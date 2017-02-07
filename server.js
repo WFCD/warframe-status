@@ -1,6 +1,8 @@
 'use strict';
 
 const express = require('express');
+const helmet = require('helmet');
+const winston = require('winston');
 const Worldstate = require('warframe-worldstate-parser');
 const Cache = require('./lib/cache.js');
 
@@ -25,19 +27,25 @@ Object.keys(worldStates).forEach((k) => {
 });
 
 const app = express();
+app.use(helmet());
 
 app.get('/', (req, res) => {
   res.redirect('/pc');
 });
 
 app.get('/:platform', (req, res) => {
+  winston.info(`Got ${req.originalUrl}`);
   if (!has.call(worldStates, req.params.platform)) {
     res.status(404).end();
     return;
   }
   worldStates[req.params.platform].cache.getData().then((data) => {
     res.json(data);
-  });
+  }).catch(winston.error);
+});
+
+app.use((req, res) => {
+  res.status(404).end();
 });
 
 app.listen(process.env.PORT || 3000);
