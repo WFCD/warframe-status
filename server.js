@@ -6,24 +6,34 @@ const winston = require('winston');
 const Worldstate = require('warframe-worldstate-parser');
 const Cache = require('./lib/cache.js');
 
-const worldStates = {
-  pc: {
-    url: 'http://content.warframe.com/dynamic/worldState.php',
-  },
-  ps4: {
-    url: 'http://content.ps4.warframe.com/dynamic/worldState.php',
-  },
-  xb1: {
-    url: 'http://content.xb1.warframe.com/dynamic/worldState.php',
-  },
+const parser = function parser(data) {
+  return new Worldstate(data);
 };
 
-const has = Object.prototype.hasOwnProperty;
+const platforms = ['pc', 'ps4', 'xb1'];
+const items = [
+  'news',
+  'events',
+  'alerts',
+  'sortie',
+  'syndicateMissions',
+  'fissures',
+  'globalUpgrades',
+  'flashSales',
+  'invasions',
+  'darkSectors',
+  'voidTrader',
+  'dailyDeals',
+  'simaris',
+  'conclaveChallenges',
+  'persistentEnemies',
+];
+const worldStates = {};
 
-Object.keys(worldStates).forEach((k) => {
-  worldStates[k].cache = new Cache(worldStates[k].url, process.env.CACHE_TIMEOUT || 60000,
-    { Parser: Worldstate });
-  worldStates[k].cache.startUpdating();
+platforms.forEach((p) => {
+  const url = `http://content${p === 'pc' ? '' : `.${p}`}.warframe.com/dynamic/worldState.php`;
+  worldStates[p] = new Cache(url, process.env.CACHE_TIMEOUT || 60000, { parser });
+  worldStates[p].startUpdating();
 });
 
 const app = express();
@@ -35,12 +45,23 @@ app.get('/', (req, res) => {
 
 app.get('/:platform', (req, res) => {
   winston.info(`Got ${req.originalUrl}`);
-  if (!has.call(worldStates, req.params.platform)) {
+  if (!platforms.includes(req.params.platform)) {
     res.status(404).end();
     return;
   }
-  worldStates[req.params.platform].cache.getData().then((data) => {
+  worldStates[req.params.platform].getData().then((data) => {
     res.json(data);
+  }).catch(winston.error);
+});
+
+app.get('/:platform/:item', (req, res) => {
+  winston.info(`Got ${req.originalUrl}`);
+  if (!platforms.includes(req.params.platform) || !items.includes(req.params.item)) {
+    res.status(404).end();
+    return;
+  }
+  worldStates[req.params.platform].getData().then((data) => {
+    res.json(data[req.params.item]);
   }).catch(winston.error);
 });
 
@@ -48,4 +69,4 @@ app.use((req, res) => {
   res.status(404).end();
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, process.env.HOSTNAME || '127.0.0.1');
