@@ -6,6 +6,8 @@ const winston = require('winston');
 const Worldstate = require('warframe-worldstate-parser');
 const Cache = require('./lib/cache.js');
 
+winston.level = process.env.LOG_LEVEL || 'error';
+
 const parser = function parser(data) {
   return new Worldstate(data);
 };
@@ -27,6 +29,10 @@ const items = [
   'simaris',
   'conclaveChallenges',
   'persistentEnemies',
+  'cetusCycle',
+  'constructionProgress',
+  'earthCycle',
+  'timestamp',
 ];
 const worldStates = {};
 
