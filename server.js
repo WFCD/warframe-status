@@ -42,34 +42,34 @@ const langKeys = Object.keys(warframeData.languages);
 const worldStates = {};
 
 const handleSearch = (key, query) => {
-    let value = {};
-    switch (key) {
-        case 'warframes':
-            const results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(query));
-            value = results.length > 0 ? results : {};
-            break;
-        case 'solNodes':
-            const keyResults = solKeys.filter(solNodeKey => solNodeKey.toLowerCase().includes(query.toLowerCase()));
-            const nodeResults = [];
-            solKeys.forEach(solKey => {
-                if (warframeData.solNodes[solKey] 
-                    && warframeData.solNodes[solKey].value.toLowerCase().includes(query.toLowerCase())) {
-                    nodeResults.push(warframeData.solNodes[solKey]);
-                }
-            });
-            value = { keys: keyResults, nodes: nodeResults };
-            break;
-        default:
-            const defaultResults = [];
-            Object.keys(warframeData[key]).forEach(selectedDataKey => {
-                if (selectedDataKey.toLowerCase().includes(query.toLowerCase())) {
-                    defaultResults.push(warframeData[key][selectedDataKey]);
-                }
-            });
-            value = defaultResults;
-            break;
-    }
-    return value;
+  let value = {};
+  switch (key) {
+    case 'warframes':
+      const results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(query));
+      value = results.length > 0 ? results : {};
+      break;
+    case 'solNodes':
+      const keyResults = solKeys.filter(solNodeKey => solNodeKey.toLowerCase().includes(query.toLowerCase()));
+      const nodeResults = [];
+      solKeys.forEach(solKey => {
+        if (warframeData.solNodes[solKey] 
+          && warframeData.solNodes[solKey].value.toLowerCase().includes(query.toLowerCase())) {
+          nodeResults.push(warframeData.solNodes[solKey]);
+        }
+      });
+      value = { keys: keyResults, nodes: nodeResults };
+      break;
+    default:
+      const defaultResults = [];
+      Object.keys(warframeData[key]).forEach(selectedDataKey => {
+        if (selectedDataKey.toLowerCase().includes(query.toLowerCase())) {
+          defaultResults.push(warframeData[key][selectedDataKey]);
+        }
+      });
+      value = defaultResults;
+      break;
+  }
+  return value;
 }
 
 platforms.forEach((p) => {
