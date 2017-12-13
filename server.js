@@ -4,7 +4,7 @@ const express = require('express');
 const helmet = require('helmet');
 const winston = require('winston');
 const Worldstate = require('warframe-worldstate-parser');
-const warframeData = require('warframe-worldstate-data');
+const warframeData = require('warframe-worldstate-data'); // eslint-disable-line import/no-unresolved
 const Cache = require('./lib/cache.js');
 
 winston.level = process.env.LOG_LEVEL || 'error';
@@ -38,7 +38,6 @@ const items = [
 
 const wfKeys = Object.keys(warframeData);
 const solKeys = Object.keys(warframeData.solNodes);
-const langKeys = Object.keys(warframeData.languages);
 const worldStates = {};
 
 const handleSearch = (key, query) => {
@@ -49,10 +48,11 @@ const handleSearch = (key, query) => {
       value = results.length > 0 ? results : {};
       break;
     case 'solNodes':
-      const keyResults = solKeys.filter(solNodeKey => solNodeKey.toLowerCase().includes(query.toLowerCase()));
+      const keyResults = solKeys
+        .filter(solNodeKey => solNodeKey.toLowerCase().includes(query.toLowerCase()));
       const nodeResults = [];
-      solKeys.forEach(solKey => {
-        if (warframeData.solNodes[solKey] 
+      solKeys.forEach((solKey) => {
+        if (warframeData.solNodes[solKey]
           && warframeData.solNodes[solKey].value.toLowerCase().includes(query.toLowerCase())) {
           nodeResults.push(warframeData.solNodes[solKey]);
         }
@@ -61,7 +61,7 @@ const handleSearch = (key, query) => {
       break;
     default:
       const defaultResults = [];
-      Object.keys(warframeData[key]).forEach(selectedDataKey => {
+      Object.keys(warframeData[key]).forEach((selectedDataKey) => {
         if (selectedDataKey.toLowerCase().includes(query.toLowerCase())) {
           defaultResults.push(warframeData[key][selectedDataKey]);
         }
@@ -70,7 +70,7 @@ const handleSearch = (key, query) => {
       break;
   }
   return value;
-}
+};
 
 platforms.forEach((p) => {
   const url = `http://content${p === 'pc' ? '' : `.${p}`}.warframe.com/dynamic/worldState.php`;
@@ -90,10 +90,10 @@ app.get('/', (req, res) => {
 app.get('/:key', (req, res) => {
   winston.log('silly', `Got ${req.originalUrl}`);
   if (platforms.includes(req.params.key)) {
-      winston.info('Worldstate Data Retrieval');
-      worldStates[req.params.key].getData().then((data) => {
-        res.json(data);
-      }).catch(winston.error);
+    winston.info('Worldstate Data Retrieval');
+    worldStates[req.params.key].getData().then((data) => {
+      res.json(data);
+    }).catch(winston.error);
   } else if (wfKeys.includes(req.params.key)) {
     winston.log('debug', 'Generic Data Retrieval');
     if(!req.query.search) {
