@@ -104,9 +104,9 @@ app.get('/:key', (req, res) => {
       winston.log('debug', 'Generic Data Retrieval');
       res.json(handleSearch(req.params.key, req.query.search.trim()));
     }
-} else if (req.params.key === 'routes') {
+  } else if (req.params.key === 'routes') {
     res.json([].concat(wfKeys).concat(platforms));
-} else {
+  } else {
     res.status(404).end();
     return;
   }
