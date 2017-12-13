@@ -92,7 +92,7 @@ app.get('/', (req, res) => {
 app.get('/:key', (req, res) => {
   winston.log('silly', `Got ${req.originalUrl}`);
   if (platforms.includes(req.params.key)) {
-    winston.info('Worldstate Data Retrieval');
+    winston.log('debug', 'Worldstate Data Retrieval');
     worldStates[req.params.key].getData().then((data) => {
       res.json(data);
     }).catch(winston.error);
@@ -104,7 +104,9 @@ app.get('/:key', (req, res) => {
       winston.log('debug', 'Generic Data Retrieval');
       res.json(handleSearch(req.params.key, req.query.search.trim()));
     }
-  } else {
+} else if (req.params.key === 'routes') {
+    res.json([].concat(wfKeys).concat(platforms));
+} else {
     res.status(404).end();
     return;
   }
