@@ -22,7 +22,6 @@
     }],
     "no-underscore-dangle": "off",
     "strict": ["error", "safe"],
-    "linebreak-style": "off",
-    "no-case-declarations": "off"
+    "linebreak-style": "off"
 	}
 }
