@@ -48,8 +48,14 @@ const handleSearch = (key, query) => {
 
   switch (key) {
     case 'warframes':
-      results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(query));
-      value = results.length > 0 ? results : {};
+      results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(query)
+        || frame.name.toLowerCase().includes(query.toLowerCase()));
+      value = results.length > 0 ? results : [];
+      break;
+    case 'weapons':
+      results = warframeData.weapons.filter(weapon => (new RegExp(weapon.regex)).test(query)
+        || weapon.name.toLowerCase().includes(query.toLowerCase()));
+      value = results.length > 0 ? results : [];
       break;
     case 'solNodes':
       keyResults = solKeys
