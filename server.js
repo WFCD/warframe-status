@@ -44,8 +44,8 @@ const handleSearch = (key, query) => {
   let value = {};
   let results = [];
   let keyResults = [];
-  let nodeResults = [];
-  
+  const nodeResults = [];
+
   switch (key) {
     case 'warframes':
       results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(query));
