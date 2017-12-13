@@ -42,15 +42,18 @@ const worldStates = {};
 
 const handleSearch = (key, query) => {
   let value = {};
+  let results = [];
+  let keyResults = [];
+  let nodeResults = [];
+  
   switch (key) {
     case 'warframes':
-      const results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(query));
+      results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(query));
       value = results.length > 0 ? results : {};
       break;
     case 'solNodes':
-      const keyResults = solKeys
+      keyResults = solKeys
         .filter(solNodeKey => solNodeKey.toLowerCase().includes(query.toLowerCase()));
-      const nodeResults = [];
       solKeys.forEach((solKey) => {
         if (warframeData.solNodes[solKey]
           && warframeData.solNodes[solKey].value.toLowerCase().includes(query.toLowerCase())) {
@@ -60,13 +63,12 @@ const handleSearch = (key, query) => {
       value = { keys: keyResults, nodes: nodeResults };
       break;
     default:
-      const defaultResults = [];
       Object.keys(warframeData[key]).forEach((selectedDataKey) => {
         if (selectedDataKey.toLowerCase().includes(query.toLowerCase())) {
-          defaultResults.push(warframeData[key][selectedDataKey]);
+          results.push(warframeData[key][selectedDataKey]);
         }
       });
-      value = defaultResults;
+      value = results;
       break;
   }
   return value;
@@ -96,7 +98,7 @@ app.get('/:key', (req, res) => {
     }).catch(winston.error);
   } else if (wfKeys.includes(req.params.key)) {
     winston.log('debug', 'Generic Data Retrieval');
-    if(!req.query.search) {
+    if (!req.query.search) {
       res.json(warframeData[req.params.key]);
     } else {
       winston.log('debug', 'Generic Data Retrieval');
