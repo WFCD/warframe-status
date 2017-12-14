@@ -41,53 +41,58 @@ const solKeys = Object.keys(warframeData.solNodes);
 const worldStates = {};
 
 const handleSearch = (key, query) => {
-  let value = {};
+  let values = [];
   let results = [];
   let keyResults = [];
   const nodeResults = [];
-
-  switch (key) {
-    case 'arcanes':
-      results = warframeData.arcanes.filter(arcanes => (new RegExp(arcanes.regex)).test(query)
-          || arcanes.name.toLowerCase().includes(query.toLowerCase()));
-      value = results.length > 0 ? results : [];
-      break;
-    case 'warframes':
-      results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(query)
-        || frame.name.toLowerCase().includes(query.toLowerCase()));
-      value = results.length > 0 ? results : [];
-      break;
-    case 'weapons':
-      results = warframeData.weapons.filter(weapon => (new RegExp(weapon.regex)).test(query)
-        || weapon.name.toLowerCase().includes(query.toLowerCase()));
-      value = results.length > 0 ? results : [];
-      break;
-    case 'tutorials':
-      results = warframeData.tutorials.filter(tutorial => (new RegExp(tutorial.regex)).test(query)
-          || tutorial.name.toLowerCase().includes(query.toLowerCase()));
-      value = results.length > 0 ? results : [];
-      break;
-    case 'solNodes':
-      keyResults = solKeys
-        .filter(solNodeKey => solNodeKey.toLowerCase().includes(query.toLowerCase()));
-      solKeys.forEach((solKey) => {
-        if (warframeData.solNodes[solKey]
-          && warframeData.solNodes[solKey].value.toLowerCase().includes(query.toLowerCase())) {
-          nodeResults.push(warframeData.solNodes[solKey]);
-        }
-      });
-      value = { keys: keyResults, nodes: nodeResults }; // eslint-disable-line no-case-declarations
-      break;
-    default:
-      Object.keys(warframeData[key]).forEach((selectedDataKey) => {
-        if (selectedDataKey.toLowerCase().includes(query.toLowerCase())) {
-          results.push(warframeData[key][selectedDataKey]);
-        }
-      });
-      value = results;
-      break;
-  }
-  return value;
+  const queries = query.split(',').map(q => q.trim());
+  
+  queries.forEach((q) => {
+    let value;
+    switch (key) {
+      case 'arcanes':
+        results = warframeData.arcanes.filter(arcanes => (new RegExp(arcanes.regex)).test(q)
+            || arcanes.name.toLowerCase().includes(q.toLowerCase()));
+        value = results.length > 0 ? results : [];
+        break;
+      case 'warframes':
+        results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(q)
+          || frame.name.toLowerCase().includes(q.toLowerCase()));
+        value = results.length > 0 ? results : [];
+        break;
+      case 'weapons':
+        results = warframeData.weapons.filter(weapon => (new RegExp(weapon.regex)).test(q)
+          || weapon.name.toLowerCase().includes(q.toLowerCase()));
+        value = results.length > 0 ? results : [];
+        break;
+      case 'tutorials':
+        results = warframeData.tutorials.filter(tutorial => (new RegExp(tutorial.regex)).test(q)
+            || tutorial.name.toLowerCase().includes(q.toLowerCase()));
+        value = results.length > 0 ? results : [];
+        break;
+      case 'solNodes':
+        keyResults = solKeys
+          .filter(solNodeKey => solNodeKey.toLowerCase().includes(q.toLowerCase()));
+        solKeys.forEach((solKey) => {
+          if (warframeData.solNodes[solKey]
+            && warframeData.solNodes[solKey].value.toLowerCase().includes(q.toLowerCase())) {
+            nodeResults.push(warframeData.solNodes[solKey]);
+          }
+        });
+        value = { keys: keyResults, nodes: nodeResults }; // eslint-disable-line no-case-declarations
+        break;
+      default:
+        Object.keys(warframeData[key]).forEach((selectedDataKey) => {
+          if (selectedDataKey.toLowerCase().includes(q.toLowerCase())) {
+            results.push(warframeData[key][selectedDataKey]);
+          }
+        });
+        value = results;
+        break;
+    }
+    values = values.concat(value);
+  });
+  return values;
 };
 
 platforms.forEach((p) => {
@@ -136,6 +141,16 @@ app.get('/:platform/:item', (req, res) => {
   worldStates[req.params.platform].getData().then((data) => {
     res.json(data[req.params.item]);
   }).catch(winston.error);
+});
+
+app.get('/:key/search/:query', (req, res) => {
+    winston.log('silly', `Got ${req.originalUrl}`);
+    if (!wfKeys.includes(req.params.key)) {
+      res.status(404).end();
+      return;
+    }
+    winston.log('debug', 'Generic Data Retrieval - Search');
+    res.json(handleSearch(req.params.key, req.params.query.trim()));
 });
 
 app.use((req, res) => {
