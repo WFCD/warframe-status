@@ -79,7 +79,8 @@ const handleSearch = (key, query) => {
             nodeResults.push(warframeData.solNodes[solKey]);
           }
         });
-        value = { keys: keyResults, nodes: nodeResults }; // eslint-disable-line no-case-declarations
+        // eslint-disable-next-line no-case-declarations
+        value = { keys: keyResults, nodes: nodeResults };
         break;
       default:
         Object.keys(warframeData[key]).forEach((selectedDataKey) => {
