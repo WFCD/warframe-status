@@ -47,6 +47,11 @@ const handleSearch = (key, query) => {
   const nodeResults = [];
 
   switch (key) {
+    case 'arcanes':
+      results = warframeData.arcanes.filter(arcanes => (new RegExp(arcanes.regex)).test(query)
+          || arcanes.name.toLowerCase().includes(query.toLowerCase()));
+      value = results.length > 0 ? results : [];
+      break;
     case 'warframes':
       results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(query)
         || frame.name.toLowerCase().includes(query.toLowerCase()));
@@ -57,9 +62,9 @@ const handleSearch = (key, query) => {
         || weapon.name.toLowerCase().includes(query.toLowerCase()));
       value = results.length > 0 ? results : [];
       break;
-    case 'arcanes':
-      results = warframeData.arcanes.filter(arcanes => (new RegExp(arcanes.regex)).test(query)
-          || arcanes.name.toLowerCase().includes(query.toLowerCase()));
+    case 'tutorials':
+      results = warframeData.tutorials.filter(tutorial => (new RegExp(tutorial.regex)).test(query)
+          || tutorial.name.toLowerCase().includes(query.toLowerCase()));
       value = results.length > 0 ? results : [];
       break;
     case 'solNodes':
