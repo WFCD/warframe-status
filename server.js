@@ -57,6 +57,11 @@ const handleSearch = (key, query) => {
         || weapon.name.toLowerCase().includes(query.toLowerCase()));
       value = results.length > 0 ? results : [];
       break;
+    case 'arcanes':
+      results = warframeData.arcanes.filter(arcanes => (new RegExp(arcanes.regex)).test(query)
+          || arcanes.name.toLowerCase().includes(query.toLowerCase()));
+      value = results.length > 0 ? results : [];
+      break;
     case 'solNodes':
       keyResults = solKeys
         .filter(solNodeKey => solNodeKey.toLowerCase().includes(query.toLowerCase()));
@@ -114,7 +119,6 @@ app.get('/:key', (req, res) => {
     res.json([].concat(wfKeys).concat(platforms));
   } else {
     res.status(404).end();
-    return;
   }
 });
 
