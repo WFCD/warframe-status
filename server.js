@@ -46,7 +46,7 @@ const handleSearch = (key, query) => {
   let keyResults = [];
   const nodeResults = [];
   const queries = query.split(',').map(q => q.trim());
-  
+
   queries.forEach((q) => {
     let value;
     switch (key) {
@@ -144,13 +144,13 @@ app.get('/:platform/:item', (req, res) => {
 });
 
 app.get('/:key/search/:query', (req, res) => {
-    winston.log('silly', `Got ${req.originalUrl}`);
-    if (!wfKeys.includes(req.params.key)) {
-      res.status(404).end();
-      return;
-    }
-    winston.log('debug', 'Generic Data Retrieval - Search');
-    res.json(handleSearch(req.params.key, req.params.query.trim()));
+  winston.log('silly', `Got ${req.originalUrl}`);
+  if (!wfKeys.includes(req.params.key)) {
+    res.status(404).end();
+    return;
+  }
+  winston.log('debug', 'Generic Data Retrieval - Search');
+  res.json(handleSearch(req.params.key, req.params.query.trim()));
 });
 
 app.use((req, res) => {
