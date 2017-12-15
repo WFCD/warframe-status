@@ -1,5 +1,6 @@
 'use strict';
 
+/* eslint-disable import/no-unresolved */
 const express = require('express');
 const helmet = require('helmet');
 const winston = require('winston');
@@ -8,6 +9,8 @@ const warframeData = require('warframe-worldstate-data'); // eslint-disable-line
 const Cache = require('./lib/cache.js');
 const DropCache = require('./lib/DropCache.js');
 const asyncHandler = require('express-async-handler');
+/* eslint-enable import/no-unresolved */
+
 
 winston.level = process.env.LOG_LEVEL || 'error';
 
@@ -52,7 +55,7 @@ const handleSearch = async (key, query) => {
   const nodeResults = [];
   const queries = query.split(',').map(q => q.trim());
   let dropData;
-  if(key === 'drops') {
+  if (key === 'drops') {
     dropData = await dropCache.getData();
   }
 
@@ -61,27 +64,31 @@ const handleSearch = async (key, query) => {
     let value;
     switch (key) {
       case 'arcanes':
-        results = warframeData.arcanes.filter(arcanes => (new RegExp(arcanes.regex)).test(loweredQuery)
+        results = warframeData.arcanes
+            .filter(arcanes => (new RegExp(arcanes.regex)).test(loweredQuery)
             || arcanes.name.toLowerCase().includes(loweredQuery.toLowerCase()));
         value = results.length > 0 ? results : [];
         break;
       case 'drops':
         results = dropData.filter(drop => drop.place.toLowerCase().includes(loweredQuery)
-          || drop.item.toLowerCase().includes(loweredQuery))
+          || drop.item.toLowerCase().includes(loweredQuery));
         value = results.length > 0 ? results : [];
         break;
       case 'warframes':
-        results = warframeData.warframes.filter(frame => (new RegExp(frame.regex)).test(loweredQuery)
+        results = warframeData.warframes
+          .filter(frame => (new RegExp(frame.regex)).test(loweredQuery)
           || frame.name.toLowerCase().includes(loweredQuery));
         value = results.length > 0 ? results : [];
         break;
       case 'weapons':
-        results = warframeData.weapons.filter(weapon => (new RegExp(weapon.regex)).test(loweredQuery)
+        results = warframeData.weapons
+          .filter(weapon => (new RegExp(weapon.regex)).test(loweredQuery)
           || weapon.name.toLowerCase().includes(loweredQuery));
         value = results.length > 0 ? results : [];
         break;
       case 'tutorials':
-        results = warframeData.tutorials.filter(tutorial => (new RegExp(tutorial.regex)).test(loweredQuery)
+        results = warframeData.tutorials
+            .filter(tutorial => (new RegExp(tutorial.regex)).test(loweredQuery)
             || tutorial.name.toLowerCase().includes(loweredQuery));
         value = results.length > 0 ? results : [];
         break;
@@ -96,10 +103,10 @@ const handleSearch = async (key, query) => {
         });
         if (values[0]) {
           if (values[0].keys) {
-            value.keys = value.keys.concat(keyResults);
+            values[0].keys = values[0].keys.concat(keyResults);
           }
           if (values[0].nodes) {
-            value.nodes = value.keys.concat(nodeResults)
+            values[0].nodes = values[0].nodes.concat(nodeResults)
           }
         } else {
           // eslint-disable-next-line no-case-declarations
@@ -115,8 +122,17 @@ const handleSearch = async (key, query) => {
         value = results;
         break;
     }
-    values = values.concat(value);
+    if (value) {
+      values = values.concat(value);
+    }
   });
+  
+  if (key === 'solNodes' && values[0]) {
+    values[0] = {
+      keys: Array.from(new Set(values[0].keys)),
+      nodes: Array.from(new Set(values[0].nodes)),
+    }
+  }
   return values;
 };
 
