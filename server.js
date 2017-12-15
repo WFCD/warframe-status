@@ -106,7 +106,7 @@ const handleSearch = async (key, query) => {
             values[0].keys = values[0].keys.concat(keyResults);
           }
           if (values[0].nodes) {
-            values[0].nodes = values[0].nodes.concat(nodeResults)
+            values[0].nodes = values[0].nodes.concat(nodeResults);
           }
         } else {
           // eslint-disable-next-line no-case-declarations
@@ -126,12 +126,12 @@ const handleSearch = async (key, query) => {
       values = values.concat(value);
     }
   });
-  
+
   if (key === 'solNodes' && values[0]) {
     values[0] = {
       keys: Array.from(new Set(values[0].keys)),
       nodes: Array.from(new Set(values[0].nodes)),
-    }
+    };
   }
   return values;
 };
