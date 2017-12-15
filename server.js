@@ -65,7 +65,7 @@ const handleSearch = async (key, query) => {
     switch (key) {
       case 'arcanes':
         results = warframeData.arcanes
-            .filter(arcanes => (new RegExp(arcanes.regex)).test(loweredQuery)
+          .filter(arcanes => (new RegExp(arcanes.regex)).test(loweredQuery)
             || arcanes.name.toLowerCase().includes(loweredQuery.toLowerCase()));
         value = results.length > 0 ? results : [];
         break;
@@ -77,18 +77,18 @@ const handleSearch = async (key, query) => {
       case 'warframes':
         results = warframeData.warframes
           .filter(frame => (new RegExp(frame.regex)).test(loweredQuery)
-          || frame.name.toLowerCase().includes(loweredQuery));
+            || frame.name.toLowerCase().includes(loweredQuery));
         value = results.length > 0 ? results : [];
         break;
       case 'weapons':
         results = warframeData.weapons
           .filter(weapon => (new RegExp(weapon.regex)).test(loweredQuery)
-          || weapon.name.toLowerCase().includes(loweredQuery));
+            || weapon.name.toLowerCase().includes(loweredQuery));
         value = results.length > 0 ? results : [];
         break;
       case 'tutorials':
         results = warframeData.tutorials
-            .filter(tutorial => (new RegExp(tutorial.regex)).test(loweredQuery)
+          .filter(tutorial => (new RegExp(tutorial.regex)).test(loweredQuery)
             || tutorial.name.toLowerCase().includes(loweredQuery));
         value = results.length > 0 ? results : [];
         break;
