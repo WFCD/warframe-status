@@ -153,9 +153,9 @@ app.get('/', (req, res) => {
 
 app.get('/:key', asyncHandler(async (req, res) => {
   winston.log('silly', `Got ${req.originalUrl}`);
-  if (platforms.includes(req.params.key)) {
+  if (platforms.includes(req.params.key.toLowerCase())) {
     winston.log('debug', 'Worldstate Data Retrieval');
-    worldStates[req.params.key].getData().then((data) => {
+    worldStates[req.params.key.toLowerCase()].getData().then((data) => {
       res.json(data);
     }).catch(winston.error);
   } else if (wfKeys.includes(req.params.key)) {
