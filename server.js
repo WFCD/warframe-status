@@ -145,19 +145,18 @@ platforms.forEach((p) => {
 const app = express();
 app.use(helmet());
 
-/* don't redirect for now
-app.get('/', (req, res) => {
-  res.redirect('/pc');
-});
-*/
-
 app.get('/:key', asyncHandler(async (req, res) => {
   winston.log('silly', `Got ${req.originalUrl}`);
+  // platform
   if (platforms.includes(req.params.key.toLowerCase())) {
     winston.log('debug', 'Worldstate Data Retrieval');
     worldStates[req.params.key.toLowerCase()].getData().then((data) => {
       res.json(data);
     }).catch(winston.error);
+  // all drops
+  } else if (req.params.key === 'drops') {
+    res.json(await await dropCache.getData());
+  // data keys
   } else if (wfKeys.includes(req.params.key)) {
     winston.log('debug', 'Generic Data Retrieval');
     if (!req.query.search) {
@@ -166,6 +165,7 @@ app.get('/:key', asyncHandler(async (req, res) => {
       winston.log('debug', 'Generic Data Retrieval');
       res.json(await handleSearch(req.params.key, req.query.search.trim()));
     }
+  // routes listing
   } else if (req.params.key === 'routes') {
     res.json([].concat(wfKeys).concat(platforms));
   } else {
@@ -173,6 +173,7 @@ app.get('/:key', asyncHandler(async (req, res) => {
   }
 }));
 
+// worldstate data section
 app.get('/:platform/:item', (req, res) => {
   winston.log('silly', `Got ${req.originalUrl}`);
   if (!platforms.includes(req.params.platform) || !items.includes(req.params.item)) {
@@ -184,6 +185,7 @@ app.get('/:platform/:item', (req, res) => {
   }).catch(winston.error);
 });
 
+// Search via query key
 app.get('/:key/search/:query', asyncHandler(async (req, res) => {
   winston.log('silly', `Got ${req.originalUrl}`);
   if (!wfKeys.includes(req.params.key)) {
@@ -194,6 +196,7 @@ app.get('/:key/search/:query', asyncHandler(async (req, res) => {
   res.json(await handleSearch(req.params.key, req.params.query.trim()));
 }));
 
+// oh no, nothing
 app.use((req, res) => {
   res.status(404).end();
 });
