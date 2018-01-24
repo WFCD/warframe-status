@@ -12,6 +12,18 @@
   "scripts": {
   },
   "env": {
+    "CACHE_TIMEOUT": {
+      "description": "How long to wait to fetch a new instance of the worldstate",
+      "value": "60000"
+    },
+    "HOSTNAME": {
+      "description": "Hostname to bind express to",
+      "value": "0.0.0.0"
+    },
+    "LOG_LEVEL": {
+      "description": "Winston log level",
+      "value": "error"
+    },
   },
   "formation": {
     "web": {
