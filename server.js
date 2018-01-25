@@ -48,6 +48,15 @@ wfKeys.push('drops');
 const solKeys = Object.keys(warframeData.solNodes);
 const worldStates = {};
 
+const setHeadersAndJson = (res, json) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range');
+  res.setHeader('Access-Control-Expose-Headers', 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range');
+  res.json(json);
+};
+
 const handleSearch = async (key, query) => {
   let values = [];
   let results = [];
@@ -151,23 +160,23 @@ app.get('/:key', asyncHandler(async (req, res) => {
   if (platforms.includes(req.params.key.toLowerCase())) {
     winston.log('debug', 'Worldstate Data Retrieval');
     worldStates[req.params.key.toLowerCase()].getData().then((data) => {
-      res.json(data);
+      setHeadersAndJson(res, data);
     }).catch(winston.error);
   // all drops
   } else if (req.params.key === 'drops') {
-    res.json(await await dropCache.getData());
+    setHeadersAndJson(res, await await dropCache.getData());
   // data keys
   } else if (wfKeys.includes(req.params.key)) {
     winston.log('debug', 'Generic Data Retrieval');
     if (!req.query.search) {
-      res.json(warframeData[req.params.key]);
+      setHeadersAndJson(res, warframeData[req.params.key]);
     } else {
       winston.log('debug', 'Generic Data Retrieval');
-      res.json(await handleSearch(req.params.key, req.query.search.trim()));
+      setHeadersAndJson(res, await handleSearch(req.params.key, req.query.search.trim()));
     }
   // routes listing
   } else if (req.params.key === 'routes') {
-    res.json([].concat(wfKeys).concat(platforms));
+    setHeadersAndJson(res, [].concat(wfKeys).concat(platforms));
   } else {
     res.status(404).end();
   }
@@ -181,7 +190,7 @@ app.get('/:platform/:item', (req, res) => {
     return;
   }
   worldStates[req.params.platform].getData().then((data) => {
-    res.json(data[req.params.item]);
+    setHeadersAndJson(res, data[req.params.item]);
   }).catch(winston.error);
 });
 
@@ -193,7 +202,7 @@ app.get('/:key/search/:query', asyncHandler(async (req, res) => {
     return;
   }
   winston.log('debug', 'Generic Data Retrieval - Search');
-  res.json(await handleSearch(req.params.key, req.params.query.trim()));
+  setHeadersAndJson(res, await handleSearch(req.params.key, req.params.query.trim()));
 }));
 
 // oh no, nothing
