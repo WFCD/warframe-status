@@ -3,7 +3,7 @@
 /* eslint-disable import/no-unresolved */
 const express = require('express');
 const helmet = require('helmet');
-const winston = require('winston');
+const logger = require('winston');
 const Worldstate = require('warframe-worldstate-parser');
 const warframeData = require('warframe-worldstate-data'); // eslint-disable-line import/no-unresolved
 const Cache = require('./lib/cache.js');
@@ -12,13 +12,13 @@ const asyncHandler = require('express-async-handler');
 /* eslint-enable import/no-unresolved */
 
 
-winston.level = process.env.LOG_LEVEL || 'error';
+logger.level = process.env.LOG_LEVEL || 'error';
 
 const parser = function parser(data) {
   return new Worldstate(data);
 };
 
-const dropCache = new DropCache(winston);
+const dropCache = new DropCache(logger);
 
 const platforms = ['pc', 'ps4', 'xb1'];
 const items = [
@@ -155,23 +155,26 @@ const app = express();
 app.use(helmet());
 
 app.get('/:key', asyncHandler(async (req, res) => {
-  winston.log('silly', `Got ${req.originalUrl}`);
+  logger.log('silly', `Got ${req.originalUrl}`);
   // platform
   if (platforms.includes(req.params.key.toLowerCase())) {
-    winston.log('debug', 'Worldstate Data Retrieval');
-    worldStates[req.params.key.toLowerCase()].getData().then((data) => {
+    logger.log('debug', 'Worldstate Data Retrieval');
+    try {
+      const data = await worldStates[req.params.key.toLowerCase()].getData();
       setHeadersAndJson(res, data);
-    }).catch(winston.error);
+    } catch (e) {
+      logger.error(e);
+    }
   // all drops
   } else if (req.params.key === 'drops') {
     setHeadersAndJson(res, await await dropCache.getData());
   // data keys
   } else if (wfKeys.includes(req.params.key)) {
-    winston.log('debug', 'Generic Data Retrieval');
+    logger.log('debug', 'Generic Data Retrieval');
     if (!req.query.search) {
       setHeadersAndJson(res, warframeData[req.params.key]);
     } else {
-      winston.log('debug', 'Generic Data Retrieval');
+      logger.log('debug', 'Generic Data Retrieval');
       setHeadersAndJson(res, await handleSearch(req.params.key, req.query.search.trim()));
     }
   // routes listing
@@ -184,24 +187,24 @@ app.get('/:key', asyncHandler(async (req, res) => {
 
 // worldstate data section
 app.get('/:platform/:item', (req, res) => {
-  winston.log('silly', `Got ${req.originalUrl}`);
+  logger.log('silly', `Got ${req.originalUrl}`);
   if (!platforms.includes(req.params.platform) || !items.includes(req.params.item)) {
     res.status(404).end();
     return;
   }
   worldStates[req.params.platform].getData().then((data) => {
     setHeadersAndJson(res, data[req.params.item]);
-  }).catch(winston.error);
+  }).catch(logger.error);
 });
 
 // Search via query key
 app.get('/:key/search/:query', asyncHandler(async (req, res) => {
-  winston.log('silly', `Got ${req.originalUrl}`);
+  logger.log('silly', `Got ${req.originalUrl}`);
   if (!wfKeys.includes(req.params.key)) {
     res.status(404).end();
     return;
   }
-  winston.log('debug', 'Generic Data Retrieval - Search');
+  logger.log('debug', 'Generic Data Retrieval - Search');
   setHeadersAndJson(res, await handleSearch(req.params.key, req.params.query.trim()));
 }));
 
