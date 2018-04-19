@@ -1,5 +1,7 @@
 # warframe-status
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/WFCD/warframe-status.svg)](https://greenkeeper.io/)
+
 Simple express app that parses worldState.php
 
 
