@@ -23,6 +23,7 @@
     "eslint-plugin-react": "^6.3.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "exit 0"
   }
 }
