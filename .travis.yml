@@ -1,17 +1,7 @@
 language: node_js
-
 node_js:
-  - "node" removing until stabilized
+  - "node"
   - "lts/*"
-
-git:
-  depth: 3
-
 branches:
   only:
   - master
-
-install: npm install
-
-script:
-  - npm test
