@@ -97,7 +97,7 @@ app.get('/pricecheck/:type/:query', async (req, res) => {
 });
 
 app.get('/heartbeat', async (req, res) => {
-  res.status(200).end();
+  res.status(200).json("Success");
 });
 
 // oh no, nothing
