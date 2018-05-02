@@ -96,6 +96,10 @@ app.get('/pricecheck/:type/:query', async (req, res) => {
   await routes.priceCheck.handle(req, res);
 });
 
+app.get('/heartbeat', async (req, res) => {
+  res.status(200).end();
+});
+
 // oh no, nothing
 app.use((req, res) => {
   res.status(404).end();
