@@ -9,14 +9,15 @@ const DropCache = require('./lib/DropCache.js');
 /* eslint-enable import/no-unresolved */
 
 /* Routes */
-const Route = require('./lib/Route.js');
-const WorldstateRoute = require('./lib/routes/Worldstate.js');
-const Drops = require('./lib/routes/Drops.js');
-const WorldstateData = require('./lib/routes/WorldstateData.js');
-const Search = require('./lib/routes/Search.js');
-const PriceCheck = require('./lib/routes/PriceCheck.js');
+const Route = require('./lib/Route');
+const WorldstateRoute = require('./lib/routes/Worldstate');
+const Drops = require('./lib/routes/Drops');
+const WorldstateData = require('./lib/routes/WorldstateData');
+const Search = require('./lib/routes/Search');
+const PriceCheck = require('./lib/routes/PriceCheck');
+const TennoTv = require('./lib/routes/TennoTv');
 
-logger.level = process.env.LOG_LEVEL || 'error';
+logger.level = process.env.LOG_LEVEL || 'silly';
 
 const dropCache = new DropCache(logger);
 
@@ -52,6 +53,7 @@ const routes = {
   data: new WorldstateData('/:key', deps),
   search: new Search('/:key/search/:query', deps),
   priceCheck: new PriceCheck('/pricecheck/:type/:query', deps),
+  tennotv: new TennoTv('/tennotv/', deps),
 };
 
 const app = express();
@@ -60,6 +62,14 @@ app.use(helmet());
 app.get('/', (req, res) => {
   logger.log('silly', `Got ${req.originalUrl}`);
   routes.route.handle(req, res);
+});
+
+app.get('/tennotv', async (req, res) => {
+  await routes.tennotv.handle(req, res);
+});
+
+app.get('/heartbeat', async (req, res) => {
+  res.status(200).json('Success');
 });
 
 app.get('/:key', async (req, res) => {
@@ -81,6 +91,7 @@ app.get('/:key', async (req, res) => {
   }
 });
 
+
 // worldstate data section
 app.get('/:platform/:item', async (req, res) => {
   await routes.worldstate.handle(req, res);
@@ -96,9 +107,6 @@ app.get('/pricecheck/:type/:query', async (req, res) => {
   await routes.priceCheck.handle(req, res);
 });
 
-app.get('/heartbeat', async (req, res) => {
-  res.status(200).json("Success");
-});
 
 // oh no, nothing
 app.use((req, res) => {
