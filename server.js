@@ -17,7 +17,7 @@ const Search = require('./lib/routes/Search');
 const PriceCheck = require('./lib/routes/PriceCheck');
 const TennoTv = require('./lib/routes/TennoTv');
 
-logger.level = process.env.LOG_LEVEL || 'silly';
+logger.level = process.env.LOG_LEVEL || 'error';
 
 const dropCache = new DropCache(logger);
 
