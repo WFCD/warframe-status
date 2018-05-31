@@ -27,5 +27,9 @@
   "scripts": {
     "start": "node server.js",
     "test": "exit 0"
+  },
+  "engines": {
+    "node": "10.3.0",
+    "npm": "6.1.0"
   }
 }
