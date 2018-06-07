@@ -10,7 +10,7 @@
     "json-fetch-cache": "^0.1.3",
     "nexus-stats-api": "^1.0.0",
     "nodemon": "^1.14.12",
-    "snekfetch": "^4.0.0",
+    "snekfetch": "^4.0.2",
     "warframe-nexus-query": "^1.3.11",
     "warframe-worldstate-data": "github:wfcd/warframe-worldstate-data",
     "warframe-worldstate-parser": "github:wfcd/warframe-worldstate-parser",
