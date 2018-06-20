@@ -22,7 +22,7 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "7.8.2",
-    "greenkeeper-lockfile": "^1.14.0"
+    "greenkeeper-lockfile": "^1.15.1"
   },
   "scripts": {
     "start": "node server.js",
