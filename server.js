@@ -3,7 +3,7 @@
 /* eslint-disable import/no-unresolved */
 const express = require('express');
 const helmet = require('helmet');
-const logger = require('winston');
+const winston = require('winston');
 const warframeData = require('warframe-worldstate-data'); // eslint-disable-line import/no-unresolved
 const DropCache = require('./lib/DropCache.js');
 /* eslint-enable import/no-unresolved */
@@ -17,6 +17,8 @@ const Search = require('./lib/routes/Search');
 const PriceCheck = require('./lib/routes/PriceCheck');
 const TennoTv = require('./lib/routes/TennoTv');
 
+const logger = winston.createLogger();
+logger.add(new winston.transports.Console());
 logger.level = process.env.LOG_LEVEL || 'error';
 
 const dropCache = new DropCache(logger);
@@ -30,7 +32,7 @@ const solKeys = Object.keys(warframeData.solNodes);
 const setHeadersAndJson = (res, json) => {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range');
   res.setHeader('Access-Control-Expose-Headers', 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range');
   res.json(json);
@@ -58,14 +60,15 @@ const routes = {
 
 const app = express();
 app.use(helmet());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   logger.log('silly', `Got ${req.originalUrl}`);
   routes.route.handle(req, res);
 });
 
-app.get('/tennotv', async (req, res) => {
-  await routes.tennotv.handle(req, res);
+app.all('/tennotv', async (req, res) => {
+  await routes.tennotv.handle(req, res, req.method.toLowerCase());
 });
 
 app.get('/heartbeat', async (req, res) => {
@@ -91,7 +94,6 @@ app.get('/:key', async (req, res) => {
   }
 });
 
-
 // worldstate data section
 app.get('/:platform/:item', async (req, res) => {
   await routes.worldstate.handle(req, res);
@@ -113,4 +115,4 @@ app.use((req, res) => {
   res.status(404).end();
 });
 
-app.listen(process.env.PORT || 3000, process.env.HOSTNAME || '127.0.0.1');
+app.listen(process.env.PORT || 3001, process.env.HOSTNAME || '127.0.0.1');
