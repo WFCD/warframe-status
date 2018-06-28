@@ -16,6 +16,8 @@ const WorldstateData = require('./lib/routes/WorldstateData');
 const Search = require('./lib/routes/Search');
 const PriceCheck = require('./lib/routes/PriceCheck');
 const TennoTv = require('./lib/routes/TennoTv');
+const Weapons = require('./lib/routes/Weapons');
+const Warframes = require('./lib/routes/Warframes');
 
 const logger = winston.createLogger();
 logger.add(new winston.transports.Console());
@@ -24,6 +26,9 @@ logger.level = process.env.LOG_LEVEL || 'error';
 const dropCache = new DropCache(logger);
 
 const platforms = ['pc', 'ps4', 'xb1'];
+
+delete warframeData.weapons;
+delete warframeData.warframes;
 
 const wfKeys = Object.keys(warframeData);
 wfKeys.push('drops');
@@ -56,6 +61,8 @@ const routes = {
   search: new Search('/:key/search/:query', deps),
   priceCheck: new PriceCheck('/pricecheck/:type/:query', deps),
   tennotv: new TennoTv('/tennotv/', deps),
+  weapons: new Weapons('/weapons/', deps),
+  warframes: new Warframes('/warframes/', deps),
 };
 
 const app = express();
@@ -77,17 +84,23 @@ app.get('/heartbeat', async (req, res) => {
 
 app.get('/:key', async (req, res) => {
   logger.log('silly', `Got ${req.originalUrl}`);
+  const key = (req.params.key || '').toLowerCase();
+  if (key === 'warframes') {
+    routes.warframes.handle(req, res);
+  } else if (key === 'weapons') {
+    routes.weapons.handle(req, res);
+  } else
   // platform
-  if (platforms.includes(req.params.key.toLowerCase())) {
+  if (platforms.includes(key)) {
     await routes.worldstate.handle(req, res);
   // all drops
-  } else if (req.params.key === 'drops') {
+  } else if (key === 'drops') {
     await routes.drops.handle(req, res);
   // data keys
-  } else if (wfKeys.includes(req.params.key)) {
+  } else if (wfKeys.includes(key)) {
     await routes.data.handle(req, res);
   // routes listing
-  } else if (req.params.key === 'routes') {
+  } else if (key === 'routes') {
     routes.route.handle(req, res);
   } else {
     res.status(404).end();
