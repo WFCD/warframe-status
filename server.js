@@ -3,9 +3,13 @@
 /* eslint-disable import/no-unresolved */
 const express = require('express');
 const helmet = require('helmet');
-const winston = require('winston');
+const { transports, createLogger, format } = require('winston');
 const warframeData = require('warframe-worldstate-data'); // eslint-disable-line import/no-unresolved
 const DropCache = require('./lib/DropCache.js');
+
+const {
+  combine, label, printf, colorize,
+} = format;
 /* eslint-enable import/no-unresolved */
 
 /* Routes */
@@ -19,8 +23,16 @@ const TennoTv = require('./lib/routes/TennoTv');
 const Weapons = require('./lib/routes/Weapons');
 const Warframes = require('./lib/routes/Warframes');
 
-const logger = winston.createLogger();
-logger.add(new winston.transports.Console());
+const transport = new transports.Console({ colorize: true });
+const logFormat = printf(info => `[${info.label}] ${info.level}: ${info.message}`);
+const logger = createLogger({
+  format: combine(
+    colorize(),
+    label({ label: 'API' }),
+    logFormat,
+  ),
+  transports: [transport],
+});
 logger.level = process.env.LOG_LEVEL || 'error';
 
 const dropCache = new DropCache(logger);
