@@ -13,14 +13,14 @@
     "warframe-items": "^1.28.0",
     "warframe-nexus-query": "^1.3.11",
     "warframe-worldstate-data": "0.0.240",
-    "warframe-worldstate-parser": "^2.0.1",
+    "warframe-worldstate-parser": "^2.0.2",
     "winston": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "^5.0.0",
+    "eslint": "^5.1.0",
     "eslint-config-airbnb": "^17.0.0",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "7.10.0",
     "greenkeeper-lockfile": "^1.15.1",
     "nodemon": "^1.18.2"
