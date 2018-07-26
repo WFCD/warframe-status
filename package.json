@@ -23,7 +23,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "7.10.0",
     "greenkeeper-lockfile": "^1.15.1",
-    "nodemon": "^1.18.2"
+    "nodemon": "^1.18.3"
   },
   "scripts": {
     "start": "node server.js",
