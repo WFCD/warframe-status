@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "dev": "npm i nodemon@latest && nodemon",
+    "dev": "nodemon",
     "test": "exit 0"
   },
   "engines": {
