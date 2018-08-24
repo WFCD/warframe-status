@@ -19,7 +19,6 @@ const Drops = require('./lib/routes/Drops');
 const WorldstateData = require('./lib/routes/WorldstateData');
 const Search = require('./lib/routes/Search');
 const PriceCheck = require('./lib/routes/PriceCheck');
-const TennoTv = require('./lib/routes/TennoTv');
 const Weapons = require('./lib/routes/Weapons');
 const Warframes = require('./lib/routes/Warframes');
 
@@ -72,7 +71,6 @@ const routes = {
   data: new WorldstateData('/:key', deps),
   search: new Search('/:key/search/:query', deps),
   priceCheck: new PriceCheck('/pricecheck/:type/:query', deps),
-  tennotv: new TennoTv('/tennotv/', deps),
   weapons: new Weapons('/weapons/', deps),
   warframes: new Warframes('/warframes/', deps),
 };
@@ -84,10 +82,6 @@ app.use(express.json());
 app.get('/', (req, res) => {
   logger.log('silly', `Got ${req.originalUrl}`);
   routes.route.handle(req, res);
-});
-
-app.all('/tennotv', async (req, res) => {
-  await routes.tennotv.handle(req, res, req.method.toLowerCase());
 });
 
 app.get('/heartbeat', async (req, res) => {
