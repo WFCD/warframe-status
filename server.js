@@ -5,7 +5,10 @@ const express = require('express');
 const helmet = require('helmet');
 const { transports, createLogger, format } = require('winston');
 const warframeData = require('warframe-worldstate-data'); // eslint-disable-line import/no-unresolved
+const apicache = require('apicache');
 const DropCache = require('./lib/DropCache.js');
+
+const cache = apicache.middleware;
 
 const {
   combine, label, printf, colorize,
@@ -79,30 +82,37 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/', cache('1 minute'), (req, res) => {
   logger.log('silly', `Got ${req.originalUrl}`);
   routes.route.handle(req, res);
 });
 
-app.get('/heartbeat', async (req, res) => {
+app.get('/heartbeat', cache('24 hours'), async (req, res) => {
   res.status(200).json('Success');
 });
 
-app.get('/:key', async (req, res) => {
+app.get('/warframes', cache('24 hours'), async (req, res) => {
+  logger.log('silly', `Got ${req.originalUrl}`);
+  routes.warframes.handle(req, res);
+});
+
+app.get('/weapons', cache('24 hours'), async (req, res) => {
+  logger.log('silly', `Got ${req.originalUrl}`);
+  routes.weapons.handle(req, res);
+});
+
+app.get('/drops', cache('24 hours'), async (req, res) => {
+  logger.log('silly', `Got ${req.originalUrl}`);
+  routes.drops.handle(req, res);
+});
+
+app.get('/:key', cache('1 minute'), async (req, res) => {
   logger.log('silly', `Got ${req.originalUrl}`);
   const key = (req.params.key || '').toLowerCase();
-  if (key === 'warframes') {
-    routes.warframes.handle(req, res);
-  } else if (key === 'weapons') {
-    routes.weapons.handle(req, res);
-  } else
   // platform
   if (platforms.includes(key)) {
     await routes.worldstate.handle(req, res);
   // all drops
-  } else if (key === 'drops') {
-    await routes.drops.handle(req, res);
-  // data keys
   } else if (wfKeys.includes(key)) {
     await routes.data.handle(req, res);
   // routes listing
@@ -114,17 +124,17 @@ app.get('/:key', async (req, res) => {
 });
 
 // worldstate data section
-app.get('/:platform/:item', async (req, res) => {
+app.get('/:platform/:item', cache('1 minute'), async (req, res) => {
   await routes.worldstate.handle(req, res);
 });
 
 // Search via query key
-app.get('/:key/search/:query', async (req, res) => {
+app.get('/:key/search/:query', cache('10 hours'), async (req, res) => {
   await routes.search.handle(req, res);
 });
 
 // Pricecheck
-app.get('/pricecheck/:type/:query', async (req, res) => {
+app.get('/pricecheck/:type/:query', cache('10 minutes'), async (req, res) => {
   await routes.priceCheck.handle(req, res);
 });
 
