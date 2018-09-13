@@ -44,7 +44,7 @@ const platforms = ['pc', 'ps4', 'xb1'];
 delete warframeData.weapons;
 delete warframeData.warframes;
 
-const wfKeys = Object.keys(warframeData);
+const wfKeys = Object.keys(warframeData).map(key => key.toLowerCase());
 wfKeys.push('drops');
 const solKeys = Object.keys(warframeData.solNodes);
 
