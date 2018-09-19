@@ -24,6 +24,7 @@ const Search = require('./lib/routes/Search');
 const PriceCheck = require('./lib/routes/PriceCheck');
 const Weapons = require('./lib/routes/Weapons');
 const Warframes = require('./lib/routes/Warframes');
+const Mods = require('./lib/routes/Mods');
 
 const transport = new transports.Console({ colorize: true });
 const logFormat = printf(info => `[${info.label}] ${info.level}: ${info.message}`);
@@ -76,6 +77,7 @@ const routes = {
   priceCheck: new PriceCheck('/pricecheck/:type/:query', deps),
   weapons: new Weapons('/weapons/', deps),
   warframes: new Warframes('/warframes/', deps),
+  mods: new Mods('/mods/', deps)
 };
 
 const app = express();
@@ -99,6 +101,11 @@ app.get('/warframes', cache('24 hours'), async (req, res) => {
 app.get('/weapons', cache('24 hours'), async (req, res) => {
   logger.log('silly', `Got ${req.originalUrl}`);
   routes.weapons.handle(req, res);
+});
+
+app.get('/mods', cache('24 hours'), async (req, res) => {
+  logger.log('silly', `Got ${req.originalUrl}`);
+  routes.mods.handle(req, res);
 });
 
 app.get('/drops', cache('24 hours'), async (req, res) => {
