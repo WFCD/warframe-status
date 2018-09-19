@@ -46,7 +46,7 @@ delete warframeData.weapons;
 delete warframeData.warframes;
 
 const wfKeys = Object.keys(warframeData).map(key => key.toLowerCase());
-wfKeys.push('drops');
+wfKeys.push('drops', 'mods');
 const solKeys = Object.keys(warframeData.solNodes);
 
 const setHeadersAndJson = (res, json) => {
