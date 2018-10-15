@@ -10,10 +10,10 @@
     "helmet": "^3.12.1",
     "json-fetch-cache": "^0.1.3",
     "nexus-stats-api": "^1.0.0",
-    "warframe-items": "^1.77.0",
+    "warframe-items": "^1.93.0",
     "warframe-nexus-query": "^1.1.1",
     "warframe-worldstate-data": "^0.1.5",
-    "warframe-worldstate-parser": "^2.1.12",
+    "warframe-worldstate-parser": "^2.1.13",
     "winston": "^3.1.0"
   },
   "devDependencies": {
