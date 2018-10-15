@@ -1,6 +1,6 @@
 {
   "name": "warframe-status",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "nspacestd",
   "repository": "https://github.com/wfcd/warframe-status.git",
   "dependencies": {
