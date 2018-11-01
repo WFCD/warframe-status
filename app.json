@@ -23,6 +23,22 @@
     "LOG_LEVEL": {
       "description": "Winston log level",
       "value": "error"
+    },
+    "TWITTER_TIMEOUT": {
+      "description": "Milliseconds between each request batch to Twitter.",
+      "value": "600000"
+    },
+    "TWITTER_KEY": {
+      "description": "Consumer key for Twitter API Access.",
+      "required": false
+    },
+    "TWITTER_SECRET": {
+      "description": "Consumer secret for Twitter API Access.",
+      "required": false
+    },
+    "TWITTER_BEARER_TOKEN": {
+      "description": "Application-only bearer token for Twitter API Access",
+      "required": false
     }
   },
   "formation": {

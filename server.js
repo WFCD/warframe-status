@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const { transports, createLogger, format } = require('winston');
 const warframeData = require('warframe-worldstate-data'); // eslint-disable-line import/no-unresolved
 const apicache = require('apicache');
-const DropCache = require('./lib/DropCache.js');
+const DropCache = require('./lib/caches/DropCache.js');
 
 const cache = apicache.middleware;
 
@@ -36,7 +36,9 @@ const logger = createLogger({
   ),
   transports: [transport],
 });
-logger.level = process.env.LOG_LEVEL || 'error';
+logger.level = process.env.LOG_LEVEL || 'info';
+
+logger.info('Setting up dependencies...');
 
 const dropCache = new DropCache(logger);
 
@@ -84,6 +86,7 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 
+logger.info('Setting up routes...');
 app.get('/', cache('1 minute'), (req, res) => {
   logger.log('silly', `Got ${req.originalUrl}`);
   routes.route.handle(req, res);
@@ -151,4 +154,8 @@ app.use((req, res) => {
   res.status(404).end();
 });
 
-app.listen(process.env.PORT || 3001, process.env.HOSTNAME || '127.0.0.1');
+const port = process.env.PORT || 3001;
+const host = process.env.HOSTNAME || process.env.HOST || 'localhost';
+app.listen(port, host);
+
+logger.info(`Started listening on ${host}:${port}`);
