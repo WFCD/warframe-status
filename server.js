@@ -79,7 +79,7 @@ const routes = {
   priceCheck: new PriceCheck('/pricecheck/:type/:query', deps),
   weapons: new Weapons('/weapons/', deps),
   warframes: new Warframes('/warframes/', deps),
-  mods: new Mods('/mods/', deps)
+  mods: new Mods('/mods/', deps),
 };
 
 const app = express();
