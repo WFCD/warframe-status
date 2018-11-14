@@ -11,10 +11,10 @@
     "json-fetch-cache": "^0.1.3",
     "nexus-stats-api": "^1.0.0",
     "twitter": "^1.7.1",
-    "warframe-items": "^1.139.0",
+    "warframe-items": "^1.158.0",
     "warframe-nexus-query": "^1.1.1",
     "warframe-worldstate-data": "^0.1.9",
-    "warframe-worldstate-parser": "^2.1.22",
+    "warframe-worldstate-parser": "^2.1.23",
     "winston": "^3.1.0"
   },
   "devDependencies": {
