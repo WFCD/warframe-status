@@ -42,7 +42,7 @@ logger.info('Setting up dependencies...');
 
 const dropCache = new DropCache(logger);
 
-const platforms = ['pc', 'ps4', 'xb1'];
+const platforms = ['pc', 'ps4', 'xb1', 'swi'];
 
 delete warframeData.weapons;
 delete warframeData.warframes;
@@ -155,7 +155,7 @@ app.use((req, res) => {
 });
 
 const port = process.env.PORT || 3001;
-const host = process.env.HOSTNAME || process.env.HOST || 'localhost';
+const host = process.env.HOSTNAME || process.env.HOST || process.env.IP || 'localhost';
 app.listen(port, host);
 
 logger.info(`Started listening on ${host}:${port}`);
