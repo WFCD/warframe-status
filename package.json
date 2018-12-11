@@ -11,21 +11,21 @@
     "json-fetch-cache": "^0.1.3",
     "nexus-stats-api": "^1.0.0",
     "twitter": "^1.7.1",
-    "warframe-items": "^1.179.0",
+    "warframe-items": "^1.180.0",
     "warframe-nexus-query": "^1.1.1",
     "warframe-worldstate-data": "^0.1.12",
-    "warframe-worldstate-parser": "^2.1.24",
+    "warframe-worldstate-parser": "^2.1.25",
     "winston": "^3.1.0"
   },
   "devDependencies": {
     "@types/apicache": "^1.2.0",
-    "eslint": "^5.9.0",
+    "eslint": "^5.10.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "7.11.1",
     "greenkeeper-lockfile": "^1.15.1",
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.18.8"
   },
   "scripts": {
     "start": "node server.js",
