@@ -134,8 +134,21 @@ app.get('/:key', cache('1 minute'), async (req, res) => {
 });
 
 // worldstate data section
-app.get('/:platform/:item', cache('1 minute'), async (req, res) => {
-  await routes.worldstate.handle(req, res);
+app.get('/:key/:item', cache('1 minute'), async (req, res) => {
+  if (platforms.includes(req.params.key)) {
+    req.params.platform = req.params.key;
+    await routes.worldstate.handle(req, res);
+    return;
+  }
+  if (req.params.key === 'weapons') {
+    routes.weapons.handleSingle(req, res);
+  }
+  if (req.params.key === 'warframes') {
+    routes.warframes.handleSingle(req, res);
+  }
+  if (req.params.key === 'mods') {
+    routes.mods.handleSingle(req, res);
+  }
 });
 
 // Search via query key
