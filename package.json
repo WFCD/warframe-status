@@ -11,15 +11,15 @@
     "json-fetch-cache": "^0.1.3",
     "nexus-stats-api": "^1.0.0",
     "twitter": "^1.7.1",
-    "warframe-items": "^1.188.0",
+    "warframe-items": "^1.208.0",
     "warframe-nexus-query": "^1.1.1",
-    "warframe-worldstate-data": "^0.1.13",
+    "warframe-worldstate-data": "^0.1.14",
     "warframe-worldstate-parser": "^2.1.26",
     "winston": "^3.1.0"
   },
   "devDependencies": {
     "@types/apicache": "^1.2.0",
-    "eslint": "^5.10.0",
+    "eslint": "^5.11.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
