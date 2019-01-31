@@ -25,6 +25,7 @@ const PriceCheck = require('./lib/routes/PriceCheck');
 const Weapons = require('./lib/routes/Weapons');
 const Warframes = require('./lib/routes/Warframes');
 const Mods = require('./lib/routes/Mods');
+const Items = require('./lib/routes/Items');
 
 const transport = new transports.Console({ colorize: true });
 const logFormat = printf(info => `[${info.label}] ${info.level}: ${info.message}`);
@@ -75,12 +76,14 @@ const routes = {
   worldstate: new WorldstateRoute('/:platform', deps),
   drops: new Drops('/drops', deps),
   data: new WorldstateData('/:key', deps),
-  search: new Search('/:key/search/:query', deps),
   priceCheck: new PriceCheck('/pricecheck/:type/:query', deps),
-  weapons: new Weapons('/weapons/', deps),
-  warframes: new Warframes('/warframes/', deps),
-  mods: new Mods('/mods/', deps),
+  weapons: new Weapons('/weapons', deps),
+  warframes: new Warframes('/warframes', deps),
+  mods: new Mods('/mods', deps),
+  items: new Items('/items', deps),
 };
+
+routes.search = new Search('/:key/search/:query', deps, routes);
 
 const app = express();
 app.use(helmet());
