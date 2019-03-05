@@ -13,7 +13,7 @@
     "twitter": "^1.7.1",
     "warframe-items": "^1.218.0",
     "warframe-nexus-query": "^1.1.1",
-    "warframe-worldstate-data": "^0.1.43",
+    "warframe-worldstate-data": "^0.1.44",
     "warframe-worldstate-parser": "^2.3.4",
     "winston": "^3.2.1"
   },
