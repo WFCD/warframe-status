@@ -11,7 +11,7 @@ const {
 const wfItemData = {
   weapons: {
     items: new Items({ category: ['Primary', 'Secondary', 'Melee'] }),
-    name: 'Weapon'
+    name: 'Weapon',
   },
   warframes: {
     items: new Items({ category: ['Warframes'] }),

@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  logger, setHeadersAndJson, cache, warframeData, solKeys
+  logger, setHeadersAndJson, cache, warframeData, solKeys,
 } = require('../lib/utilities');
 
 const dataKeys = Object.keys(warframeData);

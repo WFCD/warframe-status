@@ -4,7 +4,9 @@ const express = require('express');
 const Nexus = require('warframe-nexus-query');
 const NexusFetcher = require('nexus-stats-api');
 
-const { logger, setHeadersAndJson, ah } = require('../lib/utilities');
+const {
+  logger, setHeadersAndJson, ah, cache,
+} = require('../lib/utilities');
 
 const router = express.Router();
 
@@ -22,7 +24,7 @@ const nexusFetcher = new NexusFetcher(nexusOptions.nexusKey
 
 const nexusQuerier = new Nexus(nexusFetcher);
 
-router.get('/:type/:query',  ah(async (req, res) => {
+router.get('/:type/:query', cache('1 hour'), ah(async (req, res) => {
   let value = '';
   logger.silly(`Got ${req.originalUrl}`);
   switch (req.params.type) {
