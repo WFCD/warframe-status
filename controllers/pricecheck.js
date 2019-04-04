@@ -24,7 +24,7 @@ const nexusQuerier = new Nexus(nexusFetcher);
 
 router.get('/:type/:query',  ah(async (req, res) => {
   let value = '';
-  logger.log('silly', `Got ${req.originalUrl}`);
+  logger.silly(`Got ${req.originalUrl}`);
   switch (req.params.type) {
     case 'string':
       value = await nexusQuerier.priceCheckQueryString(req.params.query);

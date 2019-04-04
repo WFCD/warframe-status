@@ -7,7 +7,7 @@ const { logger } = require('../lib/utilities');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  logger.log('silly', `Got ${req.originalUrl}`);
+  logger.silly(`Got ${req.originalUrl}`);
   res.status(200).json({ msg: 'Success', code: 200 });
 });
 

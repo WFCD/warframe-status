@@ -20,14 +20,14 @@ router.use((req, res, next) => {
 });
 
 router.get('/', cache('1 minute'), ah(async (req, res) => {
-  logger.log('silly', `Got ${req.originalUrl}`);
+  logger.silly(`Got ${req.originalUrl}`);
   const ws = await worldStates[req.platform].getData();
   ws.twitter = await twitter.getData();
   setHeadersAndJson(res, ws);
 }));
 
 router.get('/:field', cache('1 minute'), ah(async (req, res) => {
-  logger.log('silly', `Got ${req.originalUrl}`);
+  logger.silly(`Got ${req.originalUrl}`);
   const ws = await worldStates[req.platform].getData();
   ws.twitter = await twitter.getData(); // inject twitter data
 

@@ -27,12 +27,12 @@ router.use((req, res, next) => {
 });
 
 router.get('/', cache('10 hours'), (req, res) => {
-  logger.log('silly', `Got ${req.originalUrl}`);
+  logger.silly(`Got ${req.originalUrl}`);
   setHeadersAndJson(res, warframeData[req.key]);
 });
 
 router.get('/search/:query', cache('10 hours'), (req, res) => {
-  logger.log('silly', `Got ${req.originalUrl}`);
+  logger.silly(`Got ${req.originalUrl}`);
   let values = [];
   let results = [];
   let keyResults = [];

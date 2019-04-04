@@ -5,7 +5,7 @@ const {
 } = require('../lib/utilities');
 
 router.get('/', cache('1 minute'), (req, res) => {
-  logger.log('silly', `Got ${req.originalUrl}`);
+  logger.silly(`Got ${req.originalUrl}`);
   setHeadersAndJson(res, [].concat(wfKeys));
 });
 

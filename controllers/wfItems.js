@@ -38,12 +38,12 @@ router.use((req, res, next) => {
 
 
 router.get('/', cache('10 hours'), (req, res) => {
-  logger.log('silly', `Got ${req.originalUrl}`);
+  logger.silly(`Got ${req.originalUrl}`);
   setHeadersAndJson(res, req.items.items);
 });
 
 router.get('/:item', cache('10 hours'), (req, res) => {
-  logger.log('silly', `Got ${req.originalUrl}`);
+  logger.silly(`Got ${req.originalUrl}`);
   let result;
   let exact = false;
   req.items.items.forEach((item) => {
@@ -63,7 +63,7 @@ router.get('/:item', cache('10 hours'), (req, res) => {
 });
 
 router.get('/search/:query', cache('10 hours'), (req, res) => {
-  logger.log('silly', `Got ${req.originalUrl}`);
+  logger.silly(`Got ${req.originalUrl}`);
   const queries = req.params.query.trim().split(',').map(q => q.trim());
   const results = [];
   queries.forEach((query) => {
