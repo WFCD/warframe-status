@@ -9,6 +9,9 @@ const router = express.Router();
 
 router.use((req, res, next) => {
   req.platform = (req.baseUrl.replace('/', '').trim().split('/')[0] || '').toLowerCase();
+  if (req.platform === 'ns') {
+    req.platform = 'swi';
+  }
 
   if (!platforms.includes(req.platform)) {
     req.platform = undefined;
@@ -31,7 +34,7 @@ router.get('/:field', cache('1 minute'), ah(async (req, res) => {
   if (ws[req.params.field]) {
     setHeadersAndJson(res, ws[req.params.field]);
   } else {
-    res.status(404).json({ error: 'No such worldstate field', code: 400 });
+    res.status(400).json({ error: 'No such worldstate field', code: 400 });
   }
 }));
 

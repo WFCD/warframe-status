@@ -1,7 +1,7 @@
 'use strict';
 
 const {
-  logger, router, cache, setHeadersAndJson, wfKeys, platforms,
+  logger, router, cache, setHeadersAndJson, wfKeys, platforms, warframeData, platformAliases,
 } = require('../lib/utilities');
 
 router.get('/', cache('1 minute'), (req, res) => {
@@ -9,15 +9,14 @@ router.get('/', cache('1 minute'), (req, res) => {
   setHeadersAndJson(res, [].concat(wfKeys));
 });
 
+router.use(`/:platform(${platforms.join('|')}|${platformAliases.join('|')})`, require('./worldstate'));
+router.use(`/:data(${Object.keys(warframeData).join('|')})`, require('./staticWfData'));
+router.use('/pricecheck', require('./pricecheck'));
 router.use('/heartbeat', require('./heartbeat'));
-router.use('/warframes', require('./warframes'));
-router.use('/weapons', require('./weapons'));
-router.use('/mods', require('./mods'));
-router.use('/items', require('./items'));
+router.use('/warframes', require('./wfItems'));
+router.use('/weapons', require('./wfItems'));
+router.use('/items', require('./wfItems'));
+router.use('/mods', require('./wfItems'));
 router.use('/drops', require('./drops'));
-
-// TODO: still need other data routes....
-
-router.use(`/:platform(${platforms.join('|')})`, require('./worldstate'));
 
 module.exports = router;
