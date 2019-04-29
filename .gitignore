@@ -38,3 +38,6 @@ jspm_packages
 
 # PM2 Config
 warframe-status.json
+
+# Temp file storage
+tmp/

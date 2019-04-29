@@ -5,6 +5,10 @@ const helmet = require('helmet');
 
 const { logger } = require('./lib/utilities');
 
+if (!global.__basedir) {
+  global.__basedir = __dirname;
+}
+
 logger.info('Setting up dependencies...');
 
 const app = express();
