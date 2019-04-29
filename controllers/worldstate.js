@@ -26,6 +26,8 @@ router.get('/', cache('1 minute'), ah(async (req, res) => {
   setHeadersAndJson(res, ws);
 }));
 
+router.use('/rivens', require('./rivens'));
+
 router.get('/:field', cache('1 minute'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const ws = await worldStates[req.platform].getData();
