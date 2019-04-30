@@ -16,7 +16,7 @@ const groupRivenData = (cacheStrData) => {
   const byType = {};
   parsed.forEach(rivenD => {
     if (rivenD.compatibility === null) {
-      rivenD.compatibility = `Veiled ${rivenD.type}`;
+      rivenD.compatibility = `Veiled ${rivenD.itemType}`;
     }
 
     rivenD.compatibility = titleCase(rivenD.compatibility.replace('<ARCHWING>', '').trim());
