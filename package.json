@@ -10,6 +10,7 @@
     "helmet": "^3.16.0",
     "json-fetch-cache": "^0.1.3",
     "nexus-stats-api": "^1.0.0",
+    "raven": "^2.6.4",
     "twitter": "^1.7.1",
     "warframe-items": "^1.278.0",
     "warframe-nexus-query": "^1.6.4",

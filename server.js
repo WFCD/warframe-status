@@ -12,6 +12,15 @@ if (!global.__basedir) {
 logger.info('Setting up dependencies...');
 
 const app = express();
+
+if (process.env.SENTRY_DSN) {
+  // eslint-disable-next-line global-require
+  const Raven = require('raven');
+  Raven.config(process.env.SENTRY_DSN).install();
+  app.use(Raven.requestHandler());
+  app.use(Raven.errorHandler());
+}
+
 app.use(helmet());
 app.use(express.json());
 
