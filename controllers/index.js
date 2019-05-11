@@ -1,12 +1,14 @@
 'use strict';
 
+const router = require('express').Router();
+
 const {
-  logger, router, cache, setHeadersAndJson, wfKeys, platforms, warframeData, platformAliases,
+  logger, cache, setHeadersAndJson, platforms, warframeData, platformAliases,
 } = require('../lib/utilities');
 
 router.get('/', cache('1 minute'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  setHeadersAndJson(res, [].concat(wfKeys));
+  setHeadersAndJson(res, { code: 200, message: 'OK' });
 });
 
 router.use(`/:platform(${platforms.join('|')}|${platformAliases.join('|')})`, require('./worldstate'));

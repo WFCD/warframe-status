@@ -1,26 +1,14 @@
 'use strict';
 
 const express = require('express');
-const Worldstate = require('warframe-worldstate-parser');
 
-const Cache = require('../lib/caches/cache.js');
+const twitter = require('../lib/caches/TwitterCache');
 
 const {
-  logger, setHeadersAndJson, worldStates, ah, platforms, twitter,
+  logger, setHeadersAndJson, worldStates, ah, platforms, cache,
 } = require('../lib/utilities');
 
 const router = express.Router();
-
-
-const parser = function parser(data) {
-  return new Worldstate(data);
-};
-
-platforms.forEach((p) => {
-  const url = `http://content${p === 'pc' ? '' : `.${p}`}.warframe.com/dynamic/worldState.php`;
-  worldStates[p] = new Cache(url, process.env.CACHE_TIMEOUT || 60000, { parser });
-  worldStates[p].startUpdating();
-});
 
 router.use((req, res, next) => {
   req.platform = (req.baseUrl.replace('/', '').trim().split('/')[0] || '').toLowerCase();
@@ -29,23 +17,28 @@ router.use((req, res, next) => {
   }
 
   if (!platforms.includes(req.platform)) {
-    req.platform = undefined;
+    req.platform = 'pc';
+  }
+
+  req.language = (req.header('Accept-Language') || 'en').substr(0, 2);
+  if (req.language !== 'en') {
+    logger.info(`got a request for ${req.language}`);
   }
   next();
 });
 
-router.get('/', /* cache('1 minute'), */ ah(async (req, res) => {
+router.get('/', cache('1 minute'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  const ws = await worldStates[req.platform].getData();
+  const ws = await worldStates[req.platform][req.language].getData();
   ws.twitter = await twitter.getData();
   setHeadersAndJson(res, ws);
 }));
 
 router.use('/rivens', require('./rivens'));
 
-router.get('/:field', /* cache('1 minute'), */ ah(async (req, res) => {
+router.get('/:field', cache('1 minute'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  const ws = await worldStates[req.platform].getData();
+  const ws = await worldStates[req.platform][req.language].getData();
   ws.twitter = await twitter.getData(); // inject twitter data
 
   if (ws[req.params.field]) {

@@ -1,7 +1,12 @@
 'use strict';
 
 const express = require('express');
+
 const helmet = require('helmet');
+
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 const { logger } = require('./lib/utilities');
 
@@ -11,8 +16,7 @@ if (!global.__basedir) {
 
 logger.info('Setting up dependencies...');
 
-const app = express();
-
+/* Express setup */
 if (process.env.SENTRY_DSN) {
   // eslint-disable-next-line global-require
   const Sentry = require('@sentry/node');
@@ -34,6 +38,8 @@ app.use((req, res) => {
 
 const port = process.env.PORT || 3001;
 const host = process.env.HOSTNAME || process.env.HOST || process.env.IP || 'localhost';
-app.listen(port, host);
+server.listen(port, host);
 
 logger.info(`Started listening on ${host}:${port}`);
+
+io.on('connection', require('./sockets'));
