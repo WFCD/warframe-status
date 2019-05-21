@@ -15,10 +15,10 @@ const app = express();
 
 if (process.env.SENTRY_DSN) {
   // eslint-disable-next-line global-require
-  const Raven = require('raven');
-  Raven.config(process.env.SENTRY_DSN).install();
-  app.use(Raven.requestHandler());
-  app.use(Raven.errorHandler());
+  const Sentry = require('@sentry/node');
+  Sentry.init({ dsn: process.env.SENTRY_DSN });
+  app.use(Sentry.Handlers.requestHandler());
+  app.use(Sentry.Handlers.errorHandler());
 }
 
 app.use(helmet());
