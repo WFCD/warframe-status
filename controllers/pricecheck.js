@@ -32,25 +32,33 @@ router.use((req, res, next) => {
 router.get('/:type/:query', cache('1 hour'), ah(async (req, res) => {
   let value = undefined;
   logger.silly(`Got ${req.originalUrl}`);
-  switch (req.params.type) {
-    case 'string':
-      value = await nexusQuerier.priceCheckQueryString(req.params.query, undefined, req.platform);
-      break;
-    case 'find':
-      value = await nexusQuerier.priceCheckQuery(req.params.query, req.platform);
-      break;
-    case 'attachment':
-      value = await nexusQuerier.priceCheckQueryAttachment(req.params.query, undefined, req.platform);
-      break;
-    default:
-      break;
-  }
-  if (value) {
-    setHeadersAndJson(res, value);
-  } else {
-    res.status(400).json({
-      error: `Unable to pricecheck \`${query}\``,
-      code: 400,
+  try {
+    switch (req.params.type) {
+      case 'string':
+        value = await nexusQuerier.priceCheckQueryString(req.params.query, undefined, req.platform);
+        break;
+      case 'find':
+        value = await nexusQuerier.priceCheckQuery(req.params.query, req.platform);
+        break;
+      case 'attachment':
+        value = await nexusQuerier.priceCheckQueryAttachment(req.params.query, undefined, req.platform);
+        break;
+      default:
+        break;
+    }
+    if (value) {
+      setHeadersAndJson(res, value);
+    } else {
+      res.status(400).json({
+        error: `Unable to pricecheck \`${query}\``,
+        code: 400,
+      });
+    }
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({
+      error: `An error ocurred pricechecking \`${query}\``,
+      code: 500
     });
   }
 
