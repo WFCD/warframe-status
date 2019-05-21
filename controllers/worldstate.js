@@ -1,11 +1,26 @@
 'use strict';
 
 const express = require('express');
+const Worldstate = require('warframe-worldstate-parser');
+
+const Cache = require('../lib/caches/cache.js');
+
 const {
   logger, setHeadersAndJson, worldStates, ah, platforms, twitter,
 } = require('../lib/utilities');
 
 const router = express.Router();
+
+
+const parser = function parser(data) {
+  return new Worldstate(data);
+};
+
+platforms.forEach((p) => {
+  const url = `http://content${p === 'pc' ? '' : `.${p}`}.warframe.com/dynamic/worldState.php`;
+  worldStates[p] = new Cache(url, process.env.CACHE_TIMEOUT || 60000, { parser });
+  worldStates[p].startUpdating();
+});
 
 router.use((req, res, next) => {
   req.platform = (req.baseUrl.replace('/', '').trim().split('/')[0] || '').toLowerCase();
