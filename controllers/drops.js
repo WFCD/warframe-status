@@ -23,12 +23,12 @@ const groupLocation = (data) => {
   return locBase;
 };
 
-router.get('/', cache('24 hours'), ah(async (req, res) => {
+router.get('/', cache('4 hours'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   setHeadersAndJson(res, await dropCache.getData());
 }));
 
-router.get('/search/:query', cache('10 hours'), ah(async (req, res) => {
+router.get('/search/:query', cache('1 hour'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const drops = await dropCache.getData();
   const queries = req.params.query.split(',').map(q => q.trim());

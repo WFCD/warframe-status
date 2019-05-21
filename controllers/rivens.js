@@ -3,7 +3,7 @@
 const Cache = require('../lib/caches/cache');
 const express = require('express');
 const {
-  logger, setHeadersAndJson, ah, cache, platforms, titleCase,
+  logger, setHeadersAndJson, ah, platforms, titleCase,
 } = require('../lib/utilities');
 
 const router = express.Router();
@@ -61,13 +61,13 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/', cache('1 week'), ah(async (req, res) => {
+router.get('/', /* cache('1 week'), */ ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const rC = rivenCaches[req.platform];
   setHeadersAndJson(res, await rC.getData());
 }));
 
-router.get('/search/:query', cache('10 hours'), ah(async (req, res) => {
+router.get('/search/:query', /* cache('10 hours'), */ ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const query = req.params.query
   const results = {};

@@ -2,7 +2,7 @@
 
 const express = require('express');
 const {
-  logger, setHeadersAndJson, worldStates, ah, cache, platforms, twitter,
+  logger, setHeadersAndJson, worldStates, ah, platforms, twitter,
 } = require('../lib/utilities');
 
 const router = express.Router();
@@ -19,7 +19,7 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/', cache('1 minute'), ah(async (req, res) => {
+router.get('/', /* cache('1 minute'), */ ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const ws = await worldStates[req.platform].getData();
   ws.twitter = await twitter.getData();
@@ -28,7 +28,7 @@ router.get('/', cache('1 minute'), ah(async (req, res) => {
 
 router.use('/rivens', require('./rivens'));
 
-router.get('/:field', cache('1 minute'), ah(async (req, res) => {
+router.get('/:field', /* cache('1 minute'), */ ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const ws = await worldStates[req.platform].getData();
   ws.twitter = await twitter.getData(); // inject twitter data

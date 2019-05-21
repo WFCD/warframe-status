@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  logger, setHeadersAndJson, cache, warframeData, solKeys,
+  logger, setHeadersAndJson, warframeData, solKeys,
 } = require('../lib/utilities');
 
 const dataKeys = Object.keys(warframeData);
@@ -26,12 +26,12 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/', cache('10 hours'), (req, res) => {
+router.get('/', /* cache('10 hours'), */ (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   setHeadersAndJson(res, warframeData[req.key]);
 });
 
-router.get('/search/:query', cache('10 hours'), (req, res) => {
+router.get('/search/:query', /* cache('10 hours'), */ (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   let values = [];
   let results = [];
