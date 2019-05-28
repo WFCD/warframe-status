@@ -13,9 +13,9 @@
     "nexus-stats-api": "^1.0.0",
     "node-fetch": "^2.6.0",
     "twitter": "^1.7.1",
-    "warframe-items": "^1.295.0",
+    "warframe-items": "^1.304.0",
     "warframe-nexus-query": "^1.6.4",
-    "warframe-worldstate-data": "^0.3.2",
+    "warframe-worldstate-data": "^0.3.4",
     "warframe-worldstate-parser": "^2.6.2",
     "winston": "^3.2.1"
   },
