@@ -30,12 +30,14 @@ router.use((req, res, next) => {
 });
 
 router.get('/:type/:query', cache('1 hour'), ah(async (req, res) => {
-//   res.status(503).json({
-//     error: 'Service temporarily unavailable',
-//     code: 503,
-//   });
-  
-//   return;
+  if (process.env.DISABLE_PRICECHECKS) {
+    res.status(503).json({
+      error: 'Service temporarily unavailable',
+      code: 503,
+    });
+    
+    return;
+  }
   
   let value;
   logger.silly(`Got ${req.originalUrl}`);
