@@ -37,3 +37,5 @@ const host = process.env.HOSTNAME || process.env.HOST || process.env.IP || 'loca
 app.listen(port, host);
 
 logger.info(`Started listening on ${host}:${port}`);
+
+module.exports = app;
