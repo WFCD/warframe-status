@@ -5,7 +5,7 @@
     "use": "@now/node"
   }],
   "github": {
-    "silent": true
+    "silent": false
   },
   "name": "warframe-status",
   "scope": "wfcd"
