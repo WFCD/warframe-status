@@ -2,7 +2,10 @@
   "version": 2,
   "builds": [{
     "src": "server.js",
-    "use": "@now/node-server"
+    "use": "@now/node-server",
+    "config": {
+      "maxLambdaSize": "25mb"
+    }
   }],
   "github": {
     "silent": false
