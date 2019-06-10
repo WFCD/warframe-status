@@ -1,8 +1,8 @@
 {
   "version": 2,
   "builds": [{
-    "src": "package.json",
-    "use": "@now/node"
+    "src": "server.js",
+    "use": "@now/node-server"
   }],
   "github": {
     "silent": false
