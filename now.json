@@ -11,6 +11,5 @@
     "silent": false
   },
   "name": "warframe-status",
-  "scope": "wfcd",
-  "maxLambdaSize": "25mb"
+  "scope": "wfcd"
 }
