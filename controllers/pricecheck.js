@@ -19,14 +19,18 @@ const nexusOptions = {
   ignore_limiter: true,
 };
 
-const nexus = new NexusFetcher(nexusOptions.nexusKey
-    && nexusOptions.nexusSecret ? nexusOptions : {});
+let nexus;
+let nexusQuerier;
 
-nexus.connecting()
-  .then(() => nexus.connection.client.on('unexpected-response', () => {}));
+if (!process.env.DISABLE_PRICECHECKS) {
+  nexus = new NexusFetcher(nexusOptions.nexusKey
+      && nexusOptions.nexusSecret ? nexusOptions : {});
 
-
-const nexusQuerier = new Nexus({ logger, nexusApi: nexus });
+  nexus.connecting()
+    .then(() => nexus.connection.client.on('unexpected-response', () => {}));
+  
+  nexusQuerier = new Nexus({ logger, nexusApi: nexus });
+}
 
 router.use((req, res, next) => {
   req.platform = req.get('platform');
