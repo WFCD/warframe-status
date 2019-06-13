@@ -83,7 +83,6 @@ const parseNew = (deps) => {
         });
       });
       break;
-
     case 'cetusCycle':
     case 'earthCycle':
     case 'vallisCycle':

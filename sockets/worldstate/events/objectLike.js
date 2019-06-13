@@ -6,7 +6,9 @@ module.exports = (data, deps) => {
   const last = new Date(lastUpdated[deps.platform][deps.language]);
   const activation = new Date(data.activation);
   const start = new Date(deps.cycleStart);
-  if (between(last, activation, start)) {
+  if (between(last, activation, start)
+  /* || ['kuva', 'nightwave', 'arbitration'].includes(deps.key.toLowerCase()) */
+  ) {
     const packet = {
       ...deps,
       data,
