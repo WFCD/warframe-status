@@ -41,3 +41,7 @@ warframe-status.json
 
 # Temp file storage
 tmp/
+
+#nodemon dev config
+.nodemon
+nodemon.json
