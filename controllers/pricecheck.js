@@ -10,23 +10,25 @@ const {
 
 const router = express.Router();
 
+let nexus;
+let nexusQuerier;
+let nexusOptions;
 
-const nexusOptions = {
-  user_key: process.env.NEXUSHUB_USER_KEY || undefined,
-  user_secret: process.env.NEXUSHUB_USER_SECRET || undefined,
-  api_url: process.env.NEXUS_API_OVERRIDE || undefined,
-  auth_url: process.env.NEXUS_AUTH_OVERRIDE || undefined,
-  ignore_limiter: true,
-};
-
-const nexus = new NexusFetcher(nexusOptions.nexusKey
+if (!process.env.DISABLE_PRICECHECKS) {
+  nexusOptions = {
+    user_key: process.env.NEXUSHUB_USER_KEY || undefined,
+    user_secret: process.env.NEXUSHUB_USER_SECRET || undefined,
+    api_url: process.env.NEXUS_API_OVERRIDE || undefined,
+    auth_url: process.env.NEXUS_AUTH_OVERRIDE || undefined,
+    ignore_limiter: true,
+  };
+  nexus = new NexusFetcher(nexusOptions.nexusKey
     && nexusOptions.nexusSecret ? nexusOptions : {});
 
-nexus.connecting()
-  .then(() => nexus.connection.client.on('unexpected-response', () => {}));
-
-
-const nexusQuerier = new Nexus({ logger, nexusApi: nexus });
+  nexus.connecting()
+    .then(() => nexus.connection.client.on('unexpected-response', () => {}));
+  nexusQuerier = new Nexus({ logger, nexusApi: nexus });
+}
 
 router.use((req, res, next) => {
   req.platform = req.get('platform');

@@ -15,6 +15,8 @@ function acolyteKey(acolyte) {
 }
 
 function arbiKey(arbitration) {
+  if (!arbitration) return '';
+
   let k;
   try {
     k = `arbitration.${arbitration.enemy.toLowerCase()}.${arbitration.type.replace(/\s/g, '').toLowerCase()}`;
@@ -50,6 +52,7 @@ const parseNew = (deps) => {
   // anything in the eKeyOverrides goes first, then anything uniform
   switch (deps.key) {
     case 'kuva':
+      if (!deps.data) break;
       const data = groupBy(deps.data, 'type');
       Object.keys(data).forEach((type) => {
         deps = {
