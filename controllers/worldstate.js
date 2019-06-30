@@ -5,7 +5,7 @@ const express = require('express');
 const twitter = require('../lib/caches/TwitterCache');
 
 const {
-  logger, setHeadersAndJson, worldStates, ah, platforms, cache,
+  logger, setHeadersAndJson, worldStates, ah, platforms, cache, languages,
 } = require('../lib/utilities');
 
 const router = express.Router();
@@ -24,6 +24,9 @@ router.use((req, res, next) => {
   if (req.language !== 'en') {
     logger.info(`got a request for ${req.language}`);
   }
+  if (!languages.includes(req.language)) {
+    req.language = 'en';
+  }
   next();
 });
 
@@ -31,6 +34,7 @@ router.get('/', cache('1 minute'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const ws = await worldStates[req.platform][req.language].getData();
   ws.twitter = await twitter.getData();
+  res.setHeader('Content-Language', req.language);
   setHeadersAndJson(res, ws);
 }));
 
@@ -42,6 +46,7 @@ router.get('/:field', cache('1 minute'), ah(async (req, res) => {
   ws.twitter = await twitter.getData(); // inject twitter data
 
   if (ws[req.params.field]) {
+    res.setHeader('Content-Language', req.language);
     setHeadersAndJson(res, ws[req.params.field]);
   } else {
     res.status(400).json({ error: 'No such worldstate field', code: 400 });

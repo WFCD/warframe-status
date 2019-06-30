@@ -1,7 +1,7 @@
 'use strict';
 
-const Cache = require('../lib/caches/cache');
 const express = require('express');
+const Cache = require('../lib/caches/cache');
 const {
   logger, setHeadersAndJson, ah, platforms, titleCase,
 } = require('../lib/utilities');
@@ -12,9 +12,9 @@ const rivenCaches = {};
 
 const groupRivenData = (cacheStrData) => {
   const parsed = JSON.parse(cacheStrData);
-  
+
   const byType = {};
-  parsed.forEach(rivenD => {
+  parsed.forEach((rivenD) => {
     if (rivenD.compatibility === null) {
       rivenD.compatibility = `Veiled ${rivenD.itemType}`;
     }
@@ -26,8 +26,8 @@ const groupRivenData = (cacheStrData) => {
     }
     if (!byType[rivenD.itemType][rivenD.compatibility]) {
       byType[rivenD.itemType][rivenD.compatibility] = {
-        'rerolled': null,
-        'unrolled': null,
+        rerolled: null,
+        unrolled: null,
       };
     }
 
@@ -35,9 +35,9 @@ const groupRivenData = (cacheStrData) => {
   });
 
   return byType;
-}
+};
 
-platforms.forEach(platform => {
+platforms.forEach((platform) => {
   const rCache = new Cache(`http://n9e5v4d8.ssl.hwcdn.net/repos/weeklyRivens${platform.toUpperCase()}.json`, 604800000, {
     parser: groupRivenData,
   });
@@ -69,17 +69,18 @@ router.get('/', /* cache('1 week'), */ ah(async (req, res) => {
 
 router.get('/search/:query', /* cache('10 hours'), */ ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  const query = req.params.query
+  const { query } = req.params;
   const results = {};
   const rCache = await rivenCaches[req.platform].getData();
-  
-  Object.keys(rCache).forEach(type => {
-    Object.keys(rCache[type]).forEach(compatibility => {
+
+  Object.keys(rCache).forEach((type) => {
+    Object.keys(rCache[type]).forEach((compatibility) => {
       if (compatibility.toLowerCase().includes(query.toLowerCase())) {
         results[compatibility] = rCache[type][compatibility];
       }
     });
   });
+  res.setHeader('Content-Language', req.language);
   setHeadersAndJson(res, results);
 }));
 
