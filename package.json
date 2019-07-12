@@ -14,7 +14,7 @@
     "rss-feed-emitter": "^2.0.1",
     "socket.io": "^2.2.0",
     "twitter": "^1.7.1",
-    "warframe-items": "^1.412.0",
+    "warframe-items": "^1.422.0",
     "warframe-nexus-query": "^1.6.5",
     "warframe-worldstate-data": "^1.0.4",
     "warframe-worldstate-parser": "^2.7.4",
@@ -34,7 +34,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "7.12.4",
     "greenkeeper-lockfile": "^1.15.1",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.19.1"
   },
   "scripts": {
     "start": "node server.js",
