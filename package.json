@@ -15,7 +15,7 @@
     "socket.io": "^2.2.0",
     "twitter": "^1.7.1",
     "warframe-items": "^1.412.0",
-    "warframe-nexus-query": "^1.6.4",
+    "warframe-nexus-query": "^1.6.5",
     "warframe-worldstate-data": "^1.0.4",
     "warframe-worldstate-parser": "^2.7.4",
     "winston": "^3.2.1"
