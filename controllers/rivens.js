@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const Cache = require('../lib/caches/cache');
+const Cache = require('json-fetch-cache');
 const {
   logger, setHeadersAndJson, ah, platforms, titleCase,
 } = require('../lib/utilities');
