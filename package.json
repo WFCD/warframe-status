@@ -14,10 +14,10 @@
     "rss-feed-emitter": "^2.0.1",
     "socket.io": "^2.2.0",
     "twitter": "^1.7.1",
-    "warframe-items": "^1.422.0",
+    "warframe-items": "^1.451.0",
     "warframe-nexus-query": "^1.6.5",
     "warframe-worldstate-data": "^1.0.5",
-    "warframe-worldstate-parser": "^2.7.4",
+    "warframe-worldstate-parser": "^2.8.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
@@ -28,11 +28,9 @@
     "@types/node-fetch": "^2.3.3",
     "@types/socket.io": "^2.1.2",
     "@types/twitter": "^1.7.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "7.12.4",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.17.2",
     "greenkeeper-lockfile": "^1.15.1",
     "nodemon": "^1.19.1"
   },
