@@ -4,7 +4,7 @@ const { lastUpdated, logger } = require('./wsSocketUtils');
 const { groupBy } = require('../../lib/utilities');
 
 function fissureKey(fissure) {
-  return `fissures.t${fissure.tierNum}.${fissure.missionType.toLowerCase()}`;
+  return `fissures.t${fissure.tierNum}.${(fissure.missionType || '').toLowerCase()}`;
 }
 
 function acolyteKey(acolyte) {
@@ -15,7 +15,7 @@ function acolyteKey(acolyte) {
 }
 
 function arbiKey(arbitration) {
-  if (!arbitration) return '';
+  if (!(arbitration && arbitration.enemy)) return '';
 
   let k;
   try {
