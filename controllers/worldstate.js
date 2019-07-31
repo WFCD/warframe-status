@@ -24,7 +24,7 @@ router.use((req, res, next) => {
   if (req.language !== 'en') {
     logger.info(`got a request for ${req.language}`);
   }
-  if (!languages.includes(req.language)) {
+  if (!(req.language && languages.includes(req.language))) {
     req.language = 'en';
   }
   next();
