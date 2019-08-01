@@ -61,7 +61,7 @@ const groupLocation = (data) => {
   return locBase;
 };
 
-const dropCache = new Cache('https://drops.warframestat.us/data/all.slim.json', 43200000, { parser: formatData });
+const dropCache = new Cache('https://drops.warframestat.us/data/all.slim.json', 43200000, { parser: formatData, useEmitter: false, logger, delayStart: true });
 
 router.get('/', cache('24 hours'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
