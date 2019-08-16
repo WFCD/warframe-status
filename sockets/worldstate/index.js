@@ -15,11 +15,13 @@ const worldstate = (socket) => {
     });
   });
 
-  // on initial worldstate request?
-  // can't handle lang yet, but take it anyway
   socket.on('ws-init', async ({ platform, language }) => {
     logger.debug(`socket ${socket.id} sent 'ws-init'`);
-    socket.emit('ws-supply', { platform, language, ws: await worldStates[platform || 'pc'].getData() });
+    socket.emit('ws-supply', {
+      platform,
+      language,
+      ws: await worldStates[platform || 'pc'][language || 'en'].data,
+    });
   });
 };
 
