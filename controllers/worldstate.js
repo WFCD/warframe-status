@@ -9,9 +9,9 @@ const {
 } = require('../lib/utilities');
 
 const get = async (platform, language) => {
-  const ws = await worldStates[platform][language].getData();
+  const ws = worldStates[platform][language];
   ws.twitter = await twitter.getData(); // inject twitter data
-  return ws;
+  return ws.data;
 };
 
 const router = express.Router();
@@ -40,8 +40,7 @@ router.use((req, res, next) => {
 
 router.get('/', cache('1 minute'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  const ws = await worldStates[req.platform][req.language].getData();
-  ws.twitter = await twitter.getData();
+  const ws = await get(req.platform, req.language);
   res.setHeader('Content-Language', req.language);
   setHeadersAndJson(res, ws);
 }));
