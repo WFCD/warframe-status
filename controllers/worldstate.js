@@ -38,7 +38,7 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/', cache('1 minute'), ah(async (req, res) => {
+router.get('/', ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const ws = await get(req.platform, req.language);
   res.setHeader('Content-Language', req.language);
@@ -47,7 +47,7 @@ router.get('/', cache('1 minute'), ah(async (req, res) => {
 
 router.use('/rivens', require('./rivens'));
 
-router.get('/:field', cache('1 minute'), ah(async (req, res) => {
+router.get('/:field', ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const ws = await get(req.platform, req.language);
 
