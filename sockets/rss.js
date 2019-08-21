@@ -7,7 +7,7 @@ const rss = new RSSSocketEmitter(logger);
 
 const rssSock = (socket) => {
   rss.on('new-rss', (rssItem) => {
-    logger.debug(`Emitting 'rss' to ${socket.id}: ${rssItem.timestamp}`);
+    logger.verbose(`Emitting 'rss' to ${socket.id}: ${rssItem.timestamp}`);
     socket.emit('rss', rssItem);
   });
 };

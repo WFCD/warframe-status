@@ -14,7 +14,7 @@ if (!global.__basedir) {
   global.__basedir = __dirname;
 }
 
-logger.info('Setting up dependencies...');
+logger.verbose('Setting up dependencies...');
 
 /* Express setup */
 if (process.env.SENTRY_DSN) {
@@ -28,7 +28,7 @@ if (process.env.SENTRY_DSN) {
 app.use(helmet());
 app.use(express.json());
 
-logger.info('Setting up routes...');
+logger.verbose('Setting up routes...');
 app.use(require('./controllers'));
 
 // oh no, nothing
@@ -40,6 +40,6 @@ const port = process.env.PORT || 3001;
 const host = process.env.HOSTNAME || process.env.HOST || process.env.IP || 'localhost';
 server.listen(port, host);
 
-logger.info(`Started listening on ${host}:${port}`);
+logger.verbose(`Started listening on ${host}:${port}`);
 
 io.on('connection', require('./sockets'));
