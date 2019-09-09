@@ -33,11 +33,12 @@
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.2",
     "greenkeeper-lockfile": "^1.15.1",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.2"
   },
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon",
+    "dev:pm2": "pm2 start warframe-status.json",
     "lint": "npx eslint server.js lib/",
     "lint:fix": "npx eslint server.js lib/ --fix",
     "test": "exit 0"

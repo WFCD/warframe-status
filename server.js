@@ -8,7 +8,7 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
-const { logger } = require('./lib/utilities');
+const { logger, socketLogger } = require('./lib/utilities');
 
 if (!global.__basedir) {
   global.__basedir = __dirname;
@@ -40,6 +40,6 @@ const port = process.env.PORT || 3001;
 const host = process.env.HOSTNAME || process.env.HOST || process.env.IP || 'localhost';
 server.listen(port, host);
 
-logger.verbose(`Started listening on ${host}:${port}`);
+socketLogger.verbose(`Started listening on ${host}:${port}`);
 
 io.on('connection', require('./sockets'));

@@ -51,7 +51,7 @@ router.get('/:field', ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const ws = await get(req.platform, req.language);
 
-  if (ws[req.params.field]) {
+  if (ws && ws[req.params.field]) {
     res.setHeader('Content-Language', req.language);
     setHeadersAndJson(res, ws[req.params.field]);
   } else if (req.params.field && languages.includes(req.params.field.substr(0, 2).toLowerCase())) {
