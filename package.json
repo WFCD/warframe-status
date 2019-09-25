@@ -51,7 +51,7 @@
   "nodemonConfig": {
     "ignore": [],
     "env": {
-      "LOG_LEVEL": "info",
+      "LOG_LEVEL": "debug",
       "API_BASE_URL": "http://localhost:3001",
       "NODE_ENV": "production"
     }
