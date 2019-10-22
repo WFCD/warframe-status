@@ -1,9 +1,7 @@
 'use strict';
 
 const { socketLogger: logger } = require('../lib/utilities');
-const RSSSocketEmitter = require('../lib/caches/RSSSocketEmitter');
-
-const rss = new RSSSocketEmitter(logger);
+const rss = require('../lib/caches/RSSSocketEmitter');
 
 const rssSock = (socket) => {
   rss.on('new-rss', (rssItem) => {

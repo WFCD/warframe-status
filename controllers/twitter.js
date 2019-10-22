@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+
 const router = express.Router();
 const twitter = require('../lib/caches/TwitterCache');
 

@@ -21,5 +21,6 @@ router.use('/twitter', require('./twitter'));
 router.use('/items', require('./wfItems'));
 router.use('/mods', require('./wfItems'));
 router.use('/drops', require('./drops'));
+router.use('/rss', require('./rss'));
 
 module.exports = router;
