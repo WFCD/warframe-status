@@ -1,0 +1,4 @@
+[submodule "api-spec"]
+	path = api-spec
+	url = https://github.com/wfcd/api-spec
+	branch = gh-pages

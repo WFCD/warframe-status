@@ -5,7 +5,7 @@ const Nexus = require('warframe-nexus-query');
 const NexusFetcher = require('nexushub-client');
 
 const {
-  logger, setHeadersAndJson, ah, cache,
+  logger, ah, cache, noResult,
 } = require('../lib/utilities');
 
 const router = express.Router();
@@ -63,12 +63,9 @@ router.get('/:type/:query', cache('1 hour'), ah(async (req, res) => {
         break;
     }
     if (value) {
-      setHeadersAndJson(res, value);
+      res.json(value);
     } else {
-      res.status(400).json({
-        error: `Unable to pricecheck \`${req.params.query}\``,
-        code: 400,
-      });
+      noResult(res);
     }
   } catch (error) {
     logger.error(error);

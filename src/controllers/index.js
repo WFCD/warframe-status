@@ -3,12 +3,12 @@
 const router = require('express').Router();
 
 const {
-  logger, cache, setHeadersAndJson, platforms, warframeData, platformAliases,
+  logger, cache, platforms, warframeData, platformAliases,
 } = require('../lib/utilities');
 
 router.get('/', cache('1 minute'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  setHeadersAndJson(res, { code: 200, message: 'OK' });
+  res.json({ code: 200, message: 'OK' });
 });
 
 router.use(`/:platform(${platforms.join('|')}|${platformAliases.join('|')})`, require('./worldstate'));

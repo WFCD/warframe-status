@@ -45,3 +45,4 @@ tmp/
 #nodemon dev config
 .nodemon
 nodemon.json
+.env

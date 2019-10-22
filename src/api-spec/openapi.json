@@ -1,0 +1,6682 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "WarframeStat.us API",
+    "description": "Simple API for data from the game Warframe.",
+    "contact": {
+      "email": "wf-com-dev@warframestat.us"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "living",
+    "x-logo": {
+      "url": "https://warframestat.us/wfcd_logo_color.png"
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Warframe",
+    "url": "https://warframe.com"
+  },
+  "servers": [
+    {
+      "url": "https://api.warframestat.us/",
+      "description": "Preferred production server. Others may be disallowed in the future."
+    },
+    {
+      "url": "http://api.warframestat.us/",
+      "description": "Non-https production server"
+    },
+    {
+      "url": "https://ws.warframestat.us/",
+      "description": "Deprecated (old) production subdomain"
+    },
+    {
+      "url": "http://ws.warframestat.us/",
+      "description": "Deprecated (old) production subdomain, no https"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Warframe",
+      "description": "Everything about Warframe",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://warframe.com"
+      }
+    },
+    {
+      "name": "Worldstate",
+      "description": "Warframe Worldstate Data",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://discord.gg/jGZxH9f"
+      }
+    }
+  ],
+  "paths": {
+    "/{platform}": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get Warframe Worldstate Data for the provided platform",
+        "description": "The full translated Warframe Worldstate",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ws"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/alerts": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Alerts data",
+        "description": "Description and rewards for Alerts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/alert"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/arbitration": {
+      "get": {
+        "tags": [
+          "Worldstate",
+          "Unstable"
+        ],
+        "summary": "[Unstable] Arbitration data",
+        "description": "Description of the currently active arbitration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/arbitration"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/cetusCycle": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get Current Cetus Status",
+        "description": "Data on the Day/night cycle for Cetus on earth",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/cetusCycle"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/conclaveChallenges": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get Conclave Challenge Data",
+        "description": "Data on each day and week's conclave challenges",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/conclaveChallenges"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/constructionProgress": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get Construction Progress for Fomorians and Razorbacks",
+        "description": "Construction percentages for showing how far constructed the enemy fleets are.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/construction"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/dailyDeals": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Daily Deal information from Darvo",
+        "description": "Darvo's Daily Deal details",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/dailyDeals"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/darkSectors": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Dark Sector occupation and history",
+        "description": "Dark Sector (Rail Wars) data and history. Digital Extremes has emptied several of these.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/darkSectors"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/{platform}/earthCycle": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get the current Earth rotation information",
+        "description": "The current Earth day/night cycle progress.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/earthCycle"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/events": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Listing of ongoing events",
+        "description": "Events, such as Fomorian Attacks are included here",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/events"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/fissures": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Data on current fissures",
+        "description": "Information about current Void Fissure missions",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/fissures"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/flashSales": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Current Flash Sales from Darvo",
+        "description": "Popular Deals, discounts, featured deals.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/flashSales"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/globalUpgrades": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Current Global Upgrades",
+        "description": "Any current modifiers applied to all users, such as double drops.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/globalUpgrades"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/invasions": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Invasion Data",
+        "description": "Data on invasion missions, such as estimated completion time, rewards, etc.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/invasions"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/kuva": {
+      "get": {
+        "tags": [
+          "Worldstate",
+          "Unstable"
+        ],
+        "summary": "[Unstable] Current Kuva Mission listing",
+        "description": "Current Kuva Mission listing (provided by [semlar](https://10o.io/kuvalog)).",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/kuva"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{platform}/news": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Current Listing of News items",
+        "description": "Translated News items from the worldstate",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/news"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/nightwave": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get the current Nightwave state.",
+        "description": "The Current cycle and challenges of Nightwave, a battle-pass-esque rotation and challenge system",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/nightwave"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/persistentEnemies": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get Persistent Enemy Data",
+        "description": "Data about current acolytes attacking the Sol System",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/persistentEnemies"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/rivens": {
+      "get": {
+        "tags": [
+          "Worldstate",
+          "Rivens"
+        ],
+        "summary": "Get Riven statistic data",
+        "description": "Data about averages, deviations, medians, miniums, and maxes for all rivens for the provided platform",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rivenType"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/rivens/search/{query}": {
+      "get": {
+        "tags": [
+          "Worldstate",
+          "Rivens"
+        ],
+        "summary": "Get Riven statistic data",
+        "description": "Data about averages, deviations, medians, miniums, and maxes for rivens whose name match the query for the provided platform",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/platform"
+          },
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Riven name to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/rivenType"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/sentientOutposts": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get the current Sentient Outpost, if any",
+        "description": "Status data for current Sentient Outpost, if any. Parsed source is combined data from DE\\'s worldstate and [semlar\\'s data](https://semlar.com/anomaly.json)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/platform"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mission": {
+                      "$ref": "#/components/schemas/mission"
+                    },
+                    "active": {
+                      "type": "boolean",
+                      "description": "Whether or not the outpost is active"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "Identifier for the mission node with active indicator"
+                    },
+                    "activation": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the mission became or becomes active"
+                    },
+                    "expiry": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "When the mission became or becomes inactive"
+                    },
+                    "previous": {
+                      "description": "Estimation data for the last mission that was active. Could also be the current.",
+                      "type": "object",
+                      "properties": {
+                        "activation": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "When the mission became or becomes active"
+                        },
+                        "expiry": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "When the mission became or becomes inactive"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/simaris": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get the current Sanctuary Status",
+        "description": "Status data for Simaris' Sanctuary",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/platform"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/simaris"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/sortie": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Current Sortie Data",
+        "description": "Data about the missions for the current sortie",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/platform"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/sortie"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/syndicateMissions": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Listing of Syndicate mission nodes",
+        "description": "Cycling through different nodes each day, these are a general listing of the nodes that each syndicate will use for the day.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/platform"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/syndicateMissions"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/timestamp": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get the timestamp that the current worldstate was generated at.",
+        "description": "The time that the worldstate was last generated",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/platform"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/timestamp"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/vallisCycle": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get the current state of the Orb Vallis",
+        "description": "The current cycle of the Orb Vallis warm/cold cycle",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/platform"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/vallisCycle"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/{platform}/voidTrader": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get the current Void Trader Information",
+        "description": "Information on the current Void Trader offerings, or when he will arrive.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/platform"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/voidTrader"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/arcanes": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Arcane Enhancement Data",
+        "description": "Available Arcane Enhancements",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/arcane"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/arcanes/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Arcane Enhancement Data based on the query",
+        "description": "Available Arcane Enhancements",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/arcane"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/conclave": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get conclave challenge data",
+        "description": "Data about conclave challenges",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/conclave"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/conclave/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get conclave challenge data based on the query",
+        "description": "Data about conclave challenges",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/conclave"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/drops/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Warframe Drops data",
+        "description": "Percentages for Warframe drops in different areas of the game",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/drops"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Event-specific Data",
+        "description": "Data about events",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/events/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Event-specific Data based on the query",
+        "description": "Data about events",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/factions": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Faction translation information.",
+        "description": "Strings for translating faction identifiers.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/factions"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/factions/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Faction translation information based on the query.",
+        "description": "Strings for translating faction identifiers.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/factions"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/fissureModifiers": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Fissure Modifier translation data.",
+        "description": "Fissure translation identifiers",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/fissureModifiers"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/fissureModifiers/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Fissure Modifier translation data based on the query.",
+        "description": "Fissure translation identifiers",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/fissureModifiers"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/items/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Warframe Items data",
+        "description": "Item information, such as name, unique name, type, and image name.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/items"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/languages": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Language strings for Warframe.",
+        "description": "Get language strings to assist translation. (Prefer the /languages/search/:query route)",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/languages"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/languages/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Language strings for Warframe based on the query.",
+        "description": "Get language strings to assist translation.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/languages"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/locales": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Full list of supported locales",
+        "description": "Locales supported by the API",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/language"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/missionTypes": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get MissionType Translation Keys",
+        "description": "Mission Type information to aid translating identifiers",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/missionTypes"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/missionTypes/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get MissionType Translation Keys based on the query",
+        "description": "Mission Type information to aid translating identifiers",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/missionTypes"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/operationTypes": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get operation types data.",
+        "description": "Operation Types information to aid translating identifiers for global upgrades",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operationTypes"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/operationTypes/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get operation types data based on the query.",
+        "description": "Operation Types information to aid translating identifiers for global upgrades",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operationTypes"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/persistentEnemy": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Persistent Enemy translation data.",
+        "description": "Persistent Enemy translation information for aiding translation of identifiers.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/persistentEnemies"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/persistentEnemy/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Persistent Enemy translation data based on the query.",
+        "description": "Persistent Enemy translation information for aiding translation of identifiers.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/persistentEnemies"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/solNodes": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Sol Node information and translation data.",
+        "description": "Sol Node translation information for aiding the translation of identifiers.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/solNode"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/solNodes/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Sol Node information and translation data based on the query.",
+        "description": "Sol Node translation information for aiding the translation of identifiers.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/solNodeSearch"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/sortie": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Sortie translation information.",
+        "description": "Sortie translation information for assisting translation of identifiers.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sortieData"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/sortie/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Sortie translation information based on the query.",
+        "description": "Sortie translation information for assisting translation of identifiers.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sortieData"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/syndicates": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Syndicate translation data.",
+        "description": "Information to assist translating syndicate identifiers.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/syndicates"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/syndicates/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Syndicate translation data based on the query.",
+        "description": "Information to assist translating syndicate identifiers.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/syndicates"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/tutorials": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Tutorials Data",
+        "description": "Tutorials data from DE",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tutorials"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/tutorials/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Tutorials Data based on the query",
+        "description": "Tutorials data from DE",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tutorials"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/upgradeTypes": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get upgrade types data for global upgrades.",
+        "description": "Upgrade types for what can be changed by global modifiers, such as double credit weekends.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/upgradeTypes"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/upgradeTypes/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get upgrade types data for global upgrades based on the query.",
+        "description": "Upgrade types for what can be changed by global modifiers, such as double credit weekends.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/upgradeTypes"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/warframes": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Warframe specs and data, such as polarities defenses, and profile.",
+        "description": "Warframe stats and general information.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/warframes"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/warframes/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Warframe specs and data, such as polarities defenses, and profile based on the query.",
+        "description": "Warframe stats and general information.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/warframes"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/weapons": {
+      "get": {
+        "tags": [
+          "Static Processing Data"
+        ],
+        "summary": "Get Weapon data and statistics.",
+        "description": "Weapon statistics.",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/weapons"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/weapons/search/{query}": {
+      "get": {
+        "tags": [
+          "Searchable"
+        ],
+        "summary": "Get Weapon data and statistics based on the query.",
+        "description": "Weapon statistics.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "description": "Keyword to search for",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "utf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/weapons"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "alert": {
+        "type": "object",
+        "properties": {
+          "mission": {
+            "$ref": "#/components/schemas/mission"
+          },
+          "expired": {
+            "type": "boolean"
+          },
+          "eta": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "activation": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "rewardTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/rewardType"
+            }
+          }
+        },
+        "required": [
+          "activation",
+          "eta",
+          "expired",
+          "expiry",
+          "id"
+        ]
+      },
+      "arbitration": {
+        "type": "object",
+        "properties": {
+          "activation": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the Arbitration becomes active"
+          },
+          "expiry": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the Arbitration becomes inactive"
+          },
+          "node": {
+            "type": "string",
+            "description": "Plain name for the node"
+          },
+          "enemy": {
+            "$ref": "#/components/schemas/faction"
+          },
+          "type": {
+            "type": "string",
+            "description": "Mission type"
+          },
+          "archwing": {
+            "type": "boolean",
+            "description": "Whether or not this mission requires archwing"
+          },
+          "sharkwing": {
+            "type": "boolean",
+            "description": "Whether or not this mission requires sharkwing"
+          }
+        }
+      },
+      "arcane": {
+        "required": [
+          "effect",
+          "info",
+          "location",
+          "name",
+          "rarity",
+          "regex",
+          "thumbnail"
+        ],
+        "type": "object",
+        "properties": {
+          "regex": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "effect": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "rarity": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "location": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "thumbnail": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "info": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "cetusCycle": {
+        "required": [
+          "expiry",
+          "id",
+          "isCetus",
+          "isDay",
+          "timeLeft"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "activation": {
+            "type": "string"
+          },
+          "isDay": {
+            "type": "boolean"
+          },
+          "state": {
+            "type": "string",
+            "description": "Describes the current time. e.g. \"day\" or \"night\""
+          },
+          "timeLeft": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "isCetus": {
+            "type": "boolean"
+          },
+          "shortString": {
+            "type": "string",
+            "description": "A short description of the remaining time until the next day/night change."
+          }
+        }
+      },
+      "conclave": {
+        "required": [
+          "categories",
+          "modes"
+        ],
+        "type": "object",
+        "properties": {
+          "modes": {
+            "required": [
+              "PVPMODE_ALL",
+              "PVPMODE_CAPTURETHEFLAG",
+              "PVPMODE_DEATHMATCH",
+              "PVPMODE_NONE",
+              "PVPMODE_SPEEDBALL",
+              "PVPMODE_TEAMDEATHMATCH"
+            ],
+            "type": "object",
+            "properties": {
+              "PVPMODE_ALL": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "PVPMODE_TEAMDEATHMATCH": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "PVPMODE_NONE": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "PVPMODE_CAPTURETHEFLAG": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "PVPMODE_SPEEDBALL": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "PVPMODE_DEATHMATCH": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "categories": {
+            "required": [
+              "PVPChallengeTypeCategory_DAILY",
+              "PVPChallengeTypeCategory_DAILY_ROOT",
+              "PVPChallengeTypeCategory_MODEAFFECTOR",
+              "PVPChallengeTypeCategory_WEEKLY",
+              "PVPChallengeTypeCategory_WEEKLY_ROOT"
+            ],
+            "type": "object",
+            "properties": {
+              "PVPChallengeTypeCategory_DAILY_ROOT": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "PVPChallengeTypeCategory_DAILY": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "PVPChallengeTypeCategory_WEEKLY": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "PVPChallengeTypeCategory_WEEKLY_ROOT": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "PVPChallengeTypeCategory_MODEAFFECTOR": {
+                "required": [
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "conclaveChallenges": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "required": [
+            "amount",
+            "asString",
+            "category",
+            "daily",
+            "description",
+            "endString",
+            "eta",
+            "expired",
+            "expiry",
+            "id",
+            "mode",
+            "rootChallenge"
+          ],
+          "type": "object",
+          "properties": {
+            "mode": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "eta": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "expired": {
+              "type": "boolean"
+            },
+            "endString": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "daily": {
+              "type": "boolean"
+            },
+            "description": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "expiry": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "asString": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "category": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "rootChallenge": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "construction": {
+        "required": [
+          "fomorianProgress",
+          "id",
+          "razorbackProgress",
+          "unknownProgress"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "fomorianProgress": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "razorbackProgress": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "unknownProgress": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "dailyDeals": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "required": [
+            "discount",
+            "eta",
+            "expiry",
+            "id",
+            "item",
+            "originalPrice",
+            "salePrice",
+            "sold",
+            "total"
+          ],
+          "type": "object",
+          "properties": {
+            "sold": {
+              "type": "number"
+            },
+            "item": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "total": {
+              "type": "number"
+            },
+            "eta": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "originalPrice": {
+              "type": "number"
+            },
+            "salePrice": {
+              "type": "number"
+            },
+            "discount": {
+              "type": "number"
+            },
+            "expiry": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "id": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "darkSectorHistory": {
+        "type": "object",
+        "description": "Describes a Dark Sector Historical Battle.",
+        "properties": {
+          "defender": {
+            "type": "string",
+            "description": "Clan or alliance that was defending."
+          },
+          "defenderIsAlliance": {
+            "type": "boolean",
+            "description": "Whether or not the defender was an alliance."
+          },
+          "attacker": {
+            "type": "string",
+            "description": "Clan or alliance that was attacking."
+          },
+          "winner": {
+            "type": "string",
+            "description": "One of attacker or defender, whichever one won."
+          },
+          "start": {
+            "type": "string",
+            "description": "When the battle started."
+          },
+          "end": {
+            "type": "string",
+            "description": "When the battle ended."
+          }
+        }
+      },
+      "darkSectors": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "required": [
+            "defenderDeployemntActivation",
+            "defenderMOTD",
+            "defenderName",
+            "deployerClan",
+            "deployerName",
+            "id",
+            "isAlliance"
+          ],
+          "type": "object",
+          "properties": {
+            "defenderMOTD": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "deployerName": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "defenderDeploymentActivation": {
+              "type": "number"
+            },
+            "defenderName": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "deployerClan": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "isAlliance": {
+              "type": "boolean"
+            },
+            "id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "history": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/darkSectorHistory"
+              }
+            }
+          }
+        }
+      },
+      "drops": {
+        "minItems": 1,
+        "type": "array",
+        "description": "",
+        "items": {
+          "required": [
+            "chance",
+            "item",
+            "place",
+            "rarity"
+          ],
+          "type": "object",
+          "properties": {
+            "item": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "chance": {
+              "type": "number"
+            },
+            "place": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "rarity": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "earthCycle": {
+        "required": [
+          "expiry",
+          "id",
+          "isDay",
+          "timeLeft"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "isDay": {
+            "type": "boolean"
+          },
+          "timeLeft": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "event": {
+        "type": "object",
+        "properties": {
+          "activation": {
+            "type": "string",
+            "description": "Timestamp of when the event started",
+            "format": "date-time"
+          },
+          "expiry": {
+            "type": "string",
+            "description": "Timestamp of when the event ends",
+            "format": "date-time"
+          },
+          "maximumScore": {
+            "type": "number",
+            "description": "Maximum score to complete the event"
+          },
+          "currentScore": {
+            "type": "number",
+            "description": "The current score for the event"
+          },
+          "smallInterval": {
+            "type": "number",
+            "description": "Interval for the first goal"
+          },
+          "largeInterval": {
+            "type": "number",
+            "description": "Interval for the second intermediate score"
+          },
+          "faction": {
+            "$ref": "#/components/schemas/faction"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description or \"subtitle\" for the event."
+          },
+          "tooltip": {
+            "type": "string",
+            "description": "Tooltip for the event"
+          },
+          "node": {
+            "type": "string",
+            "description": "Node that the event is taking place on"
+          },
+          "concurrentNodes": {
+            "type": "array",
+            "description": "Nodes that the event is happening concurrently on",
+            "items": {
+              "type": "string"
+            }
+          },
+          "victimNode": {
+            "type": "string",
+            "description": "Node that is being attacked & defended in the event."
+          },
+          "scoreLocTag": {
+            "type": "string",
+            "description": "Localized tag for the event score"
+          },
+          "rewards": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/reward"
+            }
+          },
+          "expired": {
+            "type": "boolean",
+            "description": "Whether or not the event is expired"
+          },
+          "health": {
+            "type": "number",
+            "description": "Amount of health remaining for the target"
+          },
+          "affiliatedWith": {
+            "$ref": "#/components/schemas/syndicate"
+          },
+          "jobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/syndicateJob"
+            }
+          },
+          "interimSteps": {
+            "type": "array",
+            "description": "Interim steps, marking progress towards the final goal.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "goal": {
+                  "type": "number",
+                  "description": "Score to each to achieve this step"
+                },
+                "reward": {
+                  "$ref": "#/components/schemas/reward"
+                },
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "sender": {
+                      "type": "string",
+                      "description": "Who commissioned this reward"
+                    },
+                    "subject": {
+                      "type": "string",
+                      "description": "Title of the in-game mail received for completing the step."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Body of the in-game mail received for completing the step."
+                    },
+                    "senderIcon": {
+                      "type": "string",
+                      "description": "Path to sender icon string."
+                    },
+                    "attachments": {
+                      "type": "array",
+                      "description": "Attachments to the message. Unknown usage.",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "winnerCount": {
+                  "type": "number",
+                  "description": "Suspected to be the number of persons who have completed this step."
+                }
+              }
+            }
+          },
+          "progressSteps": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Steps in the progress to completion"
+              },
+              "progressAmt": {
+                "type": "number",
+                "description": "Percent progress to completion"
+              }
+            }
+          },
+          "progressTotal": {
+            "type": "number",
+            "description": "Total of progressSteps values."
+          },
+          "showTotalAtEndOfMission": {
+            "type": "boolean",
+            "description": "Whether or not to show the total score at the end of the mission"
+          },
+          "isPersonal": {
+            "type": "boolean",
+            "description": "Whether or not the event is personal"
+          },
+          "isCommunity": {
+            "type": "boolean",
+            "description": "Whether or not the event is communal"
+          },
+          "regionDrops": {
+            "type": "array",
+            "description": "Drops in the area around the event node",
+            "items": {
+              "type": "string"
+            }
+          },
+          "archwingDrops": {
+            "type": "array",
+            "description": "Archwing Drops in effect while this event is active",
+            "items": {
+              "type": "string"
+            }
+          },
+          "asString": {
+            "type": "string",
+            "description": "Attempt to summarize event in a short string. (Do not use)."
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Miscellaneous metadata in a string provided by Digital Extremes"
+          },
+          "completionBonuses": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "Completion bonus amounts per-stage"
+          },
+          "scoreVar": {
+            "type": "string",
+            "description": "Internal string used for unknown purpose"
+          },
+          "altExpiry": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Alternate Expiry. Use unknown."
+          },
+          "altActivation": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Alternate Activation. Use unknown."
+          },
+          "nextAlt": {
+            "type": "object",
+            "properties": {
+              "expiry": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Next alternate expiry. Use unknown."
+              },
+              "activation": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Next alternate activation. Use unknown."
+              }
+            }
+          }
+        }
+      },
+      "events": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/event"
+        }
+      },
+      "faction": {
+        "type": "string",
+        "description": "A Faction in Warframe",
+        "enum": [
+          "Orokin",
+          "Corrupted",
+          "Infested",
+          "Corpus",
+          "Grineer",
+          "Tenno"
+        ]
+      },
+      "factions": {
+        "required": [
+          "FC_CORPUS",
+          "FC_CORRUPTED",
+          "FC_GRINEER",
+          "FC_INFESTATION",
+          "FC_OROKIN"
+        ],
+        "type": "object",
+        "properties": {
+          "FC_GRINEER": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "FC_CORPUS": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "FC_INFESTATION": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "FC_CORRUPTED": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "FC_OROKIN": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "fissure": {
+        "type": "object",
+        "required": [
+          "activation",
+          "enemy",
+          "eta",
+          "expired",
+          "expiry",
+          "id",
+          "missionType",
+          "node",
+          "tier",
+          "tierNum"
+        ],
+        "properties": {
+          "node": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "expired": {
+            "type": "boolean"
+          },
+          "eta": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "missionType": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "tier": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "tierNum": {
+            "type": "number"
+          },
+          "enemy": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "activation": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "fissureModifiers": {
+        "required": [
+          "VoidT1",
+          "VoidT2",
+          "VoidT3",
+          "VoidT4"
+        ],
+        "type": "object",
+        "properties": {
+          "VoidT1": {
+            "required": [
+              "num",
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "num": {
+                "type": "number"
+              },
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "VoidT2": {
+            "required": [
+              "num",
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "num": {
+                "type": "number"
+              },
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "VoidT3": {
+            "required": [
+              "num",
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "num": {
+                "type": "number"
+              },
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "VoidT4": {
+            "required": [
+              "num",
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "num": {
+                "type": "number"
+              },
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "fissures": {
+        "minItems": 1,
+        "items": {
+          "$ref": "#/components/schemas/fissure"
+        }
+      },
+      "flashSales": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "required": [
+            "discount",
+            "eta",
+            "expired",
+            "expiry",
+            "id",
+            "isFeatured",
+            "isPopular",
+            "item",
+            "premiumOverride"
+          ],
+          "type": "object",
+          "properties": {
+            "item": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "expired": {
+              "type": "boolean"
+            },
+            "eta": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "discount": {
+              "type": "number"
+            },
+            "premiumOverride": {
+              "type": "number"
+            },
+            "isPopular": {
+              "type": "boolean"
+            },
+            "expiry": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "isFeatured": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "globalUpgrades": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "string"
+            },
+            "end": {
+              "type": "string"
+            },
+            "upgrade": {
+              "type": "string"
+            },
+            "operation": {
+              "description": "Operation descriptor",
+              "type": "string"
+            },
+            "operationSymbol": {
+              "description": "Symbol corresponding to operation",
+              "type": "string"
+            },
+            "upgradeOperationValue": {
+              "description": "Value corresponding to performing the operation",
+              "type": "number"
+            },
+            "expired": {
+              "description": "Whether or not the upgrade has expired",
+              "type": "boolean"
+            },
+            "eta": {
+              "description": "Formatted short string designating when the upgrade will expire.",
+              "type": "string"
+            },
+            "desc": {
+              "description": "Plain text description of the global upgrade.",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "invasion": {
+        "required": [
+          "activation",
+          "attackingFaction",
+          "completed",
+          "completion",
+          "count",
+          "defendingFaction",
+          "desc",
+          "eta",
+          "id",
+          "node",
+          "requiredRuns",
+          "vsInfestation"
+        ],
+        "type": "object",
+        "properties": {
+          "defenderReward": {
+            "$ref": "#/components/schemas/reward"
+          },
+          "attackingFaction": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "completion": {
+            "type": "number"
+          },
+          "attackerReward": {
+            "$ref": "#/components/schemas/reward"
+          },
+          "count": {
+            "type": "number"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "requiredRuns": {
+            "type": "number"
+          },
+          "vsInfestation": {
+            "type": "boolean"
+          },
+          "node": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "eta": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "defendingFaction": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "activation": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "rewardTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/rewardType"
+            }
+          },
+          "desc": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "invasions": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/invasion"
+        }
+      },
+      "item": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "uniqueName": {
+            "type": "string"
+          }
+        }
+      },
+      "items": {
+        "minItems": 0,
+        "type": "array",
+        "description": "An item from Warframe",
+        "items": {
+          "$ref": "#/components/schemas/item"
+        }
+      },
+      "kuva": {
+        "type": "object",
+        "properties": {
+          "activation": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the Kuva group becomes active"
+          },
+          "expiry": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the Kuva group becomes inactive"
+          },
+          "node": {
+            "type": "string",
+            "description": "Plain name for the node"
+          },
+          "enemy": {
+            "$ref": "#/components/schemas/faction"
+          },
+          "type": {
+            "type": "string",
+            "description": "Mission type"
+          },
+          "node_type": {
+            "type": "string",
+            "description": "Internal node-type string for denoting what kind of node it is"
+          },
+          "archwing": {
+            "type": "boolean",
+            "description": "Whether or not this mission requires archwing"
+          },
+          "sharkwing": {
+            "type": "boolean",
+            "description": "Whether or not this mission requires sharkwing"
+          }
+        }
+      },
+      "language": {
+        "type": "string",
+        "default": "en",
+        "enum": [
+          "de",
+          "es",
+          "fr",
+          "it",
+          "ko",
+          "pl",
+          "pt",
+          "ru",
+          "zh",
+          "en"
+        ]
+      },
+      "languages": {
+        "type": "object",
+        "properties": {
+          "languageKey": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "meleeWeapon": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "uniqueName": {
+            "type": "string"
+          },
+          "secondsPerShot": {
+            "type": "number"
+          },
+          "totalDamage": {
+            "type": "number"
+          },
+          "damagePerSecond": {
+            "type": "number"
+          },
+          "trigger": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "accuracy": {
+            "type": "number"
+          },
+          "criticalChance": {
+            "type": "number"
+          },
+          "criticalMultiplier": {
+            "type": "number"
+          },
+          "procChance": {
+            "type": "number"
+          },
+          "fireRate": {
+            "type": "number"
+          },
+          "chargeAttack": {
+            "type": "number"
+          },
+          "spinAttack": {
+            "type": "number"
+          },
+          "leapAttack": {
+            "type": "number"
+          },
+          "wallAttack": {
+            "type": "number"
+          },
+          "slot": {
+            "type": "number"
+          },
+          "noise": {
+            "type": "string"
+          },
+          "sentinel": {
+            "type": "boolean"
+          },
+          "masteryReq": {
+            "type": "number"
+          },
+          "omegaAttenuation": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "buildPrice": {
+            "type": "number"
+          },
+          "buildTime": {
+            "type": "number"
+          },
+          "skipBuildTimePrice": {
+            "type": "number"
+          },
+          "buildQuantity": {
+            "type": "number"
+          },
+          "consumeOnBuild": {
+            "type": "boolean"
+          },
+          "components": {
+            "$ref": "#/components/schemas/item"
+          },
+          "imageName": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "tradable": {
+            "type": "boolean"
+          },
+          "patchlogs": {
+            "$ref": "#/components/schemas/patchlog"
+          },
+          "ammo": {
+            "type": "number"
+          },
+          "damage": {
+            "type": "number"
+          },
+          "damageTypes": {
+            "type": "object",
+            "properties": {
+              "impact": {
+                "type": "number"
+              },
+              "puncture": {
+                "type": "number"
+              },
+              "slash": {
+                "type": "number"
+              },
+              "heat": {
+                "type": "number"
+              },
+              "cold": {
+                "type": "number"
+              },
+              "electric": {
+                "type": "number"
+              },
+              "toxin": {
+                "type": "number"
+              },
+              "gas": {
+                "type": "number"
+              },
+              "viral": {
+                "type": "number"
+              },
+              "corrosive": {
+                "type": "number"
+              },
+              "blast": {
+                "type": "number"
+              },
+              "magnetic": {
+                "type": "number"
+              },
+              "radiation": {
+                "type": "number"
+              },
+              "true": {
+                "type": "number"
+              },
+              "void": {
+                "type": "number"
+              }
+            }
+          },
+          "flight": {
+            "type": "number"
+          },
+          "polarities": {
+            "$ref": "#/components/schemas/polarity"
+          },
+          "projectile": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "vaulted": {
+            "type": "boolean"
+          },
+          "wikiaThumbnail": {
+            "type": "string"
+          },
+          "wikiaUrl": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "number"
+          },
+          "releaseDate": {
+            "type": "string"
+          },
+          "vaultDate": {
+            "type": "string"
+          }
+        }
+      },
+      "mission": {
+        "type": "object",
+        "required": [
+          "archwingRequired",
+          "faction",
+          "maxEnemyLevel",
+          "maxWaveNum",
+          "minEnemyLevel",
+          "nightmare",
+          "node",
+          "reward",
+          "type"
+        ],
+        "properties": {
+          "reward": {
+            "$ref": "#/components/schemas/reward"
+          },
+          "node": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "faction": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxEnemyLevel": {
+            "type": "number"
+          },
+          "minEnemyLevel": {
+            "type": "number"
+          },
+          "maxWaveNum": {
+            "type": "number"
+          },
+          "type": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nightmare": {
+            "type": "boolean"
+          },
+          "archwingRequired": {
+            "type": "boolean",
+            "description": "Whether or not an Archwing is required for participating in the mision."
+          },
+          "isSharkwing": {
+            "description": "Whether or not the mission takes place in a submerssible mission.",
+            "type": "boolean"
+          },
+          "enemySpec": {
+            "type": "string",
+            "description": "Enemy specification for the mission"
+          },
+          "levelOverride": {
+            "type": "string",
+            "description": "Override for the map on this mission"
+          },
+          "advancedSpawners": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of strings denoting extra spawners for a mission"
+          },
+          "requiredItems": {
+            "type": "array",
+            "description": "Items required to enter the mission",
+            "items": {
+              "type": "string"
+            }
+          },
+          "consumeRequiredItems": {
+            "type": "boolean",
+            "description": "Whether or not the required items are consumed"
+          },
+          "leadersAlwaysAllowed": {
+            "type": "boolean",
+            "description": "Whether or not leaders are always allowed"
+          },
+          "levelAuras": {
+            "type": "array",
+            "description": "Affectors for this mission",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "missionTypes": {
+        "required": [
+          "MT_ARENA",
+          "MT_ASSASSINATION",
+          "MT_ASSAULT",
+          "MT_CAPTURE",
+          "MT_DEFENSE",
+          "MT_EVACUATION",
+          "MT_EXCAVATE",
+          "MT_EXTERMINATION",
+          "MT_HIVE",
+          "MT_INTEL",
+          "MT_MOBILE_DEFENSE",
+          "MT_PVP",
+          "MT_RESCUE",
+          "MT_RETRIEVAL",
+          "MT_SABOTAGE",
+          "MT_SECTOR",
+          "MT_SURVIVAL",
+          "MT_TERRITORY"
+        ],
+        "type": "object",
+        "properties": {
+          "MT_EXCAVATE": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_SABOTAGE": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_MOBILE_DEFENSE": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_ASSASSINATION": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_EXTERMINATION": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_HIVE": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_DEFENSE": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_TERRITORY": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_ARENA": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_PVP": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_RESCUE": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_INTEL": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_SURVIVAL": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_CAPTURE": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_SECTOR": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_RETRIEVAL": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_ASSAULT": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "MT_EVACUATION": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "news": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "required": [
+            "asString",
+            "date",
+            "eta",
+            "id",
+            "imageLink",
+            "link",
+            "message",
+            "primeAccess",
+            "priority",
+            "stream",
+            "update"
+          ],
+          "type": "object",
+          "properties": {
+            "date": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "imageLink": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "eta": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "primeAccess": {
+              "type": "boolean"
+            },
+            "stream": {
+              "type": "boolean"
+            },
+            "translations": {
+              "required": [
+                "es"
+              ],
+              "type": "object",
+              "properties": {
+                "es": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            },
+            "link": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "update": {
+              "type": "boolean"
+            },
+            "id": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "asString": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "message": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "priority": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "nightwave": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "activation": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "params": {
+            "type": "object",
+            "properties": {}
+          },
+          "rewardTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "season": {
+            "type": "number"
+          },
+          "tag": {
+            "type": "string"
+          },
+          "phase": {
+            "type": "number"
+          },
+          "possibleChallenges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/nightwaveChallenge"
+            }
+          },
+          "activeChallenges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/nightwaveChallenge"
+            }
+          }
+        }
+      },
+      "nightwaveChallenge": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "activation": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "isDaily": {
+            "type": "boolean"
+          },
+          "isElite": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          },
+          "desc": {
+            "type": "string"
+          },
+          "reputation": {
+            "type": "number"
+          }
+        }
+      },
+      "operationTypes": {
+        "required": [
+          "MULTIPLY"
+        ],
+        "type": "object",
+        "properties": {
+          "MULTIPLY": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "patchlog": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "url": {
+            "type": "string"
+          },
+          "additions": {
+            "type": "string"
+          },
+          "changes": {
+            "type": "string"
+          },
+          "fixes": {
+            "type": "string"
+          }
+        }
+      },
+      "persistentEnemies": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "locationTag": {
+              "type": "string",
+              "description": "Location tag for Acolyte"
+            },
+            "agentType": {
+              "type": "string",
+              "description": "Which acolyte it is"
+            },
+            "rank": {
+              "type": "number",
+              "description": "Enemy level"
+            },
+            "healthPercent": {
+              "type": "number",
+              "description": "Enemy's remaining health"
+            },
+            "fleeDamage": {
+              "type": "number",
+              "description": "The percent damage that the enemy takes when it's defeated"
+            },
+            "region": {
+              "type": "string",
+              "description": "The region in which the enemy is located"
+            },
+            "lastDiscoveredTime": {
+              "type": "string",
+              "description": "The time at which the enemy was last discovered"
+            },
+            "lastDiscoveredAt": {
+              "type": "string",
+              "description": "Node at which the enemy was last discovered"
+            },
+            "isDiscovered": {
+              "type": "boolean",
+              "description": "Whether or not the enemy is currently discovered"
+            },
+            "isUsingTicketing": {
+              "type": "boolean",
+              "description": "Whether or not the enemy is using 'ticketing'. Unknown usage."
+            },
+            "pid": {
+              "type": "string",
+              "description": "faux-id incorporating the actual description and whether or not the enemy is discovered."
+            }
+          }
+        }
+      },
+      "platform": {
+        "type": "string",
+        "enum": [
+          "pc",
+          "ps4",
+          "xb1",
+          "swi"
+        ]
+      },
+      "polarity": {
+        "type": "string",
+        "enum": [
+          "Vazarin",
+          "Madurai",
+          "Naramon",
+          "Zenurik",
+          "Unairu",
+          "Penjaga",
+          "Unbra"
+        ]
+      },
+      "primaryWeapon": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "uniqueName": {
+            "type": "string"
+          },
+          "secondsPerShot": {
+            "type": "number"
+          },
+          "dmagePerShot": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "magazineSize": {
+            "type": "number"
+          },
+          "reloadTime": {
+            "type": "number"
+          },
+          "totalDamage": {
+            "type": "number"
+          },
+          "damagePerSecond": {
+            "type": "number"
+          },
+          "trigger": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "accuracy": {
+            "type": "number"
+          },
+          "criticalChance": {
+            "type": "number"
+          },
+          "criticalMultiplier": {
+            "type": "number"
+          },
+          "procChance": {
+            "type": "number"
+          },
+          "fireRate": {
+            "type": "number"
+          },
+          "slot": {
+            "type": "number"
+          },
+          "noise": {
+            "type": "string"
+          },
+          "sentinel": {
+            "type": "boolean"
+          },
+          "masteryReq": {
+            "type": "number"
+          },
+          "omegaAttenuation": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "buildPrice": {
+            "type": "number"
+          },
+          "buildTime": {
+            "type": "number"
+          },
+          "skipBuildTimePrice": {
+            "type": "number"
+          },
+          "buildQuantity": {
+            "type": "number"
+          },
+          "consumeOnBuild": {
+            "type": "boolean"
+          },
+          "components": {
+            "$ref": "#/components/schemas/item"
+          },
+          "imageName": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "tradable": {
+            "type": "boolean"
+          },
+          "patchlogs": {
+            "$ref": "#/components/schemas/patchlog"
+          },
+          "ammo": {
+            "type": "number"
+          },
+          "damage": {
+            "type": "number"
+          },
+          "damageTypes": {
+            "type": "object",
+            "properties": {
+              "impact": {
+                "type": "number"
+              },
+              "puncture": {
+                "type": "number"
+              },
+              "slash": {
+                "type": "number"
+              },
+              "heat": {
+                "type": "number"
+              },
+              "cold": {
+                "type": "number"
+              },
+              "electric": {
+                "type": "number"
+              },
+              "toxin": {
+                "type": "number"
+              },
+              "gas": {
+                "type": "number"
+              },
+              "viral": {
+                "type": "number"
+              },
+              "corrosive": {
+                "type": "number"
+              },
+              "blast": {
+                "type": "number"
+              },
+              "magnetic": {
+                "type": "number"
+              },
+              "radiation": {
+                "type": "number"
+              },
+              "true": {
+                "type": "number"
+              },
+              "void": {
+                "type": "number"
+              }
+            }
+          },
+          "flight": {
+            "type": "number"
+          },
+          "polarities": {
+            "$ref": "#/components/schemas/polarity"
+          },
+          "projectile": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "vaulted": {
+            "type": "boolean"
+          },
+          "wikiaThumbnail": {
+            "type": "string"
+          },
+          "wikiaUrl": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "number"
+          },
+          "releaseDate": {
+            "type": "string"
+          },
+          "vaultDate": {
+            "type": "string"
+          }
+        }
+      },
+      "reward": {
+        "type": "object",
+        "required": [
+          "asString",
+          "color",
+          "countedItems",
+          "credits",
+          "itemString",
+          "items",
+          "thumbnail"
+        ],
+        "properties": {
+          "countedItems": {
+            "minItems": 1,
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "required": [
+                "count",
+                "type"
+              ],
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number"
+                },
+                "type": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "thumbnail": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "color": {
+            "type": "number"
+          },
+          "credits": {
+            "type": "number"
+          },
+          "asString": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "itemString": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "rewardType": {
+        "type": "string",
+        "description": "One of the reward types",
+        "enum": [
+          "vauban",
+          "vandal",
+          "wraith",
+          "skin",
+          "helmet",
+          "nitain",
+          "mutalist",
+          "weapon",
+          "fieldron",
+          "detonite",
+          "mutagen",
+          "aura",
+          "neuralSensors",
+          "orokinCell",
+          "alloyPlate",
+          "circuits",
+          "controlModule",
+          "ferrite",
+          "gallium",
+          "morphics",
+          "nanoSpores",
+          "oxium",
+          "rubedo",
+          "salvage",
+          "plastids",
+          "polymerBundle",
+          "argonCrystal",
+          "cryotic",
+          "tellurium",
+          "neurodes",
+          "nightmare",
+          "endo",
+          "reactor",
+          "catalyst",
+          "forma",
+          "synthula",
+          "exilus",
+          "riven",
+          "kavatGene",
+          "kubrowEgg",
+          "traces",
+          "other",
+          "credits"
+        ]
+      },
+      "riven": {
+        "type": "object",
+        "properties": {
+          "rivenCompatability": {
+            "type": "object",
+            "description": "The name of the weapon that this riven is compatible with",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "rolled": {
+                  "$ref": "#/components/schemas/rivenStatistic"
+                },
+                "unrolled": {
+                  "$ref": "#/components/schemas/rivenStatistic"
+                }
+              }
+            },
+            "example": {
+              "Corvas": {
+                "rerolled": {
+                  "itemType": "Archgun Riven Mod",
+                  "compatibility": "Corvas",
+                  "rerolled": true,
+                  "avg": 291.94,
+                  "stddev": 346.96,
+                  "min": 25,
+                  "max": 1500,
+                  "pop": 0.0536,
+                  "median": 150
+                }
+              }
+            }
+          }
+        }
+      },
+      "rivenStatistic": {
+        "description": "A colleciton of rivens about a specific weapon's riven sales",
+        "type": "object",
+        "properties": {
+          "itemType": {
+            "type": "string"
+          },
+          "compatability": {
+            "type": "string"
+          },
+          "rerolled": {
+            "type": "boolean"
+          },
+          "avg": {
+            "type": "number",
+            "format": "float"
+          },
+          "stddev": {
+            "type": "number",
+            "format": "float"
+          },
+          "min": {
+            "type": "number",
+            "format": "float"
+          },
+          "max": {
+            "type": "number",
+            "format": "float"
+          },
+          "pop": {
+            "type": "number",
+            "format": "float"
+          },
+          "median": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "example": {
+          "rerolled": {
+            "itemType": "Archgun Riven Mod",
+            "compatibility": "Corvas",
+            "rerolled": true,
+            "avg": 291.94,
+            "stddev": 346.96,
+            "min": 25,
+            "max": 1500,
+            "pop": 0.0536,
+            "median": 150
+          }
+        }
+      },
+      "rivenType": {
+        "type": "object",
+        "description": "The type of riven that the child rivens belong to",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/riven"
+        },
+        "example": {
+          "Archgun Riven Mod": {
+            "Corvas": {
+              "rerolled": {
+                "itemType": "Archgun Riven Mod",
+                "compatibility": "Corvas",
+                "rerolled": true,
+                "avg": 291.94,
+                "stddev": 346.96,
+                "min": 25,
+                "max": 1500,
+                "pop": 0.0536,
+                "median": 150
+              }
+            }
+          }
+        }
+      },
+      "secondaryWeapon": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "uniqueName": {
+            "type": "string"
+          },
+          "secondsPerShot": {
+            "type": "number"
+          },
+          "dmagePerShot": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "magazineSize": {
+            "type": "number"
+          },
+          "reloadTime": {
+            "type": "number"
+          },
+          "totalDamage": {
+            "type": "number"
+          },
+          "damagePerSecond": {
+            "type": "number"
+          },
+          "trigger": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "accuracy": {
+            "type": "number"
+          },
+          "criticalChance": {
+            "type": "number"
+          },
+          "criticalMultiplier": {
+            "type": "number"
+          },
+          "procChance": {
+            "type": "number"
+          },
+          "fireRate": {
+            "type": "number"
+          },
+          "slot": {
+            "type": "number"
+          },
+          "noise": {
+            "type": "string"
+          },
+          "sentinel": {
+            "type": "boolean"
+          },
+          "masteryReq": {
+            "type": "number"
+          },
+          "omegaAttenuation": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "buildPrice": {
+            "type": "number"
+          },
+          "buildTime": {
+            "type": "number"
+          },
+          "skipBuildTimePrice": {
+            "type": "number"
+          },
+          "buildQuantity": {
+            "type": "number"
+          },
+          "consumeOnBuild": {
+            "type": "boolean"
+          },
+          "components": {
+            "$ref": "#/components/schemas/item"
+          },
+          "imageName": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "tradable": {
+            "type": "boolean"
+          },
+          "patchlogs": {
+            "$ref": "#/components/schemas/patchlog"
+          },
+          "ammo": {
+            "type": "number"
+          },
+          "damage": {
+            "type": "number"
+          },
+          "damageTypes": {
+            "type": "object",
+            "properties": {
+              "impact": {
+                "type": "number"
+              },
+              "puncture": {
+                "type": "number"
+              },
+              "slash": {
+                "type": "number"
+              },
+              "heat": {
+                "type": "number"
+              },
+              "cold": {
+                "type": "number"
+              },
+              "electric": {
+                "type": "number"
+              },
+              "toxin": {
+                "type": "number"
+              },
+              "gas": {
+                "type": "number"
+              },
+              "viral": {
+                "type": "number"
+              },
+              "corrosive": {
+                "type": "number"
+              },
+              "blast": {
+                "type": "number"
+              },
+              "magnetic": {
+                "type": "number"
+              },
+              "radiation": {
+                "type": "number"
+              },
+              "true": {
+                "type": "number"
+              },
+              "void": {
+                "type": "number"
+              }
+            }
+          },
+          "flight": {
+            "type": "number"
+          },
+          "polarities": {
+            "$ref": "#/components/schemas/polarity"
+          },
+          "projectile": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "vaulted": {
+            "type": "boolean"
+          },
+          "wikiaThumbnail": {
+            "type": "string"
+          },
+          "wikiaUrl": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "number"
+          },
+          "releaseDate": {
+            "type": "string"
+          },
+          "vaultDate": {
+            "type": "string"
+          }
+        }
+      },
+      "simaris": {
+        "required": [
+          "asString",
+          "isTargetActive",
+          "target"
+        ],
+        "type": "object",
+        "properties": {
+          "target": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "isTargetActive": {
+            "type": "boolean"
+          },
+          "asString": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "solNode": {
+        "type": "object",
+        "properties": {
+          "SolKey": {
+            "required": [
+              "enemy",
+              "type",
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "enemy": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "solNodeSearch": {
+        "minItems": 1,
+        "type": "array",
+        "description": "",
+        "items": {
+          "required": [
+            "keys",
+            "nodes"
+          ],
+          "type": "object",
+          "properties": {
+            "nodes": {
+              "minItems": 1,
+              "uniqueItems": true,
+              "type": "array",
+              "items": {
+                "required": [
+                  "enemy",
+                  "type",
+                  "value"
+                ],
+                "type": "object",
+                "properties": {
+                  "enemy": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "type": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "value": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "keys": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "sortie": {
+        "required": [
+          "activation",
+          "boss",
+          "eta",
+          "expired",
+          "expiry",
+          "faction",
+          "id",
+          "rewardPool",
+          "variants"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "activation": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "rewardPool": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "variants": {
+            "minItems": 1,
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "required": [
+                "boss",
+                "missionType",
+                "modifier",
+                "modifierDescription",
+                "node",
+                "planet"
+              ],
+              "type": "object",
+              "properties": {
+                "node": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "boss": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "missionType": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "planet": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "modifier": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "modifierDescription": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "boss": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "faction": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "expired": {
+            "type": "boolean"
+          },
+          "eta": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "sortieData": {
+        "required": [
+          "bosses",
+          "endStates",
+          "modifierDescriptions",
+          "modifierTypes",
+          "modifiers"
+        ],
+        "type": "object",
+        "properties": {
+          "modifierTypes": {
+            "required": [
+              "SORTIE_MODIFIER_ARMOR",
+              "SORTIE_MODIFIER_BOW_ONLY",
+              "SORTIE_MODIFIER_CORROSIVE",
+              "SORTIE_MODIFIER_ELECTRICITY",
+              "SORTIE_MODIFIER_EXIMUS",
+              "SORTIE_MODIFIER_EXPLOSION",
+              "SORTIE_MODIFIER_FIRE",
+              "SORTIE_MODIFIER_FREEZE",
+              "SORTIE_MODIFIER_GAS",
+              "SORTIE_MODIFIER_HAZARD_COLD",
+              "SORTIE_MODIFIER_HAZARD_FIRE",
+              "SORTIE_MODIFIER_HAZARD_FOG",
+              "SORTIE_MODIFIER_HAZARD_ICE",
+              "SORTIE_MODIFIER_HAZARD_MAGNETIC",
+              "SORTIE_MODIFIER_HAZARD_RADIATION",
+              "SORTIE_MODIFIER_IMPACT",
+              "SORTIE_MODIFIER_LOW_ENERGY",
+              "SORTIE_MODIFIER_MAGNETIC",
+              "SORTIE_MODIFIER_MELEE_ONLY",
+              "SORTIE_MODIFIER_POISON",
+              "SORTIE_MODIFIER_PUNCTURE",
+              "SORTIE_MODIFIER_RADIATION",
+              "SORTIE_MODIFIER_RIFLE_ONLY",
+              "SORTIE_MODIFIER_SECONDARY_ONLY",
+              "SORTIE_MODIFIER_SHIELDS",
+              "SORTIE_MODIFIER_SHOTGUN_ONLY",
+              "SORTIE_MODIFIER_SLASH",
+              "SORTIE_MODIFIER_SNIPER_ONLY",
+              "SORTIE_MODIFIER_TOXIN",
+              "SORTIE_MODIFIER_VIRAL"
+            ],
+            "type": "object",
+            "properties": {
+              "SORTIE_MODIFIER_IMPACT": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_COLD": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_SECONDARY_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_TOXIN": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_ELECTRICITY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_FOG": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_MAGNETIC": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_ARMOR": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_CORROSIVE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_VIRAL": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_RADIATION": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_SLASH": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_POISON": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_GAS": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_MAGNETIC": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_FIRE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_SNIPER_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_PUNCTURE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_EXPLOSION": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_BOW_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_RADIATION": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_SHIELDS": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_FREEZE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_FIRE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_EXIMUS": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_SHOTGUN_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_MELEE_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_RIFLE_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_ICE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_LOW_ENERGY": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "modifierDescriptions": {
+            "required": [
+              "SORTIE_MODIFIER_ARMOR",
+              "SORTIE_MODIFIER_BOW_ONLY",
+              "SORTIE_MODIFIER_CORROSIVE",
+              "SORTIE_MODIFIER_ELECTRICITY",
+              "SORTIE_MODIFIER_EXIMUS",
+              "SORTIE_MODIFIER_EXPLOSION",
+              "SORTIE_MODIFIER_FIRE",
+              "SORTIE_MODIFIER_FREEZE",
+              "SORTIE_MODIFIER_GAS",
+              "SORTIE_MODIFIER_HAZARD_COLD",
+              "SORTIE_MODIFIER_HAZARD_FIRE",
+              "SORTIE_MODIFIER_HAZARD_FOG",
+              "SORTIE_MODIFIER_HAZARD_ICE",
+              "SORTIE_MODIFIER_HAZARD_MAGNETIC",
+              "SORTIE_MODIFIER_HAZARD_RADIATION",
+              "SORTIE_MODIFIER_IMPACT",
+              "SORTIE_MODIFIER_LOW_ENERGY",
+              "SORTIE_MODIFIER_MAGNETIC",
+              "SORTIE_MODIFIER_MELEE_ONLY",
+              "SORTIE_MODIFIER_POISON",
+              "SORTIE_MODIFIER_PUNCTURE",
+              "SORTIE_MODIFIER_RADIATION",
+              "SORTIE_MODIFIER_RIFLE_ONLY",
+              "SORTIE_MODIFIER_SECONDARY_ONLY",
+              "SORTIE_MODIFIER_SHIELDS",
+              "SORTIE_MODIFIER_SHOTGUN_ONLY",
+              "SORTIE_MODIFIER_SLASH",
+              "SORTIE_MODIFIER_SNIPER_ONLY",
+              "SORTIE_MODIFIER_TOXIN",
+              "SORTIE_MODIFIER_VIRAL"
+            ],
+            "type": "object",
+            "properties": {
+              "SORTIE_MODIFIER_IMPACT": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_COLD": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_SECONDARY_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_TOXIN": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_ELECTRICITY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_FOG": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_MAGNETIC": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_ARMOR": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_CORROSIVE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_VIRAL": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_RADIATION": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_SLASH": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_POISON": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_GAS": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_MAGNETIC": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_FIRE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_SNIPER_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_PUNCTURE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_EXPLOSION": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_BOW_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_RADIATION": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_SHIELDS": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_FREEZE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_FIRE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_EXIMUS": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_SHOTGUN_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_MELEE_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_RIFLE_ONLY": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_HAZARD_ICE": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "SORTIE_MODIFIER_LOW_ENERGY": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "bosses": {
+            "required": [
+              "SORTIE_BOSS_ALAD",
+              "SORTIE_BOSS_AMBULAS",
+              "SORTIE_BOSS_CORRUPTED_VOR",
+              "SORTIE_BOSS_HEK",
+              "SORTIE_BOSS_HYENA",
+              "SORTIE_BOSS_INFALAD",
+              "SORTIE_BOSS_JACKAL",
+              "SORTIE_BOSS_KELA",
+              "SORTIE_BOSS_KRIL",
+              "SORTIE_BOSS_LEPHANTIS",
+              "SORTIE_BOSS_NEF",
+              "SORTIE_BOSS_PHORID",
+              "SORTIE_BOSS_RAPTOR",
+              "SORTIE_BOSS_RUK",
+              "SORTIE_BOSS_TYL",
+              "SORTIE_BOSS_VOR"
+            ],
+            "type": "object",
+            "properties": {
+              "SORTIE_BOSS_KELA": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_AMBULAS": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_TYL": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_ALAD": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_RUK": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_HYENA": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_KRIL": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_CORRUPTED_VOR": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_INFALAD": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_PHORID": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_JACKAL": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_RAPTOR": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_VOR": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_HEK": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_NEF": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "SORTIE_BOSS_LEPHANTIS": {
+                "required": [
+                  "faction",
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "faction": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "endStates": {
+            "minItems": 1,
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "required": [
+                "bossName"
+              ],
+              "type": "object",
+              "properties": {
+                "regions": {
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "type": "array",
+                  "items": {
+                    "required": [
+                      "name"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "missions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      },
+                      "name": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "bossName": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "modifiers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "description": ""
+      },
+      "syndicate": {
+        "type": "string",
+        "enum": [
+          "Arbiters of Hexis",
+          "Cephalon Suda",
+          "Assassins",
+          "Nightwave",
+          "Ostrons",
+          "Vox Solaris",
+          "Solaris United",
+          "Perrin Sequence",
+          "Steel Meridian",
+          "Red Veil",
+          "New Loka"
+        ]
+      },
+      "syndicateJob": {
+        "type": "object",
+        "description": "A Job for a syndicate. Often called a bounty.",
+        "properties": {
+          "activation": {
+            "type": "string",
+            "description": "Timestamp for when the job becomes active",
+            "format": "date-time"
+          },
+          "expiry": {
+            "type": "string",
+            "description": "Timestamp for when the job becomes inactive",
+            "format": "date-time"
+          },
+          "rewardPool": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Reward Pool for the job"
+          },
+          "type": {
+            "type": "string",
+            "description": "What type of Job (Bounty) it is"
+          },
+          "enemyLevels": {
+            "type": "array",
+            "description": "Array of enemy levels",
+            "items": {
+              "type": "number"
+            }
+          },
+          "standingStages": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "Stages of standing rewards."
+          },
+          "minMR": {
+            "type": "number",
+            "description": "Minimum Mastery Rank required to perform a job."
+          }
+        }
+      },
+      "syndicateMission": {
+        "required": [
+          "activation",
+          "eta",
+          "expiry",
+          "id",
+          "syndicate"
+        ],
+        "type": "object",
+        "properties": {
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "eta": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "jobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/syndicateJob"
+            }
+          },
+          "syndicate": {
+            "$ref": "#/components/schemas/syndicate"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "activation": {
+            "format": "date-time",
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "syndicateMissions": {
+        "minItems": 1,
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/syndicateMission"
+        }
+      },
+      "syndicates": {
+        "required": [
+          "ArbitersSyndicate",
+          "AssassinsSyndicate",
+          "CephalonSudaSyndicate",
+          "CetusSyndicate",
+          "EventSyndicate",
+          "NewLokaSyndicate",
+          "PerrinSyndicate",
+          "QuillsSyndicate",
+          "RedVeilSyndicate",
+          "SteelMeridianSyndicate"
+        ],
+        "type": "object",
+        "properties": {
+          "ArbitersSyndicate": {
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "CephalonSudaSyndicate": {
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "NewLokaSyndicate": {
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "PerrinSyndicate": {
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "SteelMeridianSyndicate": {
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "RedVeilSyndicate": {
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "CetusSyndicate": {
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "QuillsSyndicate": {
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "AssassinsSyndicate": {
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "EventSyndicate": {
+            "required": [
+              "name"
+            ],
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "timestamp": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "tutorials": {
+        "minItems": 1,
+        "type": "array",
+        "description": "",
+        "items": {
+          "required": [
+            "name",
+            "regex",
+            "url"
+          ],
+          "type": "object",
+          "properties": {
+            "regex": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "url": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        }
+      },
+      "upgradeTypes": {
+        "required": [
+          "GAMEPLAY_KILL_XP_AMOUNT",
+          "GAMEPLAY_MONEY_PICKUP_AMOUNT",
+          "GAMEPLAY_MONEY_REWARD_AMOUNT",
+          "GAMEPLAY_PICKUP_AMOUNT"
+        ],
+        "type": "object",
+        "properties": {
+          "GAMEPLAY_KILL_XP_AMOUNT": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "GAMEPLAY_PICKUP_AMOUNT": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "GAMEPLAY_MONEY_REWARD_AMOUNT": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "GAMEPLAY_MONEY_PICKUP_AMOUNT": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "vallisCycle": {
+        "required": [
+          "expiry",
+          "id",
+          "isWarm",
+          "timeLeft"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "timeLeft": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "isWarm": {
+            "type": "boolean"
+          }
+        }
+      },
+      "voidTrader": {
+        "required": [
+          "activation",
+          "active",
+          "character",
+          "endString",
+          "expiry",
+          "id",
+          "inventory",
+          "location",
+          "psId",
+          "startString"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "activation": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "character": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "location": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "inventory": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "item": {
+                  "type": "string",
+                  "description": "Item that is being sold"
+                },
+                "ducats": {
+                  "type": "number",
+                  "description": "Amount of ducats required to purchase item"
+                },
+                "credits": {
+                  "type": "number",
+                  "description": "Amount of credits required to purchase item"
+                }
+              }
+            }
+          },
+          "psId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "startString": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "endString": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "warframes": {
+        "minItems": 1,
+        "type": "array",
+        "description": "",
+        "items": {
+          "required": [
+            "armor",
+            "aura",
+            "color",
+            "conclave",
+            "description",
+            "health",
+            "info",
+            "location",
+            "mr",
+            "name",
+            "polarities",
+            "power",
+            "regex",
+            "shield",
+            "speed",
+            "thumbnail",
+            "url"
+          ],
+          "type": "object",
+          "properties": {
+            "shield": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "polarities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "prime_power": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "prime_mr": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "color": {
+              "type": "number"
+            },
+            "prime_polarities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "conclave": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "description": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "prime_armor": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "speed": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "aura": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "prime_url": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "prime_health": {
+              "type": "string"
+            },
+            "power": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "prime_aura": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "info": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "thumbnail": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "mr": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "prime_shield": {
+              "type": "string"
+            },
+            "health": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "prime_speed": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "url": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "regex": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "armor": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "name": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "location": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "prime_conclave": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "weapons": {
+        "minItems": 1,
+        "type": "array",
+        "description": "",
+        "items": {
+          "oneOf": [
+            {
+              "$ref": "#/components/schemas/primaryWeapon"
+            },
+            {
+              "$ref": "#/components/schemas/secondaryWeapon"
+            },
+            {
+              "$ref": "#/components/schemas/meleeWeapon"
+            }
+          ]
+        }
+      },
+      "ws": {
+        "required": [
+          "alerts",
+          "cetusCycle",
+          "conclaveChallenges",
+          "constructionProgress",
+          "dailyDeals",
+          "darkSectors",
+          "earthCycle",
+          "events",
+          "fissures",
+          "flashSales",
+          "globalUpgrades",
+          "invasions",
+          "news",
+          "persistentEnemies",
+          "simaris",
+          "sortie",
+          "syndicateMissions",
+          "timestamp",
+          "voidTrader"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "$ref": "#/components/schemas/timestamp"
+          },
+          "news": {
+            "$ref": "#/components/schemas/news"
+          },
+          "events": {
+            "$ref": "#/components/schemas/events"
+          },
+          "alerts": {
+            "$ref": "#/components/schemas/alert"
+          },
+          "sortie": {
+            "$ref": "#/components/schemas/sortie"
+          },
+          "syndicateMissions": {
+            "$ref": "#/components/schemas/syndicateMissions"
+          },
+          "fissures": {
+            "$ref": "#/components/schemas/fissures"
+          },
+          "globalUpgrades": {
+            "$ref": "#/components/schemas/globalUpgrades"
+          },
+          "flashSales": {
+            "$ref": "#/components/schemas/flashSales"
+          },
+          "invasions": {
+            "$ref": "#/components/schemas/invasions"
+          },
+          "darkSectors": {
+            "$ref": "#/components/schemas/darkSectors"
+          },
+          "voidTrader": {
+            "$ref": "#/components/schemas/voidTrader"
+          },
+          "dailyDeals": {
+            "$ref": "#/components/schemas/dailyDeals"
+          },
+          "simaris": {
+            "$ref": "#/components/schemas/simaris"
+          },
+          "conclaveChallenges": {
+            "$ref": "#/components/schemas/conclaveChallenges"
+          },
+          "persistentEnemies": {
+            "$ref": "#/components/schemas/persistentEnemies"
+          },
+          "earthCycle": {
+            "$ref": "#/components/schemas/earthCycle"
+          },
+          "cetusCycle": {
+            "$ref": "#/components/schemas/cetusCycle"
+          },
+          "vallisCycle": {
+            "$ref": "#/components/schemas/vallisCycle"
+          },
+          "constructionProgress": {
+            "$ref": "#/components/schemas/construction"
+          },
+          "nightwave": {
+            "$ref": "#/components/schemas/nightwave"
+          },
+          "arbitration": {
+            "$ref": "#/components/schemas/arbitration"
+          },
+          "kuva": {
+            "$ref": "#/components/schemas/kuva"
+          }
+        },
+        "description": "Full Worldstate Object"
+      }
+    },
+    "responses": {
+      "error": {
+        "description": "An error occurred",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Description of error"
+                },
+                "code": {
+                  "type": "integer",
+                  "description": "HTTP status code associated with error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Path or sub-path not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Description of error",
+                  "example": "Route not found"
+                },
+                "code": {
+                  "type": "integer",
+                  "description": "HTTP status code associated with error",
+                  "example": 404
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "language": {
+        "name": "Accept-Language",
+        "in": "header",
+        "description": "Language to retrieve",
+        "schema": {
+          "$ref": "#/components/schemas/language"
+        }
+      },
+      "platform": {
+        "name": "platform",
+        "in": "path",
+        "description": "Platform to provide data for",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/platform"
+        }
+      }
+    },
+    "headers": {
+      "Content-Language": {
+        "description": "Language of the content",
+        "schema": {
+          "$ref": "#/components/schemas/language"
+        }
+      }
+    }
+  }
+}
