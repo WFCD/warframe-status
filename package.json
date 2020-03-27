@@ -33,7 +33,7 @@
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.2",
     "greenkeeper-lockfile": "^1.15.1",
-    "nodemon": "^1.19.2"
+    "nodemon": "^2.0.2"
   },
   "scripts": {
     "start": "node server.js",
