@@ -15,7 +15,7 @@
     "rss-feed-emitter": "github:filipedeschamps/rss-feed-emitter#0c6beac",
     "socket.io": "^2.3.0",
     "twitter": "^1.7.1",
-    "warframe-items": "^1.878.0",
+    "warframe-items": "^1.880.0",
     "warframe-nexus-query": "^1.6.11",
     "warframe-worldstate-data": "^1.4.4",
     "warframe-worldstate-parser": "^2.11.3",
