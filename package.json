@@ -41,7 +41,9 @@
     "dev:pm2": "pm2 start warframe-status.json",
     "lint": "npx eslint server.js lib/",
     "lint:fix": "npx eslint server.js lib/ --fix",
-    "test": "exit 0"
+    "test": "exit 0",
+    "snyk-protect": "npx snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "engines": {
     "node": "11.15.0",
@@ -55,5 +57,6 @@
       "API_BASE_URL": "http://localhost:3001",
       "NODE_ENV": "production"
     }
-  }
+  },
+  "snyk": true
 }
