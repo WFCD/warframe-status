@@ -18,7 +18,7 @@
     "warframe-items": "^1.896.0",
     "warframe-nexus-query": "^1.6.12",
     "warframe-worldstate-data": "^1.5.1",
-    "warframe-worldstate-parser": "^2.13.1",
+    "warframe-worldstate-parser": "^2.14.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
