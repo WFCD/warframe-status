@@ -11,3 +11,55 @@ Simple express app that parses worldState.php
 [![PS4 API Status](https://img.shields.io/website/https/api.warframestat.us/ps4.svg?down_message=down&label=ps4%20api&logo=playstation&up_message=up)](https://api.warframestat.us/ps4)
 [![XB1 API Status](https://img.shields.io/website/https/api.warframestat.us/xb1.svg?down_message=down&label=xb1%20api&logo=xbox&up_message=up)](https://api.warframestat.us/xb1)
 [![Switch API Status](https://img.shields.io/website/https/api.warframestat.us/swi.svg?down_message=down&label=switch%20api&logo=nintendo-switch&up_message=up)](https://api.warframestat.us/swi)
+
+## Access
+
+### REST-ish:
+
+- `http://$host:$port/$platform`
+- `http://$host:$port/$platform/$child-item`
+- `http://$host:$port/$a-bunch-of-static-data`
+
+
+### Sockets:
+
+`ws://$host:$port/sockets`
+
+Requests taken as json strings in the socket packet.
+
+Consumers will need to parse responses and stringify requests yourself, as ws doesn't provide a way to automatically parse them.
+
+- ```json
+{"event": "ws:req", "packet": { "platform": "$platform", "language": "$language" }}
+```
+- ```json
+{ "event": "twitter" }
+```
+- ```json
+{ "event": "rss" }
+```
+
+
+connecting automatically subscribes the connection to events structured as:
+```json
+{
+  "event": "twitter",
+  "packet": // tweets
+}
+```
+
+```json
+{
+  "event": "ws:update",
+  "packet": // entire updated worldstate
+}
+```
+
+```json
+{
+  "event": // worldstate key,
+  "packet": // worldstate key data
+}
+```
+
+probably several others that can take some experimenting
