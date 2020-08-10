@@ -26,7 +26,6 @@ router.use((req, res, next) => {
     req.platform = 'pc';
   }
 
-  // TODO: figure out how to keep this with the rest
   req.language = (req.header('Accept-Language') || 'en').substr(0, 2).toLowerCase();
   req.language = (req.query.language || req.language || 'en').substr(0, 2);
   if (req.language !== 'en') {
