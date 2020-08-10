@@ -4,7 +4,9 @@ const express = require('express');
 
 const router = express.Router();
 
-const { Items, logger, noResult } = require('../lib/utilities');
+const {
+  Items, logger, noResult, trimPlatform,
+} = require('../lib/utilities');
 
 const wfItemData = {
   weapons: {
@@ -26,6 +28,7 @@ const wfItemData = {
 };
 
 router.use((req, res, next) => {
+  req.platform = trimPlatform(req.baseUrl);
   req.items = (req.baseUrl.replace('/', '').trim().split('/')[0] || '').toLowerCase();
 
   if (Object.keys(wfItemData).includes(req.items)) {

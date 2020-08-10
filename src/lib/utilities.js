@@ -14,6 +14,8 @@ const platformAliases = ['ns'];
 
 const worldState = new WorldstateEmitter({ platform: 'pc', locale: 'en' });
 
+const trimPlatform = (path) => path.replace('/', '').trim().split('/')[0] || '').toLowerCase();
+
 /**
  * Group an array by a field value
  * @param  {Object[]} array array of objects to broup
@@ -65,4 +67,5 @@ module.exports = {
   languages: warframeData.locales,
   worldState,
   noResult,
+  trimPlatform,
 };

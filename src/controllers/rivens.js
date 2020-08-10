@@ -3,7 +3,7 @@
 const express = require('express');
 const Cache = require('json-fetch-cache');
 const {
-  logger, ah, platforms, titleCase,
+  logger, ah, platforms, titleCase, trimPlatform,
 } = require('../lib/utilities');
 
 const router = express.Router();
@@ -48,7 +48,7 @@ platforms.forEach((platform) => {
 });
 
 router.use((req, res, next) => {
-  req.platform = (req.baseUrl.replace('/', '').trim().split('/')[0] || '').toLowerCase();
+  req.platform = trimPlatform(req.baseUrl);
   if (req.platform === 'ns') {
     req.platform = 'swi';
   }

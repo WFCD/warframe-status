@@ -8,6 +8,12 @@ const { logger, warframeData, solKeys } = require('../lib/utilities');
 
 const dataKeys = Object.keys(warframeData);
 
+const overwriteResults = (parent, results) => {
+  if (parent) {
+    parent = parent.concat(results);
+  }
+};
+
 router.use((req, res, next) => {
   req.key = (req.baseUrl.replace('/', '').trim().split('/')[0] || '');
 
@@ -65,12 +71,8 @@ router.get('/search/:query', /* cache('10 hours'), */ (req, res) => {
           }
         });
         if (values[0]) {
-          if (values[0].keys) {
-            values[0].keys = values[0].keys.concat(keyResults);
-          }
-          if (values[0].nodes) {
-            values[0].nodes = values[0].nodes.concat(nodeResults);
-          }
+          overwriteResults(values[0].keys, keyResults);
+          overwriteResults(values[0].nodes, nodeResults);
         } else {
           // eslint-disable-next-line no-case-declarations
           value = { keys: keyResults, nodes: nodeResults };
