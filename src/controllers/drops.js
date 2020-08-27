@@ -2,9 +2,7 @@
 
 const express = require('express');
 
-const {
-  logger, setHeadersAndJson, cache, ah,
-} = require('../lib/utilities');
+const { logger, cache, ah } = require('../lib/utilities');
 
 const dropCache = require('../lib/caches/Drops');
 
@@ -27,7 +25,7 @@ const groupLocation = (data) => {
 
 router.get('/', cache('24 hours'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  setHeadersAndJson(res, await dropCache.getData());
+  res.json(await dropCache.getData());
 }));
 
 router.get('/search/:query', cache('1 hour'), ah(async (req, res) => {
@@ -56,7 +54,7 @@ router.get('/search/:query', cache('1 hour'), ah(async (req, res) => {
     }
   });
 
-  setHeadersAndJson(res, results);
+  res.json(results);
 }));
 
 module.exports = router;

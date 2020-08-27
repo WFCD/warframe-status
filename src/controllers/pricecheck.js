@@ -5,23 +5,22 @@ const Nexus = require('warframe-nexus-query');
 const NexusFetcher = require('nexushub-client');
 
 const {
-  logger, setHeadersAndJson, ah, cache,
+  logger, ah, cache, noResult,
 } = require('../lib/utilities');
 
 const router = express.Router();
 
 let nexus;
 let nexusQuerier;
-let nexusOptions;
+const nexusOptions = {
+  user_key: process.env.NEXUSHUB_USER_KEY || undefined,
+  user_secret: process.env.NEXUSHUB_USER_SECRET || undefined,
+  api_url: process.env.NEXUS_API_OVERRIDE || undefined,
+  auth_url: process.env.NEXUS_AUTH_OVERRIDE || undefined,
+  ignore_limiter: true,
+};
 
 if (!process.env.DISABLE_PRICECHECKS) {
-  nexusOptions = {
-    user_key: process.env.NEXUSHUB_USER_KEY || undefined,
-    user_secret: process.env.NEXUSHUB_USER_SECRET || undefined,
-    api_url: process.env.NEXUS_API_OVERRIDE || undefined,
-    auth_url: process.env.NEXUS_AUTH_OVERRIDE || undefined,
-    ignore_limiter: true,
-  };
   nexus = new NexusFetcher(nexusOptions.nexusKey
     && nexusOptions.nexusSecret ? nexusOptions : {});
 
@@ -63,12 +62,9 @@ router.get('/:type/:query', cache('1 hour'), ah(async (req, res) => {
         break;
     }
     if (value) {
-      setHeadersAndJson(res, value);
+      res.json(value);
     } else {
-      res.status(400).json({
-        error: `Unable to pricecheck \`${req.params.query}\``,
-        code: 400,
-      });
+      noResult(res);
     }
   } catch (error) {
     logger.error(error);
