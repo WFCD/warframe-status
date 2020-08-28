@@ -20,7 +20,7 @@
     "warframe-worldstate-data": "^1.8.1",
     "warframe-worldstate-parser": "^2.14.2",
     "winston": "^3.3.3",
-    "worldstate-emitter": "^1.0.3",
+    "worldstate-emitter": "^1.0.4",
     "ws": "^7.3.1"
   },
   "optionalDependencies": {
