@@ -34,8 +34,8 @@ const initSwagger = (app) => {
   const swaggConfig = {
     swaggerSpec: spec,
     uriPath: '/meta/status',
-    onAuthenticate: swaggerAuth,
-    authentication: isProd,
+    // onAuthenticate: swaggerAuth,
+    // authentication: isProd,
   };
   app.use(swagger.getMiddleware(swaggConfig));
 };

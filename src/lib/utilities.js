@@ -12,7 +12,7 @@ const initLogger = require('./logger');
 const platforms = ['pc', 'ps4', 'xb1', 'swi'];
 const platformAliases = ['ns'];
 
-const worldState = new WorldstateEmitter({ platform: 'pc', locale: 'en' });
+const worldState = new WorldstateEmitter();
 
 const trimPlatform = path => (path.replace('/', '').trim().split('/')[0] || '').toLowerCase();
 
