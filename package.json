@@ -44,7 +44,7 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "start": "node src/main.js",
+    "start": "node main.js",
     "dev": "nodemon",
     "dev:pm2": "pm2 start warframe-status.json",
     "lint": "npx eslint src/",
