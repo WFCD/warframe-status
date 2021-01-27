@@ -4,7 +4,7 @@
   "author": "tobitenno",
   "repository": "https://github.com/wfcd/warframe-status.git",
   "dependencies": {
-    "@sentry/node": "^5.24.2",
+    "@sentry/node": "^5.30.0",
     "apicache": "^1.5.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
@@ -14,34 +14,34 @@
     "helmet": "^3.23.3",
     "json-fetch-cache": "^1.2.6",
     "nexushub-client": "^1.2.0",
-    "swagger-stats": "^0.95.11",
-    "warframe-items": "^1.1141.0",
-    "warframe-nexus-query": "^1.6.13",
-    "warframe-worldstate-data": "^1.10.7",
-    "warframe-worldstate-parser": "^2.16.1",
+    "swagger-stats": "^0.95.18",
+    "warframe-items": "^1.1245.0",
+    "warframe-nexus-query": "^1.6.15",
+    "warframe-worldstate-data": "^1.11.2",
+    "warframe-worldstate-parser": "^2.16.4",
     "winston": "^3.3.3",
-    "worldstate-emitter": "^1.0.6",
-    "ws": "^7.3.1"
+    "worldstate-emitter": "^1.0.7",
+    "ws": "^7.4.2"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.1",
     "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
-    "@sentry/types": "^5.24.2",
+    "@sentry/types": "^5.30.0",
     "@types/apicache": "^1.2.2",
-    "@types/cors": "^2.8.7",
-    "@types/express": "^4.17.8",
+    "@types/cors": "^2.8.9",
+    "@types/express": "^4.17.11",
     "@types/helmet": "0.0.43",
-    "@types/socket.io": "^2.1.11",
+    "@types/socket.io": "^2.1.13",
     "@types/twitter": "^1.7.0",
-    "@types/ws": "^7.2.6",
+    "@types/ws": "^7.4.0",
     "dotenv": "^8.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.22.1",
     "greenkeeper-lockfile": "^1.15.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.7"
   },
   "scripts": {
     "start": "node main.js",
