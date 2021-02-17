@@ -5,7 +5,7 @@
   "repository": "https://github.com/wfcd/warframe-status.git",
   "dependencies": {
     "@sentry/node": "^5.30.0",
-    "@wfcd/arsenal-parser": "^1.0.0",
+    "@wfcd/arsenal-parser": "^1.1.2",
     "apicache": "^1.5.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
