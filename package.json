@@ -5,6 +5,7 @@
   "repository": "https://github.com/wfcd/warframe-status.git",
   "dependencies": {
     "@sentry/node": "^5.30.0",
+    "@wfcd/arsenal-parser": "^1.0.0",
     "apicache": "^1.5.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
@@ -14,6 +15,7 @@
     "helmet": "^3.23.3",
     "json-fetch-cache": "^1.2.6",
     "nexushub-client": "^1.2.0",
+    "node-fetch": "^2.6.1",
     "swagger-stats": "^0.95.18",
     "warframe-items": "^1.1245.0",
     "warframe-nexus-query": "^1.6.15",
@@ -37,26 +39,25 @@
     "@types/twitter": "^1.7.0",
     "@types/ws": "^7.4.0",
     "dotenv": "^8.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "greenkeeper-lockfile": "^1.15.1",
     "nodemon": "^2.0.7"
   },
   "scripts": {
     "start": "node main.js",
     "dev": "nodemon",
     "dev:pm2": "pm2 start warframe-status.json",
-    "lint": "npx eslint src/",
-    "lint:fix": "npx eslint src/ --fix",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
     "test": "exit 0",
-    "snyk-protect": "npx snyk protect",
+    "snyk-protect": "npx -p snyk -y snyk protect",
     "prepare": "npm run snyk-protect",
     "update:spec": "curl --url https://docs.warframestat.us/openapi.json -G -o src/api-spec/openapi.json --silent"
   },
   "engines": {
-    "node": "11.15.0",
-    "npm": "6.7.0"
+    "node": ">=11.15.0",
+    "npm": ">=6.7.0"
   },
   "license": "Apache-2.0",
   "nodemonConfig": {
