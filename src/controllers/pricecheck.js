@@ -21,11 +21,10 @@ const nexusOptions = {
 };
 
 if (!process.env.DISABLE_PRICECHECKS) {
+  logger.info('pricechecking enabled');
   nexus = new NexusFetcher(nexusOptions.nexusKey
     && nexusOptions.nexusSecret ? nexusOptions : {});
 
-  nexus.connecting()
-    .then(() => nexus.connection.client.on('unexpected-response', () => {}));
   nexusQuerier = new Nexus({ logger, nexusApi: nexus });
 }
 
