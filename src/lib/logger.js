@@ -34,7 +34,7 @@ const color = (scope = 'PROC') => {
 const setup = (scope = 'PROC') => {
   /* Logger setup */
   const transport = new transports.Console({ colorize: true });
-  const logFormat = printf(info => `[${info.label}] ${info.level}: ${info.message}`);
+  const logFormat = printf((info) => `[${info.label}] ${info.level}: ${info.message}`);
   const logger = createLogger({
     format: combine(
       colorize(),

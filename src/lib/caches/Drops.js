@@ -9,7 +9,7 @@ const { logger } = require('../utilities');
  * @returns {Array.<JSON>}
  */
 function formatData(data) {
-  return JSON.parse(data).map(reward => ({
+  return JSON.parse(data).map((reward) => ({
     place: reward.place
       .replace(/<\/?b>/ig, '')
       .replace('Derelict/', '')

@@ -14,7 +14,7 @@ const platformAliases = ['ns'];
 
 const worldState = new WorldstateEmitter();
 
-const trimPlatform = path => (path.replace('/', '').trim().split('/')[0] || '').toLowerCase();
+const trimPlatform = (path) => (path.replace('/', '').trim().split('/')[0] || '').toLowerCase();
 
 /**
  * Group an array by a field value
@@ -44,7 +44,7 @@ const socketLogger = initLogger('SOCK');
 delete warframeData.weapons;
 delete warframeData.warframes;
 
-const titleCase = str => str.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+const titleCase = (str) => str.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
 
 const noResult = (res) => {
   res.status(400).json({ error: 'No Result.', code: 400 });
@@ -55,7 +55,7 @@ module.exports = {
   platforms,
   platformAliases,
   cache: apiCache.options({
-    appendKey: req => `${req.platform}${req.language}` || '',
+    appendKey: (req) => `${req.platform}${req.language}` || '',
   }).middleware,
   Items,
   warframeData,

@@ -5,7 +5,7 @@
   "repository": "https://github.com/wfcd/warframe-status.git",
   "dependencies": {
     "@sentry/node": "^5.30.0",
-    "@wfcd/arsenal-parser": "^1.1.2",
+    "@wfcd/arsenal-parser": "^1.2.1",
     "apicache": "^1.5.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
@@ -16,6 +16,7 @@
     "json-fetch-cache": "^1.2.6",
     "nexushub-client": "^1.2.0",
     "node-fetch": "^2.6.1",
+    "prom-client": "^11.5.3",
     "swagger-stats": "^0.95.18",
     "warframe-items": "^1.1245.0",
     "warframe-nexus-query": "^1.6.15",
@@ -51,13 +52,11 @@
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
     "test": "exit 0",
-    "snyk-protect": "npx -p snyk -y snyk protect",
-    "prepare": "npm run snyk-protect",
     "update:spec": "curl --url https://docs.warframestat.us/openapi.json -G -o src/api-spec/openapi.json --silent"
   },
   "engines": {
-    "node": ">=11.15.0",
-    "npm": ">=6.7.0"
+    "node": ">=11.15.0 < 15",
+    "npm": ">=6.7.0 < 7"
   },
   "license": "Apache-2.0",
   "nodemonConfig": {
@@ -70,8 +69,8 @@
       "NODE_ENV": "development",
       "PORT": 3001,
       "CACHE_TIMEOUT": 30000,
-      "DISABLE_PRICECHECKS": "true"
+      "DISABLE_PRICECHECKS": "true",
+      "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
     }
-  },
-  "snyk": true
+  }
 }

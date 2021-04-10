@@ -10,8 +10,8 @@ const cors = require('cors');
 const spec = require('../api-spec/openapi.json');
 
 // Some dependency/config stuff
-const adminCred = { user: process.env.ADMIN_USER, pass: process.env.ADMIN_PASS };
-const isProd = process.env.NODE_ENV === 'production';
+// const adminCred = { user: process.env.ADMIN_USER, pass: process.env.ADMIN_PASS };
+// const isProd = process.env.NODE_ENV === 'production';
 
 const initSentry = (app) => {
   if (process.env.SENTRY_DSN) {
@@ -30,7 +30,7 @@ const initSecurity = (app) => {
 
 const initSwagger = (app) => {
   // eslint-disable-next-line max-len
-  const swaggerAuth = (req, user, pass) => (!isProd || (user === adminCred.user && pass === adminCred.pass));
+  // const swaggerAuth = (req, user, pass) => (!isProd || (user === adminCred.user && pass === adminCred.pass));
   const swaggConfig = {
     swaggerSpec: spec,
     uriPath: '/meta/status',

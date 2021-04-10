@@ -36,7 +36,8 @@ router.use((req, res, next) => {
 router.get('/:username', cache('10 minutes'), async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const profileUrl = `https://content.${req.platform === 'pc' ? '' : `${req.platform}.`}warframe.com/dynamic/twitch/getActiveLoadout.php?account=${encodeURIComponent(req.params.username.toLowerCase())}`;
-  const data = await fetch(profileUrl).then(d => d.json());
+  const data = await fetch(profileUrl, { headers: { 'User-Agent': process.env.USER_AGENT || 'Node.js Fetch' } })
+    .then((d) => d.json());
   if (!data.accountInfo) {
     noResult(res);
     return;

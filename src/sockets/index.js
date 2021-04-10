@@ -53,7 +53,7 @@ const index = (socket, req) => {
     }
   });
 
-  socket.on('close', reason => logger.warn(`socket disconnected because ${reason}`));
+  socket.on('close', (reason) => logger.warn(`socket disconnected because ${reason}`));
   socket.on('error', logger.error);
 };
 

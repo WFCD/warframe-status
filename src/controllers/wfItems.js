@@ -37,7 +37,6 @@ router.use((req, res, next) => {
   next();
 });
 
-
 router.get('/', (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   res.json(req.items.items);
@@ -65,7 +64,7 @@ router.get('/:item', (req, res) => {
 
 router.get('/search/:query', /* cache('10 hours'), */ (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  const queries = req.params.query.trim().split(',').map(q => q.trim());
+  const queries = req.params.query.trim().split(',').map((q) => q.trim());
   const results = [];
   queries.forEach((query) => {
     req.items.items.forEach((item) => {

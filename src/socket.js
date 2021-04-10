@@ -26,13 +26,13 @@ const init = (server) => {
   wss.on('error', logger.error);
 
   // subscribable events
-  worldState.on('tweet', packet => broadcast('tweet', packet));
-  worldState.on('rss', packet => broadcast('rss', packet));
+  worldState.on('tweet', (packet) => broadcast('tweet', packet));
+  worldState.on('rss', (packet) => broadcast('rss', packet));
   worldState.on('ws:update:event', (packet) => {
     broadcast('ws:event', packet);
     broadcast(packet.key, packet);
   });
-  worldState.on('ws:update:parsed', packet => broadcast('ws:update', packet));
+  worldState.on('ws:update:parsed', (packet) => broadcast('ws:update', packet));
 
   logger.info(`Started listening on wss://${host}:${port}/socket`);
 };
