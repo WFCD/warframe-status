@@ -11,6 +11,7 @@ const router = express.Router();
 const rivenCaches = {};
 
 const groupRivenData = (cacheStrData) => {
+  if (!cacheStrData.length) return {};
   const parsed = JSON.parse(cacheStrData);
 
   const byType = {};
