@@ -6,7 +6,6 @@
   "dependencies": {
     "@sentry/node": "^5.30.0",
     "@wfcd/arsenal-parser": "^1.2.1",
-    "@wfcd/items": "^1.1246.118",
     "apicache": "^1.5.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
@@ -19,6 +18,7 @@
     "node-fetch": "^2.6.1",
     "prom-client": "^11.5.3",
     "swagger-stats": "^0.95.18",
+    "warframe-items": "^1.1246.120",
     "warframe-nexus-query": "^1.6.15",
     "warframe-worldstate-data": "^1.18.12",
     "warframe-worldstate-parser": "^2.19.0",
