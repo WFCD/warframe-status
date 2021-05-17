@@ -6,6 +6,7 @@
   "dependencies": {
     "@sentry/node": "^5.30.0",
     "@wfcd/arsenal-parser": "^1.2.1",
+    "@wfcd/items": "^1.1246.118",
     "apicache": "^1.5.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
@@ -18,13 +19,12 @@
     "node-fetch": "^2.6.1",
     "prom-client": "^11.5.3",
     "swagger-stats": "^0.95.18",
-    "warframe-items": "^1.1245.0",
     "warframe-nexus-query": "^1.6.15",
-    "warframe-worldstate-data": "^1.11.2",
-    "warframe-worldstate-parser": "^2.16.4",
+    "warframe-worldstate-data": "^1.18.12",
+    "warframe-worldstate-parser": "^2.19.0",
     "winston": "^3.3.3",
     "worldstate-emitter": "^1.0.7",
-    "ws": "^7.4.2"
+    "ws": "^7.4.5"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.1",
@@ -38,11 +38,11 @@
     "@types/helmet": "0.0.43",
     "@types/socket.io": "^2.1.13",
     "@types/twitter": "^1.7.0",
-    "@types/ws": "^7.4.0",
-    "dotenv": "^8.2.0",
-    "eslint": "^7.20.0",
+    "@types/ws": "^7.4.4",
+    "dotenv": "^8.6.0",
+    "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import": "^2.23.2",
     "nodemon": "^2.0.7"
   },
   "scripts": {
