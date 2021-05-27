@@ -24,7 +24,7 @@
     "warframe-worldstate-parser": "^2.19.0",
     "winston": "^3.3.3",
     "worldstate-emitter": "^1.0.7",
-    "ws": "^7.4.5"
+    "ws": "^7.4.6"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.1",
