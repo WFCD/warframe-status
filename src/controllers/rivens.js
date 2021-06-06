@@ -39,7 +39,7 @@ const groupRivenData = (cacheStrData) => {
 };
 
 platforms.forEach((platform) => {
-  const rCache = new Cache(`https://warframe.com/repos/weeklyRivens${platform.toUpperCase()}.json`, 604800000, {
+  const rCache = new Cache(`https://www.warframe.com/repos/weeklyRivens${platform.toUpperCase()}.json`, 604800000, {
     parser: groupRivenData,
     logger,
     delayStart: true,
