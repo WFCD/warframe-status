@@ -29,13 +29,13 @@ Requests taken as json strings in the socket packet.
 
 Consumers will need to parse responses and stringify requests yourself, as ws doesn't provide a way to automatically parse them.
 
-- ```json
+```json
 {"event": "ws:req", "packet": { "platform": "$platform", "language": "$language" }}
 ```
-- ```json
+```json
 { "event": "twitter" }
 ```
-- ```json
+```json
 { "event": "rss" }
 ```
 
