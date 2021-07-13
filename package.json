@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@sentry/types": "^6.9.0",
-    "@types/apicache": "^1.2.2",
+    "@types/apicache": "^1.2.3",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.12",
     "@types/helmet": "0.0.43",
