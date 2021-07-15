@@ -2,31 +2,13 @@
 
 const express = require('express');
 const Nexus = require('warframe-nexus-query');
-const NexusFetcher = require('nexushub-client');
 
 const {
   logger, ah, cache, noResult,
 } = require('../lib/utilities');
 
 const router = express.Router();
-
-let nexus;
-let nexusQuerier;
-const nexusOptions = {
-  user_key: process.env.NEXUSHUB_USER_KEY || undefined,
-  user_secret: process.env.NEXUSHUB_USER_SECRET || undefined,
-  api_url: process.env.NEXUS_API_OVERRIDE || undefined,
-  auth_url: process.env.NEXUS_AUTH_OVERRIDE || undefined,
-  ignore_limiter: true,
-};
-
-if (!process.env.DISABLE_PRICECHECKS) {
-  logger.info('pricechecking enabled');
-  nexus = new NexusFetcher(nexusOptions.nexusKey
-    && nexusOptions.nexusSecret ? nexusOptions : {});
-
-  nexusQuerier = new Nexus({ logger, nexusApi: nexus });
-}
+const nexusQuerier = new Nexus({ logger, skipNexus: true });
 
 router.use((req, res, next) => {
   req.platform = req.get('platform');
