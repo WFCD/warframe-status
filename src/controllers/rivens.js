@@ -12,7 +12,10 @@ const rivenCaches = {};
 
 const groupRivenData = (cacheStrData) => {
   if (!cacheStrData.length) return {};
-  const parsed = JSON.parse(cacheStrData);
+  const stripped = cacheStrData
+    .replace(/NaN/g, 0)
+    .replace(/WARNING:.*\n/, '');
+  const parsed = JSON.parse(stripped);
 
   const byType = {};
   parsed.forEach((rivenD) => {
