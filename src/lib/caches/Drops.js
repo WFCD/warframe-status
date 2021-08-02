@@ -33,7 +33,7 @@ function formatData(data) {
       .replace(' (Conclave)', '')
       .replace('Rotation ', 'Rot ')
       .trim(),
-    item: reward.item.replace('Blueprint', 'BP').replace(' Prime', ' P.'),
+    item: reward.item,
     rarity: reward.rarity,
     chance: Number.parseFloat(reward.chance),
   }));
