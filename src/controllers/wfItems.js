@@ -5,12 +5,12 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  Items, logger, noResult, trimPlatform,
+  Items, logger, noResult, trimPlatform, cache,
 } = require('../lib/utilities');
 
 const wfItemData = {
   weapons: {
-    items: new Items({ category: ['Primary', 'Secondary', 'Melee'] }),
+    items: new Items({ category: ['Primary', 'Secondary', 'Melee', 'Arch-Melee', 'Arch-Gun'] }),
     name: 'Weapon',
   },
   warframes: {
@@ -42,7 +42,7 @@ router.get('/', (req, res) => {
   res.json(req.items.items);
 });
 
-router.get('/:item', (req, res) => {
+router.get('/:item', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   let result;
   let exact = false;
@@ -62,9 +62,10 @@ router.get('/:item', (req, res) => {
   }
 });
 
-router.get('/search/:query', /* cache('10 hours'), */ (req, res) => {
+router.get('/search/:query', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  const queries = req.params.query.trim().split(',').map((q) => q.trim());
+  const { only, delete, sortby } = req.query;
+  const queries = req.params.query.trim().split(',').map((q) => q.trim().toLowerCase());
   const results = [];
   queries.forEach((query) => {
     req.items.items.forEach((item) => {
