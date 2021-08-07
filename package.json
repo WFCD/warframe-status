@@ -4,7 +4,7 @@
   "author": "tobitenno",
   "repository": "https://github.com/wfcd/warframe-status.git",
   "dependencies": {
-    "@sentry/node": "^6.10.0",
+    "@sentry/node": "^6.11.0",
     "@wfcd/arsenal-parser": "^1.2.1",
     "apicache": "^1.5.3",
     "colors": "^1.4.0",
