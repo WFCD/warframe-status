@@ -18,16 +18,16 @@
     "node-fetch": "^2.6.5",
     "prom-client": "^11.5.3",
     "swagger-stats": "^0.99.2",
-    "warframe-items": "^1.1249.135",
+    "warframe-items": "^1.1250.5",
     "warframe-nexus-query": "^1.6.16",
-    "warframe-worldstate-data": "^1.19.9",
+    "warframe-worldstate-data": "^1.19.10",
     "warframe-worldstate-parser": "^2.20.4",
     "winston": "^3.3.3",
     "worldstate-emitter": "^1.0.7",
     "ws": "^7.5.5"
   },
   "optionalDependencies": {
-    "bufferutil": "^4.0.1",
+    "bufferutil": "^4.0.4",
     "utf-8-validate": "^5.0.6"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "@types/helmet": "4.0.0",
     "@types/socket.io": "^3.0.2",
     "@types/twitter": "^1.7.1",
-    "@types/ws": "^7.4.7",
+    "@types/ws": "^8.2.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
