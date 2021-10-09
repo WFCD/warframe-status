@@ -18,7 +18,7 @@
     "node-fetch": "^2.6.5",
     "prom-client": "^11.5.3",
     "swagger-stats": "^0.99.2",
-    "warframe-items": "^1.1250.5",
+    "warframe-items": "^1.1250.16",
     "warframe-nexus-query": "^1.6.16",
     "warframe-worldstate-data": "^1.19.10",
     "warframe-worldstate-parser": "^2.20.4",
