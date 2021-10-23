@@ -43,7 +43,7 @@
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.25.2",
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.14"
   },
   "scripts": {
     "start": "node main.js",
