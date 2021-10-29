@@ -6,9 +6,6 @@ if (process.env.NODE_ENV === 'development') require('dotenv').config();
 const express = require('express');
 
 const app = express();
-
-const server = require('http').createServer(app);
-
 const addons = require('./lib/addons');
 
 const { logger } = require('./lib/utilities');
@@ -30,4 +27,4 @@ app.use((req, res) => {
   res.status(404).json({ error: 'No such route.', code: 404 }).end();
 });
 
-module.exports = server;
+module.exports = app;

@@ -9,14 +9,12 @@ const {
 } = require('../lib/utilities');
 
 const i18nOnObject = true;
-
 const wfItemData = {
   weapons: new Items({ category: ['Primary', 'Secondary', 'Melee', 'Arch-Melee', 'Arch-Gun'], i18n, i18nOnObject }),
   warframes: new Items({ category: ['Warframes', 'Archwing'], i18n, i18nOnObject }),
   items: new Items({ i18n, i18nOnObject }),
   mods: new Items({ category: ['Mods'], i18n, i18nOnObject }),
 };
-
 const cleanup = (item, lang) => {
   if (lang) {
     if (lang !== 'en') {
@@ -55,12 +53,73 @@ router.use((req, res, next) => {
   next();
 });
 
+/**
+ * GET /warframes
+ * @summary Get Warframe specs and data, such as polarities defenses, and profile.
+ * @description Warframe stats and general information.
+ * @tags Static Processing Data
+ * @return {Array<Item>} 200 - successful operation
+ */
+/**
+ * GET /weapons
+ * @summary Get Weapon data and statistics.
+ * @description Weapon statistics.
+ * @tags Static Processing Data
+ * @return {Array<Item>} 200 - successful operation
+ */
+/**
+ * GET /items
+ * @summary Get Warframe specs and data, such as polarities defenses, and profile.
+ * @description Warframe stats and general information.
+ * @tags Static Processing Data
+ * @return {Array<Item>} 200 - successful operation
+ */
+/**
+ * GET /mods
+ * @summary Get Warframe specs and data, such as polarities defenses, and profile.
+ * @description Warframe stats and general information.
+ * @tags Static Processing Data
+ * @return {Array<Item>} 200 - successful operation
+ */
 router.get('/', (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only } = req.query;
 
   res.json([...req.items].map((i) => postCleanup(i, { only, remove })));
 });
+
+/**
+ * GET /warframes/{query}
+ * @summary Get Warframe specs and data, such as polarities defenses, and profile based on the query
+ * @description Warframe stats and general information.
+ * @tags Searchable
+ * @param {string} query.path - Keyword to search for
+ * @return {Item} 200 - successful operation
+ */
+/**
+ * GET /weapons/{query}
+ * @summary Get Weapon data and statistics based on the query.
+ * @description Weapon Statistics
+ * @tags Searchable
+ * @param {string} query.path - Keyword to search for
+ * @return {Item} 200 - successful operation
+ */
+/**
+ * GET /items/{query}
+ * @summary Get Warframe Items data
+ * @description Item information, such as name, unique name, type, and image name.
+ * @tags Searchable
+ * @param {string} query.path - Keyword to search for
+ * @return {Item} 200 - successful operation
+ */
+/**
+ * GET /mods/{query}
+ * @summary Get Mods Items data
+ * @description Mod information
+ * @tags Searchable
+ * @param {string} query.path - Keyword to search for
+ * @return {Array<Item>} 200 - successful operation
+ */
 router.get('/:item', cache('10 hours'), (req, res, next) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only } = req.query;
@@ -82,6 +141,39 @@ router.get('/:item', cache('10 hours'), (req, res, next) => {
   }
   next();
 });
+
+/**
+ * GET /warframes/search/{query}
+ * @summary Get Warframe specs and data, such as polarities defenses, and profile based on the query
+ * @description Warframe stats and general information.
+ * @tags Searchable
+ * @param {string} query.path - Keyword to search for
+ * @return {Array<Item>} 200 - successful operation
+ */
+/**
+ * GET /weapons/search/{query}
+ * @summary Get Weapon data and statistics based on the query.
+ * @description Weapon Statistics
+ * @tags Searchable
+ * @param {string} query.path - Keyword to search for
+ * @return {Array<Item>} 200 - successful operation
+ */
+/**
+ * GET /items/search/{query}
+ * @summary Get Warframe Items data
+ * @description Item information, such as name, unique name, type, and image name.
+ * @tags Searchable
+ * @param {string} query.path - Keyword to search for
+ * @return {Array<Item>} 200 - successful operation
+ */
+/**
+ * GET /mods/search/{query}
+ * @summary Get Mods Items data
+ * @description Mod information
+ * @tags Searchable
+ * @param {string} query.path - Keyword to search for
+ * @return {Array<Item>} 200 - successful operation
+ */
 router.get('/search/:query', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only } = req.query;
