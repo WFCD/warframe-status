@@ -6,7 +6,7 @@
   "dependencies": {
     "@sentry/node": "^6.13.3",
     "@wfcd/arsenal-parser": "^1.2.1",
-    "apicache": "^1.5.3",
+    "apicache": "^1.6.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
