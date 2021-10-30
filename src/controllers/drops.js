@@ -23,11 +23,34 @@ const groupLocation = (data) => {
   return locBase;
 };
 
+/**
+ * Drop with chances @ location
+ * @typedef {Object} Drop
+ * @property {string} location
+ * @property {string} type
+ * @property {('common'|'uncommon'|'rare'|'legendary')} [rarity]
+ * @property {number} [chance] drop chance as a decimal that the drop occurs
+ * @property {'A'|'B'|'C'|'D'|'E'|'F'|'G'} [rotation] rotation the drop occurs on
+ */
+
+/**
+ * GET /drops
+ * @return {Array<Drop>} drop array
+ * @summary Drops, responses are cached for 24h
+ * @description Get all of the drops
+ */
 router.get('/', cache('24 hours'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   res.json(await dropCache.getData());
 }));
 
+/**
+ * GET /drops/search/{query}
+ * @param {string} query.path Drop query
+ * @return {Array<Drop>} qualifying drop array
+ * @summary Responds with an array of drops matching the query.
+ * @description Query-based drop search, responses are cached for an hour
+ */
 router.get('/search/:query', cache('1 hour'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const drops = await dropCache.getData();

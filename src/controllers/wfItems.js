@@ -49,6 +49,7 @@ router.use((req, res, next) => {
   req.items = (req.baseUrl.replace('/', '').trim().split('/')[0] || '').toLowerCase();
   if (Object.keys(wfItemData).includes(req.items)) {
     req.items = [...wfItemData[req.items]].map((i) => cleanup(i, req.header('Accept-Language')));
+    res.setHeader('Content-Language', req.header('Accept-Language'));
   }
   next();
 });

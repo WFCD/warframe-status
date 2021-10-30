@@ -43,8 +43,6 @@
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.25.2",
-    "express-jsdoc-swagger": "^1.6.7",
-    "json-to-pretty-yaml": "^1.2.2",
     "nodemon": "^2.0.14"
   },
   "scripts": {
@@ -54,7 +52,7 @@
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
     "test": "exit 0",
-    "update:spec": "node src/lib/generate.js"
+    "update:spec": "curl --url https://docs.warframestat.us/openapi.json -G -o src/api-spec/openapi.json --silent"
   },
   "engines": {
     "node": ">=11.15.0 < 15",
@@ -66,7 +64,7 @@
       "**/test/**.**"
     ],
     "env": {
-      "LOG_LEVEL": "silly",
+      "LOG_LEVEL": "info",
       "API_BASE_URL": "http://localhost:3001",
       "NODE_ENV": "development",
       "PORT": 3001,
