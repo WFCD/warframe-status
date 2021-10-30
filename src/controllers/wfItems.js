@@ -18,7 +18,7 @@ const wfItemData = {
 const cleanup = (item, lang) => {
   if (lang) {
     if (lang !== 'en') {
-      Object.keys(item.i18n).forEach((locale) => {
+      Object.keys(item.i18n || {}).forEach((locale) => {
         if (locale !== lang) item.i18n[locale] = undefined;
       });
     } else {
@@ -48,7 +48,7 @@ router.use((req, res, next) => {
   req.platform = trimPlatform(req.baseUrl);
   req.items = (req.baseUrl.replace('/', '').trim().split('/')[0] || '').toLowerCase();
   if (Object.keys(wfItemData).includes(req.items)) {
-    req.items = [...wfItemData[req.items]].map((i) => cleanup(i, req.header('Accept-Language') || 'en'));
+    req.items = ([...wfItemData[req.items]] || []).map((i) => cleanup(i, req.header('Accept-Language') || 'en'));
     res.setHeader('Content-Language', req.header('Accept-Language') || 'en');
   }
   next();
