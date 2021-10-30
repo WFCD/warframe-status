@@ -180,6 +180,7 @@ router.get('/search/:query', cache('10 hours'), (req, res) => {
   const { remove, only } = req.query;
   const queries = req.params.query.trim().split(',').map((q) => q.trim().toLowerCase());
   const results = queries.map((query) => [...req.items].map((item) => {
+    if (!item || !item.name) return null;
     if (item.name.toLowerCase().includes(query)) {
       return item;
     }
