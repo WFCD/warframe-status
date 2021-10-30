@@ -16,7 +16,6 @@
     "json-fetch-cache": "^1.2.6",
     "nexushub-client": "^1.2.0",
     "node-fetch": "^2.6.5",
-    "prom-client": "^11.5.3",
     "swagger-stats": "^0.99.2",
     "warframe-items": "^1.1251.3",
     "warframe-nexus-query": "^1.6.16",
@@ -28,7 +27,8 @@
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.5",
-    "utf-8-validate": "^5.0.7"
+    "utf-8-validate": "^5.0.7",
+    "prom-client": "^11.5.3"
   },
   "devDependencies": {
     "@sentry/types": "^6.13.3",
@@ -61,16 +61,57 @@
   "license": "Apache-2.0",
   "nodemonConfig": {
     "ignore": [
-      "**/test/**.**"
+      "**/test/**.**",
+      "pacakge*.json"
     ],
     "env": {
-      "LOG_LEVEL": "verbose",
+      "LOG_LEVEL": "info",
       "API_BASE_URL": "http://localhost:3001",
       "NODE_ENV": "development",
       "PORT": 3001,
       "CACHE_TIMEOUT": 30000,
       "DISABLE_PRICECHECKS": "true",
       "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+    }
+  },
+  "eslintIgnore": ["src/lib/generate.js"],
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "parserOptions": {
+      "sourceType": "script"
+    },
+    "rules": {
+      "valid-jsdoc": [
+        "error",
+        {
+          "requireReturn": false,
+          "requireReturnDescription": false,
+          "preferType": {
+            "String": "string",
+            "Number": "number",
+            "Boolean": "boolean",
+            "Function": "function",
+            "object": "Object",
+            "date": "Date",
+            "error": "Error"
+          },
+          "prefer": {
+            "return": "returns"
+          }
+        }
+      ],
+      "no-underscore-dangle": "off",
+      "strict": [
+        "error",
+        "safe"
+      ],
+      "linebreak-style": "off",
+      "no-restricted-syntax": "off",
+      "no-await-in-loop": "off",
+      "global-require": "off",
+      "no-fallthrough": "off",
+      "no-param-reassign": "off",
+      "no-case-declarations": "off"
     }
   }
 }

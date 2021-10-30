@@ -46,3 +46,5 @@ tmp/
 .nodemon
 nodemon.json
 .env
+
+.idea/
