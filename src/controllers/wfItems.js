@@ -28,15 +28,19 @@ const cleanup = (item, lang) => {
   return item;
 };
 const postCleanup = (item, { only, remove }) => {
-  const removeKeys = (remove || '').split(',');
-  const onlyKeys = (only || '').split(',');
+  const removeKeys = (remove || '')
+    .split(',')
+    .filter((k) => k.length);
+  const onlyKeys = (only || '')
+    .split(',')
+    .filter((k) => k.length);
   if (Array.isArray(onlyKeys) && onlyKeys.length) {
     Object.keys(item).forEach((key) => {
       if (!onlyKeys.includes(key)) {
         item[key] = undefined;
       }
     });
-  } else if (Array.isArray(removeKeys)) {
+  } else if (Array.isArray(removeKeys) && removeKeys.length) {
     removeKeys.forEach((key) => {
       item[key] = undefined;
     });
