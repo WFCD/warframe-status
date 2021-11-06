@@ -15,7 +15,7 @@
     "helmet": "^4.6.0",
     "json-fetch-cache": "^1.2.6",
     "nexushub-client": "^1.2.0",
-    "node-fetch": "^2.6.5",
+    "node-fetch": "^2.6.6",
     "swagger-stats": "^0.99.2",
     "warframe-items": "^1.1251.15",
     "warframe-nexus-query": "^1.6.16",
