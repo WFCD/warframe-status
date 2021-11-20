@@ -40,7 +40,7 @@
     "@types/twitter": "^1.7.1",
     "@types/ws": "^8.2.0",
     "dotenv": "^10.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.3",
     "nodemon": "^2.0.15"
