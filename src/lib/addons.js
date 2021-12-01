@@ -17,7 +17,15 @@ const initSentry = (app) => {
   if (process.env.SENTRY_DSN) {
     // eslint-disable-next-line global-require
     const Sentry = require('@sentry/node');
-    Sentry.init({ dsn: process.env.SENTRY_DSN });
+    const { Integrations: TracingIntegrations } = require('@sentry/tracing');
+    Sentry.init({
+      dsn: process.env.SENTRY_DSN,
+      release: `${process.env.npm_package_name}@${process.env.npm_package_version}`,
+      integrations: [new TracingIntegrations.BrowserTracing({
+        tracingOrigins: ['api.warframestat.us'],
+      })],
+      sampleRate: 0.25,
+    });
     app.use(Sentry.Handlers.requestHandler());
     app.use(Sentry.Handlers.errorHandler());
   }
