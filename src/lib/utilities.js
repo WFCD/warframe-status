@@ -50,12 +50,17 @@ const noResult = (res) => {
   res.status(400).json({ error: 'No Result.', code: 400 });
 };
 
+const appendKey = (req) => {
+  const queries = Object.keys(req.query).map((q) => `${q}${req.query[q]}`);
+  return `${req.platform || ''}${req.language || 'en'}${queries.join('&')}` || '';
+};
+
 module.exports = {
   logger,
   platforms,
   platformAliases,
   cache: apiCache.options({
-    appendKey: (req) => `${req.platform}${req.language}` || '',
+    appendKey,
   }).middleware,
   Items,
   warframeData,

@@ -125,12 +125,12 @@ router.get('/', (req, res) => {
  * @param {string} query.path - Keyword to search for
  * @return {Array<Item>} 200 - successful operation
  */
-router.get('/:item', cache('10 hours'), (req, res, next) => {
+router.get('/:item', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only } = req.query;
   let result;
   let exact = false;
-  req.items.forEach((item) => {
+  [...req.items].filter((item) => item && item.name).forEach((item) => {
     if (item.name.toLowerCase() === req.params.item.toLowerCase()) {
       result = item;
       exact = true;
@@ -139,12 +139,12 @@ router.get('/:item', cache('10 hours'), (req, res, next) => {
       result = item;
     }
   });
+
   if (result) {
-    res.json(postCleanup(result, { only, remove }));
+    res.json(postCleanup({ ...result }, { only, remove }));
   } else {
     noResult(res);
   }
-  next();
 });
 
 /**

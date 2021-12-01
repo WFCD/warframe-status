@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "author": "tobitenno",
   "repository": "https://github.com/wfcd/warframe-status.git",
+  "private": true,
   "dependencies": {
     "@sentry/node": "^6.15.0",
     "@wfcd/arsenal-parser": "^1.2.1",
@@ -115,5 +116,28 @@
       "no-param-reassign": "off",
       "no-case-declarations": "off"
     }
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json"
+          ]
+        }
+      ],
+      "@eclass/semantic-release-sentry-releases"
+    ],
+    "branches": "main"
   }
 }
