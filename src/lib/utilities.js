@@ -52,7 +52,7 @@ const noResult = (res) => {
 
 const appendKey = (req) => {
   const queries = Object.keys(req.query).map((q) => `${q}${req.query[q]}`);
-  return `${req.platform || ''}${req.language || 'en'}${queries.join('&')}` || '';
+  return `${req.method}${encodeURIComponent(req.path)}${req.platform || ''}${req.language || 'en'}${queries.join('')}` || '';
 };
 
 module.exports = {

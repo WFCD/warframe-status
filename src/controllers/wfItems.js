@@ -130,12 +130,14 @@ router.get('/:item', cache('10 hours'), (req, res) => {
   const { remove, only } = req.query;
   let result;
   let exact = false;
-  [...req.items].filter((item) => item && item.name).forEach((item) => {
-    if (item.name.toLowerCase() === req.params.item.toLowerCase()) {
+  const by = req.query.by || 'name';
+
+  [...req.items].filter((item) => item && item[by]).forEach((item) => {
+    if (item[by].toLowerCase() === req.params.item.toLowerCase()) {
       result = item;
       exact = true;
     }
-    if (item.name.toLowerCase().includes(req.params.item.toLowerCase()) && !exact) {
+    if (item[by].toLowerCase().includes(req.params.item.toLowerCase()) && !exact) {
       result = item;
     }
   });
@@ -181,11 +183,11 @@ router.get('/:item', cache('10 hours'), (req, res) => {
  */
 router.get('/search/:query', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  const { remove, only } = req.query;
+  const { remove, only, by = 'name' } = req.query;
   const queries = req.params.query.trim().split(',').map((q) => q.trim().toLowerCase());
   const results = queries.map((query) => [...req.items].map((item) => {
-    if (!item || !item.name) return null;
-    if (item.name.toLowerCase().includes(query)) {
+    if (!item || !item[by]) return null;
+    if (item[by].toLowerCase().includes(query)) {
       return item;
     }
     return null;
