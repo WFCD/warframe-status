@@ -22,7 +22,7 @@
     "warframe-items": "^1.1252.5",
     "warframe-nexus-query": "^1.6.16",
     "warframe-worldstate-data": "^1.20.6",
-    "warframe-worldstate-parser": "^2.21.1",
+    "warframe-worldstate-parser": "^2.22.0",
     "winston": "^3.3.3",
     "worldstate-emitter": "^1.0.7",
     "ws": "^7.5.6"
@@ -33,6 +33,10 @@
     "utf-8-validate": "^5.0.7"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.16.3",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/plugin-proposal-private-methods": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
     "@sentry/types": "^6.16.1",
     "@types/apicache": "^1.6.1",
     "@types/cors": "^2.8.12",
@@ -41,11 +45,19 @@
     "@types/socket.io": "^3.0.2",
     "@types/twitter": "^1.7.1",
     "@types/ws": "^8.2.2",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "dotenv": "^10.0.0",
     "eslint": "^8.4.1",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
-    "nodemon": "^2.0.15"
+    "eslint-plugin-prettier": "^4.0.0",
+    "mocha": "^9.1.3",
+    "mocha-steps": "^1.3.0",
+    "nodemon": "^2.0.15",
+    "nyc": "^15.1.0",
+    "prettier": "^2.5.1"
   },
   "scripts": {
     "start": "node main.js",
@@ -53,8 +65,9 @@
     "dev:pm2": "pm2 start warframe-status.json",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
-    "test": "exit 0",
-    "update:spec": "curl --url https://docs.warframestat.us/openapi.json -G -o src/api-spec/openapi.json --silent"
+    "test": "nyc mocha",
+    "update:spec": "curl --url https://docs.warframestat.us/openapi.json -G -o src/api-spec/openapi.json --silent",
+    "coverage": "npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
     "node": ">=11.15.0 < 15",
@@ -63,8 +76,9 @@
   "license": "Apache-2.0",
   "nodemonConfig": {
     "ignore": [
-      "**/test/**.**",
-      "pacakge*.json"
+      "src/spec/**",
+      "pacakge*.json",
+      "src/api-spec/**"
     ],
     "env": {
       "LOG_LEVEL": "info",
@@ -80,9 +94,19 @@
     "src/lib/generate.js"
   ],
   "eslintConfig": {
-    "extends": "airbnb-base",
+    "extends": [
+      "prettier",
+      "airbnb-base"
+    ],
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
-      "sourceType": "script"
+      "sourceType": "script",
+      "babelOptions": {
+        "plugins": [
+          "@babel/plugin-proposal-class-properties",
+          "@babel/plugin-proposal-private-methods"
+        ]
+      }
     },
     "rules": {
       "valid-jsdoc": [
@@ -115,8 +139,21 @@
       "global-require": "off",
       "no-fallthrough": "off",
       "no-param-reassign": "off",
-      "no-case-declarations": "off"
-    }
+      "no-case-declarations": "off",
+      "default-case": "off"
+    },
+    "plugins": [
+      "prettier"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-private-methods"
+    ]
   },
   "release": {
     "plugins": [
@@ -140,5 +177,36 @@
       "@eclass/semantic-release-sentry-releases"
     ],
     "branches": "main"
+  },
+  "mocha": {
+    "exit": true,
+    "spec": "src/spec/**/*.spec.js",
+    "enableSourceMaps": true,
+    "enable-source-maps": true,
+    "checkLeaks": true,
+    "timeout": 60000,
+    "normal": 500,
+    "slow": 2000,
+    "fullTrace": true,
+    "require": [
+      "mocha-steps",
+      "src/spec/hooks/env.js",
+      "src/spec/hooks/start.hook.js"
+    ]
+  },
+  "nyc": {
+    "exclude": [
+      "src/spec/**",
+      "src/controllers/index.js",
+      "src/lib/*"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "source-map": true,
+    "sourceMap": true,
+    "produce-source-map": true,
+    "skip-full": true
   }
 }

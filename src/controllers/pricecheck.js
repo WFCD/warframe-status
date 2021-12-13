@@ -7,6 +7,10 @@ const {
   logger, ah, cache, noResult,
 } = require('../lib/utilities');
 
+const unavailable = {
+  error: 'Service temporarily unavailable',
+  code: 503,
+};
 const router = express.Router();
 const nexusQuerier = new Nexus({ logger, skipNexus: true });
 
@@ -17,14 +21,8 @@ router.use((req, res, next) => {
 
 router.get('/:type/:query', cache('1 hour'), ah(async (req, res) => {
   if (process.env.DISABLE_PRICECHECKS) {
-    res.status(503).json({
-      error: 'Service temporarily unavailable',
-      code: 503,
-    });
-
-    return;
+    return res.status(503).json(unavailable);
   }
-
   let value;
   logger.silly(`Got ${req.originalUrl}`);
   try {
@@ -39,17 +37,16 @@ router.get('/:type/:query', cache('1 hour'), ah(async (req, res) => {
         value = await nexusQuerier
           .priceCheckQueryAttachment(req.params.query, undefined, req.platform);
         break;
-      default:
-        break;
     }
+    /* istanbul ignore else */
     if (value) {
-      res.json(value);
-    } else {
-      noResult(res);
+      return res.status(200).json(value);
     }
-  } catch (error) {
+    /* istanbul ignore next */
+    return noResult(res);
+  } catch (error) /* istanbul ignore next */ {
     logger.error(error);
-    res.status(500).json({
+    return res.status(500).json({
       error: `An error ocurred pricechecking \`${req.params.query}\``,
       code: 500,
     });

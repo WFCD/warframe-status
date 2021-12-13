@@ -12,7 +12,6 @@ jobs:
     strategy:
       matrix:
         node-version: [15.x]
-
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
@@ -25,3 +24,21 @@ jobs:
         npm i warframe-worldstate-data@latest
         npm i @wfcd/arsenal-parser@latest
         npm run lint
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 15.x ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          npm install
+          npm i warframe-items@latest
+          npm i warframe-worldstate-parser@latest
+          npm i warframe-worldstate-data@latest
+          npm i @wfcd/arsenal-parser@latest
+          npm run lint

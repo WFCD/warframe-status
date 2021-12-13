@@ -8,7 +8,7 @@ const {
 const get = (platform, language) => {
   try {
     return worldState.getWorldstate(platform, language);
-  } catch (e) {
+  } catch (e) /* istanbul ignore next */ {
     logger.debug(e);
     return undefined;
   }
@@ -17,23 +17,15 @@ const get = (platform, language) => {
 const router = express.Router();
 
 router.use((req, res, next) => {
-  req.platform = (req.baseUrl.replace('/', '').trim().split('/')[0] || '').toLowerCase();
-  if (req.platform === 'ns') {
-    req.platform = 'swi';
-  }
-
-  if (!platforms.includes(req.platform)) {
-    req.platform = 'pc';
-  }
+  req.platform = (req.baseUrl.replace('/', '').trim().split('/')[0] || /* istanbul ignore next */ '').toLowerCase();
+  if (req.platform === 'ns') req.platform = 'swi';
+  /* istanbul ignore if */
+  if (!platforms.includes(req.platform)) req.platform = 'pc';
 
   req.language = (req.header('Accept-Language') || 'en').substr(0, 2).toLowerCase();
-  req.language = (req.query.language || req.language || 'en').substr(0, 2);
-  if (req.language !== 'en') {
-    logger.info(`got a request for ${req.language}`);
-  }
-  if (!(req.language && languages.includes(req.language))) {
-    req.language = 'en';
-  }
+  req.language = (req.query.language || req.language).substr(0, 2);
+  if (req.language !== 'en') logger.info(`got a request for ${req.language}`);
+  if (!(req.language && languages.includes(req.language))) req.language = 'en';
   next();
 });
 
@@ -57,7 +49,7 @@ router.get('/:field', (req, res) => {
     const ows = get(req.platform, req.params.field.substr(0, 2).toLowerCase());
     res.json(ows);
   } else {
-    res.status(400).json({ error: 'No such worldstate field', code: 400 });
+    res.status(404).json({ error: 'No such worldstate field', code: 404 });
   }
 });
 
@@ -72,7 +64,7 @@ router.get('/:language/:field', cache('1 minute'), (req, res) => {
     res.setHeader('Content-Language', req.language);
     res.json(ws[req.params.field]);
   } else {
-    res.status(400).json({ error: 'No such worldstate field', code: 400 });
+    res.status(404).json({ error: 'No such worldstate field', code: 404 });
   }
 });
 

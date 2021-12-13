@@ -47,7 +47,7 @@ delete warframeData.warframes;
 const titleCase = (str) => str.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
 
 const noResult = (res) => {
-  res.status(400).json({ error: 'No Result.', code: 400 });
+  res.status(404).json({ error: 'No Result', code: 404 });
 };
 
 const appendKey = (req) => {
@@ -61,6 +61,11 @@ module.exports = {
   platformAliases,
   cache: apiCache.options({
     appendKey,
+    enabled: process.env.NODE_ENV === 'production',
+    statusCodes: {
+      exclude: [503],
+    },
+    respectCacheControl: true,
   }).middleware,
   Items,
   warframeData,

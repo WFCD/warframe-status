@@ -64,9 +64,7 @@ router.get('/search/:query', cache('1 hour'), ah(async (req, res) => {
     qResults = qResults.length > 0 ? qResults : [];
 
     if (req.query.grouped_by && req.query.grouped_by === 'location') {
-      if (typeof results !== 'object') {
-        results = {};
-      }
+      /* istanbul ignore if */ if (typeof results !== 'object') results = {};
 
       results = {
         ...groupLocation(qResults),
