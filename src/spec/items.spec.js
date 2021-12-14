@@ -34,6 +34,13 @@ describe('items', () => {
     res.body[0].should.have.property('description');
     res.body[0].should.not.have.property('name');
   });
+  it('should be case insensitive', async () => {
+    const res = await chai.request(server)
+      .get('/items/excalibur%20umbra');
+    res.should.have.status(200);
+    res.body.should.be.an('object');
+    res.body.name.should.be.equal('Excalibur Umbra');
+  });
   it('should be searchable for a single result', async () => {
     const res = await chai.request(server)
       .get('/items/excalibur%20umbra');
