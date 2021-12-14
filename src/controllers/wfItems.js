@@ -129,6 +129,7 @@ router.get('/:item', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only } = req.query;
   let result;
+  let keyDistance;
   let exact = false;
   const by = req.query.by || 'name';
 
@@ -137,8 +138,13 @@ router.get('/:item', cache('10 hours'), (req, res) => {
       result = item;
       exact = true;
     }
+
     if (item[by].toLowerCase().includes(req.params.item.toLowerCase()) && !exact) {
-      result = item;
+      const distance = item[by].toLowerCase().replace(req.params.item.toLowerCase(), '').length;
+      if (!keyDistance || distance < keyDistance) {
+        keyDistance = distance;
+        result = item;
+      }
     }
   });
 
