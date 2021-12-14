@@ -15,6 +15,16 @@ describe('items', () => {
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(0);
   });
+  it('should include required keys', async () => {
+    const res = await chai.request(server)
+      .get('/items');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.be.greaterThan(0);
+    res.body.forEach((item) => {
+      item.should.include.all.keys('uniqueName', 'name', 'category', 'type', 'tradable');
+    });
+  });
   it('should remove keys from dump', async () => {
     const res = await chai.request(server)
       .get('/items?remove=uniqueName,description');
