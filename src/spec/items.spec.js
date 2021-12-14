@@ -106,7 +106,7 @@ describe('weapons', () => {
 });
 
 describe('warframes', () => {
-  it('should return all items', async () => {
+  it('should return all warframes', async () => {
     const res = await chai.request(server)
       .get(`/warframes?ts=${Date.now()}`);
     res.should.have.status(200);
