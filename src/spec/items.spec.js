@@ -3,6 +3,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../app');
+const { Items } = require('../lib/utilities');
 
 chai.should();
 chai.use(chaiHttp);
@@ -13,7 +14,7 @@ describe('items', () => {
       .get('/items');
     res.should.have.status(200);
     res.body.should.be.an('array');
-    res.body.length.should.be.greaterThan(0);
+    res.body.length.should.be.equal(new Items().length);
   });
   it('should include required keys', async () => {
     const res = await chai.request(server)
