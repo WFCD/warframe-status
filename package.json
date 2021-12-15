@@ -24,7 +24,7 @@
     "warframe-worldstate-data": "^1.20.6",
     "warframe-worldstate-parser": "^2.22.0",
     "winston": "^3.3.3",
-    "worldstate-emitter": "^1.0.7",
+    "worldstate-emitter": "^1.0.8",
     "ws": "^7.5.6"
   },
   "optionalDependencies": {
@@ -70,8 +70,8 @@
     "coverage": "npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
-    "node": ">=11.15.0 < 15",
-    "npm": ">=6.7.0 < 7"
+    "node": ">=16.0.0 < 17",
+    "npm": ">=8.0.0 < 9"
   },
   "license": "Apache-2.0",
   "nodemonConfig": {
