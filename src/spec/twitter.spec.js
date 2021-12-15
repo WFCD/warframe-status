@@ -7,8 +7,7 @@ const server = require('../app');
 const should = chai.should();
 chai.use(chaiHttp);
 
-const twitific = process.env.TWITTER_SECRET
-  && process.env.TWITTER_TIMEOUT
+const twitific = process.env.TWITTER_KEY
   && process.env.TWITTER_SECRET
   && process.env.TWITTER_BEARER_TOKEN;
 

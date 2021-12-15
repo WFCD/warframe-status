@@ -59,6 +59,10 @@ jobs:
       - run: npm test
         env:
           CI: true
+          TWITTER_KEY: ${{ secrets.TWITTER_KEY }}
+          TWITTER_SECRET: ${{ secrets.TWITTER_SECRET }}
+          TWITTER_TIMEOUT: ${{ secrets.TWITTER_TIMEOUT }}
+          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
