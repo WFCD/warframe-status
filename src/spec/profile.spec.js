@@ -18,6 +18,8 @@ describe('profiles', () => {
       const res = await chai.request(server).get('/profile/tobiah');
       res.should.have.status(200);
       should.exist(res.body);
+      res.body.should.include.keys('account', 'loadout');
+      res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
     });
     it('should error with bad username', async () => {
       const res = await chai.request(server).get('/profile/asdasdaasdaasdaasdasdaasdaasdaasdasdaasdaasdaasdasdaasdaasdaasdasdaasdaasda');
