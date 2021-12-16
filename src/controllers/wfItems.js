@@ -15,19 +15,20 @@ const wfItemData = {
   items: new Items({ i18n, i18nOnObject }),
   mods: new Items({ category: ['Mods'], i18n, i18nOnObject }),
 };
-const cleanup = (item, lang) => {
-  if (lang) {
-    if (lang !== 'en') {
-      Object.keys(item.i18n || {}).forEach((locale) => {
-        if (locale !== lang) item.i18n[locale] = undefined;
+const cleanup = (item, lang = 'en') => {
+  const clone = { ...item };
+  if (lang !== 'en') {
+    Object.keys(clone.i18n || {})
+      .forEach((locale) => {
+        if (locale !== lang) clone.i18n[locale] = undefined;
       });
-    } else {
-      item.i18n = undefined;
-    }
+  } else {
+    clone.i18n = undefined;
   }
-  return item;
+  return clone;
 };
 const postCleanup = (item, { only, remove }) => {
+  const clone = { ...item };
   const removeKeys = (remove || '')
     .split(',')
     .filter((k) => k.length);
@@ -35,17 +36,17 @@ const postCleanup = (item, { only, remove }) => {
     .split(',')
     .filter((k) => k.length);
   if (Array.isArray(onlyKeys) && onlyKeys.length) {
-    Object.keys(item).forEach((key) => {
+    Object.keys(clone).forEach((key) => {
       if (!onlyKeys.includes(key)) {
-        item[key] = undefined;
+        clone[key] = undefined;
       }
     });
   } else if (Array.isArray(removeKeys) && removeKeys.length) {
     removeKeys.forEach((key) => {
-      item[key] = undefined;
+      clone[key] = undefined;
     });
   }
-  return item;
+  return clone;
 };
 
 router.use((req, res, next) => {

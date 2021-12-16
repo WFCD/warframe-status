@@ -2,7 +2,7 @@
 
 const WebSocket = require('ws');
 
-const logger = require('../src/lib/logger')('PROC');
+const logger = require('../lib/logger')('PROC');
 
 logger.level = 'debug';
 

@@ -11,7 +11,7 @@ const router = express.Router();
 const rivenCaches = {};
 
 const groupRivenData = (cacheStrData) => {
-  if (!cacheStrData.length) return {};
+  /* istanbul ignore if */ if (!cacheStrData.length) return {};
   const stripped = cacheStrData
     .replace(/NaN/g, 0)
     .replace(/WARNING:.*\n/, '');
@@ -53,17 +53,9 @@ platforms.forEach((platform) => {
 
 router.use((req, res, next) => {
   req.platform = trimPlatform(req.baseUrl);
-  if (req.platform === 'ns') {
-    req.platform = 'swi';
-  }
-
-  if (!platforms.includes(req.platform)) {
-    if (req.header('platform')) {
-      req.platform = req.header('platform');
-    } else {
-      req.platform = 'pc';
-    }
-  }
+  if (req.platform === 'ns') req.platform = 'swi';
+  /* istanbul ignore if */
+  if (!platforms.includes(req.platform)) req.platform = req.header('platform') || 'pc';
   next();
 });
 
