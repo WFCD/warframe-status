@@ -14,7 +14,7 @@
     "express": "^4.17.2",
     "express-async-handler": "^1.2.0",
     "express-favicon-short-circuit": "^1.1.1",
-    "helmet": "^4.6.0",
+    "helmet": "^5.0.1",
     "json-fetch-cache": "^1.2.6",
     "nexushub-client": "^1.2.0",
     "node-fetch": "^2.6.6",
