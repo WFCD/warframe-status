@@ -30,7 +30,7 @@
   "optionalDependencies": {
     "bufferutil": "^4.0.5",
     "prom-client": "^11.5.3",
-    "utf-8-validate": "^5.0.7"
+    "utf-8-validate": "^5.0.8"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.5",
