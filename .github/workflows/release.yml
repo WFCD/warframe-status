@@ -17,7 +17,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Test
         run: |
-          npm install
+          npm ci
           npm i warframe-items@latest
           npm i warframe-worldstate-parser@latest
           npm i warframe-worldstate-data@latest
@@ -79,6 +79,6 @@ jobs:
       - name: Update server
         run: ssh prod 'cd ~/warframe-status && git checkout -- . && git fetch --all && git reset --hard origin/main'
       - name: Update dependencies
-        run ssh prod 'rm -rf node_modules && npm ci'
+        run: ssh prod 'rm -rf node_modules && npm ci'
       - name: Start Process
         run: ssh prod 'cd ~/warframe-status && pm2 start warframe-status.json'
