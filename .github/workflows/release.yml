@@ -75,7 +75,7 @@ jobs:
           SSH_KEY: ${{ secrets.PROD_SSH_KEY }}
           SSH_HOST: ${{ secrets.PROD_SSH_HOST }}
       - name: Stop Process
-        run: ssh prod 'pm2 kill'
+        run: ssh prod 'source ~/.zshrc && pm2 kill'
       - name: Update server
         run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && git checkout -- . && git fetch --all && git reset --hard origin/main'
       - name: Update dependencies
