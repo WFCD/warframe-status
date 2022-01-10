@@ -1,6 +1,6 @@
 'use strict';
 
-require('colors');
+require('chalk');
 const ah = require('express-async-handler');
 const warframeData = require('warframe-worldstate-data');
 const Items = require('warframe-items');

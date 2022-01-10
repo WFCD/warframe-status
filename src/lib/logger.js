@@ -1,6 +1,6 @@
 'use strict';
 
-require('colors');
+require('chalk');
 const { transports, createLogger, format } = require('winston');
 
 const {
