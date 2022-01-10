@@ -4,8 +4,28 @@ on:
     branches:
       - main
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 15.x ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Test
+        run: |
+          npm ci
+          npm i warframe-items@latest
+          npm i warframe-worldstate-parser@latest
+          npm i warframe-worldstate-data@latest
+          npm i @wfcd/arsenal-parser@latest
+          npm test
   semantic-release:
     runs-on: ubuntu-latest
+    needs: [ test ]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -33,3 +53,32 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
           environment: production
+  deploy:
+    # Built from https://blog.benoitblanchon.fr/github-action-run-ssh-commands/
+    runs-on: ubuntu-latest
+    needs: [ semantic-release, test]
+    steps:
+      - name: Configure
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/prod.key
+          chmod 600 ~/.ssh/prod.key
+          cat >>~/.ssh/config <<END
+          Host prod
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/prod.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.PROD_SSH_USER }}
+          SSH_KEY: ${{ secrets.PROD_SSH_KEY }}
+          SSH_HOST: ${{ secrets.PROD_SSH_HOST }}
+      - name: Stop Process
+        run: ssh prod 'pm2 kill'
+      - name: Update server
+        run: ssh prod 'cd ~/warframe-status && git checkout -- . && git fetch --all && git reset --hard origin/main'
+      - name: Update dependencies
+        run: ssh prod 'rm -rf node_modules && npm ci'
+      - name: Start Process
+        run: ssh prod 'cd ~/warframe-status && pm2 start warframe-status.json'
