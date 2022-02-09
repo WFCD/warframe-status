@@ -2,7 +2,7 @@
 
 const express = require('express');
 const {
-  logger, worldState, platforms, cache, languages,
+  logger, worldState, cache, languages,
 } = require('../lib/utilities');
 
 const get = (platform, language) => {
@@ -15,19 +15,6 @@ const get = (platform, language) => {
 };
 
 const router = express.Router();
-
-router.use((req, res, next) => {
-  req.platform = (req.baseUrl.replace('/', '').trim().split('/')[0] || /* istanbul ignore next */ '').toLowerCase();
-  if (req.platform === 'ns') req.platform = 'swi';
-  /* istanbul ignore if */
-  if (!platforms.includes(req.platform)) req.platform = 'pc';
-
-  req.language = (req.header('Accept-Language') || 'en').substr(0, 2).toLowerCase();
-  req.language = (req.query.language || req.language).substr(0, 2);
-  if (req.language !== 'en') logger.info(`got a request for ${req.language}`);
-  if (!(req.language && languages.includes(req.language))) req.language = 'en';
-  next();
-});
 
 router.get('/', (req, res) => {
   logger.verbose(`Got ${req.originalUrl}`);

@@ -10,9 +10,9 @@ const {
 
 router.get('/', cache('1 minute'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  const twitific = process.env.TWITTER_TIMEOUT
+  const twitific = !!(process.env.TWITTER_TIMEOUT
     && process.env.TWITTER_SECRET
-    && process.env.TWITTER_BEARER_TOKEN;
+    && process.env.TWITTER_BEARER_TOKEN);
 
   if (twitific) {
     const twd = await worldState.getTwitter();

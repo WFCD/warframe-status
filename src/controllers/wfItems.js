@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  Items, logger, noResult, trimPlatform, cache, languages: i18n,
+  Items, logger, noResult, trimPlatform, cache, languages: i18n, deepCopy,
 } = require('../lib/utilities');
 
 const i18nOnObject = true;
@@ -15,7 +15,7 @@ const wfItemData = {
   items: new Items({ i18n, i18nOnObject }),
   mods: new Items({ category: ['Mods'], i18n, i18nOnObject }),
 };
-const cleanup = (item, lang = 'en') => {
+const cleanup = (item, lang) => {
   const clone = { ...item };
   if (lang !== 'en') {
     Object.keys(clone.i18n || {})
@@ -50,12 +50,8 @@ const postCleanup = (item, { only, remove }) => {
 };
 
 router.use((req, res, next) => {
-  req.platform = trimPlatform(req.baseUrl);
-  req.items = (req.baseUrl.replace('/', '').trim().split('/')[0] || '').toLowerCase();
-  if (Object.keys(wfItemData).includes(req.items)) {
-    req.items = ([...wfItemData[req.items]] || []).map((i) => cleanup(i, req.header('Accept-Language') || 'en'));
-    res.setHeader('Content-Language', req.header('Accept-Language') || 'en');
-  }
+  req.items = deepCopy(wfItemData[trimPlatform(req.baseUrl)]).map((i) => cleanup(i, req.language));
+  res.setHeader('Content-Language', req.language);
   next();
 });
 
@@ -193,7 +189,7 @@ router.get('/search/:query', cache('10 hours'), (req, res) => {
   const { remove, only, by = 'name' } = req.query;
   const queries = req.params.query.trim().split(',').map((q) => q.trim().toLowerCase());
   const results = queries.map((query) => [...req.items].map((item) => {
-    if (!item || !item[by]) return null;
+    if (!(item && item[by])) return null;
     if (item[by].toLowerCase().includes(query)) {
       return item;
     }
