@@ -23,7 +23,13 @@ client.on('message', (d) => {
   const packed = JSON.parse(d);
   switch (packed.event) {
     case 'ws:provide':
-      logger.info(`${packed.packet.platform} ${packed.packet.language} ${packed.packet.ws.timestamp}`);
+      logger.info(`${
+        packed.packet.platform
+      } ${
+        packed.packet.language
+      } ${
+        packed.packet.ws.timestamp
+      }`);
       break;
     case 'twitter:provide':
       // do nothing

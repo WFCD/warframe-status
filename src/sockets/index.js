@@ -12,7 +12,10 @@ const safeParse = (data) => {
 
 const requestWS = ({ platform, language } = {}) => {
   if (!platform && !language) {
-    return { code: 500, message: `Provided platform (${platform}) or language (${language}) not provided.` };
+    return {
+      code: 500,
+      message: `Provided platform (${platform}) or language (${language}) not provided.`,
+    };
   }
   try {
     const ws = worldState.getWorldstate(platform, language);
