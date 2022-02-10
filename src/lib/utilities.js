@@ -55,6 +55,37 @@ const appendKey = (req) => {
   return `${req.method}${encodeURIComponent(req.path)}${req.platform || ''}${req.language || 'en'}${queries.join('')}` || '';
 };
 
+// Implemented from https://medium.com/@ziyoshams/deep-copying-javascript-arrays-4d5fc45a6e3e
+const deepCopy = (arr) => {
+  const copy = [];
+  arr.forEach((elem) => {
+    if (Array.isArray(elem)) {
+      copy.push(deepCopy(elem));
+    } else if (typeof elem === 'object') {
+      // eslint-disable-next-line no-use-before-define
+      copy.push(deepCopyObject(elem));
+    } else {
+      copy.push(elem);
+    }
+  });
+  return copy;
+};
+// Helper function to deal with Objects
+const deepCopyObject = (obj) => {
+  const tempObj = {};
+  if (!obj) return undefined;
+  for (const [key, value] of Object.entries(obj)) {
+    if (Array.isArray(value)) {
+      tempObj[key] = deepCopy(value);
+    } else if (typeof value === 'object') {
+      tempObj[key] = deepCopyObject(value);
+    } else {
+      tempObj[key] = value;
+    }
+  }
+  return tempObj;
+};
+
 module.exports = {
   logger,
   platforms,
@@ -78,4 +109,5 @@ module.exports = {
   worldState,
   noResult,
   trimPlatform,
+  deepCopy,
 };

@@ -76,14 +76,60 @@ describe('items', () => {
     res.body[0].name.should.eq('Excalibur Umbra');
   });
   it('should accommodate alternate languages', async () => {
-    const res = await chai.request(server)
+    let res = await chai.request(server)
       .get('/items/search/excalibur%20umbra')
       .set('Accept-Language', 'zh');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(1);
+    res.body[0].i18n.should.not.have.property('it');
+    res.body[0].name.should.eq('Excalibur Umbra');
+    res.body[0].i18n.should.have.property('zh');
+    res.should.have.header('Content-Language', 'zh');
+
+    res = await chai.request(server)
+      .get('/items/search/excalibur%20umbra?language=zh&only=i18n,name');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.be.greaterThan(1);
+    res.body[0].i18n.should.have.property('zh');
+    res.body[0].i18n.should.not.have.property('it');
     res.body[0].name.should.eq('Excalibur Umbra');
     res.should.have.header('Content-Language', 'zh');
+
+    res = await chai.request(server)
+      .get('/items/search/excalibur%20umbra')
+      .set('Accept-Language', 'it');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.be.greaterThan(1);
+    res.body[0].i18n.should.not.have.property('zh');
+    res.body[0].name.should.eq('Excalibur Umbra');
+    res.body[0].i18n.should.have.property('it');
+    res.should.have.header('Content-Language', 'it');
+
+    res = await chai.request(server)
+      .get('/items/search/excalibur%20umbra?language=it&only=i18n,name');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.be.greaterThan(1);
+    res.body[0].i18n.should.have.property('it');
+    res.body[0].i18n.should.not.have.property('zh');
+    res.body[0].name.should.eq('Excalibur Umbra');
+    res.should.have.header('Content-Language', 'it');
+  });
+  it('should return empty array for unmatchable', async () => {
+    let res = await chai.request(server)
+      .get('/items/search/my%20name%20is%20inigo%20montonya');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.eq(0);
+
+    res = await chai.request(server)
+      .get('/items/search/excalibur?by=shoobedowopwah');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.eq(0);
   });
 });
 
