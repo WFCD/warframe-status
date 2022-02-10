@@ -70,8 +70,8 @@ router.get('/search/:query', cache('10 hours'), (req, res) => {
             }
           });
           if (values[0]) {
-            values[0].keys = overwriteResults(values[0]?.keys, keyResults);
-            values[0].nodes = overwriteResults(values[0]?.nodes, nodeResults);
+            values[0].keys = overwriteResults(values[0].keys, keyResults);
+            values[0].nodes = overwriteResults(values[0].nodes, nodeResults);
           } else {
             // eslint-disable-next-line no-case-declarations
             value = { keys: keyResults, nodes: nodeResults };
@@ -90,11 +90,11 @@ router.get('/search/:query', cache('10 hours'), (req, res) => {
           break;
 
         default:
-          Object.keys(warframeData[req.language]?.[req.key] || warframeData[req.key])
+          Object.keys(warframeData[req.language].[req.key] || warframeData[req.key])
             .forEach((selectedDataKey) => {
               if (selectedDataKey.toLowerCase().includes(loweredQuery)) {
                 results.push(
-                  (warframeData[req.language]?.[req.key] || warframeData[req.key])[selectedDataKey],
+                  (warframeData[req.language].[req.key] || warframeData[req.key])[selectedDataKey],
                 );
               }
             });
