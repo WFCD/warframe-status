@@ -36,7 +36,7 @@
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-private-methods": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
-    "@sentry/types": "^6.17.7",
+    "@sentry/types": "^6.17.9",
     "@types/apicache": "^1.6.1",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
