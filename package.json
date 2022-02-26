@@ -42,7 +42,7 @@
     "@types/express": "^4.17.13",
     "@types/helmet": "4.0.0",
     "@types/twitter": "^1.7.1",
-    "@types/ws": "^8.2.2",
+    "@types/ws": "^8.5.1",
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",
     "dotenv": "^16.0.0",
