@@ -9,19 +9,20 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 15.x ]
+        node-version: [ 16.x ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Test
-        run: |
+      - run: |
           npm ci
           npm i warframe-items@latest
           npm i warframe-worldstate-parser@latest
           npm i warframe-worldstate-data@latest
           npm i @wfcd/arsenal-parser@latest
+          npm run lint
+          npm run build
           npm test
   semantic-release:
     runs-on: ubuntu-latest
@@ -30,9 +31,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2.5.4
         env:
