@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [15.x]
+        node-version: [16.x]
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
@@ -28,10 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 15.x ]
+        node-version: [ 16.x ]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: |
@@ -40,6 +40,7 @@ jobs:
           npm i warframe-worldstate-parser@latest
           npm i warframe-worldstate-data@latest
           npm i @wfcd/arsenal-parser@latest
+          npm run build
           npm test
   coverage:
     name: Coverage
