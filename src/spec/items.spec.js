@@ -5,7 +5,7 @@ const chaiHttp = require('chai-http');
 const server = require('../app');
 const { Items } = require('../lib/utilities');
 
-chai.should();
+const should = chai.should();
 chai.use(chaiHttp);
 
 describe('items', () => {
@@ -82,19 +82,19 @@ describe('items', () => {
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(1);
-    res.body[0].i18n.should.not.have.property('it');
+    should.not.exist(res.body[0].i18n);
     res.body[0].name.should.eq('Excalibur Umbra');
-    res.body[0].i18n.should.have.property('zh');
+    res.body[0].description.should.include('来自');
     res.should.have.header('Content-Language', 'zh');
 
     res = await chai.request(server)
-      .get('/items/search/excalibur%20umbra?language=zh&only=i18n,name');
+      .get('/items/search/excalibur%20umbra?language=zh&only=name,description');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(1);
-    res.body[0].i18n.should.have.property('zh');
-    res.body[0].i18n.should.not.have.property('it');
+    should.not.exist(res.body[0].i18n);
     res.body[0].name.should.eq('Excalibur Umbra');
+    res.body[0].description.should.include('来自');
     res.should.have.header('Content-Language', 'zh');
 
     res = await chai.request(server)
@@ -103,19 +103,19 @@ describe('items', () => {
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(1);
-    res.body[0].i18n.should.not.have.property('zh');
+    should.not.exist(res.body[0].i18n);
     res.body[0].name.should.eq('Excalibur Umbra');
-    res.body[0].i18n.should.have.property('it');
+    res.body[0].description.should.include("Dall'ombra");
     res.should.have.header('Content-Language', 'it');
 
     res = await chai.request(server)
-      .get('/items/search/excalibur%20umbra?language=it&only=i18n,name');
+      .get('/items/search/excalibur%20umbra?language=it&only=name,description');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(1);
-    res.body[0].i18n.should.have.property('it');
-    res.body[0].i18n.should.not.have.property('zh');
+    should.not.exist(res.body[0].i18n);
     res.body[0].name.should.eq('Excalibur Umbra');
+    res.body[0].description.should.include("Dall'ombra");
     res.should.have.header('Content-Language', 'it');
   });
   it('should return empty array for unmatchable', async () => {
@@ -198,7 +198,7 @@ describe('warframes', () => {
   });
   it('should be searchable for multiple results', async () => {
     const res = await chai.request(server)
-      .get(`/warframes/search/excalibur%20umbra?ts=${Date.now()}`);
+      .get('/warframes/search/excalibur%20umbra');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.eq(1);

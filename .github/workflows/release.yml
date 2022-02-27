@@ -79,6 +79,6 @@ jobs:
       - name: Update server
         run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && git checkout -- . && git fetch --all && git reset --hard origin/main'
       - name: Update dependencies
-        run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && rm -rf node_modules && nvm install && nvm use && npm ci'
+        run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && rm -rf node_modules && nvm install && nvm use && npm ci && npm run build'
       - name: Start Process
         run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && pm2 start warframe-status.json'

@@ -5,52 +5,17 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  Items, logger, noResult, trimPlatform, cache, languages: i18n, deepCopy,
+  logger, noResult, trimPlatform, cache,
 } = require('../lib/utilities');
 
-const i18nOnObject = true;
-const wfItemData = {
-  weapons: new Items({ category: ['Primary', 'Secondary', 'Melee', 'Arch-Melee', 'Arch-Gun'], i18n, i18nOnObject }),
-  warframes: new Items({ category: ['Warframes', 'Archwing'], i18n, i18nOnObject }),
-  items: new Items({ i18n, i18nOnObject }),
-  mods: new Items({ category: ['Mods'], i18n, i18nOnObject }),
-};
-const cleanup = (item, lang) => {
-  const clone = { ...item };
-  if (lang !== 'en') {
-    Object.keys(clone.i18n || {})
-      .forEach((locale) => {
-        if (locale !== lang) clone.i18n[locale] = undefined;
-      });
-  } else {
-    clone.i18n = undefined;
-  }
-  return clone;
-};
-const postCleanup = (item, { only, remove }) => {
-  const clone = { ...item };
-  const removeKeys = (remove || '')
-    .split(',')
-    .filter((k) => k.length);
-  const onlyKeys = (only || '')
-    .split(',')
-    .filter((k) => k.length);
-  if (Array.isArray(onlyKeys) && onlyKeys.length) {
-    Object.keys(clone).forEach((key) => {
-      if (!onlyKeys.includes(key)) {
-        clone[key] = undefined;
-      }
-    });
-  } else if (Array.isArray(removeKeys) && removeKeys.length) {
-    removeKeys.forEach((key) => {
-      clone[key] = undefined;
-    });
-  }
-  return clone;
-};
+const Items = require('../lib/caches/Items');
+
+const splitKeys = (input) => (input || '')
+  .split(',')
+  .filter((k) => k.length);
 
 router.use((req, res, next) => {
-  req.items = deepCopy(wfItemData[trimPlatform(req.baseUrl)]).map((i) => cleanup(i, req.language));
+  req.itemType = trimPlatform(req.baseUrl);
   res.setHeader('Content-Language', req.language);
   next();
 });
@@ -86,8 +51,10 @@ router.use((req, res, next) => {
 router.get('/', (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only } = req.query;
-
-  res.json([...req.items].map((i) => postCleanup(i, { only, remove })));
+  return res.status(200).json(Items.get(req.itemType, req.language, {
+    remove: splitKeys(remove),
+    only: splitKeys(only),
+  }));
 });
 
 /**
@@ -125,31 +92,18 @@ router.get('/', (req, res) => {
 router.get('/:item', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only } = req.query;
-  let result;
-  let keyDistance;
-  let exact = false;
-  const by = req.query.by || 'name';
-
-  [...req.items].filter((item) => item && item[by]).forEach((item) => {
-    if (item[by].toLowerCase() === req.params.item.toLowerCase()) {
-      result = item;
-      exact = true;
-    }
-
-    if (item[by].toLowerCase().includes(req.params.item.toLowerCase()) && !exact) {
-      const distance = item[by].toLowerCase().replace(req.params.item.toLowerCase(), '').length;
-      if (!keyDistance || distance < keyDistance) {
-        keyDistance = distance;
-        result = item;
-      }
-    }
+  const result = Items.get(req.itemType, req.language, {
+    by: req.query.by,
+    only: splitKeys(only),
+    remove: splitKeys(remove),
+    max: 1,
+    term: req.params.item,
   });
 
-  if (result) {
-    res.json(postCleanup({ ...result }, { only, remove }));
-  } else {
-    noResult(res);
+  if (result && Object.keys(result).length) {
+    return res.status(200).json(result);
   }
+  return noResult(res);
 });
 
 /**
@@ -188,14 +142,14 @@ router.get('/search/:query', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only, by = 'name' } = req.query;
   const queries = req.params.query.trim().split(',').map((q) => q.trim().toLowerCase());
-  const results = queries.map((query) => [...req.items].map((item) => {
-    if (!(item && item[by])) return null;
-    if (item[by].toLowerCase().includes(query)) {
-      return item;
-    }
-    return null;
-  }).filter((a) => a)).flat();
-  res.json(Array.from(new Set(results)).map((i) => postCleanup(i, { only, remove })));
+  const results = queries.map((query) => Items.get(req.itemType, req.language, {
+    by,
+    remove: splitKeys(remove),
+    only: splitKeys(only),
+    term: query,
+    max: 0,
+  })).flat();
+  return res.status(200).json(results);
 });
 
 module.exports = router;

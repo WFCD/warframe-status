@@ -19,6 +19,9 @@ const color = (scope = 'PROC') => {
     case 'SOCK':
       scoped = 'SOCK'.yellow;
       break;
+    case 'BUILD':
+      scoped = 'BUILD'.green;
+      break;
     default:
       scoped = scope.toUpperCase().red;
       break;
