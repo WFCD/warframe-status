@@ -12,10 +12,19 @@ jobs:
         node-version: [ 16.x ]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
+          cache: 'npm'
+      - name: Verify
+        env:
+          CI: true
+          TWITTER_KEY: ${{ secrets.TWITTER_KEY }}
+          TWITTER_SECRET: ${{ secrets.TWITTER_SECRET }}
+          TWITTER_TIMEOUT: ${{ secrets.TWITTER_TIMEOUT }}
+          TWITTER_BEARER_TOKEN:
+            ${{ secrets.TWITTER_BEARER_TOKEN }}
+        run: |
           npm ci
           npm i warframe-items@latest
           npm i warframe-worldstate-parser@latest

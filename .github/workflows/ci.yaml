@@ -36,7 +36,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - env:
+      - name: Verify
+        env:
           CI: true
           TWITTER_KEY: ${{ secrets.TWITTER_KEY }}
           TWITTER_SECRET: ${{ secrets.TWITTER_SECRET }}
