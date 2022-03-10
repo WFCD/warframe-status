@@ -4,6 +4,9 @@ const path = require('path');
 const flatCache = require('flat-cache');
 const Job = require('cron').CronJob;
 const hydrate = require('../hydrate');
+const Logger = require('../logger');
+
+let logger;
 
 const FOUR_HOURS = 14400000;
 
@@ -11,6 +14,8 @@ module.exports = class ItemsCache {
   static #cache = flatCache.load('.items', path.resolve(__dirname, '../../../'));
 
   static {
+    logger = Logger('ITEMS');
+    logger.level = 'info';
     const lastUpdate = ItemsCache.#cache.getKey('last_updt');
     if (!lastUpdate || ((Date.now() - lastUpdate) > FOUR_HOURS)) {
       hydrate();
@@ -66,8 +71,13 @@ module.exports = class ItemsCache {
   static get(key, language, {
     by = 'name', remove, only, term, max,
   }) {
-    const base = ItemsCache.#cache.getKey(`${language}-${key}`);
+    let base = ItemsCache.#cache.getKey(`${language}-${key}`);
     if (!term && !(remove || only)) return base;
+    if (!base) {
+      logger.error('Items not hydrated. Forcing hydration.');
+      hydrate();
+      base = ItemsCache.#cache.getKey(`${language}-${key}`);
+    }
     let filtered = base;
     if (term && max !== 1) {
       filtered = base
@@ -86,20 +96,22 @@ module.exports = class ItemsCache {
       let keyDistance;
       let exact = false;
       filtered = undefined;
-      base.filter((item) => item && item[by]).forEach((item) => {
-        if (item[by].toLowerCase() === term.toLowerCase()) {
-          filtered = item;
-          exact = true;
-        }
-
-        if (item[by].toLowerCase().includes(term.toLowerCase()) && !exact) {
-          const distance = item[by].toLowerCase().replace(term.toLowerCase(), '').length;
-          if (!keyDistance || distance < keyDistance) {
-            keyDistance = distance;
+      base
+        .filter((item) => item && item[by])
+        .forEach((item) => {
+          if (item[by].toLowerCase() === term.toLowerCase()) {
             filtered = item;
+            exact = true;
           }
-        }
-      });
+
+          if (item[by].toLowerCase().includes(term.toLowerCase()) && !exact) {
+            const distance = item[by].toLowerCase().replace(term.toLowerCase(), '').length;
+            if (!keyDistance || distance < keyDistance) {
+              keyDistance = distance;
+              filtered = item;
+            }
+          }
+        });
     }
     return this.#cleanup(filtered, { remove, only });
   }
