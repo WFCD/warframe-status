@@ -43,6 +43,13 @@ const makeLanguageCache = (language) => {
           ...itemClone.i18n[language],
         };
       }
+      if (itemClone.abilities) {
+        itemClone.abilities = itemClone.abilities.map((ability) => ({
+          uniqueName: ability.abilityUniqueName || ability.uniqueName || undefined,
+          name: ability.abilityName || ability.name,
+          description: ability.abilityDescription || ability.description,
+        }));
+      }
       delete itemClone.i18n;
       return itemClone;
     });
