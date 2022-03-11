@@ -48,3 +48,5 @@ nodemon.json
 .env
 
 .idea/
+# flatcache for the items
+.items

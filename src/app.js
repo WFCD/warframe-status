@@ -26,5 +26,6 @@ app.use(require('./controllers'));
 app.use((req, res) => {
   res.status(404).json({ error: 'No such route.', code: 404 }).end();
 });
+logger.info('Routes up');
 
 module.exports = app;

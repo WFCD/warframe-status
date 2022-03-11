@@ -26,10 +26,10 @@ router.use((req, res, next) => {
 });
 
 router.use(`/:platform(${platforms.join('|')}|${platformAliases.join('|')})`, require('./worldstate'));
-router.use(`/:data(${Object.keys(warframeData).join('|')})`, require('./staticWfData'));
+router.use(`/:data(${Object.keys(warframeData).join('|')})`, require('./data'));
 router.use('/pricecheck', require('./pricecheck'));
 router.use('/heartbeat', require('./heartbeat'));
-router.use('/:itype(warframes|weapons|items|mods)', require('./wfItems'));
+router.use('/:itype(warframes|weapons|items|mods)', require('./items'));
 router.use('/twitter', require('./twitter'));
 router.use('/profile', require('./profile'));
 router.use('/drops', require('./drops'));
