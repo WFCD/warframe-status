@@ -46,7 +46,7 @@
     "@types/flat-cache": "^2.0.0",
     "@types/helmet": "4.0.0",
     "@types/twitter": "^1.7.1",
-    "@types/ws": "^8.5.2",
+    "@types/ws": "^8.5.3",
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",
     "cross-env": "^7.0.3",
