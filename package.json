@@ -38,7 +38,7 @@
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-private-methods": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
-    "@sentry/types": "^6.19.2",
+    "@sentry/types": "^6.19.3",
     "@types/apicache": "^1.6.1",
     "@types/cors": "^2.8.12",
     "@types/cron": "^1.7.3",
