@@ -10,6 +10,20 @@ const caches = ['weapons', 'warframes', 'items', 'mods'];
 const i18nOnObject = true;
 const FOUR_HOURS = 14400000;
 
+/**
+ * Cache object
+ * @typedef {Object} ItemCache
+ * @property {Array<module:warframe-items.Item>} weapons
+ * @property {Array<module:warframe-items.Item>} warframes
+ * @property {Array<module:warframe-items.Item>} items
+ * @property {Array<module:warframe-items.Item>} mods
+ */
+
+/**
+ * Generate a Cache object for a specified language
+ * @param {string} language one of {module:warframe-worldstate-data.locales}
+ * @returns {ItemCache}
+ */
 const makeLanguageCache = (language) => {
   const base = ({
     weapons: new Items({
