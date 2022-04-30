@@ -37,7 +37,7 @@
     "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-private-methods": "^7.16.7",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-env": "^7.17.10",
     "@sentry/types": "^6.19.6",
     "@types/apicache": "^1.6.1",
     "@types/cors": "^2.8.12",
