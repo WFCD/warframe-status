@@ -78,7 +78,7 @@ const makeLanguageCache = (language) => {
 const hydrate = async () => {
   // Items caches
   const cache = flatCache.load('.items', path.resolve(__dirname, '../../'));
-  if ((Date.now() - cache.getKey('last_updt')) >= (FOUR_HOURS / 2)) {
+  if ((Date.now() - (cache.getKey('last_updt') || 0)) >= (FOUR_HOURS / 2)) {
     data.locales.forEach((language) => {
       const cacheForLang = makeLanguageCache(language);
       caches.forEach((cacheType) => {
@@ -91,7 +91,7 @@ const hydrate = async () => {
 
   // WF Info caches
   const wfInfoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
-  if ((Date.now() - wfInfoCache.getKey('last_updt')) >= (TWO_HOURS / 2)) {
+  if ((Date.now() - (wfInfoCache.getKey('last_updt') || 0)) >= (TWO_HOURS / 2)) {
     if (filteredItemsSrc) {
       await (fetch(filteredItemsSrc).then((d) => d.json())).then((d) => {
         wfInfoCache.setKey('filteredItems', d);

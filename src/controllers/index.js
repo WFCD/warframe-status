@@ -34,5 +34,6 @@ router.use('/twitter', require('./twitter'));
 router.use('/profile', require('./profile'));
 router.use('/drops', require('./drops'));
 router.use('/rss', require('./rss'));
+router.use('/wfinfo', require('./wfinfo'));
 
 module.exports = router;
