@@ -195,7 +195,6 @@
     "fullTrace": true,
     "bail": true,
     "require": [
-      "mocha-steps",
       "src/spec/hooks/env.js",
       "src/spec/hooks/start.hook.js"
     ]
