@@ -2,10 +2,9 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const rewire = require('rewire');
 const server = require('../app');
 
-const Settings = rewire('../lib/settings');
+const Settings = require('../lib/settings');
 
 chai.use(chaiHttp);
 
@@ -14,12 +13,8 @@ const original = {
   prices: process.env.WFINFO_PRICES,
 };
 
-const overrideWFInfo = (filtered, prices) => {
-  Settings.__set__('wfInfo', { filteredItems: filtered, prices });
-};
-
 const resetWFInfo = () => {
-  Settings.__set__('wfInfo', original);
+  Settings.wfInfo = original;
 };
 
 describe('wfinfo', () => {
@@ -36,7 +31,7 @@ describe('wfinfo', () => {
         res.body.should.have.keys(['timestamp', 'errors', 'relics', 'eqmt', 'ignored_items']);
       });
       it('should be unavailable', async () => {
-        overrideWFInfo(undefined, Settings.__get__('wfinfo').prices);
+        Settings.wfInfo.filteredItems = undefined;
         const res = await chai.request(server)
           .get('/wfinfo/filtered_items');
         res.should.have.status(503);
@@ -60,7 +55,7 @@ describe('wfinfo', () => {
         res.body[0].should.have.keys(['name', 'yesterday_vol', 'today_vol', 'custom_avg']);
       });
       it('should be unavailable', async () => {
-        overrideWFInfo(Settings.__get__('wfinfo').prices, undefined);
+        Settings.wfInfo.prices = undefined;
         const res = await chai.request(server)
           .get('/wfinfo/prices');
         res.should.have.status(503);

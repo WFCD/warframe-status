@@ -12,7 +12,7 @@ const Settings = require('../lib/settings');
 router.get('/', cache('1 minute'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
 
-  if (Settings.isTwitterActive) {
+  if (Settings.twitter.active) {
     const twd = await worldState.getTwitter();
     if (twd) {
       return res.status(200).json(twd);
