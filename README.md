@@ -41,25 +41,43 @@ Consumers will need to parse responses and stringify requests yourself, as ws do
 
 
 connecting automatically subscribes the connection to events structured as:
-```json
+```json5
 {
   "event": "twitter",
-  "packet": // tweets
+  "packet": "[]" // tweets
 }
 ```
 
-```json
+```json5
 {
   "event": "ws:update",
-  "packet": // entire updated worldstate
+  "packet": "{}" // entire updated worldstate
 }
 ```
 
-```json
+```json5
 {
-  "event": // worldstate key,
-  "packet": // worldstate key data
+  "event": "", // worldstate key,
+  "packet": "" // worldstate key data
 }
 ```
 
 probably several others that can take some experimenting
+
+
+## ENV Variables
+
+
+| Key                      | Meaning                                             |
+|:-------------------------|:----------------------------------------------------|
+| `TWITTER_KEY`            | Twitter Account Key                                 |
+| `TWITTER_SECRET`         | Twitter Account Secret                              |
+| `TWITTER_BEARER_TOKEN`   | Twitter OAuth Bearer Token                          |
+| `WFINFO_FILTERED_ITEMS`  | WF Info filtered items source json url              |
+| `WFINFO_PRICES`          | WF Info prices source json url                      | 
+| `DISABLE_PRICECHECKS`    | Disable pricecheck services                         |
+| `SENTRY_DSN`             | Sentry DNS for reporting errors                     |
+| `BUILD`                  | Whether or not to forcibly build caches on startup  |
+| `LOG_LEVEL`              | Logging level for logging                           | 
+| `HOST`/`HOSTNAME`        | host or hostname for hosting service                |
+| `PORT`/`IP`              | Port or IP address for hosting service              |
