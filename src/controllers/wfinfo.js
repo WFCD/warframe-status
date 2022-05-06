@@ -2,8 +2,9 @@
 
 const express = require('express');
 const flatCache = require('flat-cache');
-
 const path = require('path');
+
+const Settings = require('../lib/settings');
 const {
   logger, cache, ah,
 } = require('../lib/utilities');
@@ -14,7 +15,7 @@ const infoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
 router.get('/filtered_items', cache('1 hour'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
 
-  if (process.env.WFINFO_FILTERED_ITEMS) {
+  if (Settings.wfInfo?.filteredItems) {
     return res.status(200).json(infoCache.getKey('filteredItems'));
   }
   return res.status(503).json({ code: 503, error: 'WFInfo Data Services Unavailable' });
@@ -23,7 +24,7 @@ router.get('/filtered_items', cache('1 hour'), ah(async (req, res) => {
 router.get('/prices', cache('1 hour'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
 
-  if (process.env.WFINFO_PRICES) {
+  if (Settings.wfInfo?.prices) {
     return res.status(200).json(infoCache.getKey('prices'));
   }
   return res.status(503).json({ code: 503, error: 'WFInfo Data Services Unavailable' });

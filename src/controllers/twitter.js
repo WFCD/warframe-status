@@ -7,14 +7,12 @@ const router = express.Router();
 const {
   logger, cache, ah, worldState,
 } = require('../lib/utilities');
+const Settings = require('../lib/settings');
 
 router.get('/', cache('1 minute'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  const twitific = !!(process.env.TWITTER_TIMEOUT
-    && process.env.TWITTER_SECRET
-    && process.env.TWITTER_BEARER_TOKEN);
 
-  if (twitific) {
+  if (Settings.isTwitterActive) {
     const twd = await worldState.getTwitter();
     if (twd) {
       return res.status(200).json(twd);
