@@ -21,7 +21,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/:type/:query', cache('1 hour'), ah(async (req, res) => {
-  if (Settings.priceChecks) {
+  if (!Settings.priceChecks) {
     return res.status(503).json(unavailable);
   }
   let value;

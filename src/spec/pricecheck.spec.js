@@ -3,12 +3,13 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../app');
+const Settings = require('../lib/settings');
 
 chai.should();
 chai.use(chaiHttp);
 
 describe('pricecheck', () => {
-  it('handles no results', async function stringSearch() {
+  it('handles no results', async function noResSearch() {
     this.timeout = 40000;
     const res = await chai.request(server)
       .get('/pricecheck/string/poopoo%20prime');
@@ -17,7 +18,7 @@ describe('pricecheck', () => {
     res.body.should.include('no such item');
   });
   it('supports string search', async function stringSearch() {
-    this.timeout = 40000;
+    this.timeout = 60000;
     const res = await chai.request(server)
       .get('/pricecheck/string/nikana%20prime');
     res.should.have.status(200);
@@ -25,7 +26,7 @@ describe('pricecheck', () => {
     res.body.should.not.include('no such item');
   });
   it('supports attachment search', async function attachmentSearch() {
-    this.timeout = 40000;
+    this.timeout = 60000;
     const res = await chai.request(server)
       .get('/pricecheck/attachment/nikana%20prime');
     res.should.have.status(200);
@@ -40,7 +41,7 @@ describe('pricecheck', () => {
     res.body[0].footer.icon_url.should.include('https://warframestat.us/');
   });
   it('supports raw search', async function rawSearch() {
-    this.timeout = 40000;
+    this.timeout = 60000;
     const res = await chai.request(server)
       .get('/pricecheck/find/nikana%20prime');
     res.should.have.status(200);
@@ -49,7 +50,7 @@ describe('pricecheck', () => {
     res.body.should.not.include('no such item');
   });
   it('503s when disabled', async () => {
-    process.env.DISABLE_PRICECHECKS = true;
+    Settings.priceChecks = false;
     const res = await chai.request(server)
       .get('/pricecheck/attachment/nikana%20prime')
       .set('Cache-Control', 'no-cache');

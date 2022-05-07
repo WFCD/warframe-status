@@ -11,7 +11,7 @@ const settings = {
     prices: process.env.WFINFO_PRICES,
   },
   build: !!(process.env.BUILD && process.env.BUILD.trim().startsWith('build')),
-  priceChecks: !!(process.env.DISABLE_PRICECHECKS),
+  priceChecks: !(process.env.DISABLE_PRICECHECKS),
 };
 
 module.exports = process.env.NODE_ENV === 'test' ? settings : Object.freeze(settings);
