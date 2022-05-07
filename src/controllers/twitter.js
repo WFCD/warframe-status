@@ -14,9 +14,7 @@ router.get('/', cache('1 minute'), ah(async (req, res) => {
 
   if (Settings.twitter.active) {
     const twd = await worldState.getTwitter();
-    if (twd) {
-      return res.status(200).json(twd);
-    }
+    return res.status(200).json(twd);
   }
   return res.status(404).json({ code: 404, error: 'No Twitter Data' });
 }));
