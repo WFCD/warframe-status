@@ -3,6 +3,7 @@
 const express = require('express');
 const flatCache = require('flat-cache');
 const path = require('path');
+const { CronJob: Job } = require('cron');
 
 const Settings = require('../lib/settings');
 const {
@@ -10,7 +11,12 @@ const {
 } = require('../lib/utilities');
 
 const router = express.Router();
-const infoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
+let infoCache;
+
+router.use((req, res, next) => {
+  if (!infoCache) infoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
+  next();
+});
 
 router.get('/filtered_items', cache('1 hour'), ah(async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
@@ -29,5 +35,10 @@ router.get('/prices', cache('1 hour'), ah(async (req, res) => {
   }
   return res.status(503).json({ code: 503, error: 'WFInfo Data Services Unavailable' });
 }));
+
+// eslint-disable-next-line no-new
+new Job('0 5 * * * *', () => {
+  infoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
+}, undefined, true);
 
 module.exports = router;
