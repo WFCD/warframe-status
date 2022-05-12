@@ -20,7 +20,7 @@ module.exports = class ItemsCache {
     if (!lastUpdate || ((Date.now() - lastUpdate) > FOUR_HOURS)) {
       hydrate();
     }
-    const hydration = new Job('0 0 */2 * * *', hydrate, undefined, true);
+    const hydration = new Job('0 0 * * * *', hydrate, undefined, true);
     hydration.start();
   }
 

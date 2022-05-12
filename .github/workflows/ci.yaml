@@ -43,6 +43,9 @@ jobs:
           TWITTER_SECRET: ${{ secrets.TWITTER_SECRET }}
           TWITTER_TIMEOUT: ${{ secrets.TWITTER_TIMEOUT }}
           TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+          WFINFO_FILTERED_ITEMS: ${{ secrets.WFINFO_FILTERED_ITEMS }}
+          WFINFO_PRICES: ${{ secrets.WFINFO_PRICES }}
+          NODE_ENV: 'test'
         run: |
           npm ci
           npm i warframe-items@latest

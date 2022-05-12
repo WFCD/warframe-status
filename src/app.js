@@ -1,7 +1,7 @@
 'use strict';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-/* istanbul ignore next */ if (process.env.NODE_ENV === 'development') require('dotenv').config();
+/* istanbul ignore next */ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') require('dotenv').config();
 
 const express = require('express');
 

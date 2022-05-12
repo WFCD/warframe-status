@@ -50,3 +50,4 @@ nodemon.json
 .idea/
 # flatcache for the items
 .items
+.wfinfo

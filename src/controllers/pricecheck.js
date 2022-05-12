@@ -6,6 +6,7 @@ const Nexus = require('warframe-nexus-query');
 const {
   logger, ah, cache, noResult,
 } = require('../lib/utilities');
+const Settings = require('../lib/settings');
 
 const unavailable = {
   error: 'Service temporarily unavailable',
@@ -20,7 +21,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/:type/:query', cache('1 hour'), ah(async (req, res) => {
-  if (process.env.DISABLE_PRICECHECKS) {
+  if (!Settings.priceChecks) {
     return res.status(503).json(unavailable);
   }
   let value;
