@@ -47,7 +47,7 @@ router.get('/:language/:field', cache('1 minute'), (req, res) => {
   }
   const ws = get(req.platform, req.language);
 
-  if (ws[req.params.field]) {
+  if (ws && ws[req.params.field]) {
     res.setHeader('Content-Language', req.language);
     res.json(ws[req.params.field]);
   } else {
