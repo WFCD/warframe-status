@@ -9,6 +9,7 @@ const Logger = require('./logger');
 
 const FOUR_HOURS = 14400000;
 const TWO_HOURS = 7200000;
+const TWO_DAYS = 172800000;
 const caches = ['weapons', 'warframes', 'items', 'mods'];
 const i18nOnObject = true;
 const filteredItemsSrc = process.env.WFINFO_FILTERED_ITEMS;
@@ -104,6 +105,27 @@ const hydrate = async () => {
     }
     wfInfoCache.setKey('last_updt', Date.now());
     wfInfoCache.save(true);
+  }
+
+  // Twitch extension token cache
+  const twitchCache = flatCache.load('.twitch', path.resolve(__dirname, '../../'));
+  const CLIENT_ID = 'b31o4btkqth5bzbvr9ub2ovr79umhh'; // twitch's client id
+  const WF_ARSENAL_ID = 'ud1zj704c0eb1s553jbkayvqxjft97';
+  const TWITCH_CHANNEL_ID = '89104719'; // tobitenno
+  if (CLIENT_ID
+    && ((Date.now() - (twitchCache.getKey('last_updt') || 0)) >= TWO_DAYS)
+    && twitchCache.getKey('token') !== 'unset') {
+    let raw = await fetch(`https://api.twitch.tv/v5/channels/${TWITCH_CHANNEL_ID}/extensions`, {
+      headers: {
+        'client-id': CLIENT_ID,
+      },
+    })
+      .then((d) => d.json());
+    raw = raw?.tokens?.find((s) => s.extension_id === WF_ARSENAL_ID)?.token;
+    raw = raw || 'unset';
+    twitchCache.setKey('token', raw);
+    twitchCache.setKey('last_updt', Date.now());
+    twitchCache.save(true);
   }
 };
 

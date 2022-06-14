@@ -38,6 +38,7 @@ router.get('/prices', cache('1 hour'), ah(async (req, res) => {
 
 // eslint-disable-next-line no-new
 new Job('0 5 * * * *', () => {
+  /* istanbul ignore next */
   infoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
 }, undefined, true);
 

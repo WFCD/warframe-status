@@ -7,19 +7,41 @@ const server = require('../app');
 const should = chai.should();
 chai.use(chaiHttp);
 
-let proceed = false;
 describe('profiles', () => {
-  before(async () => {
-    proceed = !!((await chai.request(server).get('/profile/tobiah'))?.account?.name);
-  });
   describe('/profile/:username', async () => {
-    it('should get profile data', async function root() {
-      if (!proceed) this.skip();
-      const res = await chai.request(server).get('/profile/tobiah');
-      res.should.have.status(200);
-      should.exist(res.body);
-      res.body.should.include.keys('account', 'loadout');
-      res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+    describe('should get profile data', () => {
+      it('pc [default]', async () => {
+        const res = await chai.request(server).get('/profile/tobiah');
+        res.should.have.status(200);
+        should.exist(res.body);
+        res.body.should.include.keys('account', 'loadout');
+        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body.account.name.should.eq('Tobiah');
+      });
+      it('xbox', async () => {
+        const res = await chai.request(server).get('/profile/[de]megan').set('platform', 'xb1');
+        res.should.have.status(200);
+        should.exist(res.body);
+        res.body.should.include.keys('account', 'loadout');
+        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body.account.name.should.eq('[DE]Megan');
+      });
+      xit('psn', async () => {
+        const res = await chai.request(server).get('/profile/newyevon26').set('platform', 'ps4');
+        res.should.have.status(200);
+        should.exist(res.body);
+        res.body.should.include.keys('account', 'loadout');
+        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body.account.name.should.eq('povo844');
+      });
+      it('switch', async () => {
+        const res = await chai.request(server).get('/profile/tobiah').set('platform', 'swi');
+        res.should.have.status(200);
+        should.exist(res.body);
+        res.body.should.include.keys('account', 'loadout');
+        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body.account.name.should.eq('Tobiah');
+      });
     });
     it('should error with bad username', async () => {
       const res = await chai.request(server).get('/profile/asdasdaasdaasdaasdasdaasdaasdaasdasdaasdaasdaasdasdaasdaasdaasdasdaasdaasda');
