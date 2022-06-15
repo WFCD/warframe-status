@@ -51,3 +51,4 @@ nodemon.json
 # flatcache for the items
 .items
 .wfinfo
+.twitch

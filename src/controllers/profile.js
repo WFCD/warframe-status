@@ -3,29 +3,36 @@
 const express = require('express');
 const fetch = require('node-fetch');
 const ArsenalParser = require('@wfcd/arsenal-parser');
+const flatCache = require('flat-cache');
+const path = require('path');
+
+const {
+  logger, noResult, cache,
+} = require('../lib/utilities');
 
 const router = express.Router();
 
-const {
-  logger, noResult, platforms, languages, cache,
-} = require('../lib/utilities');
+const WF_ARSENAL_ID = 'ud1zj704c0eb1s553jbkayvqxjft97';
+let token;
 
 router.use((req, res, next) => {
-  req.platform = (req.baseUrl.replace('/', '').trim().split('/')[0] || '').toLowerCase();
-  if (req.platform === 'ns') req.platform = 'swi';
-  if (!platforms.includes(req.platform) || !req.platform) req.platform = 'pc';
-
-  req.language = (req.header('Accept-Language') || 'en').substr(0, 2).toLowerCase();
-  req.language = (req.query.language || req.language).substr(0, 2);
-  if (req.language !== 'en') logger.info(`got a request for ${req.language}`);
-  if (!(req.language && languages.includes(req.language))) req.language = 'en';
+  const tokenCache = flatCache.load('.twitch', path.resolve(__dirname, '../../'));
+  token = tokenCache.getKey('token');
   next();
 });
 
-router.get('/:username', cache('10 minutes'), async (req, res) => {
+router.get('/:username', cache('1 hour'), async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
+  if (!token || token === 'unset') return res.status(503).json({ code: 503, error: 'Service Unavailable' });
   const profileUrl = `https://content.${req.platform === 'pc' ? '' : `${req.platform}.`}warframe.com/dynamic/twitch/getActiveLoadout.php?account=${encodeURIComponent(req.params.username.toLowerCase())}`;
-  const data = await fetch(profileUrl, { headers: { 'User-Agent': process.env.USER_AGENT || 'Node.js Fetch' } })
+  const data = await fetch(profileUrl, {
+    headers: {
+      'User-Agent': process.env.USER_AGENT || 'Node.js Fetch',
+      Origin: `https://${WF_ARSENAL_ID}.ext-twitch.tv`,
+      Referer: `https://${WF_ARSENAL_ID}.ext-twitch.tv`,
+      Authorization: `Bearer ${token}`,
+    },
+  })
     .then((d) => d.json());
   if (!data.accountInfo) {
     return noResult(res);

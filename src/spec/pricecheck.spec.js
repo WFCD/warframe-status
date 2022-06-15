@@ -9,6 +9,7 @@ chai.should();
 chai.use(chaiHttp);
 
 describe('pricecheck', () => {
+  beforeEach(() => { Settings.priceChecks = true; });
   it('handles no results', async function noResSearch() {
     this.timeout = 40000;
     const res = await chai.request(server)
