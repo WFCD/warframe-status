@@ -54,7 +54,7 @@ jobs:
             @semantic-release/git
             @semantic-release/exec
       - name: Create Sentry release
-        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == true  }}
+        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'yes'  }}
         uses: getsentry/action-release@v1
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
@@ -64,7 +64,7 @@ jobs:
           environment: production
       # Built from https://blog.benoitblanchon.fr/github-action-run-ssh-commands/
       - name: Deploy - Configure
-        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'true'  }}
+        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'yes'  }}
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/prod.key
@@ -81,14 +81,14 @@ jobs:
           SSH_KEY: ${{ secrets.PROD_SSH_KEY }}
           SSH_HOST: ${{ secrets.PROD_SSH_HOST }}
       - name: Deploy - Stop Process
-        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'true'  }}
+        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'yes'  }}
         run: ssh prod 'source ~/.zshrc && pm2 kill'
       - name: Deploy - Update server
-        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'true'  }}
+        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'yes'  }}
         run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && git checkout -- . && git fetch --all && git reset --hard origin/main'
       - name: Deploy - Update dependencies
-        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'true'  }}
+        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'yes'  }}
         run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && rm -rf node_modules && nvm install && nvm use && npm ci && npm run build && npm i -g pm2@latest'
       - name: Deploy - Start Process
-        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'true'  }}
+        if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'yes'  }}
         run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && pm2 start warframe-status.json'

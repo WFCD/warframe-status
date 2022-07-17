@@ -70,7 +70,7 @@
     "lint:fix": "eslint src/ --fix",
     "test": "nyc mocha",
     "update:spec": "curl --url https://docs.warframestat.us/openapi.json -G -o src/api-spec/openapi.json --silent",
-    "hydrate:cache": "cross-env BUILD=build node ./src/lib/hydrate.js",
+    "hydrate:cache": "cross-env BUILD=build WFINFO_FILTERED_ITEMS=$WFINFO_FILTERED_ITEMS WFINFO_PRICES=$WFINFO_PRICES node ./src/lib/hydrate.js",
     "coverage": "npm test && nyc report --reporter=text-lcov | coveralls",
     "build": "npm run hydrate:cache"
   },
@@ -166,7 +166,8 @@
       [
         "@semantic-release/exec",
         {
-          "successCmd": "export SEMANTIC_RELEASE_COMMENCE=true"
+          "successCmd": "export SEMANTIC_RELEASE_COMMENCE=yes",
+          "failCmd": "export SEMANTIC_RELEASE_COMMENCE=no"
         }
       ],
       "@semantic-release/release-notes-generator",
