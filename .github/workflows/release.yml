@@ -53,6 +53,7 @@ jobs:
             @eclass/semantic-release-sentry-releases@2.11.0
             @semantic-release/git
             @semantic-release/exec
+      - run: source .release
       - name: Create Sentry release
         if: ${{ env.SEMANTIC_RELEASE_COMMENCE == 'yes'  }}
         uses: getsentry/action-release@v1
