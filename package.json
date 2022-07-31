@@ -16,7 +16,7 @@
     "express-async-handler": "^1.2.0",
     "express-favicon-short-circuit": "^1.1.1",
     "flat-cache": "^3.0.4",
-    "helmet": "^5.1.0",
+    "helmet": "^5.1.1",
     "json-fetch-cache": "^1.2.6",
     "node-fetch": "^2.6.7",
     "swagger-stats": "^0.99.2",
