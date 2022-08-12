@@ -8,34 +8,25 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x]
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        node-version-file: .nvmrc
+        cache: npm
     - run: |
         npm ci
-        npm i warframe-items@latest
-        npm i warframe-worldstate-parser@latest
-        npm i warframe-worldstate-data@latest
-        npm i @wfcd/arsenal-parser@latest
+        npm i warframe-items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
         npm run lint
   test:
     name: Test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 16.x ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          node-version-file: .nvmrc
+          cache: npm
       - name: Verify
         env:
           CI: true
@@ -48,10 +39,7 @@ jobs:
           NODE_ENV: 'test'
         run: |
           npm ci
-          npm i warframe-items@latest
-          npm i warframe-worldstate-parser@latest
-          npm i warframe-worldstate-data@latest
-          npm i @wfcd/arsenal-parser@latest
+          npm i warframe-items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
           npm run build
           npm test
       - name: Coveralls

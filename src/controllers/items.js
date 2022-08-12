@@ -4,15 +4,11 @@ const express = require('express');
 
 const router = express.Router();
 
-const {
-  logger, noResult, trimPlatform, cache,
-} = require('../lib/utilities');
+const { logger, noResult, trimPlatform, cache } = require('../lib/utilities');
 
 const Items = require('../lib/caches/Items');
 
-const splitKeys = (input) => (input || '')
-  .split(',')
-  .filter((k) => k.length);
+const splitKeys = (input) => (input || '').split(',').filter((k) => k.length);
 
 router.use((req, res, next) => {
   req.itemType = trimPlatform(req.baseUrl);
@@ -51,10 +47,12 @@ router.use((req, res, next) => {
 router.get('/', (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only } = req.query;
-  return res.status(200).json(Items.get(req.itemType, req.language, {
-    remove: splitKeys(remove),
-    only: splitKeys(only),
-  }));
+  return res.status(200).json(
+    Items.get(req.itemType, req.language, {
+      remove: splitKeys(remove),
+      only: splitKeys(only),
+    })
+  );
 });
 
 /**
@@ -141,14 +139,21 @@ router.get('/:item', cache('10 hours'), (req, res) => {
 router.get('/search/:query', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only, by = 'name' } = req.query;
-  const queries = req.params.query.trim().split(',').map((q) => q.trim().toLowerCase());
-  const results = queries.map((query) => Items.get(req.itemType, req.language, {
-    by,
-    remove: splitKeys(remove),
-    only: splitKeys(only),
-    term: query,
-    max: 0,
-  })).flat();
+  const queries = req.params.query
+    .trim()
+    .split(',')
+    .map((q) => q.trim().toLowerCase());
+  const results = queries
+    .map((query) =>
+      Items.get(req.itemType, req.language, {
+        by,
+        remove: splitKeys(remove),
+        only: splitKeys(only),
+        term: query,
+        max: 0,
+      })
+    )
+    .flat();
   return res.status(200).json(results);
 });
 

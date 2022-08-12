@@ -11,7 +11,7 @@ const { logger } = require('../utilities');
 function formatData(data) {
   return JSON.parse(data).map((reward) => ({
     place: reward.place
-      .replace(/<\/?b>/ig, '')
+      .replace(/<\/?b>/gi, '')
       .replace('Derelict/', '')
       .replace('Assassinate (Assassination)', 'Assassinate')
       .replace('Defense (Defense)', 'Defense')
@@ -40,7 +40,11 @@ function formatData(data) {
 }
 
 const drops = new Cache('https://drops.warframestat.us/data/all.slim.json', 60000000, {
-  parser: formatData, useEmitter: false, logger, delayStart: false, maxRetry: 1,
+  parser: formatData,
+  useEmitter: false,
+  logger,
+  delayStart: false,
+  maxRetry: 1,
 });
 
 module.exports = drops;

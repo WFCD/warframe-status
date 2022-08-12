@@ -1,9 +1,7 @@
 'use strict';
 
 const express = require('express');
-const {
-  logger, worldState, cache, languages,
-} = require('../lib/utilities');
+const { logger, worldState, cache, languages } = require('../lib/utilities');
 
 const get = (platform, language) => {
   try {

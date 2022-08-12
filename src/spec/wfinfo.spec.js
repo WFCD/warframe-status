@@ -21,10 +21,9 @@ describe('wfinfo', () => {
   afterEach(resetWFInfo);
 
   describe('filtered_items', () => {
-    if (process.env.WFINFO_FILTERED_ITEMS) {
+    if (Settings.wfInfo.filteredItems) {
       it('should not be empty', async () => {
-        const res = await chai.request(server)
-          .get('/wfinfo/filtered_items');
+        const res = await chai.request(server).get('/wfinfo/filtered_items');
         res.should.have.status(200);
         res.body.should.be.an('object');
         Object.keys(res.body).length.should.eq(5);
@@ -32,38 +31,33 @@ describe('wfinfo', () => {
       });
       it('should be unavailable', async () => {
         Settings.wfInfo.filteredItems = undefined;
-        const res = await chai.request(server)
-          .get('/wfinfo/filtered_items');
+        const res = await chai.request(server).get('/wfinfo/filtered_items');
         res.should.have.status(503);
       });
     } else {
       it('should be unavailable', async () => {
-        const res = await chai.request(server)
-          .get('/wfinfo/filtered_items');
+        const res = await chai.request(server).get('/wfinfo/filtered_items');
         res.should.have.status(503);
       });
     }
   });
 
   describe('prices', () => {
-    if (process.env.WFINFO_PRICES) {
+    if (Settings.wfInfo.prices) {
       it('should not be empty', async () => {
-        const res = await chai.request(server)
-          .get('/wfinfo/prices');
+        const res = await chai.request(server).get('/wfinfo/prices');
         res.should.have.status(200);
         res.body.should.be.an('array');
         res.body[0].should.have.keys(['name', 'yesterday_vol', 'today_vol', 'custom_avg']);
       });
       it('should be unavailable', async () => {
         Settings.wfInfo.prices = undefined;
-        const res = await chai.request(server)
-          .get('/wfinfo/prices');
+        const res = await chai.request(server).get('/wfinfo/prices');
         res.should.have.status(503);
       });
     } else {
       it('should be unavailable', async () => {
-        const res = await chai.request(server)
-          .get('/wfinfo/prices');
+        const res = await chai.request(server).get('/wfinfo/prices');
         res.should.have.status(503);
       });
     }

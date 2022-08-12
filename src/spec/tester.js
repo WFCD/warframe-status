@@ -17,19 +17,15 @@ function heartbeat() {
 
 client.on('open', heartbeat);
 client.on('ping', heartbeat);
-client.on('close', () => { clearTimeout(pingTimeout); });
+client.on('close', () => {
+  clearTimeout(pingTimeout);
+});
 
 client.on('message', (d) => {
   const packed = JSON.parse(d);
   switch (packed.event) {
     case 'ws:provide':
-      logger.info(`${
-        packed.packet.platform
-      } ${
-        packed.packet.language
-      } ${
-        packed.packet.ws.timestamp
-      }`);
+      logger.info(`${packed.packet.platform} ${packed.packet.language} ${packed.packet.ws.timestamp}`);
       break;
     case 'twitter:provide':
       // do nothing

@@ -6,9 +6,7 @@ const ArsenalParser = require('@wfcd/arsenal-parser');
 const flatCache = require('flat-cache');
 const path = require('path');
 
-const {
-  logger, noResult, cache,
-} = require('../lib/utilities');
+const { logger, noResult, cache } = require('../lib/utilities');
 
 const router = express.Router();
 
@@ -23,8 +21,13 @@ router.use((req, res, next) => {
 
 router.get('/:username', cache('1 hour'), async (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
-  if (!token || token === 'unset') return res.status(503).json({ code: 503, error: 'Service Unavailable' });
-  const profileUrl = `https://content.${req.platform === 'pc' ? '' : `${req.platform}.`}warframe.com/dynamic/twitch/getActiveLoadout.php?account=${encodeURIComponent(req.params.username.toLowerCase())}`;
+  /* istanbul ignore if */
+  if (!token || token === 'unset') {
+    return res.status(503).json({ code: 503, error: 'Service Unavailable' });
+  }
+  const profileUrl = `https://content.${
+    req.platform === 'pc' ? '' : `${req.platform}.`
+  }warframe.com/dynamic/twitch/getActiveLoadout.php?account=${encodeURIComponent(req.params.username.toLowerCase())}`;
   const data = await fetch(profileUrl, {
     headers: {
       'User-Agent': process.env.USER_AGENT || 'Node.js Fetch',
@@ -32,8 +35,7 @@ router.get('/:username', cache('1 hour'), async (req, res) => {
       Referer: `https://${WF_ARSENAL_ID}.ext-twitch.tv`,
       Authorization: `Bearer ${token}`,
     },
-  })
-    .then((d) => d.json());
+  }).then((d) => d.json());
   if (!data.accountInfo) {
     return noResult(res);
   }

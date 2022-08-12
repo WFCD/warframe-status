@@ -2,9 +2,7 @@
 
 const express = require('express');
 const Cache = require('json-fetch-cache');
-const {
-  logger, ah, platforms, titleCase, trimPlatform,
-} = require('../lib/utilities');
+const { logger, ah, platforms, titleCase, trimPlatform } = require('../lib/utilities');
 
 const router = express.Router();
 
@@ -12,14 +10,12 @@ const rivenCaches = {};
 
 const groupRivenData = (cacheStrData) => {
   /* istanbul ignore if */ if (!cacheStrData.length) return {};
-  const stripped = cacheStrData
-    .replace(/NaN/g, 0)
-    .replace(/WARNING:.*\n/, '');
+  const stripped = cacheStrData.replace(/NaN/g, 0).replace(/WARNING:.*\n/, '');
   const parsed = JSON.parse(stripped);
 
   const byType = {};
   parsed.forEach((rivenD) => {
-    if (rivenD.compatibility === null) {
+    if (!rivenD.compatibility) {
       rivenD.compatibility = `Veiled ${rivenD.itemType}`;
     }
 
@@ -30,8 +26,8 @@ const groupRivenData = (cacheStrData) => {
     }
     if (!byType[rivenD.itemType][rivenD.compatibility]) {
       byType[rivenD.itemType][rivenD.compatibility] = {
-        rerolled: null,
-        unrolled: null,
+        rerolled: undefined,
+        unrolled: undefined,
       };
     }
 
@@ -42,11 +38,15 @@ const groupRivenData = (cacheStrData) => {
 };
 
 platforms.forEach((platform) => {
-  const rCache = new Cache(`https://n9e5v4d8.ssl.hwcdn.net/repos/weeklyRivens${platform.toUpperCase()}.json`, 604800000, {
-    parser: groupRivenData,
-    logger,
-    delayStart: true,
-  });
+  const rCache = new Cache(
+    `https://n9e5v4d8.ssl.hwcdn.net/repos/weeklyRivens${platform.toUpperCase()}.json`,
+    604800000,
+    {
+      parser: groupRivenData,
+      logger,
+      delayStart: true,
+    }
+  );
   rCache.startUpdating();
   rivenCaches[platform] = rCache;
 });
@@ -59,27 +59,33 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/', /* cache('1 week'), */ ah(async (req, res) => {
-  logger.silly(`Got ${req.originalUrl}`);
-  const rC = rivenCaches[req.platform];
-  res.json(await rC.getData());
-}));
+router.get(
+  '/',
+  /* cache('1 week'), */ ah(async (req, res) => {
+    logger.silly(`Got ${req.originalUrl}`);
+    const rC = rivenCaches[req.platform];
+    res.json(await rC.getData());
+  })
+);
 
-router.get('/search/:query', /* cache('10 hours'), */ ah(async (req, res) => {
-  logger.silly(`Got ${req.originalUrl}`);
-  const { query } = req.params;
-  const results = {};
-  const rCache = await rivenCaches[req.platform].getData();
+router.get(
+  '/search/:query',
+  /* cache('10 hours'), */ ah(async (req, res) => {
+    logger.silly(`Got ${req.originalUrl}`);
+    const { query } = req.params;
+    const results = {};
+    const rCache = await rivenCaches[req.platform].getData();
 
-  Object.keys(rCache).forEach((type) => {
-    Object.keys(rCache[type]).forEach((compatibility) => {
-      if (compatibility.toLowerCase().includes(query.toLowerCase())) {
-        results[compatibility] = rCache[type][compatibility];
-      }
+    Object.keys(rCache).forEach((type) => {
+      Object.keys(rCache[type]).forEach((compatibility) => {
+        if (compatibility.toLowerCase().includes(query.toLowerCase())) {
+          results[compatibility] = rCache[type][compatibility];
+        }
+      });
     });
-  });
-  res.setHeader('Content-Language', req.language);
-  res.json(results);
-}));
+    res.setHeader('Content-Language', req.language);
+    res.json(results);
+  })
+);
 
 module.exports = router;

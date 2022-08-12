@@ -47,7 +47,10 @@ tmp/
 nodemon.json
 .env
 
+# JetBrains files
 .idea/
+.run/
+
 # flatcache for the items
 .items
 .wfinfo

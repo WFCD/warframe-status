@@ -17,7 +17,7 @@ module.exports = class ItemsCache {
     logger = Logger('ITEMS');
     logger.level = 'info';
     const lastUpdate = ItemsCache.#cache.getKey('last_updt');
-    if (!lastUpdate || ((Date.now() - lastUpdate) > FOUR_HOURS)) {
+    if (!lastUpdate || Date.now() - lastUpdate > FOUR_HOURS) {
       hydrate();
     }
     const hydration = new Job('0 0 * * * *', hydrate, undefined, true);
@@ -37,11 +37,10 @@ module.exports = class ItemsCache {
     if (!result) return undefined;
     if (!(only || remove)) return result;
     if (Array.isArray(result)) {
-      return result
-        .map((subr) => ItemsCache
-          .#cleanup(subr, { only, remove }));
+      return result.map((subr) => ItemsCache.#cleanup(subr, { only, remove }));
     }
 
+    /** @type {module:warframe-items.Item} */
     const clone = { ...result };
     if (Array.isArray(only) && only.length) {
       Object.keys(clone).forEach((field) => {
@@ -68,9 +67,7 @@ module.exports = class ItemsCache {
    * @param {number} max maximum allowed amount (changes matching algorithm)
    * @returns {module:warframe-items.Item[]}
    */
-  static get(key, language, {
-    by = 'name', remove, only, term, max,
-  }) {
+  static get(key, language, { by = 'name', remove, only, term, max }) {
     let base = ItemsCache.#cache.getKey(`${language}-${key}`);
     if (!term && !(remove || only)) return base;
     if (!base) {
@@ -83,11 +80,11 @@ module.exports = class ItemsCache {
       filtered = base
         .filter((item) => item && item[by])
         .map((item) => {
-          if (!(item && item[by])) return null;
+          if (!(item && item[by])) return undefined;
           if (item[by].toLowerCase().includes(term.toLowerCase())) {
             return item;
           }
-          return null;
+          return undefined;
         })
         .filter((a) => a)
         .flat();

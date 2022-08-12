@@ -39,10 +39,14 @@ const groupLocation = (data) => {
  * @summary Drops, responses are cached for 24h
  * @description Get all of the drops
  */
-router.get('/', cache('24 hours'), ah(async (req, res) => {
-  logger.silly(`Got ${req.originalUrl}`);
-  res.json(await dropCache.getData());
-}));
+router.get(
+  '/',
+  cache('24 hours'),
+  ah(async (req, res) => {
+    logger.silly(`Got ${req.originalUrl}`);
+    res.json(await dropCache.getData());
+  })
+);
 
 /**
  * GET /drops/search/{query}
@@ -51,31 +55,37 @@ router.get('/', cache('24 hours'), ah(async (req, res) => {
  * @summary Responds with an array of drops matching the query.
  * @description Query-based drop search, responses are cached for an hour
  */
-router.get('/search/:query', cache('1 hour'), ah(async (req, res) => {
-  logger.silly(`Got ${req.originalUrl}`);
-  const drops = await dropCache.getData();
-  const queries = req.params.query.split(',').map((q) => q.trim());
-  let results = [];
-  queries.forEach((query) => {
-    let qResults = drops
-      .filter((drop) => drop.place.toLowerCase().includes(query.toLowerCase())
-      || drop.item.toLowerCase().includes(query.toLowerCase()));
+router.get(
+  '/search/:query',
+  cache('1 hour'),
+  ah(async (req, res) => {
+    logger.silly(`Got ${req.originalUrl}`);
+    const drops = await dropCache.getData();
+    const queries = req.params.query.split(',').map((q) => q.trim());
+    let results = [];
+    queries.forEach((query) => {
+      let qResults = drops.filter(
+        (drop) =>
+          drop.place.toLowerCase().includes(query.toLowerCase()) ||
+          drop.item.toLowerCase().includes(query.toLowerCase())
+      );
 
-    qResults = qResults.length > 0 ? qResults : [];
+      qResults = qResults.length > 0 ? qResults : [];
 
-    if (req.query.grouped_by && req.query.grouped_by === 'location') {
-      /* istanbul ignore if */ if (typeof results !== 'object') results = {};
+      if (req.query.grouped_by && req.query.grouped_by === 'location') {
+        /* istanbul ignore if */ if (typeof results !== 'object') results = {};
 
-      results = {
-        ...groupLocation(qResults),
-        ...results,
-      };
-    } else {
-      results.push(...qResults);
-    }
-  });
+        results = {
+          ...groupLocation(qResults),
+          ...results,
+        };
+      } else {
+        results.push(...qResults);
+      }
+    });
 
-  res.json(results);
-}));
+    res.json(results);
+  })
+);
 
 module.exports = router;

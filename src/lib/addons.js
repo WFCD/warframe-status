@@ -21,9 +21,11 @@ const initSentry = (app) => {
     Sentry.init({
       dsn: process.env.SENTRY_DSN,
       release: `${process.env.npm_package_name}@${process.env.npm_package_version}`,
-      integrations: [new TracingIntegrations.BrowserTracing({
-        tracingOrigins: ['api.warframestat.us'],
-      })],
+      integrations: [
+        new TracingIntegrations.BrowserTracing({
+          tracingOrigins: ['api.warframestat.us'],
+        }),
+      ],
       sampleRate: 0.25,
     });
     app.use(Sentry.Handlers.requestHandler());

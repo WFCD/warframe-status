@@ -9,8 +9,7 @@ chai.use(chaiHttp);
 
 describe('drops', () => {
   it('should be an array', async () => {
-    const res = await chai.request(server)
-      .get('/drops');
+    const res = await chai.request(server).get('/drops');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(0);
