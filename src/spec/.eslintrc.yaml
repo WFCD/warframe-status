@@ -1,0 +1,8 @@
+env:
+  mocha: true
+overrides:
+  - files:
+      - '**/*.spec.mjs'
+    rules:
+      import/extensions: off
+      import/no-extraneous-dependencies: off

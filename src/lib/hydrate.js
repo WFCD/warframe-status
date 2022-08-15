@@ -30,7 +30,7 @@ const pricesSrc = process.env.WFINFO_PRICES;
  * @returns {ItemCache}
  */
 const makeLanguageCache = (language) => {
-  const base = ({
+  const base = {
     weapons: new Items({
       category: ['Primary', 'Secondary', 'Melee', 'Arch-Melee', 'Arch-Gun'],
       i18n: language,
@@ -50,7 +50,7 @@ const makeLanguageCache = (language) => {
       i18n: language,
       i18nOnObject,
     }),
-  });
+  };
   const merged = {};
   caches.forEach((cacheType) => {
     const subCache = base[cacheType];
@@ -79,7 +79,7 @@ const makeLanguageCache = (language) => {
 const hydrate = async () => {
   // Items caches
   const cache = flatCache.load('.items', path.resolve(__dirname, '../../'));
-  if ((Date.now() - (cache.getKey('last_updt') || 0)) >= (FOUR_HOURS / 2)) {
+  if (Date.now() - (cache.getKey('last_updt') || 0) >= FOUR_HOURS / 2) {
     data.locales.forEach((language) => {
       const cacheForLang = makeLanguageCache(language);
       caches.forEach((cacheType) => {
@@ -92,16 +92,20 @@ const hydrate = async () => {
 
   // WF Info caches
   const wfInfoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
-  if ((Date.now() - (wfInfoCache.getKey('last_updt') || 0)) >= (TWO_HOURS / 2)) {
+  if (Date.now() - (wfInfoCache.getKey('last_updt') || 0) >= TWO_HOURS / 2) {
     if (filteredItemsSrc) {
-      await (fetch(filteredItemsSrc).then((d) => d.json())).then((d) => {
-        wfInfoCache.setKey('filteredItems', d);
-      });
+      await fetch(filteredItemsSrc)
+        .then((d) => d.json())
+        .then((d) => {
+          wfInfoCache.setKey('filteredItems', d);
+        });
     }
     if (pricesSrc) {
-      await (fetch(pricesSrc).then((d) => d.json())).then((d) => {
-        wfInfoCache.setKey('prices', d);
-      });
+      await fetch(pricesSrc)
+        .then((d) => d.json())
+        .then((d) => {
+          wfInfoCache.setKey('prices', d);
+        });
     }
     wfInfoCache.setKey('last_updt', Date.now());
     wfInfoCache.save(true);
@@ -112,15 +116,16 @@ const hydrate = async () => {
   const CLIENT_ID = 'b31o4btkqth5bzbvr9ub2ovr79umhh'; // twitch's client id
   const WF_ARSENAL_ID = 'ud1zj704c0eb1s553jbkayvqxjft97';
   const TWITCH_CHANNEL_ID = '89104719'; // tobitenno
-  if (CLIENT_ID
-    && ((Date.now() - (twitchCache.getKey('last_updt') || 0)) >= TWO_DAYS)
-    && twitchCache.getKey('token') !== 'unset') {
+  if (
+    CLIENT_ID &&
+    Date.now() - (twitchCache.getKey('last_updt') || 0) >= TWO_DAYS &&
+    twitchCache.getKey('token') !== 'unset'
+  ) {
     let raw = await fetch(`https://api.twitch.tv/v5/channels/${TWITCH_CHANNEL_ID}/extensions`, {
       headers: {
         'client-id': CLIENT_ID,
       },
-    })
-      .then((d) => d.json());
+    }).then((d) => d.json());
     raw = raw?.tokens?.find((s) => s.extension_id === WF_ARSENAL_ID)?.token;
     raw = raw || 'unset';
     twitchCache.setKey('token', raw);

@@ -4,9 +4,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const {
-  logger, warframeData, solKeys, cache, trimPlatform,
-} = require('../lib/utilities');
+const { logger, warframeData, solKeys, cache, trimPlatform } = require('../lib/utilities');
 
 const dataKeys = Object.keys(warframeData);
 
@@ -46,26 +44,29 @@ router.get('/search/:query', cache('10 hours'), (req, res) => {
       let value;
       switch (req.key) {
         case 'arcanes':
-          results = warframeData[req.language].arcanes
-            .filter((arcanes) => (new RegExp(arcanes.regex)).test(loweredQuery)
-              || arcanes.name.toLowerCase().includes(loweredQuery.toLowerCase()));
+          results = warframeData[req.language].arcanes.filter(
+            (arcanes) =>
+              new RegExp(arcanes.regex).test(loweredQuery) ||
+              arcanes.name.toLowerCase().includes(loweredQuery.toLowerCase())
+          );
           value = results.length > 0 ? results : [];
           break;
 
         case 'tutorials':
-          results = warframeData.tutorials
-            .filter((tutorial) => (new RegExp(tutorial.regex)).test(loweredQuery)
-              || tutorial.name.toLowerCase().includes(loweredQuery));
+          results = warframeData.tutorials.filter(
+            (tutorial) =>
+              new RegExp(tutorial.regex).test(loweredQuery) || tutorial.name.toLowerCase().includes(loweredQuery)
+          );
           value = results.length > 0 ? results : [];
           break;
 
         case 'solNodes':
-          keyResults = solKeys
-            .filter((solNodeKey) => solNodeKey.toLowerCase().includes(loweredQuery));
+          keyResults = solKeys.filter((solNodeKey) => solNodeKey.toLowerCase().includes(loweredQuery));
           solKeys.forEach((solKey) => {
-            if (warframeData[req.language].solNodes[solKey]
-              && warframeData[req.language]
-                .solNodes[solKey].value.toLowerCase().includes(loweredQuery)) {
+            if (
+              warframeData[req.language].solNodes[solKey] &&
+              warframeData[req.language].solNodes[solKey].value.toLowerCase().includes(loweredQuery)
+            ) {
               nodeResults.push(warframeData[req.language].solNodes[solKey]);
             }
           });
@@ -90,14 +91,11 @@ router.get('/search/:query', cache('10 hours'), (req, res) => {
           break;
 
         default:
-          Object.keys(warframeData[req.language][req.key] || warframeData[req.key])
-            .forEach((selectedDataKey) => {
-              if (selectedDataKey.toLowerCase().includes(loweredQuery)) {
-                results.push(
-                  (warframeData[req.language][req.key] || warframeData[req.key])[selectedDataKey],
-                );
-              }
-            });
+          Object.keys(warframeData[req.language][req.key] || warframeData[req.key]).forEach((selectedDataKey) => {
+            if (selectedDataKey.toLowerCase().includes(loweredQuery)) {
+              results.push((warframeData[req.language][req.key] || warframeData[req.key])[selectedDataKey]);
+            }
+          });
           value = results;
           break;
       }

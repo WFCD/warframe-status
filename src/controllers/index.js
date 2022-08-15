@@ -2,10 +2,7 @@
 
 const router = require('express').Router();
 
-const {
-  logger, cache, platforms, warframeData, platformAliases,
-  languages,
-} = require('../lib/utilities');
+const { logger, cache, platforms, warframeData, platformAliases, languages } = require('../lib/utilities');
 
 router.get('/', cache('1 minute'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
@@ -14,6 +11,7 @@ router.get('/', cache('1 minute'), (req, res) => {
 
 router.use((req, res, next) => {
   req.platform = (req.url.replace('/', '').trim().split('/')[0] || /* istanbul ignore next */ '').toLowerCase();
+  if (req.query.platform) req.platform = req.query.platform;
   if (req.platform === 'ns') req.platform = 'swi';
   /* istanbul ignore if */
   if (!platforms.includes(req.platform)) req.platform = 'pc';
