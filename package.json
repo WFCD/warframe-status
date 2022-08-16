@@ -48,7 +48,7 @@
     "chai-http": "^4.3.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
-    "install-peerdeps": "^2.0.3",
+    "install-peerdeps": "^3.0.3",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
     "nyc": "^15.1.0"
