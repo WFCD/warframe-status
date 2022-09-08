@@ -16,7 +16,7 @@ describe('twitter', () => {
       res.should.have.status(200);
       should.exist(res.body);
       res.body.should.be.an('array');
-      res.body.length.should.eq(15); // if it doesn't, we're missing a tweet from someone
+      res.body.length.should.eq(14); // if it doesn't, we're missing a tweet from someone
       res.body.forEach((tweet) => {
         tweet.should.be.an('object');
         tweet.should.include.all.keys('id', 'uniqueId', 'text', 'url', 'isReply', 'author', 'createdAt');
