@@ -50,7 +50,7 @@
     "dotenv": "^16.0.2",
     "install-peerdeps": "^2.0.3",
     "mocha": "^10.0.0",
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.20",
     "nyc": "^15.1.0"
   },
   "scripts": {
