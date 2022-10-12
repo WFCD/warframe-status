@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 
 describe('twitter', () => {
   describe('/', async () => {
-    it('should get twitter data', async function root() {
+    it.skip('should get twitter data', async function root() {
       if (!Settings.twitter.active) this.skip();
       const res = await chai.request(server).get('/twitter');
       res.should.have.status(200);
