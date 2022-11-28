@@ -87,7 +87,7 @@ router.get('/', (req, res) => {
  * @param {string} query.path - Keyword to search for
  * @return {Array<Item>} 200 - successful operation
  */
-router.get('/:item', cache('10 hours'), (req, res) => {
+router.get('/:item/?', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only } = req.query;
   const result = Items.get(req.itemType, req.language, {
@@ -136,7 +136,7 @@ router.get('/:item', cache('10 hours'), (req, res) => {
  * @param {string} query.path - Keyword to search for
  * @return {Array<Item>} 200 - successful operation
  */
-router.get('/search/:query', cache('10 hours'), (req, res) => {
+router.get('/search/:query/?', cache('10 hours'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const { remove, only, by = 'name' } = req.query;
   const queries = req.params.query

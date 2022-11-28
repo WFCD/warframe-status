@@ -17,7 +17,7 @@ router.use((req, res, next) => {
 });
 
 router.get(
-  '/filtered_items',
+  '/filtered_items/?',
   cache('1 hour'),
   ah(async (req, res) => {
     logger.silly(`Got ${req.originalUrl}`);
@@ -30,7 +30,7 @@ router.get(
 );
 
 router.get(
-  '/prices',
+  '/prices/?',
   cache('1 hour'),
   ah(async (req, res) => {
     logger.silly(`Got ${req.originalUrl}`);

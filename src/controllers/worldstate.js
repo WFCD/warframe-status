@@ -12,7 +12,28 @@ const get = (platform, language) => {
   }
 };
 
-const router = express.Router();
+const redirectCheck = (req, res) => {
+  if (req.platform !== 'pc') {
+    const redirPath = req.originalUrl
+      .replace(/\/(ps4|psn|swi|xb1|ns)/gi, '/pc')
+      .replace(/\/(ps4|psn|swi|xb1|ns)\//gi, '/pc/');
+    return res.redirect(301, redirPath);
+  }
+  return false;
+};
+
+const router = express.Router({ strict: true });
+
+router.use((req, res, next) => {
+  try {
+    const redirected = redirectCheck(req, res);
+    /* istanbul ignore if */
+    if (redirected) return;
+    next();
+  } catch (e) {
+    // swallow for now
+  }
+});
 
 router.get('/', (req, res) => {
   logger.verbose(`Got ${req.originalUrl}`);
@@ -21,9 +42,9 @@ router.get('/', (req, res) => {
   res.json(ws);
 });
 
-router.use('/rivens', require('./rivens'));
+router.use('/rivens/?', require('./rivens'));
 
-router.get('/:field', (req, res) => {
+router.get('/:field/?', (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   const ws = get(req.platform, req.language);
 
@@ -38,7 +59,7 @@ router.get('/:field', (req, res) => {
   }
 });
 
-router.get('/:language/:field', cache('1 minute'), (req, res) => {
+router.get('/:language/:field/?', cache('1 minute'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
   if (languages.includes(req.params.language.substr(0, 2).toLowerCase())) {
     req.language = req.params.language.substr(0, 2).toLowerCase();

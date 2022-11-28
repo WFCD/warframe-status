@@ -19,7 +19,7 @@ router.use((req, res, next) => {
 });
 
 router.get(
-  '/:type/:query',
+  '/:type/:query/?',
   cache('1 hour'),
   ah(async (req, res) => {
     if (!Settings.priceChecks) {

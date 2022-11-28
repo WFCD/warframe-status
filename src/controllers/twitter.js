@@ -13,6 +13,7 @@ router.get(
   ah(async (req, res) => {
     logger.silly(`Got ${req.originalUrl}`);
 
+    /* istanbul ignore if */
     if (Settings.twitter.active) {
       const twd = await worldState.getTwitter();
       return res.status(200).json(twd);

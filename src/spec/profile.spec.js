@@ -11,7 +11,7 @@ describe('profiles', () => {
   describe('/profile/:username', async () => {
     describe('should get profile data', () => {
       it('pc [default]', async () => {
-        const res = await chai.request(server).get('/profile/tobiah');
+        const res = await chai.request(server).get('/profile/tobiah/');
         res.should.have.status(200);
         should.exist(res.body);
         res.body.should.include.keys('account', 'loadout');

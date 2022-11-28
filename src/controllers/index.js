@@ -1,8 +1,17 @@
 'use strict';
 
-const router = require('express').Router();
-
+const { Router } = require('express');
+const url = require('url');
 const { logger, cache, platforms, warframeData, platformAliases, languages } = require('../lib/utilities');
+
+const router = Router({ strict: true });
+
+router.all(/^[^.]*[^/]$/, (req, res) => {
+  const redir = url.parse(req.originalUrl);
+  const target = `${redir.pathname}/${redir.search || ''}`;
+  if (!target.includes('search')) logger.info(`redirecting to ${target}`);
+  return res.redirect(301, target);
+});
 
 router.get('/', cache('1 minute'), (req, res) => {
   logger.silly(`Got ${req.originalUrl}`);
