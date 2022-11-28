@@ -11,7 +11,7 @@ const { logger, noResult, cache } = require('../lib/utilities');
 const router = express.Router({ strict: true });
 
 const WF_ARSENAL_ID = 'ud1zj704c0eb1s553jbkayvqxjft97';
-const WF_ARSENAL_API = 'https://content.warframe.com/dynamic/twitch/getActiveLoadout.php'
+const WF_ARSENAL_API = 'https://content.warframe.com/dynamic/twitch/getActiveLoadout.php';
 let token;
 
 router.use((req, res, next) => {
