@@ -19,14 +19,13 @@ router.use((req, res, next) => {
 });
 
 router.get(
-  '/:type/:query',
+  '/:type/:query/?',
   cache('1 hour'),
   ah(async (req, res) => {
     if (!Settings.priceChecks) {
       return res.status(503).json(unavailable);
     }
     let value;
-    logger.silly(`Got ${req.originalUrl}`);
     try {
       switch (req.params.type) {
         case 'string':

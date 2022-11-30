@@ -4,7 +4,7 @@ const express = require('express');
 const Cache = require('json-fetch-cache');
 const { logger, ah, platforms, titleCase, trimPlatform } = require('../lib/utilities');
 
-const router = express.Router();
+const router = express.Router({ strict: true });
 
 const rivenCaches = {};
 
@@ -62,16 +62,16 @@ router.use((req, res, next) => {
 router.get(
   '/',
   /* cache('1 week'), */ ah(async (req, res) => {
-    logger.silly(`Got ${req.originalUrl}`);
+    if (res.writableEnded) return;
     const rC = rivenCaches[req.platform];
     res.json(await rC.getData());
   })
 );
 
 router.get(
-  '/search/:query',
+  '/search/:query/?',
   /* cache('10 hours'), */ ah(async (req, res) => {
-    logger.silly(`Got ${req.originalUrl}`);
+    if (res.writableEnded) return;
     const { query } = req.params;
     const results = {};
     const rCache = await rivenCaches[req.platform].getData();

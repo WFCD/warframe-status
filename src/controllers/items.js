@@ -4,7 +4,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { logger, noResult, trimPlatform, cache } = require('../lib/utilities');
+const { noResult, trimPlatform, cache } = require('../lib/utilities');
 
 const Items = require('../lib/caches/Items');
 
@@ -45,7 +45,6 @@ router.use((req, res, next) => {
  * @return {Array<Item>} 200 - successful operation
  */
 router.get('/', (req, res) => {
-  logger.silly(`Got ${req.originalUrl}`);
   const { remove, only } = req.query;
   return res.status(200).json(
     Items.get(req.itemType, req.language, {
@@ -87,8 +86,7 @@ router.get('/', (req, res) => {
  * @param {string} query.path - Keyword to search for
  * @return {Array<Item>} 200 - successful operation
  */
-router.get('/:item', cache('10 hours'), (req, res) => {
-  logger.silly(`Got ${req.originalUrl}`);
+router.get('/:item/?', cache('10 hours'), (req, res) => {
   const { remove, only } = req.query;
   const result = Items.get(req.itemType, req.language, {
     by: req.query.by,
@@ -136,8 +134,7 @@ router.get('/:item', cache('10 hours'), (req, res) => {
  * @param {string} query.path - Keyword to search for
  * @return {Array<Item>} 200 - successful operation
  */
-router.get('/search/:query', cache('10 hours'), (req, res) => {
-  logger.silly(`Got ${req.originalUrl}`);
+router.get('/search/:query/?', cache('10 hours'), (req, res) => {
   const { remove, only, by = 'name' } = req.query;
   const queries = req.params.query
     .trim()

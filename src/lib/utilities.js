@@ -12,7 +12,9 @@ const initLogger = require('./logger');
 const platforms = ['pc', 'ps4', 'xb1', 'swi'];
 const platformAliases = ['ns'];
 
-const worldState = new WorldstateEmitter();
+// Note: other worldstates have been synced into pc
+//    and all default to pc in src/controllers/worldstate.js
+const worldState = new WorldstateEmitter({ platform: 'pc' });
 
 /**
  * Trim down to the first path route

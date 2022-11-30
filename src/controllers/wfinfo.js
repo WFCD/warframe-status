@@ -6,7 +6,7 @@ const path = require('path');
 const { CronJob: Job } = require('cron');
 
 const Settings = require('../lib/settings');
-const { logger, cache, ah } = require('../lib/utilities');
+const { cache, ah } = require('../lib/utilities');
 
 const router = express.Router();
 let infoCache;
@@ -17,11 +17,9 @@ router.use((req, res, next) => {
 });
 
 router.get(
-  '/filtered_items',
+  '/filtered_items/?',
   cache('1 hour'),
   ah(async (req, res) => {
-    logger.silly(`Got ${req.originalUrl}`);
-
     if (Settings.wfInfo?.filteredItems) {
       return res.status(200).json(infoCache.getKey('filteredItems'));
     }
@@ -30,11 +28,9 @@ router.get(
 );
 
 router.get(
-  '/prices',
+  '/prices/?',
   cache('1 hour'),
   ah(async (req, res) => {
-    logger.silly(`Got ${req.originalUrl}`);
-
     if (Settings.wfInfo?.prices) {
       return res.status(200).json(infoCache.getKey('prices'));
     }

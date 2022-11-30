@@ -58,7 +58,7 @@ describe('worldstate', () => {
     describe(`/${platform}`, () => {
       it('should succeed', async () => {
         if (!app.started) should.fail('server not started');
-        let res = await chai.request(app).get(`/${platform}`);
+        let res = await chai.request(app).get(`/${platform}`).redirects(2).send();
         res.should.have.status(200);
         res.should.have.property('body');
         res.body.should.be.an('object');
@@ -69,7 +69,7 @@ describe('worldstate', () => {
         keys.forEach((key) => {
           it(`/${platform}/${key}`, async () => {
             if (!app.started) should.fail('server not started');
-            res = await chai.request(app).get(`/${platform}/${key}`);
+            res = await chai.request(app).get(`/${platform}/${key}`).redirects(2).send();
             res.should.have.status(200);
             res.should.have.property('body');
           });
@@ -78,17 +78,17 @@ describe('worldstate', () => {
             if (platform === 'ns') return;
 
             // /:platform/:locale/:field
-            res = await chai.request(app).get(`/${platform}/${lang}/${key}`);
+            res = await chai.request(app).get(`/${platform}/${lang}/${key}`).redirects(2).send();
             res.should.have.status(200);
             res.should.have.property('body');
 
             // /:platform/:field?language=:locale
-            res = await chai.request(app).get(`/${platform}/${key}?language=${lang}`);
+            res = await chai.request(app).get(`/${platform}/${key}?language=${lang}`).redirects(2).send();
             res.should.have.status(200);
             res.should.have.property('body');
 
             // /:platform/:field
-            res = await chai.request(app).get(`/${platform}/${key}`).set('Accept-Language', lang);
+            res = await chai.request(app).get(`/${platform}/${key}`).set('Accept-Language', lang).redirects(2).send();
             res.should.have.status(200);
             res.should.have.property('body');
           });
@@ -96,7 +96,7 @@ describe('worldstate', () => {
       });
       it(`/${platform}/en`, async () => {
         if (!app.started) should.fail('server not started');
-        const res = await chai.request(app).get(`/${platform}/en`);
+        const res = await chai.request(app).get(`/${platform}/en`).redirects(2).send();
         res.should.have.status(200);
         res.should.have.property('body');
       });
