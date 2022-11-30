@@ -35,6 +35,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
+  if (res.writableEnded) return;
   const ws = get(req.platform, req.language);
   res.setHeader('Content-Language', req.language);
   res.json(ws);
