@@ -13,8 +13,12 @@ router.all(/^[^.]*[^/]$/, (req, res) => {
   return res.redirect(301, target);
 });
 
-router.get('/', cache('1 minute'), (req, res) => {
+router.use((req, res, next) => {
   logger.silly(`Got ${req.originalUrl}`);
+  next();
+});
+
+router.get('/', cache('1 minute'), (req, res) => {
   res.json({ code: 200, message: 'OK' });
 });
 

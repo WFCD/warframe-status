@@ -26,7 +26,6 @@ router.get(
       return res.status(503).json(unavailable);
     }
     let value;
-    logger.silly(`Got ${req.originalUrl}`);
     try {
       switch (req.params.type) {
         case 'string':

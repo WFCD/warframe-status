@@ -62,7 +62,6 @@ router.use((req, res, next) => {
 router.get(
   '/',
   /* cache('1 week'), */ ah(async (req, res) => {
-    logger.silly(`Got ${req.originalUrl}`);
     const rC = rivenCaches[req.platform];
     res.json(await rC.getData());
   })
@@ -71,7 +70,6 @@ router.get(
 router.get(
   '/search/:query/?',
   /* cache('10 hours'), */ ah(async (req, res) => {
-    logger.silly(`Got ${req.originalUrl}`);
     const { query } = req.params;
     const results = {};
     const rCache = await rivenCaches[req.platform].getData();

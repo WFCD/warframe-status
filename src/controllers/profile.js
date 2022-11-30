@@ -6,7 +6,7 @@ const ArsenalParser = require('@wfcd/arsenal-parser');
 const flatCache = require('flat-cache');
 const path = require('path');
 
-const { logger, noResult, cache } = require('../lib/utilities');
+const { noResult, cache } = require('../lib/utilities');
 
 const router = express.Router({ strict: true });
 
@@ -21,7 +21,6 @@ router.use((req, res, next) => {
 });
 
 router.get('/:username/?', cache('1 hour'), async (req, res) => {
-  logger.silly(`Got ${req.originalUrl}`);
   /* istanbul ignore if */
   if (!token || token === 'unset') {
     return res.status(503).json({ code: 503, error: 'Service Unavailable' });

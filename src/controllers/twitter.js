@@ -4,15 +4,13 @@ const express = require('express');
 
 const router = express.Router();
 
-const { logger, cache, ah, worldState } = require('../lib/utilities');
+const { cache, ah, worldState } = require('../lib/utilities');
 const Settings = require('../lib/settings');
 
 router.get(
   '/',
   cache('1 minute'),
   ah(async (req, res) => {
-    logger.silly(`Got ${req.originalUrl}`);
-
     /* istanbul ignore if */
     if (Settings.twitter.active) {
       const twd = await worldState.getTwitter();
