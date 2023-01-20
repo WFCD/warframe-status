@@ -31,7 +31,7 @@
   "optionalDependencies": {
     "bufferutil": "^4.0.7",
     "prom-client": "^11.5.3",
-    "utf-8-validate": "^5.0.10"
+    "utf-8-validate": "^6.0.0"
   },
   "devDependencies": {
     "@sentry/types": "^7.31.1",
