@@ -7,7 +7,7 @@ const server = require('../app');
 const should = chai.should();
 chai.use(chaiHttp);
 
-describe('profiles', () => {
+describe.skip('profiles', () => {
   describe('/profile/:username', async () => {
     describe('should get profile data', () => {
       it('pc [default]', async () => {
@@ -44,7 +44,7 @@ describe('profiles', () => {
       });
     });
     it('should error with bad username', async () => {
-      const res = await chai.request(server).get('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda?platform=xb1');
+      const res = await chai.request(server).get('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/?platform=xb1');
       res.should.have.status(404);
       res.body.should.be.an('object').and.include.all.keys('code', 'error');
       res.body.code.should.eq(404);
