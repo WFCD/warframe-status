@@ -77,6 +77,8 @@ const makeLanguageCache = (language) => {
 };
 
 const hydrate = async () => {
+  const logger = Logger('HYDRATE');
+  logger.level = 'error';
   // Items caches
   const cache = flatCache.load('.items', path.resolve(__dirname, '../../'));
   if (Date.now() - (cache.getKey('last_updt') || 0) >= FOUR_HOURS / 2) {
@@ -121,16 +123,20 @@ const hydrate = async () => {
     Date.now() - (twitchCache.getKey('last_updt') || 0) >= TWO_DAYS &&
     twitchCache.getKey('token') !== 'unset'
   ) {
-    let raw = await fetch(`https://api.twitch.tv/v5/channels/${TWITCH_CHANNEL_ID}/extensions`, {
-      headers: {
-        'client-id': CLIENT_ID,
-      },
-    }).then((d) => d.json());
-    raw = raw?.tokens?.find((s) => s.extension_id === WF_ARSENAL_ID)?.token;
-    raw = raw || 'unset';
-    twitchCache.setKey('token', raw);
-    twitchCache.setKey('last_updt', Date.now());
-    twitchCache.save(true);
+    try {
+      let raw = await fetch(`https://api.twitch.tv/v5/channels/${TWITCH_CHANNEL_ID}/extensions`, {
+        headers: {
+          'client-id': CLIENT_ID,
+        },
+      }).then((d) => d.json());
+      raw = raw?.tokens?.find((s) => s.extension_id === WF_ARSENAL_ID)?.token;
+      raw = raw || 'unset';
+      twitchCache.setKey('token', raw);
+      twitchCache.setKey('last_updt', Date.now());
+      twitchCache.save(true);
+    } catch (e) {
+      logger.error('Cannot hydrate Twitch token');
+    }
   }
 };
 
