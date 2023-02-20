@@ -65,7 +65,7 @@ router.get('/:language/:field/?', cache('1 minute'), (req, res) => {
   if (ws?.[req.params.field]) {
     res.setHeader('Content-Language', req.language);
     res.json(ws[req.params.field]);
-  } else {
+  } else if (!res.writableEnded) {
     res.status(404).json({ error: 'No such worldstate field', code: 404 });
   }
 });
