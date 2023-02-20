@@ -10,10 +10,10 @@ Simple express app that parses worldState.php
 [![Release](https://github.com/WFCD/warframe-status/actions/workflows/release.yml/badge.svg)](https://github.com/WFCD/warframe-status/actions/workflows/release.yml)
 [![Actions](https://github.com/WFCD/warframe-status/actions/workflows/ci.yaml/badge.svg)](https://github.com/WFCD/warframe-status/actions/workflows/ci.yaml)
 
-[![PC API Status](https://img.shields.io/website/https/api.warframestat.us/pc.svg?down_message=down&label=pc%20api&logo=steam&up_message=up)](https://api.warframestat.us/pc)
-[![PS4 API Status](https://img.shields.io/website/https/api.warframestat.us/ps4.svg?down_message=down&label=ps4%20api&logo=playstation&up_message=up)](https://api.warframestat.us/ps4)
-[![XB1 API Status](https://img.shields.io/website/https/api.warframestat.us/xb1.svg?down_message=down&label=xb1%20api&logo=xbox&up_message=up)](https://api.warframestat.us/xb1)
-[![Switch API Status](https://img.shields.io/website/https/api.warframestat.us/swi.svg?down_message=down&label=switch%20api&logo=nintendo-switch&up_message=up)](https://api.warframestat.us/swi)
+[![PC API Status](https://img.shields.io/website?label=PC%20API&logo=steam&url=https%3A%2F%2Fapi.warframestat.us%2Fpc%2F%3Flanguage%3Den)](https://api.warframestat.us/pc/?language=en)
+[![PS4 API Status](https://img.shields.io/website?label=PSN%20API&logo=playstation&url=https%3A%2F%2Fapi.warframestat.us%2Fps4%2F%3Flanguage%3Den)](https://api.warframestat.us/ps4/?language=en)
+[![XB1 API Status](https://img.shields.io/website?label=XB%20API&logo=xbox&url=https%3A%2F%2Fapi.warframestat.us%2Fxb1%2F%3Flanguage%3Den)](https://api.warframestat.us/xb1/?language=en)
+[![Switch API Status](https://img.shields.io/website?label=Switch%20API&logo=nintendo-switch&url=https%3A%2F%2Fapi.warframestat.us%2Fswi%2F%3Flanguage%3Den)](https://api.warframestat.us/swi/?language=en)
 
 ## Access
 
