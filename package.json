@@ -37,7 +37,7 @@
     "@sentry/types": "^7.44.1",
     "@types/apicache": "^1.6.1",
     "@types/cors": "^2.8.13",
-    "@types/cron": "^2.0.0",
+    "@types/cron": "^2.0.1",
     "@types/express": "^4.17.17",
     "@types/flat-cache": "^2.0.0",
     "@types/helmet": "4.0.0",
