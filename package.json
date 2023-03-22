@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "@sentry/node": "^7.44.2",
-    "@sentry/tracing": "^7.44.1",
+    "@sentry/tracing": "^7.44.2",
     "@wfcd/arsenal-parser": "^1.2.3",
     "apicache": "^1.6.3",
     "colors": "1.4.0",
