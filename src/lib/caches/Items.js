@@ -75,41 +75,90 @@ module.exports = class ItemsCache {
       hydrate();
       base = ItemsCache.#cache.getKey(`${language}-${key}`);
     }
+    // Allow nested keys separated by periods
+    const bys = by.split('.');
     let filtered = base;
     if (term && max !== 1) {
       filtered = base
-        .filter((item) => item && item[by])
+        .filter((item) => item && this.#parseNestedKey(item, bys))
         .map((item) => {
-          if (!(item && item[by])) return undefined;
-          if (item[by].toLowerCase().includes(term.toLowerCase())) {
+          const values = this.#parseNestedKey(item, bys);
+          if (!(item && values)) return undefined;
+          // parseNestedKey returns an array, so check all values in that array
+          if (values.find((entry) => entry.toString().toLowerCase().includes(term.toString().toLowerCase()))) {
             return item;
           }
           return undefined;
         })
         .filter((a) => a)
-        .flat();
+        .flat(Infinity);
     }
     if (term && max === 1) {
       let keyDistance;
       let exact = false;
       filtered = undefined;
       base
-        .filter((item) => item && item[by])
+        .filter((item) => item && this.#parseNestedKey(item, bys))
         .forEach((item) => {
-          if (item[by].toLowerCase() === term.toLowerCase()) {
+          const values = this.#parseNestedKey(item, bys);
+          // parseNestedKey returns an array, so check all values in that array
+          if (values.find((entry) => entry.toString().toLowerCase() === term.toString().toLowerCase())) {
             filtered = item;
             exact = true;
           }
-
-          if (item[by].toLowerCase().includes(term.toLowerCase()) && !exact) {
-            const distance = item[by].toLowerCase().replace(term.toLowerCase(), '').length;
-            if (!keyDistance || distance < keyDistance) {
-              keyDistance = distance;
-              filtered = item;
-            }
+          if (!exact) {
+            // parseNestedKey returns an array, so check all values in that array
+            values.forEach((entry) => {
+              if (entry.toString().toLowerCase().includes(term.toString().toLowerCase())) {
+                const distance = entry.toString().toLowerCase().replace(term.toString().toLowerCase(), '').length;
+                if (!keyDistance || distance < keyDistance) {
+                  keyDistance = distance;
+                  filtered = item;
+                }
+              }
+            });
           }
         });
     }
     return this.#cleanup(filtered, { remove, only });
+  }
+
+  /**
+   * Utility function for following nested keys. Since some keys have values that are
+   * an array of non-keyed objects, this function iterates over those arrays and can
+   * return multiple values for a single key path.
+   * @param {module:warframe-items.Item | Array<module:warframe-items.Item>} item data to search
+   * @param {Array<string>} by array of keys to follow
+   * @returns {Array<string> | undefined} list of results or undefined if no matching keys
+   */
+  static #parseNestedKey(item, by) {
+    let resultList = [];
+
+    // Walk through keys in order
+    by.reduce((prevNode, currentValue, index) => {
+      if (!prevNode) {
+        return undefined;
+      }
+      // If an entry isn't found with the key, check for an array.
+      // This allows a user to use 'by=components.name' and every element in the
+      // components array will be checked.
+      if (!prevNode[currentValue]) {
+        if (Array.isArray(prevNode)) {
+          resultList = Array.from(prevNode, (element) => this.#parseNestedKey(element, by.slice(index)))
+            .flat(Infinity)
+            .filter((element) => element); // remove falsey values
+        }
+      } else if (typeof prevNode[currentValue] === 'object') {
+        // Key contains value that could contain more keys in the path
+        return prevNode[currentValue];
+      } else if (index === by.length - 1) {
+        // Non Arraylike value found with key, good if it's the last key otherwise a bad key path
+        resultList.push(prevNode[currentValue]);
+      }
+      // Return undefined unless the value of our current key is an array, reached the end of the value tree
+      return undefined;
+    }, item);
+
+    return resultList.length > 0 ? resultList : undefined;
   }
 };
