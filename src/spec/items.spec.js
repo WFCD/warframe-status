@@ -115,6 +115,57 @@ describe('items', () => {
     res.body.should.be.an('array');
     res.body.length.should.eq(0);
   });
+  it('should return an item by a non-default key', async () => {
+    const res = await chai.request(server).get('/items/bronco.png?by=imageName');
+    res.should.have.status(200);
+    res.body.should.be.an('object');
+    Object.keys(res.body).length.should.be.greaterThan(0);
+  });
+  it('should return multiple items by a non-default key', async () => {
+    const res = await chai.request(server).get('/items/search/bronco.png?by=imageName');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.be.greaterThan(0);
+  });
+  it('should return an item by nested keys', async () => {
+    const res = await chai.request(server).get('/items/7?by=attacks.falloff.start');
+    res.should.have.status(200);
+    res.body.should.be.an('object');
+    Object.keys(res.body).length.should.be.greaterThan(0);
+    res.body.uniqueName.should.eq('/Lotus/Weapons/Tenno/Pistol/HandShotGun');
+  });
+  it('should give error for unmatchable nested keys', async () => {
+    let res = await chai.request(server).get('/items/bronco?by=components.shoobedowopwah');
+    res.should.have.status(404);
+    res.body.should.be.an('object');
+    res.body.error.should.eq('No Result');
+    res.body.code.should.eq(404);
+
+    res = await chai.request(server).get('/items/rare?by=components.rarity');
+    res.should.have.status(404);
+    res.body.should.be.an('object');
+    res.body.error.should.eq('No Result');
+    res.body.code.should.eq(404);
+  });
+  it('should return multiple items by nested keys', async () => {
+    const res = await chai.request(server).get('/items/search/7?by=attacks.falloff.start');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.eq(2);
+    res.body[0].uniqueName.should.eq('/Lotus/Weapons/Tenno/Akimbo/AkimboShotGun');
+    res.body[1].uniqueName.should.eq('/Lotus/Weapons/Tenno/Pistol/HandShotGun');
+  });
+  it('should return empty array for unmatchable nested keys', async () => {
+    let res = await chai.request(server).get('/items/search/bronco?by=components.shoobedowopwah');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.eq(0);
+
+    res = await chai.request(server).get('/items/search/rare?by=components.rarity');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.eq(0);
+  });
 });
 
 describe('weapons', () => {
