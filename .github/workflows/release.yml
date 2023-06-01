@@ -1,4 +1,7 @@
 name: Release
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 on:
   push:
     branches:
@@ -45,14 +48,14 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
         with:
-          semantic_version: 18
+          semantic_version: 17
           extra_plugins: |
             @eclass/semantic-release-sentry-releases@2.11.0
             @semantic-release/git
             @semantic-release/exec
       - name: Read .release file
         id: release
-        run: echo "::set-output name=release::$(cat .release)"
+        run: echo "release=$(cat .release)" >> $GITHUB_OUTPUT
       - name: Create Sentry release
         if: ${{ steps.release.outputs.release == 'yes'  }}
         uses: getsentry/action-release@v1
