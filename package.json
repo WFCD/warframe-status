@@ -19,7 +19,7 @@
     "helmet": "^7.0.0",
     "json-fetch-cache": "^1.2.6",
     "node-fetch": "^2.6.11",
-    "swagger-stats": "^0.99.6",
+    "swagger-stats": "^0.99.7",
     "warframe-items": "^1.1260.50",
     "warframe-nexus-query": "^1.7.1",
     "warframe-worldstate-data": "^1.28.34",
