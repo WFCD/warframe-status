@@ -18,7 +18,7 @@
     "flat-cache": "^3.0.4",
     "helmet": "^7.0.0",
     "json-fetch-cache": "^1.2.6",
-    "node-fetch": "^2.6.12",
+    "node-fetch": "^2.6.13",
     "swagger-stats": "^0.99.7",
     "warframe-items": "^1.1260.115",
     "warframe-nexus-query": "^1.7.1",
