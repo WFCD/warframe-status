@@ -11,7 +11,7 @@
     "apicache": "^1.6.3",
     "colors": "1.4.0",
     "cors": "^2.8.5",
-    "cron": "^2.4.1",
+    "cron": "^2.4.3",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-favicon-short-circuit": "^1.1.1",
