@@ -34,7 +34,7 @@
     "utf-8-validate": "^5.0.10"
   },
   "devDependencies": {
-    "@sentry/types": "^7.66.0",
+    "@sentry/types": "^7.68.0",
     "@types/apicache": "^1.6.2",
     "@types/cors": "^2.8.14",
     "@types/cron": "^2.4.0",
