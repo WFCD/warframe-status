@@ -76,43 +76,36 @@ const makeLanguageCache = (language) => {
   return merged;
 };
 
-const hydrate = async () => {
-  const logger = Logger('HYDRATE');
-  logger.level = 'error';
-  // Items caches
-  const cache = flatCache.load('.items', path.resolve(__dirname, '../../'));
-  if (Date.now() - (cache.getKey('last_updt') || 0) >= FOUR_HOURS / 2) {
-    data.locales.forEach((language) => {
-      const cacheForLang = makeLanguageCache(language);
-      caches.forEach((cacheType) => {
-        cache.setKey(`${language}-${cacheType}`, cacheForLang[cacheType]);
-      });
-    });
-    cache.setKey('last_updt', Date.now());
-    cache.save(true);
-  }
-
+const hydrateWfInfo = async (logger) => {
   // WF Info caches
   const wfInfoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
   if (Date.now() - (wfInfoCache.getKey('last_updt') || 0) >= TWO_HOURS / 2) {
     if (filteredItemsSrc) {
-      await fetch(filteredItemsSrc)
-        .then((d) => d.json())
-        .then((d) => {
-          wfInfoCache.setKey('filteredItems', d);
-        });
+      const itemsRes = await fetch(filteredItemsSrc);
+      const itemsRaw = await itemsRes.text();
+      try {
+        const d = JSON.parse(itemsRaw);
+        wfInfoCache.setKey('prices', d);
+      } catch (e) {
+        logger.error(`Failed to update wfinfo filtered items`, e);
+      }
     }
     if (pricesSrc) {
-      await fetch(pricesSrc)
-        .then((d) => d.json())
-        .then((d) => {
-          wfInfoCache.setKey('prices', d);
-        });
+      const pricesRes = await fetch(pricesSrc);
+      const pricesRaw = await pricesRes.text();
+      try {
+        const d = JSON.parse(pricesRaw);
+        wfInfoCache.setKey('prices', d);
+      } catch (e) {
+        logger.error(`Failed to update wfinfo Prices`, e);
+      }
     }
     wfInfoCache.setKey('last_updt', Date.now());
     wfInfoCache.save(true);
   }
+};
 
+const hydrateTwitch = async (logger) => {
   // Twitch extension token cache
   const twitchCache = flatCache.load('.twitch', path.resolve(__dirname, '../../'));
   const CLIENT_ID = 'b31o4btkqth5bzbvr9ub2ovr79umhh'; // twitch's client id
@@ -138,6 +131,31 @@ const hydrate = async () => {
       logger.error('Cannot hydrate Twitch token');
     }
   }
+};
+
+const hydrateItems = () => {
+  // Items caches
+  const cache = flatCache.load('.items', path.resolve(__dirname, '../../'));
+  if (Date.now() - (cache.getKey('last_updt') || 0) >= FOUR_HOURS / 2) {
+    data.locales.forEach((language) => {
+      const cacheForLang = makeLanguageCache(language);
+      caches.forEach((cacheType) => {
+        cache.setKey(`${language}-${cacheType}`, cacheForLang[cacheType]);
+      });
+    });
+    cache.setKey('last_updt', Date.now());
+    cache.save(true);
+  }
+};
+
+const hydrate = async () => {
+  const logger = Logger('HYDRATE');
+  logger.level = 'error';
+  hydrateItems();
+
+  await hydrateWfInfo(logger);
+
+  await hydrateTwitch(logger);
 };
 
 if (process.env.BUILD && process.env.BUILD.trim() === 'build') {
