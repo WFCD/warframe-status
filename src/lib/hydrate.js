@@ -77,6 +77,7 @@ const makeLanguageCache = (language) => {
 };
 
 const hydrateWfInfo = async (logger) => {
+  const start = Date.now();
   // WF Info caches
   const wfInfoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
   if (Date.now() - (wfInfoCache.getKey('last_updt') || 0) >= TWO_HOURS / 2) {
@@ -103,6 +104,8 @@ const hydrateWfInfo = async (logger) => {
     wfInfoCache.setKey('last_updt', Date.now());
     wfInfoCache.save(true);
   }
+  const end = Date.now();
+  logger.info(`WFInfo Hydration complete in ${end - start}ms`);
 };
 
 const hydrateTwitch = async (logger) => {
@@ -150,7 +153,7 @@ const hydrateItems = () => {
 
 const hydrate = async () => {
   const logger = Logger('HYDRATE');
-  logger.level = 'error';
+  logger.level = 'info';
   hydrateItems();
 
   await hydrateWfInfo(logger);
