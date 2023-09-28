@@ -86,7 +86,7 @@ const hydrateWfInfo = async (logger) => {
       const itemsRaw = await itemsRes.text();
       try {
         const d = JSON.parse(itemsRaw);
-        wfInfoCache.setKey('prices', d);
+        wfInfoCache.setKey('filteredItems', d);
       } catch (e) {
         logger.error(`Failed to update wfinfo filtered items`, e);
       }
