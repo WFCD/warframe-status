@@ -44,7 +44,7 @@
     "@types/twitter": "^1.7.2",
     "@types/ws": "^8.5.3",
     "@wfcd/eslint-config": "^1.4.1",
-    "chai": "^4.3.9",
+    "chai": "^4.3.10",
     "chai-http": "^4.4.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
