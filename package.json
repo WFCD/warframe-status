@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@sentry/types": "^7.74.1",
-    "@types/apicache": "^1.6.3",
+    "@types/apicache": "^1.6.4",
     "@types/cors": "^2.8.15",
     "@types/cron": "^2.4.0",
     "@types/express": "^4.17.19",
