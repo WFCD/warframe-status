@@ -38,15 +38,11 @@ const groupRivenData = (cacheStrData) => {
 };
 
 platforms.forEach((platform) => {
-  const rCache = new Cache(
-    `https://n9e5v4d8.ssl.hwcdn.net/repos/weeklyRivens${platform.toUpperCase()}.json`,
-    604800000,
-    {
-      parser: groupRivenData,
-      logger,
-      delayStart: true,
-    }
-  );
+  const rCache = new Cache(`https://www.warframe.com/repos/weeklyRivens${platform.toUpperCase()}.json`, 604800000, {
+    parser: groupRivenData,
+    logger,
+    delayStart: true,
+  });
   rCache.startUpdating();
   rivenCaches[platform] = rCache;
 });
