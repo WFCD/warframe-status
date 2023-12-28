@@ -7,7 +7,10 @@ const path = require('path');
 const fetch = require('node-fetch');
 const Logger = require('./logger');
 
-const { filteredItems: filteredItemsSrc, prices: pricesSrc, build } = require('./settings');
+const {
+  wfInfo: { filteredItems: filteredItemsSrc, prices: pricesSrc },
+  build,
+} = require('./settings');
 
 const FOUR_HOURS = 14400000;
 const TWO_HOURS = 7200000;
