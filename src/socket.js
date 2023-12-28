@@ -8,7 +8,6 @@ const { host, port } = require('./lib/settings');
 const handler = require('./sockets');
 const heartbeater = require('./sockets/beater');
 
-console.error(`wtf... ${host}:${port}`);
 const init = (server) => {
   const wss = new WebSocket.Server({ server, path: '/socket' });
 
