@@ -59,16 +59,16 @@
     "dev:pm2": "pm2 start warframe-status.json",
     "lint": "eslint src/ --ext .js,.mjs",
     "lint:fix": "eslint src/ --fix --ext .js,.mjs",
-    "test": "nyc mocha",
+    "test": "cross-env HOSTNAME=localhost nyc mocha",
     "update:spec": "curl --url https://docs.warframestat.us/openapi.json -G -o src/api-spec/openapi.json --silent",
     "hydrate:cache": "BUILD=build WFINFO_FILTERED_ITEMS=$WFINFO_FILTERED_ITEMS WFINFO_PRICES=$WFINFO_PRICES node ./src/lib/hydrate.js",
     "coverage": "npm test && nyc report --reporter=text-lcov | coveralls",
     "build": "npm run hydrate:cache",
-    "postinstall": "install-peerdeps @wfcd/eslint-config@^1.1.4 -S"
+    "postinstall": "install-peerdeps @wfcd/eslint-config@^1.4.1 -S"
   },
   "engines": {
-    "node": ">=16.0.0 < 17",
-    "npm": ">=8.0.0 < 9"
+    "node": ">=18.0.0 < 19",
+    "npm": ">=10.0.0 < 11"
   },
   "license": "Apache-2.0",
   "nodemonConfig": {
@@ -81,6 +81,7 @@
       "LOG_LEVEL": "info",
       "API_BASE_URL": "http://localhost:3001",
       "NODE_ENV": "development",
+      "HOST": "localhost",
       "PORT": 3001,
       "CACHE_TIMEOUT": 30000,
       "DISABLE_PRICECHECKS": "true",

@@ -119,8 +119,7 @@ describe('worldstate', () => {
 
 const namedExclusions = ['Excalibur Prime'];
 describe('item data', () => {
-  data.warframes
-    .filter((w) => !namedExclusions.includes(w.name))
+  data.warframes?.filter((w) => !namedExclusions.includes(w.name))
     .forEach((warframe) => {
       it(`${warframe.name} should have components`, () => {
         should.exist(warframe);

@@ -1,12 +1,13 @@
 'use strict';
 
 const WebSocket = require('ws');
+const { port, host } = require('../lib/settings');
 
 const logger = require('../lib/logger')('PROC');
 
 logger.level = 'debug';
 
-const client = new WebSocket('ws://localhost:3001/socket');
+const client = new WebSocket(`ws://${host}:${port}/socket`);
 
 let pingTimeout;
 

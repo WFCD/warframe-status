@@ -3,13 +3,12 @@
 const WebSocket = require('ws');
 
 const { socketLogger: logger, worldState } = require('./lib/utilities');
-
-const port = process.env.PORT || 3001;
-const host = process.env.HOSTNAME || process.env.HOST || process.env.IP || 'localhost';
+const { host, port } = require('./lib/settings');
 
 const handler = require('./sockets');
 const heartbeater = require('./sockets/beater');
 
+console.error(`wtf... ${host}:${port}`);
 const init = (server) => {
   const wss = new WebSocket.Server({ server, path: '/socket' });
 

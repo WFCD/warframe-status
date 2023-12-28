@@ -29,7 +29,7 @@ router.use((req, res, next) => {
   /* istanbul ignore if */
   if (!platforms.includes(req.platform)) req.platform = 'pc';
 
-  if (req.header('Accept-Language').length) res.set('Vary', 'Accept-Language');
+  if (req.header('Accept-Language') && req.header('Accept-Language').length) res?.set('Vary', 'Accept-Language');
 
   req.language = (req.header('Accept-Language') || 'en').substring(0, 2).toLowerCase();
   req.language = (req.query.language || req.language).substring(0, 2);

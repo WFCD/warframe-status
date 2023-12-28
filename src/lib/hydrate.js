@@ -7,13 +7,13 @@ const path = require('path');
 const fetch = require('node-fetch');
 const Logger = require('./logger');
 
+const { filteredItems: filteredItemsSrc, prices: pricesSrc, build } = require('./settings');
+
 const FOUR_HOURS = 14400000;
 const TWO_HOURS = 7200000;
 const TWO_DAYS = 172800000;
 const caches = ['weapons', 'warframes', 'items', 'mods'];
 const i18nOnObject = true;
-const filteredItemsSrc = process.env.WFINFO_FILTERED_ITEMS;
-const pricesSrc = process.env.WFINFO_PRICES;
 
 /**
  * Cache object
@@ -161,7 +161,7 @@ const hydrate = async () => {
   await hydrateTwitch(logger);
 };
 
-if (process.env.BUILD && process.env.BUILD.trim() === 'build') {
+if (build) {
   const logger = Logger('BUILD');
   logger.level = 'info';
   try {
