@@ -2,25 +2,31 @@
 
 // monitoring
 const swagger = require('swagger-stats');
-
 // security
 const helmet = require('helmet');
 const cors = require('cors');
 
 const spec = require('../api-spec/openapi.json');
 
+const {
+  sentry,
+  release,
+  // admin: { user, pass },
+  // env,
+} = require('./settings');
+
 // Some dependency/config stuff
-// const adminCred = { user: process.env.ADMIN_USER, pass: process.env.ADMIN_PASS };
-// const isProd = process.env.NODE_ENV === 'production';
+// const adminCred = { user, pass };
+// const isProd = env === 'production';
 
 const initSentry = (app) => {
-  if (process.env.SENTRY_DSN) {
+  if (sentry) {
     // eslint-disable-next-line global-require
     const Sentry = require('@sentry/node');
     const { Integrations: TracingIntegrations } = require('@sentry/tracing');
     Sentry.init({
-      dsn: process.env.SENTRY_DSN,
-      release: `${process.env.npm_package_name}@${process.env.npm_package_version}`,
+      dsn: sentry,
+      release: `${release.name}@${release.version}`,
       integrations: [
         new TracingIntegrations.BrowserTracing({
           tracingOrigins: ['api.warframestat.us'],

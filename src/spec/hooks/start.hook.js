@@ -5,9 +5,10 @@ const chai = require('chai');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const chaiHttp = require('chai-http');
 const app = require('../../app');
+const { port, host } = require('../../lib/settings');
 
 chai.use(chaiHttp);
-app.listen(process.env.PORT || 3000, process.env.IP || process.env.HOST || '0.0.0.0', () => {
+app.listen(port, host, () => {
   setTimeout(() => {
     app.emit('started');
     app.started = true;
