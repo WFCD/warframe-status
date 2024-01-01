@@ -22,6 +22,7 @@ const settings = {
     user: process.env.ADMIN_USER,
     pass: process.env.ADMIN_PASSWORD,
   },
+  features: process.env.FEATURES?.split(',') || [],
 };
 
 module.exports = process.env.NODE_ENV === 'test' ? settings : Object.freeze(settings);
