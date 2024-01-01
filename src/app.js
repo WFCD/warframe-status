@@ -1,26 +1,30 @@
-'use strict';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import dotenv from 'dotenv';
+import express from 'express';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import Settings from './lib/settings.js';
+import * as addons from './lib/addons.js';
+import { logger } from './lib/utilities.js';
+import controllers from './controllers/index.js';
 
-/* istanbul ignore next */ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test')
-  require('dotenv').config(); // eslint-disable-line import/no-extraneous-dependencies
-
-const express = require('express');
+/* istanbul ignore next */ if (['development', 'test'].includes(Settings.env)) dotenv.config();
 
 const app = express();
-const addons = require('./lib/addons');
 
-const { logger } = require('./lib/utilities');
-
-/* istanbul ignore next */ if (!global.__basedir) {
+/* istanbul ignore next */ if (!global?.__basedir) {
+  // eslint-disable-next-line no-global-assign
+  __dirname = dirname(fileURLToPath(import.meta.url));
   global.__basedir = __dirname;
 }
 
 // middleware
 app.use(express.json());
-addons.init(app);
+await addons.init(app);
 
 // actual api routes
 logger.info('Setting up routes...');
-app.use(require('./controllers'));
+app.use(controllers);
 
 // oh no, nothing...fallback catch-all
 app.use((req, res) => {
@@ -28,4 +32,4 @@ app.use((req, res) => {
 });
 logger.info('Routes up');
 
-module.exports = app;
+export default app;

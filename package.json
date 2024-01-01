@@ -17,6 +17,7 @@
     "express-favicon-short-circuit": "^1.1.1",
     "flat-cache": "^3.0.4",
     "helmet": "^7.1.0",
+    "ip-address": "^9.0.5",
     "json-fetch-cache": "^1.2.6",
     "node-fetch": "^2.7.0",
     "swagger-stats": "^0.99.7",
@@ -44,14 +45,14 @@
     "@types/twitter": "^1.7.4",
     "@types/ws": "^8.5.3",
     "@wfcd/eslint-config": "^1.4.1",
+    "c8": "^8.0.1",
     "chai": "^4.4.0",
     "chai-http": "^4.4.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "install-peerdeps": "^2.0.3",
     "mocha": "^10.2.0",
-    "nodemon": "^3.0.2",
-    "nyc": "^15.1.0"
+    "nodemon": "^3.0.2"
   },
   "scripts": {
     "start": "node main.js",
@@ -59,10 +60,10 @@
     "dev:pm2": "pm2 start warframe-status.json",
     "lint": "eslint src/ --ext .js,.mjs",
     "lint:fix": "eslint src/ --fix --ext .js,.mjs",
-    "test": "cross-env HOSTNAME=localhost nyc mocha",
+    "test": "cross-env HOSTNAME=localhost c8 mocha",
     "update:spec": "curl --url https://docs.warframestat.us/openapi.json -G -o src/api-spec/openapi.json --silent",
     "hydrate:cache": "BUILD=build WFINFO_FILTERED_ITEMS=$WFINFO_FILTERED_ITEMS WFINFO_PRICES=$WFINFO_PRICES node ./src/lib/hydrate.js",
-    "coverage": "npm test && nyc report --reporter=text-lcov | coveralls",
+    "coverage": "npm test && c8 report --reporter=text-lcov | coveralls",
     "build": "npm run hydrate:cache",
     "postinstall": "install-peerdeps @wfcd/eslint-config@^1.4.1 -S"
   },
@@ -81,6 +82,7 @@
       "LOG_LEVEL": "info",
       "API_BASE_URL": "http://localhost:3001",
       "NODE_ENV": "development",
+      "HOSTNAME": "127.0.0.1",
       "PORT": 3001,
       "CACHE_TIMEOUT": 30000,
       "DISABLE_PRICECHECKS": "true",
@@ -91,12 +93,20 @@
     "src/lib/generate.js"
   ],
   "eslintConfig": {
-    "extends": [
-      "@wfcd"
-    ],
+    "root": true,
+    "extends": "@wfcd/eslint-config/esm",
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 6,
+      "ecmaFeatures": {
+        "modules": true
+      }
+    },
     "rules": {
       "no-underscore-dangle": "off",
-      "no-restricted-syntax": "off"
+      "no-restricted-syntax": "off",
+      "import/prefer-default-export": "off"
     }
   },
   "prettier": "@wfcd/eslint-config/prettier",
@@ -155,7 +165,7 @@
       "src/spec/hooks/start.hook.js"
     ]
   },
-  "nyc": {
+  "c8": {
     "exclude": [
       "src/spec/**",
       "src/controllers/index.js",
@@ -170,5 +180,6 @@
     "sourceMap": true,
     "produce-source-map": true,
     "skip-full": true
-  }
+  },
+  "type": "module"
 }

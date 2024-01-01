@@ -1,29 +1,28 @@
-'use strict';
+import swagger from 'swagger-stats';
+import helmet from 'helmet';
+import cors from 'cors';
+// eslint-disable-next-line prettier/prettier
+import expressShortCircuit from 'express-favicon-short-circuit';
+import spec from '../api-spec/openapi.json' assert { type: 'json' };
 
-// monitoring
-const swagger = require('swagger-stats');
-// security
-const helmet = require('helmet');
-const cors = require('cors');
-
-const spec = require('../api-spec/openapi.json');
+import Settings from './settings.js';
 
 const {
   sentry,
   release,
   // admin: { user, pass },
   // env,
-} = require('./settings');
+} = Settings;
 
 // Some dependency/config stuff
 // const adminCred = { user, pass };
 // const isProd = env === 'production';
 
-const initSentry = (app) => {
+const initSentry = async (app) => {
   if (sentry) {
     // eslint-disable-next-line global-require
-    const Sentry = require('@sentry/node');
-    const { Integrations: TracingIntegrations } = require('@sentry/tracing');
+    const Sentry = await import('@sentry/node');
+    const { Integrations: TracingIntegrations } = await import('@sentry/tracing');
     Sentry.init({
       dsn: sentry,
       release: `${release.name}@${release.version}`,
@@ -56,12 +55,11 @@ const initSwagger = (app) => {
   app.use(swagger.getMiddleware(swaggConfig));
 };
 
-const init = (app) => {
-  initSentry(app);
+// eslint-disable-next-line import/prefer-default-export
+export const init = async (app) => {
+  await initSentry(app);
   initSwagger(app);
   initSecurity(app);
 
-  app.use(require('express-favicon-short-circuit'));
+  app.use(expressShortCircuit);
 };
-
-module.exports = { init };

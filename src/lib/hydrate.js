@@ -1,16 +1,17 @@
-'use strict';
-
-const Items = require('warframe-items');
-const data = require('warframe-worldstate-data');
-const flatCache = require('flat-cache');
-const path = require('path');
-const fetch = require('node-fetch');
-const Logger = require('./logger');
+import Items from 'warframe-items';
+import data from 'warframe-worldstate-data';
+import flatCache from 'flat-cache';
+import path, { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import Logger from './logger.js';
+import Settings from './settings.js';
 
 const {
   wfInfo: { filteredItems: filteredItemsSrc, prices: pricesSrc },
   build,
-} = require('./settings');
+} = Settings;
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const FOUR_HOURS = 14400000;
 const TWO_HOURS = 7200000;
@@ -176,6 +177,5 @@ if (build) {
   } catch (e) {
     logger.error(e);
   }
-} else {
-  module.exports = hydrate;
 }
+export default hydrate;

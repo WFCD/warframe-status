@@ -1,13 +1,14 @@
-'use strict';
+import express from 'express';
+import flatCache from 'flat-cache';
+import path from 'node:path';
+import { CronJob } from 'cron';
 
-const express = require('express');
-const flatCache = require('flat-cache');
-const path = require('path');
-const { CronJob: Job } = require('cron');
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import Settings from '../lib/settings.js';
+import { cache, ah } from '../lib/utilities.js';
 
-const Settings = require('../lib/settings');
-const { cache, ah } = require('../lib/utilities');
-
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const router = express.Router();
 let infoCache;
 
@@ -39,7 +40,7 @@ router.get(
 );
 
 // eslint-disable-next-line no-new
-new Job(
+new CronJob(
   '0 5 * * * *',
   /* istanbul ignore next */
   () => {
@@ -50,4 +51,4 @@ new Job(
   true
 );
 
-module.exports = router;
+export default router;

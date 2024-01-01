@@ -1,13 +1,9 @@
-'use strict';
-
-const express = require('express');
-const Cache = require('json-fetch-cache');
-const { logger, ah, platforms, titleCase, trimPlatform } = require('../lib/utilities');
+import express from 'express';
+import Cache from 'json-fetch-cache';
+import { logger, ah, platforms, titleCase, trimPlatform } from '../lib/utilities.js';
 
 const router = express.Router({ strict: true });
-
 const rivenCaches = {};
-
 const groupRivenData = (cacheStrData) => {
   /* istanbul ignore if */ if (!cacheStrData.length) return {};
   const stripped = cacheStrData.replace(/NaN/g, 0).replace(/WARNING:.*\n/, '');
@@ -84,4 +80,4 @@ router.get(
   })
 );
 
-module.exports = router;
+export default router;

@@ -1,9 +1,7 @@
-'use strict';
-
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const { warframeData } = require('../lib/utilities');
-const server = require('../app');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../app.js';
+import { warframeData } from '../lib/utilities.js';
 
 const should = chai.should();
 chai.use(chaiHttp);

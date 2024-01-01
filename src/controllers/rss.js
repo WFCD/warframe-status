@@ -1,11 +1,8 @@
-'use strict';
-
-const express = require('express');
-const { worldState } = require('../lib/utilities');
+import express from 'express';
+import { worldState } from '../lib/utilities.js';
 
 const router = express.Router();
 router.get('/', (req, res) => {
   res.json(worldState.getRss());
 });
-
-module.exports = router;
+export default router;

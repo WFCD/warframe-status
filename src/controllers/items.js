@@ -1,13 +1,8 @@
-'use strict';
-
-const express = require('express');
+import express from 'express';
+import { noResult, trimPlatform, cache } from '../lib/utilities.js';
+import Items from '../lib/caches/Items.js';
 
 const router = express.Router();
-
-const { noResult, trimPlatform, cache } = require('../lib/utilities');
-
-const Items = require('../lib/caches/Items');
-
 const splitKeys = (input) => (input || '').split(',').filter((k) => k.length);
 
 router.use((req, res, next) => {
@@ -154,4 +149,4 @@ router.get('/search/:query/?', cache('10 hours'), (req, res) => {
   return res.status(200).json(results);
 });
 
-module.exports = router;
+export default router;

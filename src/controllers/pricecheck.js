@@ -1,16 +1,13 @@
-'use strict';
+import express from 'express';
+import Nexus from 'warframe-nexus-query';
+import Settings from '../lib/settings.js';
+import { logger, ah, cache, noResult } from '../lib/utilities.js';
 
-const express = require('express');
-const Nexus = require('warframe-nexus-query');
-
-const { logger, ah, cache, noResult } = require('../lib/utilities');
-const Settings = require('../lib/settings');
-
+const router = express.Router();
 const unavailable = {
   error: 'Service temporarily unavailable',
   code: 503,
 };
-const router = express.Router();
 const nexusQuerier = new Nexus({ logger, skipNexus: true });
 
 router.use((req, res, next) => {
@@ -54,4 +51,4 @@ router.get(
   })
 );
 
-module.exports = router;
+export default router;

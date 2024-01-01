@@ -84,3 +84,6 @@ probably several others that can take some experimenting
 | `LOG_LEVEL`              | Logging level for logging                           | 
 | `HOST`/`HOSTNAME`        | host or hostname for hosting service                |
 | `PORT`/`IP`              | Port or IP address for hosting service              |
+
+
+It's highly recommended to use the local loopback (127.0.0.1) for HOST/HOSTNAME

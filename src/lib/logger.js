@@ -1,7 +1,5 @@
-'use strict';
-
-require('colors');
-const { transports, createLogger, format } = require('winston');
+import 'colors';
+import { transports, createLogger, format } from 'winston';
 
 const { combine, label, printf, colorize } = format;
 
@@ -44,4 +42,4 @@ const setup = (scope = 'PROC') => {
   return logger;
 };
 
-module.exports = setup;
+export default setup;

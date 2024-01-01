@@ -1,8 +1,16 @@
-'use strict';
-
-const { Router } = require('express');
-const url = require('url');
-const { logger, cache, platforms, warframeData, platformAliases, languages } = require('../lib/utilities');
+import url from 'node:url';
+import { Router } from 'express';
+import { logger, cache, platforms, warframeData, platformAliases, languages } from '../lib/utilities.js';
+import pricecheck from './pricecheck.js';
+import worldstate from './worldstate.js';
+import data from './data.js';
+import heartbeat from './heartbeat.js';
+import items from './items.js';
+import twitter from './twitter.js';
+import profile from './profile.js';
+import drops from './drops.js';
+import rss from './rss.js';
+import wfinfo from './wfinfo.js';
 
 const router = Router({ strict: true });
 
@@ -38,15 +46,15 @@ router.use((req, res, next) => {
   next();
 });
 
-router.use(`/:platform(${platforms.join('|')}|${platformAliases.join('|')})`, require('./worldstate'));
-router.use(`/:data(${Object.keys(warframeData).join('|')})`, require('./data'));
-router.use('/pricecheck', require('./pricecheck'));
-router.use('/heartbeat', require('./heartbeat'));
-router.use('/:itype(warframes|weapons|items|mods)', require('./items'));
-router.use('/twitter', require('./twitter'));
-router.use('/profile', require('./profile'));
-router.use('/drops', require('./drops'));
-router.use('/rss', require('./rss'));
-router.use('/wfinfo', require('./wfinfo'));
+router.use(`/:platform(${platforms.join('|')}|${platformAliases.join('|')})`, worldstate);
+router.use(`/:data(${Object.keys(warframeData).join('|')})`, data);
+router.use('/pricecheck', pricecheck);
+router.use('/heartbeat', heartbeat);
+router.use('/:itype(warframes|weapons|items|mods)', items);
+router.use('/twitter', twitter);
+router.use('/profile', profile);
+router.use('/drops', drops);
+router.use('/rss', rss);
+router.use('/wfinfo', wfinfo);
 
-module.exports = router;
+export default router;

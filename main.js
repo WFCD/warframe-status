@@ -1,12 +1,12 @@
-'use strict';
+import http from 'node:http';
+import app from './src/app.js';
+import Settings from './src/lib/settings.js';
+import makeSocket from './src/socket.js';
+import makeLogger from './src/lib/logger.js';
 
-const http = require('http');
+const { host, port, features } = Settings;
 
-const app = require('./src/app');
-const makeSocket = require('./src/socket');
-const logger = require('./src/lib/logger')('HTTP');
-const { host, port, features } = require('./src/lib/settings');
-
+const logger = makeLogger('HTTP');
 const server = http.createServer(app);
 if (features.includes('SOCKET')) makeSocket(server);
 

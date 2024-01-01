@@ -1,6 +1,6 @@
-'use strict';
+import { socketLogger, worldState } from '../lib/utilities.js';
 
-const { socketLogger: logger, worldState } = require('../lib/utilities');
+const logger = socketLogger;
 
 const safeParse = (data) => {
   try {
@@ -60,4 +60,4 @@ const index = (socket, req) => {
   socket.on('error', logger.error);
 };
 
-module.exports = index;
+export default index;

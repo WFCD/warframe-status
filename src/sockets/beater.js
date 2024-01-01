@@ -1,6 +1,4 @@
-'use strict';
-
-const { socketLogger: logger } = require('../lib/utilities');
+import { socketLogger } from '../lib/utilities.js';
 
 const noop = () => {};
 
@@ -25,7 +23,7 @@ const init = (wss) => {
   }, 30000);
 
   wss.on('close', () => clearInterval(interval));
-  wss.on('pong', () => logger.debug('pong!'));
+  wss.on('pong', () => socketLogger.debug('pong!'));
 };
 
-module.exports = init;
+export default init;

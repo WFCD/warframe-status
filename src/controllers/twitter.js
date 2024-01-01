@@ -1,11 +1,8 @@
-'use strict';
-
-const express = require('express');
+import express from 'express';
+import { cache, ah, worldState } from '../lib/utilities.js';
+import Settings from '../lib/settings.js';
 
 const router = express.Router();
-
-const { cache, ah, worldState } = require('../lib/utilities');
-const Settings = require('../lib/settings');
 
 router.get(
   '/',
@@ -20,4 +17,4 @@ router.get(
   })
 );
 
-module.exports = router;
+export default router;

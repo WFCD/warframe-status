@@ -1,9 +1,9 @@
-'use strict';
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../app.js';
+import * as utils from '../lib/utilities.js';
 
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const server = require('../app');
-const { platforms: p, platformAliases: pa } = require('../lib/utilities');
+const { platforms: p, platformAliases: pa } = utils;
 
 const should = chai.should();
 chai.use(chaiHttp);

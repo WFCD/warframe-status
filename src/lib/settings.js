@@ -1,19 +1,22 @@
-'use strict';
+import dns from 'node:dns/promises';
+import { Address6, Address4 } from 'ip-address';
+import makeLogger from './logger.js';
 
-const dns = require('dns');
-const logger = require('./logger')('BOOTSTRAP');
+const logger = makeLogger('BOOTSTRAP');
 
 // reshape ipv6 addresses to ipv4
-// TODO: Rewrite this async fully so we don't ever have an undefined value
 const raw = process.env.HOSTNAME || process.env.HOST || process.env.IP || 'localhost';
 let host;
 try {
-  logger.warn(`Not using an ip address? YOLO: ${raw}. Attempting to resolve...`);
-  dns.resolve4(raw, undefined, (err, addresses) => {
-    if (err) {
-      logger.error(err);
-      process.exit(1);
-    }
+  if (Address6.isValid(raw)) {
+    logger.info(`Oh look, ipv6 address... that won't do`);
+    host = new Address6(raw).inspectTeredo().client4;
+  } else if (Address4.isValid(raw)) {
+    host = raw;
+    logger.info('Nice, you gave an ip on the first try.');
+  } else {
+    logger.warn(`Not using an ip address? YOLO: ${raw}. Attempting to resolve...`);
+    const addresses = await dns.resolve4(raw);
     const first = addresses.find((record, index) => index === 0);
     if (first) {
       logger.info(`Great Scott! ${first} should be an ipv4 address!`);
@@ -21,7 +24,7 @@ try {
     } else {
       logger.error(`Still unable to resolve. You're on your own, Ghostrider.`);
     }
-  });
+  }
 } catch (error) {
   logger.error('Could not compensate');
   logger.error(error);
@@ -53,4 +56,4 @@ const settings = {
   features: process.env.FEATURES?.split(',') || [],
 };
 
-module.exports = process.env.NODE_ENV === 'test' ? settings : Object.freeze(settings);
+export default process.env.NODE_ENV === 'test' ? settings : Object.freeze(settings);
