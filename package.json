@@ -81,7 +81,6 @@
       "LOG_LEVEL": "info",
       "API_BASE_URL": "http://localhost:3001",
       "NODE_ENV": "development",
-      "HOST": "localhost",
       "PORT": 3001,
       "CACHE_TIMEOUT": 30000,
       "DISABLE_PRICECHECKS": "true",
