@@ -1,6 +1,11 @@
 import dns from 'node:dns/promises';
 import { Address6, Address4 } from 'ip-address';
+import dotenv from 'dotenv';
 import makeLogger from './logger.js';
+
+const env = process.env.NODE_ENV;
+
+/* istanbul ignore next */ if (['development', 'test'].includes(env)) dotenv.config();
 
 const logger = makeLogger('BOOTSTRAP');
 
@@ -48,7 +53,7 @@ const settings = {
     name: process.env.npm_package_name,
     version: process.env.npm_package_version,
   },
-  env: process.env.NODE_ENV,
+  env,
   admin: {
     user: process.env.ADMIN_USER,
     pass: process.env.ADMIN_PASSWORD,

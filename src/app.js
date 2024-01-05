@@ -1,14 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import dotenv from 'dotenv';
 import express from 'express';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'url';
-import Settings from './lib/settings.js';
 import * as addons from './lib/addons.js';
 import { logger } from './lib/utilities.js';
 import controllers from './controllers/index.js';
-
-/* istanbul ignore next */ if (['development', 'test'].includes(Settings.env)) dotenv.config();
 
 const app = express();
 
