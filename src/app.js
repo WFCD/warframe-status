@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import dotenv from 'dotenv';
 import express from 'express';
-import { dirname } from 'path';
+import { dirname } from 'node:path';
 import { fileURLToPath } from 'url';
 import Settings from './lib/settings.js';
 import * as addons from './lib/addons.js';
