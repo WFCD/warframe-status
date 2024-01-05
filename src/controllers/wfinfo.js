@@ -1,6 +1,6 @@
 import express from 'express';
 import flatCache from 'flat-cache';
-import path from 'node:path';
+import { resolve } from 'node:path';
 import { CronJob } from 'cron';
 
 import { dirname } from 'path';
@@ -13,7 +13,7 @@ const router = express.Router();
 let infoCache;
 
 router.use((req, res, next) => {
-  if (!infoCache) infoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
+  if (!infoCache) infoCache = flatCache.load('.wfinfo', resolve(__dirname, '../../'));
   next();
 });
 
@@ -45,7 +45,7 @@ new CronJob(
   /* istanbul ignore next */
   () => {
     /* istanbul ignore next */
-    infoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
+    infoCache = flatCache.load('.wfinfo', resolve(__dirname, '../../'));
   },
   undefined,
   true
