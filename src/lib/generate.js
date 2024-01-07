@@ -1,8 +1,11 @@
 import converter from 'express-jsdoc-swagger';
 import YAML from 'json-to-pretty-yaml';
 import { writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import {dirname, join} from 'node:path';
 import app from '../app.js';
+import {fileURLToPath} from "node:url";
+
+const DIRNAME = dirname(fileURLToPath(import.meta.url));
 
 const options = {
   info: {
@@ -32,7 +35,7 @@ const options = {
     },
   ],
   filesPattern: './*.js',
-  baseDir: join(__dirname, '../controllers/'),
+  baseDir: join(DIRNAME, '../controllers/'),
 };
 
 const listener = converter(app)(options);
@@ -40,7 +43,7 @@ const listener = converter(app)(options);
 listener.on('finish', (api) => {
   // const raw = JSON.stringify(api, null, 2);
   // fs.writeFileSync(path.join(__dirname, '../api-spec/openapi.json'), raw);
-  writeFileSync(join(__dirname, '../api-spec/openapi.yaml'), YAML.stringify(api));
+  writeFileSync(join(DIRNAME, '../api-spec/openapi.yaml'), YAML.stringify(api));
   // eslint-disable-next-line no-console
   console.log('Wrote docs');
   process.exit(0);

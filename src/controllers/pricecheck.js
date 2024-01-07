@@ -1,6 +1,7 @@
 import express from 'express';
 import Nexus from 'warframe-nexus-query';
-import { priceChecks } from '../lib/settings.js';
+import settings from '../lib/settings.js';
+/* eslint-disable import/no-named-as-default, import/no-named-as-default-member */
 import { logger, ah, cache, noResult } from '../lib/utilities.js';
 
 const router = express.Router();
@@ -19,7 +20,7 @@ router.get(
   '/:type/:query/?',
   cache('1 hour'),
   ah(async (req, res) => {
-    if (!priceChecks) {
+    if (!settings.priceChecks) {
       return res.status(503).json(unavailable);
     }
     let value;

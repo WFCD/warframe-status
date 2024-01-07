@@ -62,7 +62,7 @@ const settings = {
   twitter,
   wfInfo,
   build,
-  priceChecks,
+  priceChecks: priceChecks ?? false,
   host,
   port,
   sentry,

@@ -7,12 +7,12 @@ import { fileURLToPath } from 'node:url';
 import { wfInfo } from '../lib/settings.js';
 import { cache, ah } from '../lib/utilities.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const DIRNAME = dirname(fileURLToPath(import.meta.url));
 const router = express.Router();
 let infoCache;
 
 router.use((req, res, next) => {
-  if (!infoCache) infoCache = flatCache.load('.wfinfo', resolve(__dirname, '../../'));
+  if (!infoCache) infoCache = flatCache.load('.wfinfo', resolve(DIRNAME, '../../'));
   next();
 });
 
@@ -44,7 +44,7 @@ new CronJob(
   /* istanbul ignore next */
   () => {
     /* istanbul ignore next */
-    infoCache = flatCache.load('.wfinfo', resolve(__dirname, '../../'));
+    infoCache = flatCache.load('.wfinfo', resolve(DIRNAME, '../../'));
   },
   undefined,
   true
