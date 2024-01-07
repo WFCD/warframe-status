@@ -3,7 +3,7 @@ import { Address6, Address4 } from 'ip-address';
 import dotenv from 'dotenv';
 import makeLogger from './logger.js';
 
-const env = process.env.NODE_ENV;
+export const env = process.env.NODE_ENV;
 
 /* istanbul ignore next */ if (['development', 'test'].includes(env)) dotenv.config();
 
@@ -52,7 +52,6 @@ export const release = {
   name: process.env.npm_package_name,
   version: process.env.npm_package_version,
 };
-export const env = process.env.NODE_ENV;
 export const admin = {
   user: process.env.ADMIN_USER,
   pass: process.env.ADMIN_PASSWORD,

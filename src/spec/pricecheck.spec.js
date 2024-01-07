@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../app.js';
-/* eslint-disable import/no-named-as-default-member */
+/* eslint-disable import/no-named-as-default, import/no-named-as-default-member */
 import settings from '../lib/settings.js';
 
 chai.should();
@@ -48,7 +48,7 @@ describe('pricecheck', () => {
     res.body.should.not.include('no such item');
   });
   it('503s when disabled', async () => {
-    Settings.priceChecks = false;
+    settings.priceChecks = false;
     const res = await chai
       .request(server)
       .get('/pricecheck/attachment/nikana%20prime')
