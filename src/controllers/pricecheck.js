@@ -21,7 +21,6 @@ router.get(
   '/:type/:query/?',
   cache('1 hour'),
   ah(async (req, res) => {
-    console.error(`pricechecks are... ${settings.priceChecks}`);
     if (!settings.priceChecks) {
       return res.status(503).json(unavailable);
     }
