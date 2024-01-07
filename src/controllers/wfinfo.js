@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default, import/no-named-as-default-member */
 import express from 'express';
 import flatCache from 'flat-cache';
 import { resolve, dirname } from 'node:path';

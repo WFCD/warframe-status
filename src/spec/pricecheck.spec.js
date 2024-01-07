@@ -1,7 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../app.js';
-/* eslint-disable import/no-named-as-default, import/no-named-as-default-member */
 import settings from '../lib/settings.js';
 
 chai.should();

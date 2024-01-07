@@ -46,11 +46,12 @@ const initSwagger = (app) => {
   app.use(swagger.getMiddleware(swaggConfig));
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export const init = async (app) => {
+const init = async (app) => {
   await initSentry(app);
   initSwagger(app);
   initSecurity(app);
 
   app.use(expressShortCircuit);
 };
+
+export default init;

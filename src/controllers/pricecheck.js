@@ -1,5 +1,3 @@
-/* eslint-disable import/no-named-as-default, import/no-named-as-default-member */
-
 import express from 'express';
 import Nexus from 'warframe-nexus-query';
 import settings from '../lib/settings.js';

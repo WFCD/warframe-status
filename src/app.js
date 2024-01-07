@@ -1,5 +1,5 @@
 import express from 'express';
-import * as addons from './lib/addons.js';
+import initAddons from './lib/addons.js';
 import { logger } from './lib/utilities.js';
 import controllers from './controllers/index.js';
 
@@ -7,7 +7,7 @@ const app = express();
 
 // middleware
 app.use(express.json());
-await addons.init(app);
+await initAddons(app);
 
 // actual api routes
 logger.info('Setting up routes...');
