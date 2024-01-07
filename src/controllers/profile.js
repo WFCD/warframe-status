@@ -2,7 +2,7 @@ import express from 'express';
 import ArsenalParser from '@wfcd/arsenal-parser';
 import flatCache from 'flat-cache';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 import { noResult, cache } from '../lib/utilities.js';
 
 const router = express.Router({ strict: true });

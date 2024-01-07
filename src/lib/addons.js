@@ -1,18 +1,9 @@
 import swagger from 'swagger-stats';
 import helmet from 'helmet';
 import cors from 'cors';
-// eslint-disable-next-line prettier/prettier
 import expressShortCircuit from 'express-favicon-short-circuit';
+import { sentry, release } from './settings.js';
 import spec from '../api-spec/openapi.json' assert { type: 'json' };
-
-import Settings from './settings.js';
-
-const {
-  sentry,
-  release,
-  // admin: { user, pass },
-  // env,
-} = Settings;
 
 // Some dependency/config stuff
 // const adminCred = { user, pass };
@@ -45,7 +36,7 @@ const initSecurity = (app) => {
 
 const initSwagger = (app) => {
   // eslint-disable-next-line max-len
-  // const swaggerAuth = (req, user, pass) => (!isProd || (user === adminCred.user && pass === adminCred.pass));
+  // const swaggerAuth = (req, user, pass) => (!isProd || (user === admin.user && pass === admin.pass));
   const swaggConfig = {
     swaggerSpec: spec,
     uriPath: '/meta/status',

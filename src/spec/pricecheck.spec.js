@@ -1,14 +1,15 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../app.js';
-import Settings from '../lib/settings.js';
+/* eslint-disable import/no-named-as-default-member */
+import settings from '../lib/settings.js';
 
 chai.should();
 chai.use(chaiHttp);
 
 describe('pricecheck', () => {
   beforeEach(() => {
-    Settings.priceChecks = true;
+    settings.priceChecks = true;
   });
   it('handles no results', async function noResSearch() {
     this.timeout = 40000;

@@ -1,8 +1,6 @@
 import WebSocket from 'ws';
-import Settings from '../lib/settings.js';
+import { host, port } from '../lib/settings.js';
 import makeLogger from '../lib/logger.js';
-
-const { port, host } = Settings;
 
 const logger = makeLogger('PROC');
 

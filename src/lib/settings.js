@@ -11,13 +11,13 @@ const logger = makeLogger('BOOTSTRAP');
 
 // reshape ipv6 addresses to ipv4
 const raw = process.env.HOSTNAME || process.env.HOST || process.env.IP || 'localhost';
-let host;
+let resolved;
 try {
   if (Address6.isValid(raw)) {
     logger.info(`Oh look, ipv6 address... that won't do`);
-    host = new Address6(raw).inspectTeredo().client4;
+    resolved = new Address6(raw).inspectTeredo().client4;
   } else if (Address4.isValid(raw)) {
-    host = raw;
+    resolved = raw;
     logger.info('Nice, you gave an ip on the first try.');
   } else {
     logger.warn(`Not using an ip address? YOLO: ${raw}. Attempting to resolve...`);
@@ -25,7 +25,7 @@ try {
     const first = addresses.find((record, index) => index === 0);
     if (first) {
       logger.info(`Great Scott! ${first} should be an ipv4 address!`);
-      host = first;
+      resolved = first;
     } else {
       logger.error(`Still unable to resolve. You're on your own, Ghostrider.`);
     }
@@ -35,30 +35,42 @@ try {
   logger.error(error);
   process.exit(1);
 }
+export const host = resolved;
+export const port = process.env.PORT || 3001;
+
+export const twitter = {
+  active: process.env.TWITTER_TIMEOUT && process.env.TWITTER_SECRET && process.env.TWITTER_BEARER_TOKEN,
+};
+export const wfInfo = {
+  filteredItems: process.env.WFINFO_FILTERED_ITEMS,
+  prices: process.env.WFINFO_PRICES,
+};
+export const build = !!(process.env.BUILD && process.env.BUILD.trim().startsWith('build'));
+export const priceChecks = !process.env.DISABLE_PRICECHECKS;
+export const sentry = process.env.SENTRY_DSN;
+export const release = {
+  name: process.env.npm_package_name,
+  version: process.env.npm_package_version,
+};
+export const env = process.env.NODE_ENV;
+export const admin = {
+  user: process.env.ADMIN_USER,
+  pass: process.env.ADMIN_PASSWORD,
+};
+export const features = process.env.FEATURES?.split(',') || [];
 
 const settings = {
-  twitter: {
-    active: process.env.TWITTER_TIMEOUT && process.env.TWITTER_SECRET && process.env.TWITTER_BEARER_TOKEN,
-  },
-  wfInfo: {
-    filteredItems: process.env.WFINFO_FILTERED_ITEMS,
-    prices: process.env.WFINFO_PRICES,
-  },
-  build: !!(process.env.BUILD && process.env.BUILD.trim().startsWith('build')),
-  priceChecks: !process.env.DISABLE_PRICECHECKS,
+  twitter,
+  wfInfo,
+  build,
+  priceChecks,
   host,
-  port: process.env.PORT || 3001,
-  sentry: process.env.SENTRY_DSN,
-  release: {
-    name: process.env.npm_package_name,
-    version: process.env.npm_package_version,
-  },
+  port,
+  sentry,
+  release,
   env,
-  admin: {
-    user: process.env.ADMIN_USER,
-    pass: process.env.ADMIN_PASSWORD,
-  },
-  features: process.env.FEATURES?.split(',') || [],
+  admin,
+  features,
 };
 
 export default process.env.NODE_ENV === 'test' ? settings : Object.freeze(settings);

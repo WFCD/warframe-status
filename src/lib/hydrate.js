@@ -4,12 +4,9 @@ import flatCache from 'flat-cache';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Logger from './logger.js';
-import Settings from './settings.js';
+import { wfInfo, build } from './settings.js';
 
-const {
-  wfInfo: { filteredItems: filteredItemsSrc, prices: pricesSrc },
-  build,
-} = Settings;
+const { filteredItems: filteredItemsSrc, prices: pricesSrc } = wfInfo;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

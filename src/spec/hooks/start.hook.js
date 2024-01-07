@@ -1,9 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../app.js';
-import Settings from '../../lib/settings.js';
-
-const { port, host } = Settings;
+import { port, host } from '../../lib/settings.js';
 
 chai.use(chaiHttp);
 app.listen(port, host, () => {

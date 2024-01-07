@@ -1,11 +1,10 @@
 import express from 'express';
 import flatCache from 'flat-cache';
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
 import { CronJob } from 'cron';
 
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import Settings from '../lib/settings.js';
+import { fileURLToPath } from 'node:url';
+import { wfInfo } from '../lib/settings.js';
 import { cache, ah } from '../lib/utilities.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -21,7 +20,7 @@ router.get(
   '/filtered_items/?',
   cache('1 hour'),
   ah(async (req, res) => {
-    if (Settings.wfInfo?.filteredItems) {
+    if (wfInfo?.filteredItems) {
       return res.status(200).json(infoCache.getKey('filteredItems'));
     }
     return res.status(503).json({ code: 503, error: 'WFInfo Data Services Unavailable' });
@@ -32,7 +31,7 @@ router.get(
   '/prices/?',
   cache('1 hour'),
   ah(async (req, res) => {
-    if (Settings.wfInfo?.prices) {
+    if (wfInfo?.prices) {
       return res.status(200).json(infoCache.getKey('prices'));
     }
     return res.status(503).json({ code: 503, error: 'WFInfo Data Services Unavailable' });

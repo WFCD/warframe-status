@@ -1,7 +1,9 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../app.js';
-import Settings from '../lib/settings.js';
+
+/* eslint-disable import/no-named-as-default-member */
+import settings from '../lib/settings.js';
 
 chai.use(chaiHttp);
 
@@ -11,14 +13,14 @@ const original = {
 };
 
 const resetWFInfo = () => {
-  Settings.wfInfo = original;
+  settings.wfInfo = original;
 };
 
 describe('wfinfo', () => {
   afterEach(resetWFInfo);
 
   describe('filtered_items', () => {
-    if (Settings.wfInfo.filteredItems) {
+    if (settings.wfInfo.filteredItems) {
       it('should not be empty', async () => {
         const res = await chai.request(server).get('/wfinfo/filtered_items');
         res.should.have.status(200);
@@ -27,7 +29,7 @@ describe('wfinfo', () => {
         res.body.should.have.keys(['timestamp', 'errors', 'relics', 'eqmt', 'ignored_items']);
       });
       it('should be unavailable', async () => {
-        Settings.wfInfo.filteredItems = undefined;
+        settings.wfInfo.filteredItems = undefined;
         const res = await chai.request(server).get('/wfinfo/filtered_items');
         res.should.have.status(503);
       });
@@ -40,7 +42,7 @@ describe('wfinfo', () => {
   });
 
   describe('prices', () => {
-    if (Settings.wfInfo.prices) {
+    if (settings.wfInfo.prices) {
       it('should not be empty', async () => {
         const res = await chai.request(server).get('/wfinfo/prices');
         res.should.have.status(200);
@@ -48,7 +50,7 @@ describe('wfinfo', () => {
         res.body[0].should.have.keys(['name', 'yesterday_vol', 'today_vol', 'custom_avg']);
       });
       it('should be unavailable', async () => {
-        Settings.wfInfo.prices = undefined;
+        settings.wfInfo.prices = undefined;
         const res = await chai.request(server).get('/wfinfo/prices');
         res.should.have.status(503);
       });
