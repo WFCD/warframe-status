@@ -11,10 +11,10 @@ const WF_ARSENAL_ID = 'ud1zj704c0eb1s553jbkayvqxjft97';
 const WF_ARSENAL_API = 'https://content.warframe.com/dynamic/twitch/getActiveLoadout.php';
 let token;
 
-const DIRNAME = dirname(fileURLToPath(import.meta.url));
+const dirName = dirname(fileURLToPath(import.meta.url));
 
 router.use((req, res, next) => {
-  const tokenCache = flatCache.load('.twitch', resolve(DIRNAME, '../../'));
+  const tokenCache = flatCache.load('.twitch', resolve(dirName, '../../'));
   token = tokenCache.getKey('token');
   next();
 });

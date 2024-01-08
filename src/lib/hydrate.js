@@ -8,7 +8,7 @@ import { wfInfo, build } from './settings.js';
 
 const { filteredItems: filteredItemsSrc, prices: pricesSrc } = wfInfo;
 
-const DIRNAME = dirname(fileURLToPath(import.meta.url));
+const dirName = dirname(fileURLToPath(import.meta.url));
 
 const FOUR_HOURS = 14400000;
 const TWO_HOURS = 7200000;
@@ -80,7 +80,7 @@ const makeLanguageCache = (language) => {
 const hydrateWfInfo = async (logger) => {
   const start = Date.now();
   // WF Info caches
-  const wfInfoCache = flatCache.load('.wfinfo', resolve(DIRNAME, '../../'));
+  const wfInfoCache = flatCache.load('.wfinfo', resolve(dirName, '../../'));
   if (Date.now() - (wfInfoCache.getKey('last_updt') || 0) >= TWO_HOURS / 2) {
     if (filteredItemsSrc) {
       const itemsRes = await fetch(filteredItemsSrc);
@@ -111,7 +111,7 @@ const hydrateWfInfo = async (logger) => {
 
 const hydrateTwitch = async (logger) => {
   // Twitch extension token cache
-  const twitchCache = flatCache.load('.twitch', resolve(DIRNAME, '../../'));
+  const twitchCache = flatCache.load('.twitch', resolve(dirName, '../../'));
   const CLIENT_ID = 'b31o4btkqth5bzbvr9ub2ovr79umhh'; // twitch's client id
   const WF_ARSENAL_ID = 'ud1zj704c0eb1s553jbkayvqxjft97';
   const TWITCH_CHANNEL_ID = '89104719'; // tobitenno
@@ -139,7 +139,7 @@ const hydrateTwitch = async (logger) => {
 
 const hydrateItems = () => {
   // Items caches
-  const cache = flatCache.load('.items', resolve(DIRNAME, '../../'));
+  const cache = flatCache.load('.items', resolve(dirName, '../../'));
   if (Date.now() - (cache.getKey('last_updt') || 0) >= FOUR_HOURS / 2) {
     data.locales.forEach((language) => {
       const cacheForLang = makeLanguageCache(language);

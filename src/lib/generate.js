@@ -5,7 +5,7 @@ import {dirname, join} from 'node:path';
 import app from '../app.js';
 import {fileURLToPath} from "node:url";
 
-const DIRNAME = dirname(fileURLToPath(import.meta.url));
+const dirName = dirname(fileURLToPath(import.meta.url));
 
 const options = {
   info: {
@@ -35,7 +35,7 @@ const options = {
     },
   ],
   filesPattern: './*.js',
-  baseDir: join(DIRNAME, '../controllers/'),
+  baseDir: join(dirName, '../controllers/'),
 };
 
 const listener = converter(app)(options);
@@ -43,7 +43,7 @@ const listener = converter(app)(options);
 listener.on('finish', (api) => {
   // const raw = JSON.stringify(api, null, 2);
   // fs.writeFileSync(path.join(__dirname, '../api-spec/openapi.json'), raw);
-  writeFileSync(join(DIRNAME, '../api-spec/openapi.yaml'), YAML.stringify(api));
+  writeFileSync(join(dirName, '../api-spec/openapi.yaml'), YAML.stringify(api));
   // eslint-disable-next-line no-console
   console.log('Wrote docs');
   process.exit(0);

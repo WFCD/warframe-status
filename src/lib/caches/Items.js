@@ -8,10 +8,10 @@ import Logger from '../logger.js';
 let logger;
 
 const FOUR_HOURS = 14400000;
-const DIRNAME = dirname(fileURLToPath(import.meta.url));
+const dirName = dirname(fileURLToPath(import.meta.url));
 
 export default class ItemsCache {
-  static #cache = flatCache.load('.items', resolve(DIRNAME, '../../../'));
+  static #cache = flatCache.load('.items', resolve(dirName, '../../../'));
 
   static {
     logger = Logger('ITEMS');
