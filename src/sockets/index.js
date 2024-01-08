@@ -1,6 +1,4 @@
-'use strict';
-
-const { socketLogger: logger, worldState } = require('../lib/utilities');
+import { socketLogger as logger, worldState } from '../lib/utilities.js';
 
 const safeParse = (data) => {
   try {
@@ -48,8 +46,10 @@ const index = (socket, req) => {
         break;
       case 'twitter':
         socket.send(JSON.stringify({ event: 'twitter:provide', packet: worldState.getTwitter() }));
+        break;
       case 'rss':
         socket.send(JSON.stringify({ event: 'rss:provide', packet: worldState.getRss() }));
+        break;
       default:
         socket.send(JSON.stringify({ status: 400 }));
         break;
@@ -60,4 +60,4 @@ const index = (socket, req) => {
   socket.on('error', logger.error);
 };
 
-module.exports = index;
+export default index;

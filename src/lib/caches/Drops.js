@@ -1,7 +1,5 @@
-'use strict';
-
-const Cache = require('json-fetch-cache');
-const { logger } = require('../utilities');
+import Cache from 'json-fetch-cache';
+import { logger } from '../utilities.js';
 
 /**
  * Copy of #formatData from https://github.com/WFCD/warframe-drop-data/blob/gh-pages/index.html
@@ -47,4 +45,4 @@ const drops = new Cache('https://drops.warframestat.us/data/all.slim.json', 6000
   maxRetry: 1,
 });
 
-module.exports = drops;
+export default drops;

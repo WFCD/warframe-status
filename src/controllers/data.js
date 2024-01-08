@@ -1,11 +1,7 @@
-'use strict';
-
-const express = require('express');
+import express from 'express';
+import { warframeData, solKeys, cache, trimPlatform } from '../lib/utilities.js';
 
 const router = express.Router();
-
-const { warframeData, solKeys, cache, trimPlatform } = require('../lib/utilities');
-
 const dataKeys = Object.keys(warframeData);
 
 const overwriteResults = (parent, results) => parent.concat(results);
@@ -115,4 +111,4 @@ router.get('/search/:query/?', cache('10 hours'), (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

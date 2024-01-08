@@ -1,16 +1,14 @@
-'use strict';
-
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const server = require('../app');
-const Settings = require('../lib/settings');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../app.js';
+import settings from '../lib/settings.js';
 
 chai.should();
 chai.use(chaiHttp);
 
 describe('pricecheck', () => {
   beforeEach(() => {
-    Settings.priceChecks = true;
+    settings.priceChecks = true;
   });
   it('handles no results', async function noResSearch() {
     this.timeout = 40000;
@@ -49,7 +47,7 @@ describe('pricecheck', () => {
     res.body.should.not.include('no such item');
   });
   it('503s when disabled', async () => {
-    Settings.priceChecks = false;
+    settings.priceChecks = false;
     const res = await chai
       .request(server)
       .get('/pricecheck/attachment/nikana%20prime')

@@ -1,10 +1,6 @@
-'use strict';
-
-const express = require('express');
-
-const { cache, ah } = require('../lib/utilities');
-
-const dropCache = require('../lib/caches/Drops');
+import express from 'express';
+import { cache, ah } from '../lib/utilities.js';
+import dropCache from '../lib/caches/Drops.js';
 
 const router = express.Router();
 
@@ -86,4 +82,4 @@ router.get(
   })
 );
 
-module.exports = router;
+export default router;

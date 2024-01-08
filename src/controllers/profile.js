@@ -1,12 +1,9 @@
-'use strict';
-
-const express = require('express');
-const fetch = require('node-fetch');
-const ArsenalParser = require('@wfcd/arsenal-parser');
-const flatCache = require('flat-cache');
-const path = require('path');
-
-const { noResult, cache } = require('../lib/utilities');
+import express from 'express';
+import ArsenalParser from '@wfcd/arsenal-parser';
+import flatCache from 'flat-cache';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { noResult, cache } from '../lib/utilities.js';
 
 const router = express.Router({ strict: true });
 
@@ -14,8 +11,10 @@ const WF_ARSENAL_ID = 'ud1zj704c0eb1s553jbkayvqxjft97';
 const WF_ARSENAL_API = 'https://content.warframe.com/dynamic/twitch/getActiveLoadout.php';
 let token;
 
+const dirName = dirname(fileURLToPath(import.meta.url));
+
 router.use((req, res, next) => {
-  const tokenCache = flatCache.load('.twitch', path.resolve(__dirname, '../../'));
+  const tokenCache = flatCache.load('.twitch', resolve(dirName, '../../'));
   token = tokenCache.getKey('token');
   next();
 });
@@ -42,4 +41,4 @@ router.get('/:username/?', cache('1 hour'), async (req, res) => {
   return res.status(200).json(new ArsenalParser(data));
 });
 
-module.exports = router;
+export default router;

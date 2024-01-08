@@ -1,17 +1,17 @@
-'use strict';
-
-const path = require('path');
-const flatCache = require('flat-cache');
-const Job = require('cron').CronJob;
-const hydrate = require('../hydrate');
-const Logger = require('../logger');
+import flatCache from 'flat-cache';
+import { CronJob } from 'cron';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import hydrate from '../hydrate.js';
+import Logger from '../logger.js';
 
 let logger;
 
 const FOUR_HOURS = 14400000;
+const dirName = dirname(fileURLToPath(import.meta.url));
 
-module.exports = class ItemsCache {
-  static #cache = flatCache.load('.items', path.resolve(__dirname, '../../../'));
+export default class ItemsCache {
+  static #cache = flatCache.load('.items', resolve(dirName, '../../../'));
 
   static {
     logger = Logger('ITEMS');
@@ -20,7 +20,7 @@ module.exports = class ItemsCache {
     if (!lastUpdate || Date.now() - lastUpdate > FOUR_HOURS) {
       hydrate();
     }
-    const hydration = new Job('0 0 * * * *', hydrate, undefined, true);
+    const hydration = new CronJob('0 0 * * * *', hydrate, undefined, true);
     hydration.start();
   }
 
@@ -161,4 +161,4 @@ module.exports = class ItemsCache {
 
     return resultList.length > 0 ? resultList : undefined;
   }
-};
+}

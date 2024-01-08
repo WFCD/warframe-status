@@ -1,11 +1,7 @@
-'use strict';
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-const chai = require('chai');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const chaiHttp = require('chai-http');
-const app = require('../../app');
-const { port, host } = require('../../lib/settings');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../../app.js';
+import { port, host } from '../../lib/settings.js';
 
 chai.use(chaiHttp);
 app.listen(port, host, () => {
@@ -14,7 +10,10 @@ app.listen(port, host, () => {
     app.started = true;
   }, 10000);
 });
-module.exports.mochaHooks = {
+
+// this specific named export is required
+// eslint-disable-next-line import/prefer-default-export
+export const mochaHooks = {
   beforeAll(done) {
     this.timeout = 60000;
     if (!app.started) {

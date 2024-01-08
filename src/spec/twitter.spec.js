@@ -1,9 +1,7 @@
-'use strict';
-
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const server = require('../app');
-const Settings = require('../lib/settings');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../app.js';
+import { twitter } from '../lib/settings.js';
 
 const should = chai.should();
 chai.use(chaiHttp);
@@ -11,7 +9,7 @@ chai.use(chaiHttp);
 describe('twitter', () => {
   describe('/', async () => {
     it.skip('should get twitter data', async function root() {
-      if (!Settings.twitter.active) this.skip();
+      if (!twitter.active) this.skip();
       const res = await chai.request(server).get('/twitter');
       res.should.have.status(200);
       should.exist(res.body);
@@ -26,7 +24,7 @@ describe('twitter', () => {
       });
     });
     it('should error with data off', async () => {
-      Settings.twitter.active = false;
+      twitter.active = false;
       const res = await chai.request(server).get('/twitter');
       res.should.have.status(404);
       res.body.should.be.an('object').and.include.all.keys('code', 'error');

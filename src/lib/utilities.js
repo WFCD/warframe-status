@@ -1,27 +1,24 @@
-'use strict';
+import 'colors';
+import asyncHandler from 'express-async-handler';
+import wfData from 'warframe-worldstate-data';
+import wfItems from 'warframe-items';
+import WorldStateEmitter from 'worldstate-emitter';
+import apiCache from 'apicache';
+import initLogger from './logger.js';
 
-require('colors');
-const ah = require('express-async-handler');
-const warframeData = require('warframe-worldstate-data');
-const Items = require('warframe-items');
-const WorldstateEmitter = require('worldstate-emitter');
-const apiCache = require('apicache');
-
-const initLogger = require('./logger');
-
-const platforms = ['pc', 'ps4', 'xb1', 'swi'];
-const platformAliases = ['ns'];
+export const platforms = ['pc', 'ps4', 'xb1', 'swi'];
+export const platformAliases = ['ns'];
 
 // Note: other worldstates have been synced into pc
 //    and all default to pc in src/controllers/worldstate.js
-const worldState = new WorldstateEmitter({ platform: 'pc' });
+export const worldState = new WorldStateEmitter({ platform: 'pc' });
 
 /**
  * Trim down to the first path route
  * @param {string} path full path to trim
  * @returns {string}
  */
-const trimPlatform = (path) => (path.replace('/', '').trim().split('/')[0] || '').toLowerCase();
+export const trimPlatform = (path) => (path.replace('/', '').trim().split('/')[0] || '').toLowerCase();
 
 /**
  * Group an array by a field value
@@ -29,7 +26,7 @@ const trimPlatform = (path) => (path.replace('/', '').trim().split('/')[0] || ''
  * @param  {string} field field to group by
  * @returns {Object}       [description]
  */
-const groupBy = (array, field) => {
+export const groupBy = (array, field) => {
   const grouped = {};
   if (!array) return undefined;
   array.forEach((item) => {
@@ -43,48 +40,39 @@ const groupBy = (array, field) => {
 };
 
 /* Logger setup */
-const logger = initLogger('REST');
+export const logger = initLogger('REST');
 
-const socketLogger = initLogger('SOCK');
+export const socketLogger = initLogger('SOCK');
 
 /* Warframe Data & Keys */
-delete warframeData.weapons;
-delete warframeData.warframes;
+delete wfData.weapons;
+delete wfData.warframes;
 
-const titleCase = (str) => str.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
+export const titleCase = (str) => str.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
 
-const noResult = (res) => {
+export const noResult = (res) => {
   res.status(404).json({ error: 'No Result', code: 404 });
 };
 
-const appendKey = (req) => {
+export const appendKey = (req) => {
   const queries = Object.keys(req.query).map((q) => `${q}${req.query[q]}`);
   return (
     `${req.method}${encodeURIComponent(req.path)}${req.platform || ''}${req.language || 'en'}${queries.join('')}` || ''
   );
 };
 
-module.exports = {
-  logger,
-  platforms,
-  platformAliases,
-  cache: apiCache.options({
-    appendKey,
-    enabled: process.env.NODE_ENV === 'production',
-    statusCodes: {
-      exclude: [503],
-    },
-    respectCacheControl: true,
-  }).middleware,
-  Items,
-  warframeData,
-  solKeys: Object.keys(warframeData.solNodes),
-  ah,
-  titleCase,
-  socketLogger,
-  groupBy,
-  languages: warframeData.locales,
-  worldState,
-  noResult,
-  trimPlatform,
-};
+export const solKeys = Object.keys(wfData.solNodes);
+export const languages = wfData.locales;
+
+export const cache = apiCache.options({
+  appendKey,
+  enabled: process.env.NODE_ENV === 'production',
+  statusCodes: {
+    exclude: [503],
+  },
+  respectCacheControl: true,
+}).middleware;
+
+export const warframeData = wfData;
+export const Items = wfItems;
+export const ah = asyncHandler;

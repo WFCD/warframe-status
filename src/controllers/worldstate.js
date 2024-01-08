@@ -1,7 +1,6 @@
-'use strict';
-
-const express = require('express');
-const { logger, worldState, cache, languages } = require('../lib/utilities');
+import express from 'express';
+import { logger, worldState, cache, languages } from '../lib/utilities.js';
+import rivens from './rivens.js';
 
 const get = (platform, language) => {
   try {
@@ -41,7 +40,7 @@ router.get('/', (req, res) => {
   res.json(ws);
 });
 
-router.use('/rivens/?', require('./rivens'));
+router.use('/rivens/?', rivens);
 
 router.get('/:field/?', (req, res) => {
   const ws = get(req.platform, req.language);
@@ -70,4 +69,4 @@ router.get('/:language/:field/?', cache('1 minute'), (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

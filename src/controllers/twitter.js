@@ -1,18 +1,15 @@
-'use strict';
-
-const express = require('express');
+import express from 'express';
+import { cache, ah, worldState } from '../lib/utilities.js';
+import { twitter } from '../lib/settings.js';
 
 const router = express.Router();
-
-const { cache, ah, worldState } = require('../lib/utilities');
-const Settings = require('../lib/settings');
 
 router.get(
   '/',
   cache('1 minute'),
   ah(async (req, res) => {
     /* istanbul ignore if */
-    if (Settings.twitter.active) {
+    if (twitter.active) {
       const twd = await worldState.getTwitter();
       return res.status(200).json(twd);
     }
@@ -20,4 +17,4 @@ router.get(
   })
 );
 
-module.exports = router;
+export default router;

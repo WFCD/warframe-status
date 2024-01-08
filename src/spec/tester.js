@@ -1,9 +1,8 @@
-'use strict';
+import WebSocket from 'ws';
+import { host, port } from '../lib/settings.js';
+import makeLogger from '../lib/logger.js';
 
-const WebSocket = require('ws');
-const { port, host } = require('../lib/settings');
-
-const logger = require('../lib/logger')('PROC');
+const logger = makeLogger('PROC');
 
 logger.level = 'debug';
 

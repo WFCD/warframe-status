@@ -1,8 +1,12 @@
+parserOptions:
+  # disables some linting, but avoids duping esm eslint configs from package.json
+  requireConfigFile: false
 env:
   mocha: true
 overrides:
   - files:
-      - '**/*.spec.mjs'
+      - '**/*.spec.js'
+      - 'hooks/**.js'
     rules:
       import/extensions: off
       import/no-extraneous-dependencies: off

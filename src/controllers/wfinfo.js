@@ -1,18 +1,18 @@
-'use strict';
+import express from 'express';
+import flatCache from 'flat-cache';
+import { resolve, dirname } from 'node:path';
+import { CronJob } from 'cron';
 
-const express = require('express');
-const flatCache = require('flat-cache');
-const path = require('path');
-const { CronJob: Job } = require('cron');
+import { fileURLToPath } from 'node:url';
+import settings from '../lib/settings.js';
+import { cache, ah } from '../lib/utilities.js';
 
-const Settings = require('../lib/settings');
-const { cache, ah } = require('../lib/utilities');
-
+const dirName = dirname(fileURLToPath(import.meta.url));
 const router = express.Router();
 let infoCache;
 
 router.use((req, res, next) => {
-  if (!infoCache) infoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
+  if (!infoCache) infoCache = flatCache.load('.wfinfo', resolve(dirName, '../../'));
   next();
 });
 
@@ -20,7 +20,7 @@ router.get(
   '/filtered_items/?',
   cache('1 hour'),
   ah(async (req, res) => {
-    if (Settings.wfInfo?.filteredItems) {
+    if (settings.wfInfo?.filteredItems) {
       return res.status(200).json(infoCache.getKey('filteredItems'));
     }
     return res.status(503).json({ code: 503, error: 'WFInfo Data Services Unavailable' });
@@ -31,7 +31,7 @@ router.get(
   '/prices/?',
   cache('1 hour'),
   ah(async (req, res) => {
-    if (Settings.wfInfo?.prices) {
+    if (settings.wfInfo?.prices) {
       return res.status(200).json(infoCache.getKey('prices'));
     }
     return res.status(503).json({ code: 503, error: 'WFInfo Data Services Unavailable' });
@@ -39,15 +39,15 @@ router.get(
 );
 
 // eslint-disable-next-line no-new
-new Job(
+new CronJob(
   '0 5 * * * *',
   /* istanbul ignore next */
   () => {
     /* istanbul ignore next */
-    infoCache = flatCache.load('.wfinfo', path.resolve(__dirname, '../../'));
+    infoCache = flatCache.load('.wfinfo', resolve(dirName, '../../'));
   },
   undefined,
   true
 );
 
-module.exports = router;
+export default router;

@@ -1,12 +1,8 @@
-'use strict';
-
-const WebSocket = require('ws');
-
-const { socketLogger: logger, worldState } = require('./lib/utilities');
-const { host, port } = require('./lib/settings');
-
-const handler = require('./sockets');
-const heartbeater = require('./sockets/beater');
+import WebSocket from 'ws';
+import { socketLogger as logger, worldState } from './lib/utilities.js';
+import { host, port } from './lib/settings.js';
+import handler from './sockets/index.js';
+import heartbeater from './sockets/beater.js';
 
 const init = (server) => {
   const wss = new WebSocket.Server({ server, path: '/socket' });
@@ -35,4 +31,4 @@ const init = (server) => {
   logger.info(`Started listening on wss://${host}:${port}/socket`);
 };
 
-module.exports = init;
+export default init;
