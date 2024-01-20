@@ -2,7 +2,9 @@ import swagger from 'swagger-stats';
 import helmet from 'helmet';
 import cors from 'cors';
 import expressShortCircuit from 'express-favicon-short-circuit';
+import { CronJob } from 'cron';
 import { sentry, release } from './settings.js';
+import hydrate from './hydrate.js';
 import spec from '../api-spec/openapi.json' assert { type: 'json' };
 
 // Some dependency/config stuff
@@ -46,10 +48,18 @@ const initSwagger = (app) => {
   app.use(swagger.getMiddleware(swaggConfig));
 };
 
+const initHydration = async () => {
+  await hydrate();
+  // Run every hour
+  const hydration = new CronJob('0 0 * * * *', hydrate, undefined, true);
+  hydration.start();
+};
+
 const init = async (app) => {
   await initSentry(app);
   initSwagger(app);
   initSecurity(app);
+  initHydration();
 
   app.use(expressShortCircuit);
 };

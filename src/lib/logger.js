@@ -27,7 +27,7 @@ const color = (scope = 'PROC') => {
 
 /**
  * Create a colorized scope
- * @param  {string} scope [description]
+ * @param  {string} [scope] process scope
  * @returns {Object}       set up logger
  */
 const setup = (scope = 'PROC') => {

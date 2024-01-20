@@ -1,13 +1,25 @@
-import Cache from 'json-fetch-cache';
-import { logger } from '../utilities.js';
+import flatCache from 'flat-cache';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import Logger from '../logger.js';
+
+/**
+ * Drop with chances @ location
+ * @typedef {Object} Drop
+ * @property {string} place
+ * @property {string} item
+ * @property {('common'|'uncommon'|'rare'|'legendary')} [rarity]
+ * @property {number} [chance] drop chance as a decimal that the drop occurs
+ * @property {'A'|'B'|'C'|'D'|'E'|'F'|'G'} [rotation] rotation the drop occurs on
+ */
 
 /**
  * Copy of #formatData from https://github.com/WFCD/warframe-drop-data/blob/gh-pages/index.html
- * @param {Object} data unformatted json data
- * @returns {Array.<JSON>}
+ * @param {string} data unformatted json data
+ * @returns {Array.<Drop>}
  */
-function formatData(data) {
-  return JSON.parse(data).map((reward) => ({
+const formatData = (data) =>
+  JSON.parse(data).map((reward) => ({
     place: reward.place
       .replace(/<\/?b>/gi, '')
       .replace('Derelict/', '')
@@ -35,14 +47,100 @@ function formatData(data) {
     rarity: reward.rarity,
     chance: Number.parseFloat(reward.chance),
   }));
+
+/**
+ * Group drops by where they drop
+ * @param {Array<Drop>} data ungrouped drop data
+ * @returns {Record<string, Array<Drop>>}
+ */
+const groupLocation = (data) => {
+  const locBase = {};
+  data.forEach((reward) => {
+    if (!locBase[reward.place]) {
+      locBase[reward.place] = {
+        rewards: [],
+      };
+    }
+    const slimmed = { ...reward };
+    delete slimmed.place;
+    locBase[reward.place].rewards.push(slimmed);
+  });
+  return locBase;
+};
+
+let logger;
+const FOUR_HOURS = 14400000;
+const dirName = dirname(fileURLToPath(import.meta.url));
+
+export default class DropsCache {
+  static #cache = flatCache.load('.drops', resolve(dirName, '../../../'));
+  static #lastUpdate;
+
+  static {
+    logger = Logger('DROPS');
+    logger.level = 'info';
+    this.#lastUpdate = DropsCache.#cache.getKey('last_updt');
+  }
+
+  static async populate() {
+    this.#lastUpdate = DropsCache.#cache.getKey('last_updt');
+    if (typeof this.#lastUpdate === 'undefined') this.#lastUpdate = 0;
+    if (Date.now() - this.#lastUpdate <= FOUR_HOURS) {
+      logger.debug('no drops data update needed');
+      return;
+    }
+    logger.info('starting Drops hydration');
+    const start = Date.now();
+    const raw = await fetch('https://drops.warframestat.us/data/all.slim.json');
+    const text = await raw.text();
+    const formatted = formatData(text);
+    this.#cache.setKey('data', formatted);
+
+    this.#lastUpdate = Date.now();
+    this.#cache.setKey('last_updt', this.#lastUpdate);
+
+    this.#cache.save(true);
+    // done
+    const end = Date.now();
+    logger.info(`Drops hydration complete in ${end - start}ms`);
+  }
+
+  /**
+   * Get a riven data subset, filtered if query is provided
+   * @param {string} [term] filtering query
+   * @param {'location'} [groupedBy] field to group by
+   * @returns {Promise<Array<Drop> | Record<string, Drop>>}
+   */
+  static async get({ term, groupedBy } = {}) {
+    let base = /** @type {Array<Drop>} */ DropsCache.#cache.getKey('data');
+    if (!base) {
+      logger.error('Drops not hydrated. Forcing hydration.');
+      await this.populate();
+      base = DropsCache.#cache.getKey('data');
+    }
+    if (!term) return base;
+    const queries = term.split(',').map((q) => q.trim().toLowerCase());
+    let filtered /** @type {Array<Drop> | Record<string, Array<Drop>>} */ = [];
+    queries.forEach((query) => {
+      let qResults = base.filter(
+        (drop) =>
+          drop.place.toLowerCase().includes(query.toLowerCase()) ||
+          drop.item.toLowerCase().includes(query.toLowerCase())
+      );
+
+      qResults = qResults.length > 0 ? qResults : [];
+
+      if (groupedBy && groupedBy === 'location') {
+        /* istanbul ignore if */ if (typeof filtered !== 'object') filtered = {};
+
+        filtered = {
+          ...groupLocation(qResults),
+          ...filtered,
+        };
+      } else {
+        filtered.push(...qResults);
+      }
+    });
+    return filtered;
+  }
 }
-
-const drops = new Cache('https://drops.warframestat.us/data/all.slim.json', 60000000, {
-  parser: formatData,
-  useEmitter: false,
-  logger,
-  delayStart: false,
-  maxRetry: 1,
-});
-
-export default drops;

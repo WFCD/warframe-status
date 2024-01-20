@@ -1,82 +1,20 @@
-import Items from 'warframe-items';
-import data from 'warframe-worldstate-data';
 import flatCache from 'flat-cache';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Logger from './logger.js';
 import { wfInfo, build } from './settings.js';
+import ItemsCache from './caches/Items.js';
+import RivensCache from './caches/Rivens.js';
+import DropsCache from './caches/Drops.js';
 
 const { filteredItems: filteredItemsSrc, prices: pricesSrc } = wfInfo;
 
 const dirName = dirname(fileURLToPath(import.meta.url));
 
-const FOUR_HOURS = 14400000;
 const TWO_HOURS = 7200000;
 const TWO_DAYS = 172800000;
-const caches = ['weapons', 'warframes', 'items', 'mods'];
-const i18nOnObject = true;
 
-/**
- * Cache object
- * @typedef {Object} ItemCache
- * @property {Array<module:warframe-items.Item>} weapons
- * @property {Array<module:warframe-items.Item>} warframes
- * @property {Array<module:warframe-items.Item>} items
- * @property {Array<module:warframe-items.Item>} mods
- */
-
-/**
- * Generate a Cache object for a specified language
- * @param {string} language one of {module:warframe-worldstate-data.locales}
- * @returns {ItemCache}
- */
-const makeLanguageCache = (language) => {
-  const base = {
-    weapons: new Items({
-      category: ['Primary', 'Secondary', 'Melee', 'Arch-Melee', 'Arch-Gun'],
-      i18n: language,
-      i18nOnObject,
-    }),
-    warframes: new Items({
-      category: ['Warframes', 'Archwing'],
-      i18n: language,
-      i18nOnObject,
-    }),
-    items: new Items({
-      i18n: language,
-      i18nOnObject,
-    }),
-    mods: new Items({
-      category: ['Mods'],
-      i18n: language,
-      i18nOnObject,
-    }),
-  };
-  const merged = {};
-  caches.forEach((cacheType) => {
-    const subCache = base[cacheType];
-    merged[cacheType] = [...subCache].map((item) => {
-      let itemClone = { ...item };
-      if (language !== 'en' && itemClone.i18n && itemClone.i18n[language]) {
-        itemClone = {
-          ...itemClone,
-          ...itemClone.i18n[language],
-        };
-      }
-      if (itemClone.abilities) {
-        itemClone.abilities = itemClone.abilities.map((ability) => ({
-          uniqueName: ability.abilityUniqueName || ability.uniqueName || undefined,
-          name: ability.abilityName || ability.name,
-          description: ability.abilityDescription || ability.description,
-        }));
-      }
-      delete itemClone.i18n;
-      return itemClone;
-    });
-  });
-  return merged;
-};
-
+// TODO: Eventually migrate to a standalone cache class
 const hydrateWfInfo = async (logger) => {
   const start = Date.now();
   // WF Info caches
@@ -104,15 +42,17 @@ const hydrateWfInfo = async (logger) => {
     }
     wfInfoCache.setKey('last_updt', Date.now());
     wfInfoCache.save(true);
+
+    const end = Date.now();
+    logger.info(`WFInfo Hydration complete in ${end - start}ms`);
   }
-  const end = Date.now();
-  logger.info(`WFInfo Hydration complete in ${end - start}ms`);
 };
 
+// TODO: Eventually migrate to a standalone cache class
 const hydrateTwitch = async (logger) => {
   // Twitch extension token cache
   const twitchCache = flatCache.load('.twitch', resolve(dirName, '../../'));
-  const CLIENT_ID = 'b31o4btkqth5bzbvr9ub2ovr79umhh'; // twitch's client id
+  const CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko'; // twitch's client id
   const WF_ARSENAL_ID = 'ud1zj704c0eb1s553jbkayvqxjft97';
   const TWITCH_CHANNEL_ID = '89104719'; // tobitenno
   if (
@@ -121,12 +61,16 @@ const hydrateTwitch = async (logger) => {
     twitchCache.getKey('token') !== 'unset'
   ) {
     try {
-      let raw = await fetch(`https://api.twitch.tv/v5/channels/${TWITCH_CHANNEL_ID}/extensions`, {
+      let raw = await fetch(`https://gql.twitch.tv/gql`, {
+        method: 'POST',
         headers: {
           'client-id': CLIENT_ID,
         },
+        body: `[{"operationName":"ExtensionsForChannel","variables":{"channelID":"${TWITCH_CHANNEL_ID}"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"d52085e5b03d1fc3534aa49de8f5128b2ee0f4e700f79bf3875dcb1c90947ac3"}}}]`,
       }).then((d) => d.json());
-      raw = raw?.tokens?.find((s) => s.extension_id === WF_ARSENAL_ID)?.token;
+      raw = raw?.[0]?.data?.user?.channel?.selfInstalledExtensions?.find((s) => {
+        return s?.token?.extensionID === WF_ARSENAL_ID;
+      })?.token?.jwt;
       raw = raw || 'unset';
       twitchCache.setKey('token', raw);
       twitchCache.setKey('last_updt', Date.now());
@@ -137,28 +81,13 @@ const hydrateTwitch = async (logger) => {
   }
 };
 
-const hydrateItems = () => {
-  // Items caches
-  const cache = flatCache.load('.items', resolve(dirName, '../../'));
-  if (Date.now() - (cache.getKey('last_updt') || 0) >= FOUR_HOURS / 2) {
-    data.locales.forEach((language) => {
-      const cacheForLang = makeLanguageCache(language);
-      caches.forEach((cacheType) => {
-        cache.setKey(`${language}-${cacheType}`, cacheForLang[cacheType]);
-      });
-    });
-    cache.setKey('last_updt', Date.now());
-    cache.save(true);
-  }
-};
-
 const hydrate = async () => {
   const logger = Logger('HYDRATE');
   logger.level = 'info';
-  hydrateItems();
-
+  await ItemsCache.populate();
+  await DropsCache.populate();
+  await RivensCache.populate();
   await hydrateWfInfo(logger);
-
   await hydrateTwitch(logger);
 };
 
@@ -167,12 +96,13 @@ if (build) {
   logger.level = 'info';
   try {
     const start = Date.now();
-    hydrate().then(() => {
-      const end = Date.now();
-      logger.info(`Hydration complete in ${end - start}ms`);
-    });
+    await hydrate();
+    const end = Date.now();
+    logger.info(`Hydration complete in ${end - start}ms`);
+    process.exit(0);
   } catch (e) {
     logger.error(e);
   }
 }
+
 export default hydrate;

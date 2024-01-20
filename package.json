@@ -55,7 +55,7 @@
     "nodemon": "^3.0.3"
   },
   "scripts": {
-    "start": "node main.js",
+    "start": "BUILD=build WFINFO_FILTERED_ITEMS=$WFINFO_FILTERED_ITEMS WFINFO_PRICES=$WFINFO_PRICES node main.js",
     "dev": "nodemon",
     "dev:pm2": "pm2 start warframe-status.json",
     "lint": "eslint src/ --ext .js,.mjs",
