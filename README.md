@@ -27,7 +27,9 @@ Simple express app that parses worldState.php
 
 ### Sockets:
 
-`ws://$host:$port/sockets`
+`ws://$host:$port/socket`
+(or for the secure socket)
+`wss://$host:$port/socket`
 
 Requests taken as json strings in the socket packet.
 
