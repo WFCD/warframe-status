@@ -1,23 +1,8 @@
 import express from 'express';
 import { cache, ah } from '../lib/utilities.js';
-import dropCache from '../lib/caches/Drops.js';
+import DropsCache from '../lib/caches/Drops.js';
 
 const router = express.Router();
-
-const groupLocation = (data) => {
-  const locBase = {};
-  data.forEach((reward) => {
-    if (!locBase[reward.place]) {
-      locBase[reward.place] = {
-        rewards: [],
-      };
-    }
-    const slimmed = { ...reward };
-    delete slimmed.place;
-    locBase[reward.place].rewards.push(slimmed);
-  });
-  return locBase;
-};
 
 /**
  * Drop with chances @ location
@@ -39,7 +24,7 @@ router.get(
   '/',
   cache('24 hours'),
   ah(async (req, res) => {
-    res.json(await dropCache.getData());
+    res.json(await DropsCache.get());
   })
 );
 
@@ -54,31 +39,8 @@ router.get(
   '/search/:query/?',
   cache('1 hour'),
   ah(async (req, res) => {
-    const drops = await dropCache.getData();
-    const queries = req.params.query.split(',').map((q) => q.trim());
-    let results = [];
-    queries.forEach((query) => {
-      let qResults = drops.filter(
-        (drop) =>
-          drop.place.toLowerCase().includes(query.toLowerCase()) ||
-          drop.item.toLowerCase().includes(query.toLowerCase())
-      );
-
-      qResults = qResults.length > 0 ? qResults : [];
-
-      if (req.query.grouped_by && req.query.grouped_by === 'location') {
-        /* istanbul ignore if */ if (typeof results !== 'object') results = {};
-
-        results = {
-          ...groupLocation(qResults),
-          ...results,
-        };
-      } else {
-        results.push(...qResults);
-      }
-    });
-
-    res.json(results);
+    const drops = await DropsCache.get({ term: req.params.query, groupedBy: req.query.grouped_by });
+    res.json(drops);
   })
 );
 

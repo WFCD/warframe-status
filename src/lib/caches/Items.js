@@ -1,27 +1,104 @@
 import flatCache from 'flat-cache';
-import { CronJob } from 'cron';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import hydrate from '../hydrate.js';
+import Items from 'warframe-items';
+import data from 'warframe-worldstate-data';
+
 import Logger from '../logger.js';
 
 let logger;
 
 const FOUR_HOURS = 14400000;
 const dirName = dirname(fileURLToPath(import.meta.url));
+const i18nOnObject = true;
+const caches = ['weapons', 'warframes', 'items', 'mods'];
+
+/**
+ * Cache object
+ * @typedef {Object} ItemCache
+ * @property {Array<module:warframe-items.Item>} weapons
+ * @property {Array<module:warframe-items.Item>} warframes
+ * @property {Array<module:warframe-items.Item>} items
+ * @property {Array<module:warframe-items.Item>} mods
+ */
+
+/**
+ * Generate a Cache object for a specified language
+ * @param {string} language one of {module:warframe-worldstate-data.locales}
+ * @returns {ItemCache}
+ */
+const makeLanguageCache = (language) => {
+  const base = {
+    weapons: new Items({
+      category: ['Primary', 'Secondary', 'Melee', 'Arch-Melee', 'Arch-Gun'],
+      i18n: language,
+      i18nOnObject,
+    }),
+    warframes: new Items({
+      category: ['Warframes', 'Archwing'],
+      i18n: language,
+      i18nOnObject,
+    }),
+    items: new Items({
+      i18n: language,
+      i18nOnObject,
+    }),
+    mods: new Items({
+      category: ['Mods'],
+      i18n: language,
+      i18nOnObject,
+    }),
+  };
+  const merged = {};
+  caches.forEach((cacheType) => {
+    const subCache = base[cacheType];
+    merged[cacheType] = [...subCache].map((item) => {
+      let itemClone = { ...item };
+      if (language !== 'en' && itemClone.i18n && itemClone.i18n[language]) {
+        itemClone = {
+          ...itemClone,
+          ...itemClone.i18n[language],
+        };
+      }
+      if (itemClone.abilities) {
+        itemClone.abilities = itemClone.abilities.map((ability) => ({
+          uniqueName: ability.abilityUniqueName || ability.uniqueName || undefined,
+          name: ability.abilityName || ability.name,
+          description: ability.abilityDescription || ability.description,
+        }));
+      }
+      delete itemClone.i18n;
+      return itemClone;
+    });
+  });
+  return merged;
+};
 
 export default class ItemsCache {
   static #cache = flatCache.load('.items', resolve(dirName, '../../../'));
+  static #lastUpdate = 0;
 
   static {
     logger = Logger('ITEMS');
     logger.level = 'info';
-    const lastUpdate = ItemsCache.#cache.getKey('last_updt');
-    if (!lastUpdate || Date.now() - lastUpdate > FOUR_HOURS) {
-      hydrate();
+    this.#lastUpdate = ItemsCache.#cache.getKey('last_updt');
+  }
+
+  static async populate() {
+    this.#lastUpdate = ItemsCache.#cache.getKey('last_updt');
+    if (typeof this.#lastUpdate === 'undefined') this.#lastUpdate = 0;
+    if (Date.now() - this.#lastUpdate <= FOUR_HOURS) {
+      logger.debug('No items update needed');
+      return;
     }
-    const hydration = new CronJob('0 0 * * * *', hydrate, undefined, true);
-    hydration.start();
+    data.locales.forEach((language) => {
+      const cacheForLang = makeLanguageCache(language);
+      caches.forEach((cacheType) => {
+        this.#cache.setKey(`${language}-${cacheType}`, cacheForLang[cacheType]);
+      });
+    });
+    this.#cache.setKey('last_updt', Date.now());
+    this.#cache.save(true);
   }
 
   /**
@@ -65,14 +142,14 @@ export default class ItemsCache {
    * @param {Array<string>} only keys to preserve on the object
    * @param {string} term search term on the object
    * @param {number} max maximum allowed amount (changes matching algorithm)
-   * @returns {module:warframe-items.Item[]}
+   * @returns {Promise<module:warframe-items.Item[]>}
    */
-  static get(key, language, { by = 'name', remove, only, term, max }) {
+  static async get(key, language, { by = 'name', remove, only, term, max }) {
     let base = ItemsCache.#cache.getKey(`${language}-${key}`);
     if (!term && !(remove || only)) return base;
     if (!base) {
       logger.error('Items not hydrated. Forcing hydration.');
-      hydrate();
+      await this.populate();
       base = ItemsCache.#cache.getKey(`${language}-${key}`);
     }
     // Allow nested keys separated by periods

@@ -1,5 +1,5 @@
 import express from 'express';
-import { noResult, trimPlatform, cache } from '../lib/utilities.js';
+import { noResult, trimPlatform, cache, ah } from '../lib/utilities.js';
 import Items from '../lib/caches/Items.js';
 
 const router = express.Router();
@@ -39,15 +39,18 @@ router.use((req, res, next) => {
  * @tags Static Processing Data
  * @return {Array<Item>} 200 - successful operation
  */
-router.get('/', (req, res) => {
-  const { remove, only } = req.query;
-  return res.status(200).json(
-    Items.get(req.itemType, req.language, {
-      remove: splitKeys(remove),
-      only: splitKeys(only),
-    })
-  );
-});
+router.get(
+  '/',
+  ah(async (req, res) => {
+    const { remove, only } = req.query;
+    return res.status(200).json(
+      await Items.get(req.itemType, req.language, {
+        remove: splitKeys(remove),
+        only: splitKeys(only),
+      })
+    );
+  })
+);
 
 /**
  * GET /warframes/{query}
@@ -81,21 +84,25 @@ router.get('/', (req, res) => {
  * @param {string} query.path - Keyword to search for
  * @return {Array<Item>} 200 - successful operation
  */
-router.get('/:item/?', cache('10 hours'), (req, res) => {
-  const { remove, only } = req.query;
-  const result = Items.get(req.itemType, req.language, {
-    by: req.query.by,
-    only: splitKeys(only),
-    remove: splitKeys(remove),
-    max: 1,
-    term: req.params.item,
-  });
+router.get(
+  '/:item/?',
+  cache('10 hours'),
+  ah(async (req, res) => {
+    const { remove, only } = req.query;
+    const result = await Items.get(req.itemType, req.language, {
+      by: req.query.by,
+      only: splitKeys(only),
+      remove: splitKeys(remove),
+      max: 1,
+      term: req.params.item,
+    });
 
-  if (result && Object.keys(result).length) {
-    return res.status(200).json(result);
-  }
-  return noResult(res);
-});
+    if (result && Object.keys(result).length) {
+      return res.status(200).json(result);
+    }
+    return noResult(res);
+  })
+);
 
 /**
  * GET /warframes/search/{query}
@@ -129,24 +136,29 @@ router.get('/:item/?', cache('10 hours'), (req, res) => {
  * @param {string} query.path - Keyword to search for
  * @return {Array<Item>} 200 - successful operation
  */
-router.get('/search/:query/?', cache('10 hours'), (req, res) => {
-  const { remove, only, by = 'name' } = req.query;
-  const queries = req.params.query
-    .trim()
-    .split(',')
-    .map((q) => q.trim().toLowerCase());
-  const results = queries
-    .map((query) =>
-      Items.get(req.itemType, req.language, {
-        by,
-        remove: splitKeys(remove),
-        only: splitKeys(only),
-        term: query,
-        max: 0,
-      })
-    )
-    .flat();
-  return res.status(200).json(results);
-});
+router.get(
+  '/search/:query/?',
+  cache('10 hours'),
+  ah(async (req, res) => {
+    const { remove, only, by = 'name' } = req.query;
+    const queries = req.params.query
+      .trim()
+      .split(',')
+      .map((q) => q.trim().toLowerCase());
+    const results = [];
+    for await (const query of queries) {
+      results.push(
+        await Items.get(req.itemType, req.language, {
+          by,
+          remove: splitKeys(remove),
+          only: splitKeys(only),
+          term: query,
+          max: 0,
+        })
+      );
+    }
+    return res.status(200).json(results.flat());
+  })
+);
 
 export default router;
