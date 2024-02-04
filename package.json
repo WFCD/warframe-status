@@ -155,7 +155,7 @@
     "enableSourceMaps": true,
     "enable-source-maps": true,
     "checkLeaks": true,
-    "timeout": 120000,
+    "timeout": 60000,
     "normal": 500,
     "slow": 2000,
     "fullTrace": true,
