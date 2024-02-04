@@ -54,6 +54,9 @@ data.weapons = await grab('weapons');
 data.warframes = await grab('warframes');
 data.mods = await grab('mods');
 
+// this spec is a little polluted,
+// because it takes time for the worldstate emitter to get fired up and updating,
+// so this needs to always run last
 describe('worldstate', () => {
   platforms.forEach((platform) => {
     describe(`/${platform}`, () => {

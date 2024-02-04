@@ -27,7 +27,7 @@
     "warframe-worldstate-data": "^1.32.6",
     "warframe-worldstate-parser": "^2.32.0",
     "winston": "^3.11.0",
-    "worldstate-emitter": "^1.0.8",
+    "worldstate-emitter": "^2.0.2",
     "ws": "^7.5.9"
   },
   "optionalDependencies": {
@@ -155,7 +155,7 @@
     "enableSourceMaps": true,
     "enable-source-maps": true,
     "checkLeaks": true,
-    "timeout": 60000,
+    "timeout": 120000,
     "normal": 500,
     "slow": 2000,
     "fullTrace": true,

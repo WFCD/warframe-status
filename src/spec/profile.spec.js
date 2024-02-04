@@ -6,7 +6,7 @@ import server from '../app.js';
 const should = chai.should();
 chai.use(chaiHttp);
 
-describe.skip('profiles', () => {
+describe('profiles', () => {
   describe('/profile/:username', async () => {
     describe('should get profile data', () => {
       it('pc [default]', async () => {
