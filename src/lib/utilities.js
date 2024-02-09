@@ -12,7 +12,7 @@ export const platformAliases = ['ns'];
 
 // Note: other worldstates have been synced into pc
 //    and all default to pc in src/controllers/worldstate.js
-export const worldState = new WorldStateEmitter({ platform: 'pc' });
+export const worldState = await WorldStateEmitter.make();
 
 /**
  * Trim down to the first path route

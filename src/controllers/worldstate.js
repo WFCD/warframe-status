@@ -6,7 +6,7 @@ import rivens from './rivens.js';
 
 const get = (platform, language) => {
   try {
-    return worldState.getWorldstate(platform, language);
+    return worldState.getWorldstate(language);
   } catch (e) /* istanbul ignore next */ {
     logger.debug(e);
     return undefined;
