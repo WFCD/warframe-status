@@ -1,4 +1,5 @@
 import WebSocket from 'ws';
+
 import { host, port } from '../lib/settings.js';
 import makeLogger from '../lib/logger.js';
 

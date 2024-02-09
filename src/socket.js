@@ -1,4 +1,5 @@
 import WebSocket from 'ws';
+
 import { socketLogger as logger, worldState } from './lib/utilities.js';
 import { host, port } from './lib/settings.js';
 import handler from './sockets/index.js';

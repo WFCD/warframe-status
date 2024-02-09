@@ -4,6 +4,7 @@ import wfData from 'warframe-worldstate-data';
 import wfItems from 'warframe-items';
 import WorldStateEmitter from 'worldstate-emitter';
 import apiCache from 'apicache';
+
 import initLogger from './logger.js';
 
 export const platforms = ['pc', 'ps4', 'xb1', 'swi'];

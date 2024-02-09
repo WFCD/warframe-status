@@ -1,6 +1,8 @@
 import dns from 'node:dns/promises';
+
 import { Address6, Address4 } from 'ip-address';
 import dotenv from 'dotenv';
+
 import makeLogger from './logger.js';
 
 export const env = process.env.NODE_ENV;
