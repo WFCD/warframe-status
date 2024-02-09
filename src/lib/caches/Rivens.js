@@ -1,6 +1,8 @@
-import flatCache from 'flat-cache';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import flatCache from 'flat-cache';
+
 import Logger from '../logger.js';
 import { platforms, titleCase } from '../utilities.js';
 

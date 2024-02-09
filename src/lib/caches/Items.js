@@ -1,6 +1,7 @@
-import flatCache from 'flat-cache';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import flatCache from 'flat-cache';
 import Items from 'warframe-items';
 import data from 'warframe-worldstate-data';
 

@@ -1,6 +1,8 @@
-import flatCache from 'flat-cache';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import flatCache from 'flat-cache';
+
 import Logger from './logger.js';
 import { wfInfo, build } from './settings.js';
 import ItemsCache from './caches/Items.js';

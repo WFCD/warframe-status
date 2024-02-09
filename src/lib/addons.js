@@ -3,9 +3,11 @@ import helmet from 'helmet';
 import cors from 'cors';
 import expressShortCircuit from 'express-favicon-short-circuit';
 import { CronJob } from 'cron';
+
+import spec from '../api-spec/openapi.json' assert { type: 'json' };
+
 import { sentry, release } from './settings.js';
 import hydrate from './hydrate.js';
-import spec from '../api-spec/openapi.json' assert { type: 'json' };
 
 // Some dependency/config stuff
 // const adminCred = { user, pass };
