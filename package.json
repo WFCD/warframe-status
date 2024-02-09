@@ -51,7 +51,7 @@
     "chai-http": "^4.4.0",
     "cross-env": "^7.0.3",
     "install-peerdeps": "^2.0.3",
-    "mocha": "^10.2.0",
+    "mocha": "^10.3.0",
     "nodemon": "^3.0.3"
   },
   "scripts": {
