@@ -50,7 +50,7 @@
     "chai": "^4.4.1",
     "chai-http": "^4.4.0",
     "cross-env": "^7.0.3",
-    "install-peerdeps": "^2.0.3",
+    "install-peerdeps": "^3.0.3",
     "mocha": "^10.3.0",
     "nodemon": "^3.1.0"
   },
@@ -65,7 +65,8 @@
     "hydrate:cache": "BUILD=build WFINFO_FILTERED_ITEMS=$WFINFO_FILTERED_ITEMS WFINFO_PRICES=$WFINFO_PRICES node ./src/lib/hydrate.js",
     "coverage": "npm test && c8 report --reporter=text-lcov | coveralls",
     "build": "npm run hydrate:cache",
-    "postinstall": "install-peerdeps @wfcd/eslint-config@^1.4.1 -S"
+    "postinstall": "install-peerdeps @wfcd/eslint-config@latest -S",
+    "validate": "npm ls"
   },
   "engines": {
     "node": ">=18.0.0 < 19",
@@ -181,5 +182,10 @@
     "produce-source-map": true,
     "skip-full": true
   },
-  "type": "module"
+  "type": "module",
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
 }

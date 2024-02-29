@@ -15,7 +15,7 @@ jobs:
         node-version-file: .nvmrc
         cache: npm
     - run: |
-        npm ci
+        npm ci --ignore-scripts
         npm i warframe-items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
         npm run lint
   test:
@@ -38,7 +38,7 @@ jobs:
           WFINFO_PRICES: ${{ secrets.WFINFO_PRICES }}
           NODE_ENV: 'test'
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm i warframe-items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
           npm run build
           npm test
