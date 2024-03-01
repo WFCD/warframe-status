@@ -58,3 +58,7 @@ nodemon.json
 .drops
 .rivens
 .hy-info
+
+# generated files by precommit hook
+.jshintrc
+.jshintignore

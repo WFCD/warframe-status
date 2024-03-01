@@ -18,6 +18,8 @@ jobs:
         npm ci
         npm i warframe-items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
         npm run lint
+      env:
+        NODE_ENV: 'test'
   test:
     name: Test
     runs-on: ubuntu-latest

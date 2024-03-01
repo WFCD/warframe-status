@@ -7,7 +7,7 @@
   "dependencies": {
     "@sentry/node": "^7.102.1",
     "@sentry/tracing": "^7.102.1",
-    "@wfcd/arsenal-parser": "^1.2.3",
+    "@wfcd/arsenal-parser": "^2.0.1",
     "apicache": "^1.6.3",
     "colors": "1.4.0",
     "cors": "^2.8.5",
@@ -16,18 +16,18 @@
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-favicon-short-circuit": "^1.1.1",
-    "flat-cache": "^3.0.4",
+    "flat-cache": "3.0.4",
     "helmet": "^7.1.0",
     "ip-address": "^9.0.5",
     "json-fetch-cache": "^1.2.6",
     "node-fetch": "^2.7.0",
     "swagger-stats": "^0.99.7",
-    "warframe-items": "^1.1261.23",
-    "warframe-nexus-query": "^2.0.1",
-    "warframe-worldstate-data": "^1.32.6",
-    "warframe-worldstate-parser": "^2.32.0",
+    "warframe-items": "^1.1262.5",
+    "warframe-nexus-query": "^2.0.2",
+    "warframe-worldstate-data": "^2.3.5",
+    "warframe-worldstate-parser": "^3.0.2",
     "winston": "^3.11.0",
-    "worldstate-emitter": "^2.0.2",
+    "worldstate-emitter": "^2.1.1",
     "ws": "^7.5.9"
   },
   "optionalDependencies": {
@@ -45,12 +45,12 @@
     "@types/helmet": "4.0.0",
     "@types/twitter": "^1.7.4",
     "@types/ws": "^8.5.3",
-    "@wfcd/eslint-config": "^1.6.1",
+    "@wfcd/eslint-config": "latest",
     "c8": "^9.1.0",
     "chai": "^4.4.1",
     "chai-http": "^4.4.0",
     "cross-env": "^7.0.3",
-    "install-peerdeps": "^2.0.3",
+    "install-peerdeps": "^3.0.3",
     "mocha": "^10.3.0",
     "nodemon": "^3.1.0"
   },
@@ -65,7 +65,8 @@
     "hydrate:cache": "BUILD=build WFINFO_FILTERED_ITEMS=$WFINFO_FILTERED_ITEMS WFINFO_PRICES=$WFINFO_PRICES node ./src/lib/hydrate.js",
     "coverage": "npm test && c8 report --reporter=text-lcov | coveralls",
     "build": "npm run hydrate:cache",
-    "postinstall": "install-peerdeps @wfcd/eslint-config@^1.4.1 -S"
+    "postinstall": "if [ \"$NODE_ENV\" = \"dev\" ] ; then npx -p install-peerdeps@latest install-peerdeps @wfcd/eslint-config@latest -S ; fi",
+    "validate": "npm ls"
   },
   "engines": {
     "node": ">=18.0.0 < 19",
@@ -181,5 +182,10 @@
     "produce-source-map": true,
     "skip-full": true
   },
-  "type": "module"
+  "type": "module",
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
 }
