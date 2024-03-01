@@ -25,7 +25,7 @@ jobs:
           TWITTER_BEARER_TOKEN:
             ${{ secrets.TWITTER_BEARER_TOKEN }}
         run: |
-          npm ci --ignore-scripts
+          npm ci
           npm i warframe-items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
           npm run lint
           npm run build
@@ -91,7 +91,7 @@ jobs:
         run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && git checkout -- . && git fetch --all && git reset --hard origin/main'
       - name: Deploy - Update dependencies
         if: ${{ steps.release.outputs.release == 'yes'  }}
-        run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && rm -rf node_modules && nvm install && nvm use && npm ci --ignore-scripts && npm run build && npm i -g pm2@latest'
+        run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && rm -rf node_modules && nvm install && nvm use && npm ci&& npm run build && npm i -g pm2@latest'
       - name: Deploy - Start Process
         if: ${{ steps.release.outputs.release == 'yes'  }}
         run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && pm2 start warframe-status.json'
