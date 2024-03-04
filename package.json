@@ -24,7 +24,7 @@
     "swagger-stats": "^0.99.7",
     "warframe-items": "^1.1262.5",
     "warframe-nexus-query": "^2.0.2",
-    "warframe-worldstate-data": "^2.3.5",
+    "warframe-worldstate-data": "^2.3.7",
     "warframe-worldstate-parser": "^3.0.2",
     "winston": "^3.11.0",
     "worldstate-emitter": "^2.1.1",
