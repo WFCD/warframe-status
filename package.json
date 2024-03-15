@@ -5,7 +5,7 @@
   "repository": "https://github.com/wfcd/warframe-status.git",
   "private": true,
   "dependencies": {
-    "@sentry/node": "^7.106.1",
+    "@sentry/node": "^7.107.0",
     "@sentry/tracing": "^7.107.0",
     "@wfcd/arsenal-parser": "^2.0.1",
     "apicache": "^1.6.3",
