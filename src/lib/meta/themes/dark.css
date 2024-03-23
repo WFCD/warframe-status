@@ -9,7 +9,11 @@ with some color changes
 }
 
 * {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
 }
 
 body.hide-cpu .container.cpu,
@@ -22,12 +26,12 @@ body.hide-statusCodes .container.statusCodes {
 }
 
 body {
-  background: #23272A;
+  background: #23272a;
 }
 
 h1 {
   font-size: 3em;
-  color: #DDD;
+  color: #ddd;
   margin: 0;
 }
 
@@ -49,7 +53,7 @@ span {
   cursor: pointer;
   font-size: 10px;
   margin-left: 5px;
-  border: 1px solid #2C2F33;
+  border: 1px solid #2c2f33;
   padding: 3px 10px 4px 10px;
   color: #ddd;
 }
@@ -74,7 +78,7 @@ canvas {
 }
 
 .header b {
-  color: #99AAB5;
+  color: #99aab5;
 }
 
 .container {
@@ -85,7 +89,7 @@ canvas {
 }
 
 .chart-container {
-  background-color: #23272A;
+  background-color: #23272a;
   width: 400px;
   height: 100px;
 }
@@ -97,7 +101,7 @@ canvas {
 
 .health-check-row {
   align-items: center;
-  border: 1px solid #2C2F33;
+  border: 1px solid #2c2f33;
   border-radius: 4px;
   display: flex;
   margin: 0 0 10px 0;
@@ -132,17 +136,17 @@ canvas {
 }
 
 .health-check-status-container.ok {
-  background: #75D701;
+  background: #75d701;
 }
 
 .health-check-status-container.failed {
-  background: #E53A40;
+  background: #e53a40;
 }
 
 .health-check-status-container h1 {
   line-height: 2em;
   font-size: 1.5em;
-  color: #2C2F33;
+  color: #2c2f33;
   text-align: center;
   text-transform: uppercase;
 }
@@ -170,7 +174,7 @@ canvas {
 }
 
 .status-code-2xx:before {
-  background-color: #75D701;
+  background-color: #75d701;
 }
 
 .status-code-3xx:before {
@@ -182,5 +186,5 @@ canvas {
 }
 
 .status-code-5xx:before {
-  background-color: #E53A40;
+  background-color: #e53a40;
 }

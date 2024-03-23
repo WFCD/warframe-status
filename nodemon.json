@@ -1,0 +1,13 @@
+{
+  "ignore": ["src/spec/**", "pacakge*.json", "src/api-spec/**"],
+  "env": {
+    "LOG_LEVEL": "info",
+    "API_BASE_URL": "http://localhost:3001",
+    "NODE_ENV": "development",
+    "HOSTNAME": "127.0.0.1",
+    "PORT": 3001,
+    "CACHE_TIMEOUT": 30000,
+    "DISABLE_PRICECHECKS": "true",
+    "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+  }
+}
