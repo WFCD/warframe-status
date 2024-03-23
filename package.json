@@ -36,6 +36,8 @@
     "utf-8-validate": "^5.0.10"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-conventional": "^19.1.0",
     "@sentry/types": "^7.107.0",
     "@types/apicache": "^1.6.6",
     "@types/cors": "^2.8.17",
@@ -50,7 +52,9 @@
     "chai": "^4.4.1",
     "chai-http": "^4.4.0",
     "cross-env": "^7.0.3",
+    "husky": "^9.0.11",
     "install-peerdeps": "^3.0.3",
+    "lint-staged": "^15.2.2",
     "mocha": "^10.3.0",
     "nodemon": "^3.1.0"
   },
@@ -66,126 +70,13 @@
     "coverage": "npm test && c8 report --reporter=text-lcov | coveralls",
     "build": "npm run hydrate:cache",
     "postinstall": "if [ \"$NODE_ENV\" = \"dev\" ] ; then npx -p install-peerdeps@latest install-peerdeps @wfcd/eslint-config@latest -S ; fi",
-    "validate": "npm ls"
+    "prepare": "husky"
   },
   "engines": {
     "node": ">=18.0.0 < 19",
     "npm": ">=10.0.0 < 11"
   },
   "license": "Apache-2.0",
-  "nodemonConfig": {
-    "ignore": [
-      "src/spec/**",
-      "pacakge*.json",
-      "src/api-spec/**"
-    ],
-    "env": {
-      "LOG_LEVEL": "info",
-      "API_BASE_URL": "http://localhost:3001",
-      "NODE_ENV": "development",
-      "HOSTNAME": "127.0.0.1",
-      "PORT": 3001,
-      "CACHE_TIMEOUT": 30000,
-      "DISABLE_PRICECHECKS": "true",
-      "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
-    }
-  },
-  "eslintIgnore": [
-    "src/lib/generate.js"
-  ],
-  "eslintConfig": {
-    "root": true,
-    "extends": "@wfcd/eslint-config/esm",
-    "parser": "@babel/eslint-parser",
-    "parserOptions": {
-      "sourceType": "module",
-      "ecmaVersion": 6,
-      "ecmaFeatures": {
-        "modules": true
-      }
-    },
-    "rules": {
-      "no-underscore-dangle": "off",
-      "no-restricted-syntax": "off",
-      "import/no-named-as-default-member": "off"
-    }
-  },
   "prettier": "@wfcd/eslint-config/prettier",
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ],
-    "plugins": [
-      "@babel/plugin-transform-class-properties",
-      "@babel/plugin-transform-private-methods"
-    ]
-  },
-  "release": {
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      [
-        "@semantic-release/exec",
-        {
-          "successCmd": "echo 'yes' >> .release",
-          "failCmd": "echo 'no' >> .release"
-        }
-      ],
-      "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ],
-      "@semantic-release/github",
-      [
-        "@semantic-release/git",
-        {
-          "assets": [
-            "package.json"
-          ]
-        }
-      ],
-      "@eclass/semantic-release-sentry-releases"
-    ],
-    "branches": "main"
-  },
-  "mocha": {
-    "exit": true,
-    "spec": "src/spec/**/*.spec.*js",
-    "enableSourceMaps": true,
-    "enable-source-maps": true,
-    "checkLeaks": true,
-    "timeout": 60000,
-    "normal": 500,
-    "slow": 2000,
-    "fullTrace": true,
-    "bail": true,
-    "require": [
-      "src/spec/hooks/env.js",
-      "src/spec/hooks/start.hook.js"
-    ]
-  },
-  "c8": {
-    "exclude": [
-      "src/spec/**",
-      "src/controllers/index.js",
-      "src/lib/*"
-    ],
-    "reporter": [
-      "lcov",
-      "text",
-      "html"
-    ],
-    "source-map": true,
-    "sourceMap": true,
-    "produce-source-map": true,
-    "skip-full": true
-  },
-  "type": "module",
-  "pre-commit": [
-    "lint",
-    "validate",
-    "test"
-  ]
+  "type": "module"
 }

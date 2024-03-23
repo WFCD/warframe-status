@@ -1,0 +1,13 @@
+exit: true
+spec: src/spec/**/*.spec.*js
+enableSourceMaps: true
+enable-source-maps: true
+checkLeaks: true
+timeout: 60000
+normal: 500
+slow: 2000
+fullTrace: true
+bail: true
+require:
+  - src/spec/hooks/env.js
+  - src/spec/hooks/start.hook.js
