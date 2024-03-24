@@ -1,9 +1,5 @@
 {
-  "ignore": [
-    "src/spec/**",
-    "pacakge*.json",
-    "src/api-spec/**"
-  ],
+  "ignore": ["src/spec/**", "pacakge*.json", "src/api-spec/**"],
   "env": {
     "LOG_LEVEL": "info",
     "API_BASE_URL": "http://localhost:3001",

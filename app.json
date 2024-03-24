@@ -1,16 +1,10 @@
 {
   "name": "warframe-status",
   "description": "Warframe status serves as an API for Warframe community projects",
-  "keywords": [
-    "warframe",
-    "status",
-    "api",
-    "json"
-  ],
+  "keywords": ["warframe", "status", "api", "json"],
   "repository": "https://github.com/WFCD/warframe-status",
   "website": "https://docs.warframestat.us",
-  "scripts": {
-  },
+  "scripts": {},
   "env": {
     "CACHE_TIMEOUT": {
       "description": "How long to wait to fetch a new instance of the worldstate",

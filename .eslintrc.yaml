@@ -1,6 +1,6 @@
 root: true
-extends: "@wfcd/eslint-config/esm"
-parser: "@babel/eslint-parser"
+extends: '@wfcd/eslint-config/esm'
+parser: '@babel/eslint-parser'
 parserOptions:
   sourceType: module
   ecmaVersion: 6

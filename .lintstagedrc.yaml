@@ -1,5 +1,8 @@
-'*.js':
+'*,!*.js,!package*.json':
+  - prettier --write
+'*.js,!*/generate.js':
   - eslint --cache --fix
   - npm test
 package*.json:
+  - prettier --write
   - npm dedupe

@@ -58,9 +58,7 @@
   "paths": {
     "/{platform}": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get Warframe Worldstate Data for the provided platform",
         "description": "The full translated Warframe Worldstate",
         "parameters": [
@@ -101,9 +99,7 @@
     },
     "/{platform}/alerts": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Alerts data",
         "description": "Description and rewards for Alerts",
         "parameters": [
@@ -141,10 +137,7 @@
     },
     "/{platform}/arbitration": {
       "get": {
-        "tags": [
-          "Worldstate",
-          "Unstable"
-        ],
+        "tags": ["Worldstate", "Unstable"],
         "summary": "[Unstable] Arbitration data",
         "description": "Description of the currently active arbitration",
         "parameters": [
@@ -182,9 +175,7 @@
     },
     "/{platform}/cetusCycle": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get Current Cetus Status",
         "description": "Data on the Day/night cycle for Cetus on earth",
         "parameters": [
@@ -222,9 +213,7 @@
     },
     "/{platform}/conclaveChallenges": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get Conclave Challenge Data",
         "description": "Data on each day and week's conclave challenges",
         "parameters": [
@@ -262,9 +251,7 @@
     },
     "/{platform}/constructionProgress": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get Construction Progress for Fomorians and Razorbacks",
         "description": "Construction percentages for showing how far constructed the enemy fleets are.",
         "parameters": [
@@ -302,9 +289,7 @@
     },
     "/{platform}/dailyDeals": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Daily Deal information from Darvo",
         "description": "Darvo's Daily Deal details",
         "parameters": [
@@ -342,9 +327,7 @@
     },
     "/{platform}/darkSectors": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Dark Sector occupation and history",
         "description": "Dark Sector (Rail Wars) data and history. Digital Extremes has emptied several of these.",
         "parameters": [
@@ -383,9 +366,7 @@
     },
     "/{platform}/earthCycle": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get the current Earth rotation information",
         "description": "The current Earth day/night cycle progress.",
         "parameters": [
@@ -423,9 +404,7 @@
     },
     "/{platform}/events": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Listing of ongoing events",
         "description": "Events, such as Fomorian Attacks are included here",
         "parameters": [
@@ -463,9 +442,7 @@
     },
     "/{platform}/fissures": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Data on current fissures",
         "description": "Information about current Void Fissure missions",
         "parameters": [
@@ -503,9 +480,7 @@
     },
     "/{platform}/flashSales": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Current Flash Sales from Darvo",
         "description": "Popular Deals, discounts, featured deals.",
         "parameters": [
@@ -543,9 +518,7 @@
     },
     "/{platform}/globalUpgrades": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Current Global Upgrades",
         "description": "Any current modifiers applied to all users, such as double drops.",
         "parameters": [
@@ -583,9 +556,7 @@
     },
     "/{platform}/invasions": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Invasion Data",
         "description": "Data on invasion missions, such as estimated completion time, rewards, etc.",
         "parameters": [
@@ -623,10 +594,7 @@
     },
     "/{platform}/kuva": {
       "get": {
-        "tags": [
-          "Worldstate",
-          "Unstable"
-        ],
+        "tags": ["Worldstate", "Unstable"],
         "summary": "[Unstable] Current Kuva Mission listing",
         "description": "Current Kuva Mission listing (provided by [semlar](https://10o.io/kuvalog)).",
         "parameters": [
@@ -661,9 +629,7 @@
     },
     "/{platform}/news": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Current Listing of News items",
         "description": "Translated News items from the worldstate",
         "parameters": [
@@ -698,9 +664,7 @@
     },
     "/{platform}/nightwave": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get the current Nightwave state.",
         "description": "The Current cycle and challenges of Nightwave, a battle-pass-esque rotation and challenge system",
         "parameters": [
@@ -738,9 +702,7 @@
     },
     "/{platform}/persistentEnemies": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get Persistent Enemy Data",
         "description": "Data about current acolytes attacking the Sol System",
         "parameters": [
@@ -773,10 +735,7 @@
     },
     "/{platform}/rivens": {
       "get": {
-        "tags": [
-          "Worldstate",
-          "Rivens"
-        ],
+        "tags": ["Worldstate", "Rivens"],
         "summary": "Get Riven statistic data",
         "description": "Data about averages, deviations, medians, miniums, and maxes for all rivens for the provided platform",
         "parameters": [
@@ -809,10 +768,7 @@
     },
     "/{platform}/rivens/search/{query}": {
       "get": {
-        "tags": [
-          "Worldstate",
-          "Rivens"
-        ],
+        "tags": ["Worldstate", "Rivens"],
         "summary": "Get Riven statistic data",
         "description": "Data about averages, deviations, medians, miniums, and maxes for rivens whose name match the query for the provided platform",
         "parameters": [
@@ -857,9 +813,7 @@
     },
     "/{platform}/sentientOutposts": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get the current Sentient Outpost, if any",
         "description": "Status data for current Sentient Outpost, if any. Parsed source is combined data from DE\\'s worldstate and [semlar\\'s data](https://semlar.com/anomaly.json)",
         "parameters": [
@@ -936,9 +890,7 @@
     },
     "/{platform}/simaris": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get the current Sanctuary Status",
         "description": "Status data for Simaris' Sanctuary",
         "parameters": [
@@ -976,9 +928,7 @@
     },
     "/{platform}/sortie": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Current Sortie Data",
         "description": "Data about the missions for the current sortie",
         "parameters": [
@@ -1019,9 +969,7 @@
     },
     "/{platform}/syndicateMissions": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Listing of Syndicate mission nodes",
         "description": "Cycling through different nodes each day, these are a general listing of the nodes that each syndicate will use for the day.",
         "parameters": [
@@ -1059,9 +1007,7 @@
     },
     "/{platform}/timestamp": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get the timestamp that the current worldstate was generated at.",
         "description": "The time that the worldstate was last generated",
         "parameters": [
@@ -1099,9 +1045,7 @@
     },
     "/{platform}/vallisCycle": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get the current state of the Orb Vallis",
         "description": "The current cycle of the Orb Vallis warm/cold cycle",
         "parameters": [
@@ -1139,9 +1083,7 @@
     },
     "/{platform}/voidTrader": {
       "get": {
-        "tags": [
-          "Worldstate"
-        ],
+        "tags": ["Worldstate"],
         "summary": "Get the current Void Trader Information",
         "description": "Information on the current Void Trader offerings, or when he will arrive.",
         "parameters": [
@@ -1179,9 +1121,7 @@
     },
     "/arcanes": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Arcane Enhancement Data",
         "description": "Available Arcane Enhancements",
         "responses": {
@@ -1206,9 +1146,7 @@
     },
     "/arcanes/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Arcane Enhancement Data based on the query",
         "description": "Available Arcane Enhancements",
         "parameters": [
@@ -1245,9 +1183,7 @@
     },
     "/conclave": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get conclave challenge data",
         "description": "Data about conclave challenges",
         "responses": {
@@ -1272,9 +1208,7 @@
     },
     "/conclave/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get conclave challenge data based on the query",
         "description": "Data about conclave challenges",
         "parameters": [
@@ -1311,9 +1245,7 @@
     },
     "/drops/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Warframe Drops data",
         "description": "Percentages for Warframe drops in different areas of the game",
         "parameters": [
@@ -1350,9 +1282,7 @@
     },
     "/events": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Event-specific Data",
         "description": "Data about events",
         "responses": {
@@ -1377,9 +1307,7 @@
     },
     "/events/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Event-specific Data based on the query",
         "description": "Data about events",
         "parameters": [
@@ -1416,9 +1344,7 @@
     },
     "/factions": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Faction translation information.",
         "description": "Strings for translating faction identifiers.",
         "responses": {
@@ -1443,9 +1369,7 @@
     },
     "/factions/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Faction translation information based on the query.",
         "description": "Strings for translating faction identifiers.",
         "parameters": [
@@ -1482,9 +1406,7 @@
     },
     "/fissureModifiers": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Fissure Modifier translation data.",
         "description": "Fissure translation identifiers",
         "responses": {
@@ -1509,9 +1431,7 @@
     },
     "/fissureModifiers/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Fissure Modifier translation data based on the query.",
         "description": "Fissure translation identifiers",
         "parameters": [
@@ -1548,9 +1468,7 @@
     },
     "/items/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Warframe Items data",
         "description": "Item information, such as name, unique name, type, and image name.",
         "parameters": [
@@ -1587,9 +1505,7 @@
     },
     "/languages": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Language strings for Warframe.",
         "description": "Get language strings to assist translation. (Prefer the /languages/search/:query route)",
         "responses": {
@@ -1614,9 +1530,7 @@
     },
     "/languages/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Language strings for Warframe based on the query.",
         "description": "Get language strings to assist translation.",
         "parameters": [
@@ -1653,9 +1567,7 @@
     },
     "/locales": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Full list of supported locales",
         "description": "Locales supported by the API",
         "responses": {
@@ -1677,9 +1589,7 @@
     },
     "/missionTypes": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get MissionType Translation Keys",
         "description": "Mission Type information to aid translating identifiers",
         "responses": {
@@ -1704,9 +1614,7 @@
     },
     "/missionTypes/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get MissionType Translation Keys based on the query",
         "description": "Mission Type information to aid translating identifiers",
         "parameters": [
@@ -1743,9 +1651,7 @@
     },
     "/operationTypes": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get operation types data.",
         "description": "Operation Types information to aid translating identifiers for global upgrades",
         "responses": {
@@ -1770,9 +1676,7 @@
     },
     "/operationTypes/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get operation types data based on the query.",
         "description": "Operation Types information to aid translating identifiers for global upgrades",
         "parameters": [
@@ -1809,9 +1713,7 @@
     },
     "/persistentEnemy": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Persistent Enemy translation data.",
         "description": "Persistent Enemy translation information for aiding translation of identifiers.",
         "responses": {
@@ -1836,9 +1738,7 @@
     },
     "/persistentEnemy/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Persistent Enemy translation data based on the query.",
         "description": "Persistent Enemy translation information for aiding translation of identifiers.",
         "parameters": [
@@ -1875,9 +1775,7 @@
     },
     "/solNodes": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Sol Node information and translation data.",
         "description": "Sol Node translation information for aiding the translation of identifiers.",
         "responses": {
@@ -1902,9 +1800,7 @@
     },
     "/solNodes/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Sol Node information and translation data based on the query.",
         "description": "Sol Node translation information for aiding the translation of identifiers.",
         "parameters": [
@@ -1941,9 +1837,7 @@
     },
     "/sortie": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Sortie translation information.",
         "description": "Sortie translation information for assisting translation of identifiers.",
         "responses": {
@@ -1968,9 +1862,7 @@
     },
     "/sortie/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Sortie translation information based on the query.",
         "description": "Sortie translation information for assisting translation of identifiers.",
         "parameters": [
@@ -2007,9 +1899,7 @@
     },
     "/syndicates": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Syndicate translation data.",
         "description": "Information to assist translating syndicate identifiers.",
         "responses": {
@@ -2034,9 +1924,7 @@
     },
     "/syndicates/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Syndicate translation data based on the query.",
         "description": "Information to assist translating syndicate identifiers.",
         "parameters": [
@@ -2073,9 +1961,7 @@
     },
     "/tutorials": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Tutorials Data",
         "description": "Tutorials data from DE",
         "responses": {
@@ -2100,9 +1986,7 @@
     },
     "/tutorials/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Tutorials Data based on the query",
         "description": "Tutorials data from DE",
         "parameters": [
@@ -2139,9 +2023,7 @@
     },
     "/upgradeTypes": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get upgrade types data for global upgrades.",
         "description": "Upgrade types for what can be changed by global modifiers, such as double credit weekends.",
         "responses": {
@@ -2166,9 +2048,7 @@
     },
     "/upgradeTypes/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get upgrade types data for global upgrades based on the query.",
         "description": "Upgrade types for what can be changed by global modifiers, such as double credit weekends.",
         "parameters": [
@@ -2205,9 +2085,7 @@
     },
     "/warframes": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Warframe specs and data, such as polarities defenses, and profile.",
         "description": "Warframe stats and general information.",
         "responses": {
@@ -2232,9 +2110,7 @@
     },
     "/warframes/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Warframe specs and data, such as polarities defenses, and profile based on the query.",
         "description": "Warframe stats and general information.",
         "parameters": [
@@ -2271,9 +2147,7 @@
     },
     "/weapons": {
       "get": {
-        "tags": [
-          "Static Processing Data"
-        ],
+        "tags": ["Static Processing Data"],
         "summary": "Get Weapon data and statistics.",
         "description": "Weapon statistics.",
         "responses": {
@@ -2298,9 +2172,7 @@
     },
     "/weapons/search/{query}": {
       "get": {
-        "tags": [
-          "Searchable"
-        ],
+        "tags": ["Searchable"],
         "summary": "Get Weapon data and statistics based on the query.",
         "description": "Weapon statistics.",
         "parameters": [
@@ -2372,13 +2244,7 @@
             }
           }
         },
-        "required": [
-          "activation",
-          "eta",
-          "expired",
-          "expiry",
-          "id"
-        ]
+        "required": ["activation", "eta", "expired", "expiry", "id"]
       },
       "arbitration": {
         "type": "object",
@@ -2415,15 +2281,7 @@
         }
       },
       "arcane": {
-        "required": [
-          "effect",
-          "info",
-          "location",
-          "name",
-          "rarity",
-          "regex",
-          "thumbnail"
-        ],
+        "required": ["effect", "info", "location", "name", "rarity", "regex", "thumbnail"],
         "type": "object",
         "properties": {
           "regex": {
@@ -2457,13 +2315,7 @@
         }
       },
       "cetusCycle": {
-        "required": [
-          "expiry",
-          "id",
-          "isCetus",
-          "isDay",
-          "timeLeft"
-        ],
+        "required": ["expiry", "id", "isCetus", "isDay", "timeLeft"],
         "type": "object",
         "properties": {
           "id": {
@@ -2498,10 +2350,7 @@
         }
       },
       "conclave": {
-        "required": [
-          "categories",
-          "modes"
-        ],
+        "required": ["categories", "modes"],
         "type": "object",
         "properties": {
           "modes": {
@@ -2516,9 +2365,7 @@
             "type": "object",
             "properties": {
               "PVPMODE_ALL": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2528,9 +2375,7 @@
                 }
               },
               "PVPMODE_TEAMDEATHMATCH": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2540,9 +2385,7 @@
                 }
               },
               "PVPMODE_NONE": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2552,9 +2395,7 @@
                 }
               },
               "PVPMODE_CAPTURETHEFLAG": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2564,9 +2405,7 @@
                 }
               },
               "PVPMODE_SPEEDBALL": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2576,9 +2415,7 @@
                 }
               },
               "PVPMODE_DEATHMATCH": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2600,9 +2437,7 @@
             "type": "object",
             "properties": {
               "PVPChallengeTypeCategory_DAILY_ROOT": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2612,9 +2447,7 @@
                 }
               },
               "PVPChallengeTypeCategory_DAILY": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2624,9 +2457,7 @@
                 }
               },
               "PVPChallengeTypeCategory_WEEKLY": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2636,9 +2467,7 @@
                 }
               },
               "PVPChallengeTypeCategory_WEEKLY_ROOT": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2648,9 +2477,7 @@
                 }
               },
               "PVPChallengeTypeCategory_MODEAFFECTOR": {
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "type": "object",
                 "properties": {
                   "value": {
@@ -2731,12 +2558,7 @@
         }
       },
       "construction": {
-        "required": [
-          "fomorianProgress",
-          "id",
-          "razorbackProgress",
-          "unknownProgress"
-        ],
+        "required": ["fomorianProgress", "id", "razorbackProgress", "unknownProgress"],
         "type": "object",
         "properties": {
           "id": {
@@ -2761,17 +2583,7 @@
         "minItems": 1,
         "type": "array",
         "items": {
-          "required": [
-            "discount",
-            "eta",
-            "expiry",
-            "id",
-            "item",
-            "originalPrice",
-            "salePrice",
-            "sold",
-            "total"
-          ],
+          "required": ["discount", "eta", "expiry", "id", "item", "originalPrice", "salePrice", "sold", "total"],
           "type": "object",
           "properties": {
             "sold": {
@@ -2893,12 +2705,7 @@
         "type": "array",
         "description": "",
         "items": {
-          "required": [
-            "chance",
-            "item",
-            "place",
-            "rarity"
-          ],
+          "required": ["chance", "item", "place", "rarity"],
           "type": "object",
           "properties": {
             "item": {
@@ -2920,12 +2727,7 @@
         }
       },
       "earthCycle": {
-        "required": [
-          "expiry",
-          "id",
-          "isDay",
-          "timeLeft"
-        ],
+        "required": ["expiry", "id", "isDay", "timeLeft"],
         "type": "object",
         "properties": {
           "id": {
@@ -3172,29 +2974,14 @@
       "faction": {
         "type": "string",
         "description": "A Faction in Warframe",
-        "enum": [
-          "Orokin",
-          "Corrupted",
-          "Infested",
-          "Corpus",
-          "Grineer",
-          "Tenno"
-        ]
+        "enum": ["Orokin", "Corrupted", "Infested", "Corpus", "Grineer", "Tenno"]
       },
       "factions": {
-        "required": [
-          "FC_CORPUS",
-          "FC_CORRUPTED",
-          "FC_GRINEER",
-          "FC_INFESTATION",
-          "FC_OROKIN"
-        ],
+        "required": ["FC_CORPUS", "FC_CORRUPTED", "FC_GRINEER", "FC_INFESTATION", "FC_OROKIN"],
         "type": "object",
         "properties": {
           "FC_GRINEER": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -3204,9 +2991,7 @@
             }
           },
           "FC_CORPUS": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -3216,9 +3001,7 @@
             }
           },
           "FC_INFESTATION": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -3228,9 +3011,7 @@
             }
           },
           "FC_CORRUPTED": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -3240,9 +3021,7 @@
             }
           },
           "FC_OROKIN": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -3256,18 +3035,7 @@
       },
       "fissure": {
         "type": "object",
-        "required": [
-          "activation",
-          "enemy",
-          "eta",
-          "expired",
-          "expiry",
-          "id",
-          "missionType",
-          "node",
-          "tier",
-          "tierNum"
-        ],
+        "required": ["activation", "enemy", "eta", "expired", "expiry", "id", "missionType", "node", "tier", "tierNum"],
         "properties": {
           "node": {
             "minLength": 1,
@@ -3312,19 +3080,11 @@
         }
       },
       "fissureModifiers": {
-        "required": [
-          "VoidT1",
-          "VoidT2",
-          "VoidT3",
-          "VoidT4"
-        ],
+        "required": ["VoidT1", "VoidT2", "VoidT3", "VoidT4"],
         "type": "object",
         "properties": {
           "VoidT1": {
-            "required": [
-              "num",
-              "value"
-            ],
+            "required": ["num", "value"],
             "type": "object",
             "properties": {
               "num": {
@@ -3337,10 +3097,7 @@
             }
           },
           "VoidT2": {
-            "required": [
-              "num",
-              "value"
-            ],
+            "required": ["num", "value"],
             "type": "object",
             "properties": {
               "num": {
@@ -3353,10 +3110,7 @@
             }
           },
           "VoidT3": {
-            "required": [
-              "num",
-              "value"
-            ],
+            "required": ["num", "value"],
             "type": "object",
             "properties": {
               "num": {
@@ -3369,10 +3123,7 @@
             }
           },
           "VoidT4": {
-            "required": [
-              "num",
-              "value"
-            ],
+            "required": ["num", "value"],
             "type": "object",
             "properties": {
               "num": {
@@ -3627,26 +3378,13 @@
       "language": {
         "type": "string",
         "default": "en",
-        "enum": [
-          "de",
-          "es",
-          "fr",
-          "it",
-          "ko",
-          "pl",
-          "pt",
-          "ru",
-          "zh",
-          "en"
-        ]
+        "enum": ["de", "es", "fr", "it", "ko", "pl", "pt", "ru", "zh", "en"]
       },
       "languages": {
         "type": "object",
         "properties": {
           "languageKey": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -3960,9 +3698,7 @@
         "type": "object",
         "properties": {
           "MT_EXCAVATE": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -3972,9 +3708,7 @@
             }
           },
           "MT_SABOTAGE": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -3984,9 +3718,7 @@
             }
           },
           "MT_MOBILE_DEFENSE": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -3996,9 +3728,7 @@
             }
           },
           "MT_ASSASSINATION": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4008,9 +3738,7 @@
             }
           },
           "MT_EXTERMINATION": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4020,9 +3748,7 @@
             }
           },
           "MT_HIVE": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4032,9 +3758,7 @@
             }
           },
           "MT_DEFENSE": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4044,9 +3768,7 @@
             }
           },
           "MT_TERRITORY": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4056,9 +3778,7 @@
             }
           },
           "MT_ARENA": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4068,9 +3788,7 @@
             }
           },
           "MT_PVP": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4080,9 +3798,7 @@
             }
           },
           "MT_RESCUE": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4092,9 +3808,7 @@
             }
           },
           "MT_INTEL": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4104,9 +3818,7 @@
             }
           },
           "MT_SURVIVAL": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4116,9 +3828,7 @@
             }
           },
           "MT_CAPTURE": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4128,9 +3838,7 @@
             }
           },
           "MT_SECTOR": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4140,9 +3848,7 @@
             }
           },
           "MT_RETRIEVAL": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4152,9 +3858,7 @@
             }
           },
           "MT_ASSAULT": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4164,9 +3868,7 @@
             }
           },
           "MT_EVACUATION": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4216,9 +3918,7 @@
               "type": "boolean"
             },
             "translations": {
-              "required": [
-                "es"
-              ],
+              "required": ["es"],
               "type": "object",
               "properties": {
                 "es": {
@@ -4337,15 +4037,11 @@
         }
       },
       "operationTypes": {
-        "required": [
-          "MULTIPLY"
-        ],
+        "required": ["MULTIPLY"],
         "type": "object",
         "properties": {
           "MULTIPLY": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -4435,24 +4131,11 @@
       },
       "platform": {
         "type": "string",
-        "enum": [
-          "pc",
-          "ps4",
-          "xb1",
-          "swi"
-        ]
+        "enum": ["pc", "ps4", "xb1", "swi"]
       },
       "polarity": {
         "type": "string",
-        "enum": [
-          "Vazarin",
-          "Madurai",
-          "Naramon",
-          "Zenurik",
-          "Unairu",
-          "Penjaga",
-          "Unbra"
-        ]
+        "enum": ["Vazarin", "Madurai", "Naramon", "Zenurik", "Unairu", "Penjaga", "Unbra"]
       },
       "primaryWeapon": {
         "type": "object",
@@ -4646,25 +4329,14 @@
       },
       "reward": {
         "type": "object",
-        "required": [
-          "asString",
-          "color",
-          "countedItems",
-          "credits",
-          "itemString",
-          "items",
-          "thumbnail"
-        ],
+        "required": ["asString", "color", "countedItems", "credits", "itemString", "items", "thumbnail"],
         "properties": {
           "countedItems": {
             "minItems": 1,
             "uniqueItems": true,
             "type": "array",
             "items": {
-              "required": [
-                "count",
-                "type"
-              ],
+              "required": ["count", "type"],
               "type": "object",
               "properties": {
                 "count": {
@@ -5055,11 +4727,7 @@
         }
       },
       "simaris": {
-        "required": [
-          "asString",
-          "isTargetActive",
-          "target"
-        ],
+        "required": ["asString", "isTargetActive", "target"],
         "type": "object",
         "properties": {
           "target": {
@@ -5079,11 +4747,7 @@
         "type": "object",
         "properties": {
           "SolKey": {
-            "required": [
-              "enemy",
-              "type",
-              "value"
-            ],
+            "required": ["enemy", "type", "value"],
             "type": "object",
             "properties": {
               "enemy": {
@@ -5108,10 +4772,7 @@
         "type": "array",
         "description": "",
         "items": {
-          "required": [
-            "keys",
-            "nodes"
-          ],
+          "required": ["keys", "nodes"],
           "type": "object",
           "properties": {
             "nodes": {
@@ -5119,11 +4780,7 @@
               "uniqueItems": true,
               "type": "array",
               "items": {
-                "required": [
-                  "enemy",
-                  "type",
-                  "value"
-                ],
+                "required": ["enemy", "type", "value"],
                 "type": "object",
                 "properties": {
                   "enemy": {
@@ -5151,17 +4808,7 @@
         }
       },
       "sortie": {
-        "required": [
-          "activation",
-          "boss",
-          "eta",
-          "expired",
-          "expiry",
-          "faction",
-          "id",
-          "rewardPool",
-          "variants"
-        ],
+        "required": ["activation", "boss", "eta", "expired", "expiry", "faction", "id", "rewardPool", "variants"],
         "type": "object",
         "properties": {
           "id": {
@@ -5187,14 +4834,7 @@
             "uniqueItems": true,
             "type": "array",
             "items": {
-              "required": [
-                "boss",
-                "missionType",
-                "modifier",
-                "modifierDescription",
-                "node",
-                "planet"
-              ],
+              "required": ["boss", "missionType", "modifier", "modifierDescription", "node", "planet"],
               "type": "object",
               "properties": {
                 "node": {
@@ -5242,13 +4882,7 @@
         }
       },
       "sortieData": {
-        "required": [
-          "bosses",
-          "endStates",
-          "modifierDescriptions",
-          "modifierTypes",
-          "modifiers"
-        ],
+        "required": ["bosses", "endStates", "modifierDescriptions", "modifierTypes", "modifiers"],
         "type": "object",
         "properties": {
           "modifierTypes": {
@@ -5587,10 +5221,7 @@
             "type": "object",
             "properties": {
               "SORTIE_BOSS_KELA": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5604,10 +5235,7 @@
                 }
               },
               "SORTIE_BOSS_AMBULAS": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5621,10 +5249,7 @@
                 }
               },
               "SORTIE_BOSS_TYL": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5638,10 +5263,7 @@
                 }
               },
               "SORTIE_BOSS_ALAD": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5655,10 +5277,7 @@
                 }
               },
               "SORTIE_BOSS_RUK": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5672,10 +5291,7 @@
                 }
               },
               "SORTIE_BOSS_HYENA": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5689,10 +5305,7 @@
                 }
               },
               "SORTIE_BOSS_KRIL": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5706,10 +5319,7 @@
                 }
               },
               "SORTIE_BOSS_CORRUPTED_VOR": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5723,10 +5333,7 @@
                 }
               },
               "SORTIE_BOSS_INFALAD": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5740,10 +5347,7 @@
                 }
               },
               "SORTIE_BOSS_PHORID": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5757,10 +5361,7 @@
                 }
               },
               "SORTIE_BOSS_JACKAL": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5774,10 +5375,7 @@
                 }
               },
               "SORTIE_BOSS_RAPTOR": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5791,10 +5389,7 @@
                 }
               },
               "SORTIE_BOSS_VOR": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5808,10 +5403,7 @@
                 }
               },
               "SORTIE_BOSS_HEK": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5825,10 +5417,7 @@
                 }
               },
               "SORTIE_BOSS_NEF": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5842,10 +5431,7 @@
                 }
               },
               "SORTIE_BOSS_LEPHANTIS": {
-                "required": [
-                  "faction",
-                  "name"
-                ],
+                "required": ["faction", "name"],
                 "type": "object",
                 "properties": {
                   "faction": {
@@ -5865,9 +5451,7 @@
             "uniqueItems": true,
             "type": "array",
             "items": {
-              "required": [
-                "bossName"
-              ],
+              "required": ["bossName"],
               "type": "object",
               "properties": {
                 "regions": {
@@ -5875,9 +5459,7 @@
                   "uniqueItems": true,
                   "type": "array",
                   "items": {
-                    "required": [
-                      "name"
-                    ],
+                    "required": ["name"],
                     "type": "object",
                     "properties": {
                       "missions": {
@@ -5973,13 +5555,7 @@
         }
       },
       "syndicateMission": {
-        "required": [
-          "activation",
-          "eta",
-          "expiry",
-          "id",
-          "syndicate"
-        ],
+        "required": ["activation", "eta", "expiry", "id", "syndicate"],
         "type": "object",
         "properties": {
           "nodes": {
@@ -6040,9 +5616,7 @@
         "type": "object",
         "properties": {
           "ArbitersSyndicate": {
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "type": "object",
             "properties": {
               "name": {
@@ -6052,9 +5626,7 @@
             }
           },
           "CephalonSudaSyndicate": {
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "type": "object",
             "properties": {
               "name": {
@@ -6064,9 +5636,7 @@
             }
           },
           "NewLokaSyndicate": {
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "type": "object",
             "properties": {
               "name": {
@@ -6076,9 +5646,7 @@
             }
           },
           "PerrinSyndicate": {
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "type": "object",
             "properties": {
               "name": {
@@ -6088,9 +5656,7 @@
             }
           },
           "SteelMeridianSyndicate": {
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "type": "object",
             "properties": {
               "name": {
@@ -6100,9 +5666,7 @@
             }
           },
           "RedVeilSyndicate": {
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "type": "object",
             "properties": {
               "name": {
@@ -6112,9 +5676,7 @@
             }
           },
           "CetusSyndicate": {
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "type": "object",
             "properties": {
               "name": {
@@ -6124,9 +5686,7 @@
             }
           },
           "QuillsSyndicate": {
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "type": "object",
             "properties": {
               "name": {
@@ -6136,9 +5696,7 @@
             }
           },
           "AssassinsSyndicate": {
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "type": "object",
             "properties": {
               "name": {
@@ -6148,9 +5706,7 @@
             }
           },
           "EventSyndicate": {
-            "required": [
-              "name"
-            ],
+            "required": ["name"],
             "type": "object",
             "properties": {
               "name": {
@@ -6171,11 +5727,7 @@
         "type": "array",
         "description": "",
         "items": {
-          "required": [
-            "name",
-            "regex",
-            "url"
-          ],
+          "required": ["name", "regex", "url"],
           "type": "object",
           "properties": {
             "regex": {
@@ -6203,9 +5755,7 @@
         "type": "object",
         "properties": {
           "GAMEPLAY_KILL_XP_AMOUNT": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -6215,9 +5765,7 @@
             }
           },
           "GAMEPLAY_PICKUP_AMOUNT": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -6227,9 +5775,7 @@
             }
           },
           "GAMEPLAY_MONEY_REWARD_AMOUNT": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -6239,9 +5785,7 @@
             }
           },
           "GAMEPLAY_MONEY_PICKUP_AMOUNT": {
-            "required": [
-              "value"
-            ],
+            "required": ["value"],
             "type": "object",
             "properties": {
               "value": {
@@ -6254,12 +5798,7 @@
         "description": ""
       },
       "vallisCycle": {
-        "required": [
-          "expiry",
-          "id",
-          "isWarm",
-          "timeLeft"
-        ],
+        "required": ["expiry", "id", "isWarm", "timeLeft"],
         "type": "object",
         "properties": {
           "id": {
