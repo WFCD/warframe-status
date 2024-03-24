@@ -1,9 +1,9 @@
 import converter from 'express-jsdoc-swagger';
 import YAML from 'json-to-pretty-yaml';
 import { writeFileSync } from 'node:fs';
-import {dirname, join} from 'node:path';
+import { dirname, join } from 'node:path';
 import app from '../app.js';
-import {fileURLToPath} from "node:url";
+import { fileURLToPath } from 'node:url';
 
 const dirName = dirname(fileURLToPath(import.meta.url));
 

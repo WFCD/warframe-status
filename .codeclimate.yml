@@ -1,13 +1,13 @@
 ---
-version: "2"
+version: '2'
 ratings:
   paths:
-  - "src/**.js"
+    - 'src/**.js'
 plugins:
   eslint:
     enabled: true
     config:
-      config: ./package.json
+      config: ./.eslintrc.yaml
   duplication:
     enabled: false
     checks:
@@ -15,7 +15,7 @@ plugins:
         enabled: false
     config:
       languages:
-      - javascript
+        - javascript
   fixme:
     enabled: true
 checks:
