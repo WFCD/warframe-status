@@ -7,7 +7,7 @@
   "dependencies": {
     "@sentry/node": "^7.107.0",
     "@sentry/tracing": "^7.108.0",
-    "@wfcd/arsenal-parser": "^2.0.1",
+    "@wfcd/arsenal-parser": "^2.0.2",
     "apicache": "^1.6.3",
     "colors": "1.4.0",
     "cors": "^2.8.5",
