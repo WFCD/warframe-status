@@ -22,7 +22,7 @@
     "json-fetch-cache": "^1.2.6",
     "node-fetch": "^2.7.0",
     "swagger-stats": "^0.99.7",
-    "warframe-items": "^1.1262.21",
+    "warframe-items": "^1.1262.30",
     "warframe-nexus-query": "^2.0.2",
     "warframe-worldstate-data": "^2.4.4",
     "winston": "^3.13.0",
