@@ -1,46 +1,17 @@
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
+import ProfileParser from '@wfcd/profile-parser';
 import express from 'express';
-import ArsenalParser from '@wfcd/arsenal-parser';
-import flatCache from 'flat-cache';
 
-import { noResult, cache } from '../lib/utilities.js';
+import { cache, noResult } from '../lib/utilities.js';
 
 const router = express.Router({ strict: true });
-
-const WF_ARSENAL_ID = 'ud1zj704c0eb1s553jbkayvqxjft97';
-const WF_ARSENAL_API = 'https://content.warframe.com/dynamic/twitch/getActiveLoadout.php';
-let token;
-
-const dirName = dirname(fileURLToPath(import.meta.url));
-
-router.use((req, res, next) => {
-  const tokenCache = flatCache.load('.twitch', resolve(dirName, '../../'));
-  token = tokenCache.getKey('token');
-  next();
-});
+const WF_PROFILE_API = 'https://content.warframe.com/dynamic/getProfileViewingData.php';
 
 router.get('/:username/?', cache('1 hour'), async (req, res) => {
-  /* istanbul ignore if */
-  if (!token || token === 'unset') {
-    return res.status(503).json({ code: 503, error: 'Service Unavailable' });
-  }
-  if (req.platform !== 'pc') return noResult(res);
-  const profileUrl = `${WF_ARSENAL_API}?account=${encodeURIComponent(req.params.username.toLowerCase())}`;
-  const data = await fetch(profileUrl, {
-    headers: {
-      'User-Agent': process.env.USER_AGENT || 'Node.js Fetch',
-      Origin: `https://${WF_ARSENAL_ID}.ext-twitch.tv`,
-      Referer: `https://${WF_ARSENAL_ID}.ext-twitch.tv`,
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((d) => d.json());
-  /* istanbul ignore if */
-  if (!data.accountInfo) {
-    return noResult(res);
-  }
-  return res.status(200).json(new ArsenalParser(data));
+  const profileUrl = `${WF_PROFILE_API}?n=${encodeURIComponent(req.params.username)}`;
+  const data = await fetch(profileUrl, { headers: { 'User-Agent': process.env.USER_AGENT || 'Node.js Fetch' } });
+  if (data.status !== 200) noResult(res);
+
+  return res.status(200).json(new ProfileParser(await data.json()));
 });
 
 export default router;
