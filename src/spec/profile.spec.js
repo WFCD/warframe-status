@@ -16,9 +16,51 @@ describe('profiles', () => {
       res.body?.profile.should.include.keys('accountId', 'displayName', 'masteryRank', 'created');
       res.body.profile.displayName.should.eq('Tobiah');
     });
-
     it('should error with bad username', async () => {
       const res = await chai.request(server).get('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda');
+      res.should.have.status(404);
+      res.body.should.be.an('object').and.include.all.keys('code', 'error');
+      res.body.code.should.eq(404);
+      res.body.error.should.eq('No Result');
+    });
+  });
+  describe('/profile/:username/arsenal', async () => {
+    describe('should get profile data', async () => {
+      it('pc [default]', async () => {
+        const res = await chai.request(server).get('/profile/tobiah/arsenal');
+        res.should.have.status(200);
+        should.exist(res.body);
+        res.body.should.include.keys('account', 'loadout');
+        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body.account.name.should.eq('Tobiah');
+      });
+      it.skip('xbox', async () => {
+        const res = await chai.request(server).get('/profile/MrNishi/arsenal/?platform=xb1');
+        res.should.have.status(200);
+        should.exist(res.body);
+        res.body.should.include.keys('account', 'loadout');
+        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body.account.name.should.eq('[DE]Megan');
+      });
+      it.skip('psn', async () => {
+        const res = await chai.request(server).get('/profile/ErydisTheLucario/arsenal/?platform=ps4');
+        res.should.have.status(200);
+        should.exist(res.body);
+        res.body.should.include.keys('account', 'loadout');
+        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body.account.name.should.eq('povo844');
+      });
+      it('switch', async () => {
+        const res = await chai.request(server).get('/profile/tobiah/arsenal/').set('platform', 'swi');
+        res.should.have.status(200);
+        should.exist(res.body);
+        res.body.should.include.keys('account', 'loadout');
+        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body.account.name.should.eq('Tobiah');
+      });
+    });
+    it('should error with bad username', async () => {
+      const res = await chai.request(server).get('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/arsenal/');
       res.should.have.status(404);
       res.body.should.be.an('object').and.include.all.keys('code', 'error');
       res.body.code.should.eq(404);
