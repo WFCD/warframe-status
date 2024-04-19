@@ -11,12 +11,28 @@ import { cache, noResult } from '../lib/utilities.js';
 
 const router = express.Router({ strict: true });
 
-router.get('/:username/?', cache('1 minute'), async (req, res) => {
-  const profileUrl = `${settings.wfApi.profile}?n=${encodeURIComponent(req.params.username)}`;
+const get = async (username) => {
+  const profileUrl = `${settings.wfApi.profile}?n=${encodeURIComponent(username)}`;
   const data = await fetch(profileUrl, { headers: { 'User-Agent': process.env.USER_AGENT || 'Node.js Fetch' } });
-  if (data.status !== 200) noResult(res);
 
-  return res.status(200).json(new ProfileParser(await data.json()));
+  if (data.status !== 200) return undefined;
+
+  return data.json();
+};
+
+router.get('/:username/?', cache('1 minute'), async (req, res) => {
+  const profile = await get(req.params.username);
+  if (!profile) return noResult(res);
+
+  return res.status(200).json(new ProfileParser(profile));
+});
+
+router.get('/:username/xpInfo/?', cache('1 minute'), async (req, res) => {
+  let data = await get(req.params.username);
+  if (!data) return noResult(res);
+
+  data = new ProfileParser(data);
+  return res.status(200).json(data.profile.loadout.xpInfo);
 });
 
 let token;
