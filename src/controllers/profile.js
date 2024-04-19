@@ -35,6 +35,14 @@ router.get('/:username/xpInfo/?', cache('1 minute'), async (req, res) => {
   return res.status(200).json(data.profile.loadout.xpInfo);
 });
 
+router.get('/:username/stats/?', cache('1 minute'), async (req, res) => {
+  let data = await get(req.params.username);
+  if (!data) return noResult(res);
+
+  data = new ProfileParser(data);
+  return res.status(200).json(data.stats);
+});
+
 let token;
 const dirName = dirname(fileURLToPath(import.meta.url));
 

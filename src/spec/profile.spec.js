@@ -75,7 +75,22 @@ describe('profiles', () => {
       res.body[0].should.include.keys('uniqueName', 'xp', 'item');
     });
     it('should error with bad username', async () => {
-      const res = await chai.request(server).get('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda');
+      const res = await chai.request(server).get('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/xpInfo');
+      res.should.have.status(404);
+      res.body.should.be.an('object').and.include.all.keys('code', 'error');
+      res.body.code.should.eq(404);
+      res.body.error.should.eq('No Result');
+    });
+  });
+  describe('/profile/:username/xpInfo', async () => {
+    it('should get profile stats', async () => {
+      const res = await chai.request(server).get('/profile/tobiah/stats');
+      res.should.have.status(200);
+      should.exist(res.body);
+      res.body.should.include.keys('guildName', 'xp', 'missionsCompleted');
+    });
+    it('should error with bad username', async () => {
+      const res = await chai.request(server).get('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/stats');
       res.should.have.status(404);
       res.body.should.be.an('object').and.include.all.keys('code', 'error');
       res.body.code.should.eq(404);
