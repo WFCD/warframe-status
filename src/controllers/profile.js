@@ -20,14 +20,14 @@ const get = async (username) => {
   return data.json();
 };
 
-router.get('/:username/?', cache('1 minute'), async (req, res) => {
+router.get('/:username/?', cache('1 hour'), async (req, res) => {
   const profile = await get(req.params.username);
   if (!profile) return noResult(res);
 
   return res.status(200).json(new ProfileParser(profile));
 });
 
-router.get('/:username/xpInfo/?', cache('1 minute'), async (req, res) => {
+router.get('/:username/xpInfo/?', cache('1 hour'), async (req, res) => {
   let data = await get(req.params.username);
   if (!data) return noResult(res);
 
@@ -35,7 +35,7 @@ router.get('/:username/xpInfo/?', cache('1 minute'), async (req, res) => {
   return res.status(200).json(data.profile.loadout.xpInfo);
 });
 
-router.get('/:username/stats/?', cache('1 minute'), async (req, res) => {
+router.get('/:username/stats/?', cache('1 hour'), async (req, res) => {
   let data = await get(req.params.username);
   if (!data) return noResult(res);
 
