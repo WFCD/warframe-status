@@ -1,13 +1,15 @@
-import swagger from 'swagger-stats';
-import helmet from 'helmet';
+import cluster from 'node:cluster';
+
 import cors from 'cors';
-import expressShortCircuit from 'express-favicon-short-circuit';
 import { CronJob } from 'cron';
+import expressShortCircuit from 'express-favicon-short-circuit';
+import helmet from 'helmet';
+import swagger from 'swagger-stats';
 
 import spec from '../api-spec/openapi.json' assert { type: 'json' };
 
-import { sentry, release } from './settings.js';
 import hydrate from './hydrate.js';
+import { release, sentry } from './settings.js';
 
 // Some dependency/config stuff
 // const adminCred = { user, pass };
@@ -51,6 +53,7 @@ const initSwagger = (app) => {
 };
 
 const initHydration = async () => {
+  if (!cluster.isPrimary) return;
   await hydrate();
   // Run every hour
   const hydration = new CronJob('0 0 * * * *', hydrate, undefined, true);
