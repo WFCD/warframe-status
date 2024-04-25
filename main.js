@@ -9,10 +9,10 @@ import makeSocket from './src/socket.js';
 
 const { host, port, features } = Settings;
 const logger = makeLogger('HTTP');
-const cpus = os.cpus().length % 2;
+const cpus = Math.floor(os.cpus().length / 2);
 
 if (cluster.isPrimary && cpus > 2) {
-  logger.info(`Master process ${process.pid} starting up`);
+  logger.info(`Master process ${process.pid} starting up with ${cpus} workers.`);
   for (let i = 0; i < cpus; i += 1) cluster.fork();
 
   cluster.on('exit', (worker) => {
