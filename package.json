@@ -8,6 +8,7 @@
     "@sentry/node": "^7.113.0",
     "@sentry/tracing": "^7.113.0",
     "@wfcd/arsenal-parser": "^2.0.2",
+    "@wfcd/profile-parser": "^1.0.2",
     "apicache": "^1.6.3",
     "colors": "1.4.0",
     "cors": "^2.8.5",

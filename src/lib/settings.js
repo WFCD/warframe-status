@@ -1,7 +1,7 @@
 import dns from 'node:dns/promises';
 
-import { Address6, Address4 } from 'ip-address';
 import dotenv from 'dotenv';
+import { Address4, Address6 } from 'ip-address';
 
 import makeLogger from './logger.js';
 
@@ -60,6 +60,14 @@ export const admin = {
 };
 export const features = process.env.FEATURES?.split(',') || [];
 
+export const wfApi = {
+  profile: 'https://content.warframe.com/dynamic/getProfileViewingData.php',
+  arsenal: {
+    id: 'ud1zj704c0eb1s553jbkayvqxjft97',
+    api: 'https://content.warframe.com/dynamic/twitch/getActiveLoadout.php',
+  },
+};
+
 const settings = {
   twitter,
   wfInfo,
@@ -72,6 +80,7 @@ const settings = {
   env,
   admin,
   features,
+  wfApi,
 };
 
 export default process.env.NODE_ENV === 'test' ? settings : Object.freeze(settings);
