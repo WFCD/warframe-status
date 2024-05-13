@@ -1,15 +1,15 @@
 services:
   warframestatus:
-    # Or . if you wanna build the image from source
-    image: ghcr.io/WFCD/warframestatus:latest
-    environment:
-      - TWITTER_KEY=value
-      - TWITTER_SECRET=value
-      - TWITTER_BEARER_TOKEN=value
-      - WFINFO_FILTERED_ITEMS=value
-      - WFINFO_PRICES=value
-      - SENTRY_DSN=value
-      - BUILD=value
-      - LOG_LEVEL=value
+    image: warframestatus:latest
+    build: . # you can remove this if you plan to use your own image
+    # environment:
+      # - TWITTER_KEY=
+      # - TWITTER_SECRET=
+      # - TWITTER_BEARER_TOKEN=
+      # - WFINFO_FILTERED_ITEMS=
+      # - WFINFO_PRICES=
+      # - SENTRY_DSN=
+      # - BUILD=
+      # - LOG_LEVEL=
     expose:
-      - host:3001
+      - 8080:3001 # Host port can be whatever you need it to be
