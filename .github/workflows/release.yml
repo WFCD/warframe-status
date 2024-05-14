@@ -3,6 +3,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -53,6 +56,7 @@ jobs:
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
         with:
           semantic_version: 17
+          dry_run: true
           extra_plugins: |
             @eclass/semantic-release-sentry-releases@2.11.0
             @semantic-release/git
