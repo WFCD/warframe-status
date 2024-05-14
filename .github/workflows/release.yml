@@ -33,6 +33,9 @@ jobs:
   semantic-release:
     runs-on: ubuntu-latest
     needs: [ test ]
+    outputs:
+      new_version: ${{ steps.semantic.outputs.new_release_version }}
+      release: ${{ steps.release.outputs.release }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,6 +45,7 @@ jobs:
           node-version: '14'
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4
+        id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
@@ -95,3 +99,9 @@ jobs:
       - name: Deploy - Start Process
         if: ${{ steps.release.outputs.release == 'yes'  }}
         run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && pm2 start warframe-status.json'
+  registry-deploy:
+    uses: ./.github/workflows/release_image.yml
+    needs: semantic-release
+    if: ${{ needs.semantic-release.outputs.release == 'yes'  }}
+    with:
+      version: ${{ needs.semantic-release.outputs.new_version }}
