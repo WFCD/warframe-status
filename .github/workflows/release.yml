@@ -3,9 +3,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
@@ -56,7 +53,6 @@ jobs:
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
         with:
           semantic_version: 17
-          dry_run: true
           extra_plugins: |
             @eclass/semantic-release-sentry-releases@2.11.0
             @semantic-release/git
@@ -108,6 +104,8 @@ jobs:
     if: ${{ needs.semantic-release.outputs.release == 'yes'  }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -123,7 +121,7 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          push: false
+          push: true
           tags: |
             ghcr.io/WFCD/warframe-status:latest
             ghcr.io/WFCD/warframe-status:${{ needs.semantic-release.outputs.new_version }}
