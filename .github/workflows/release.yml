@@ -113,7 +113,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GH_PACKAGES_TOKEN  }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -121,5 +121,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: false
           tags: |
-            ghcr.io/user/app:latest
-            ghcr.io/user/app:${{ needs.semantic-release.outputs.new_version }}
+            ghcr.io/WFCD/warframe-status:latest
+            ghcr.io/WFCD/warframe-status:${{ needs.semantic-release.outputs.new_version }}
