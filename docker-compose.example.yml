@@ -1,0 +1,15 @@
+services:
+  warframestatus:
+    image: warframestatus:latest
+    build: . # you can remove this if you plan to use your own image
+    # environment:
+      # - TWITTER_KEY=
+      # - TWITTER_SECRET=
+      # - TWITTER_BEARER_TOKEN=
+      # - WFINFO_FILTERED_ITEMS=
+      # - WFINFO_PRICES=
+      # - SENTRY_DSN=
+      # - BUILD=
+      # - LOG_LEVEL=
+    expose:
+      - 8080:3001 # Host port can be whatever you need it to be
