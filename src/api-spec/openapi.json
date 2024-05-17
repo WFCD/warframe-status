@@ -1177,6 +1177,43 @@
         }
       }
     },
+    "/{platform}/vaultTrader": {
+      "get": {
+        "tags": [
+          "Worldstate"
+        ],
+        "summary": "Get current Varzia Information",
+        "description": "Information on the current Vault Trader (Varzia) items, and previous offerings.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Content-Language": {
+                "$ref": "#/components/headers/Content-Language"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/vaultTrader"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/error"
+          },
+          "500": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
     "/arcanes": {
       "get": {
         "tags": [
@@ -6350,6 +6387,105 @@
           "endString": {
             "minLength": 1,
             "type": "string"
+          }
+        }
+      },
+      "vaultTrader": {
+        "required": [
+          "activation",
+          "active",
+          "character",
+          "endString",
+          "expiry",
+          "id",
+          "inventory",
+          "location",
+          "psId",
+          "startString",
+          "initialStart",
+          "schedule"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "activation": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiry": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "character": {
+            "minLength": 0,
+            "type": "string"
+          },
+          "location": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "inventory": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "uniqueName": {
+                  "type": "string"
+                },
+                "item": {
+                  "type": "string"
+                },
+                "ducats": {
+                  "type": "number"
+                },
+                "credits": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "psId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "startString": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "initialStart": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "endString": {
+            "minLength": 1,
+            "type": "string",
+            "format": "date-time"
+          },
+          "schedule": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "expiry": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "item": {
+                  "type": "string",
+                  "description": "The current prime pack"
+                }
+              }
+            }
           }
         }
       },
