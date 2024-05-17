@@ -1,0 +1,16 @@
+{
+  "exclude": [
+    "src/spec/**",
+    "src/controllers/index.js",
+    "src/lib/*"
+  ],
+  "reporter": [
+    "lcov",
+    "text",
+    "html"
+  ],
+  "source-map": true,
+  "sourceMap": true,
+  "produce-source-map": true,
+  "skip-full": true
+}
