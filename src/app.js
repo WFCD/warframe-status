@@ -1,6 +1,7 @@
+import './lib/instrument.js';
 import express from 'express';
 
-import initAddons from './lib/addons.js';
+import initAddons, { initSentry } from './lib/addons.js';
 import { logger } from './lib/utilities.js';
 import controllers from './controllers/index.js';
 
@@ -18,6 +19,7 @@ app.use(controllers);
 app.use((req, res) => {
   res.status(404).json({ error: 'No such route.', code: 404 }).end();
 });
+await initSentry(app);
 logger.info('Routes up');
 
 export default app;
