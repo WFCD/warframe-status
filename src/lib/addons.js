@@ -5,33 +5,20 @@ import { CronJob } from 'cron';
 import expressShortCircuit from 'express-favicon-short-circuit';
 import helmet from 'helmet';
 import swagger from 'swagger-stats';
+import * as Sentry from '@sentry/node';
 
 import spec from '../api-spec/openapi.json' assert { type: 'json' };
 
 import hydrate from './hydrate.js';
-import { release, sentry } from './settings.js';
+import { sentry } from './settings.js';
 
 // Some dependency/config stuff
 // const adminCred = { user, pass };
 // const isProd = env === 'production';
 
-const initSentry = async (app) => {
+export const initSentry = async (app) => {
   if (sentry) {
-    // eslint-disable-next-line global-require
-    const Sentry = await import('@sentry/node');
-    const { Integrations: TracingIntegrations } = await import('@sentry/tracing');
-    Sentry.init({
-      dsn: sentry,
-      release: `${release.name}@${release.version}`,
-      integrations: [
-        new TracingIntegrations.BrowserTracing({
-          tracingOrigins: ['api.warframestat.us'],
-        }),
-      ],
-      sampleRate: 0.25,
-    });
-    app.use(Sentry.Handlers.requestHandler());
-    app.use(Sentry.Handlers.errorHandler());
+    Sentry.setupConnectErrorHandler(app);
   }
 };
 
@@ -61,7 +48,6 @@ const initHydration = async () => {
 };
 
 const init = async (app) => {
-  await initSentry(app);
   initSwagger(app);
   initSecurity(app);
   initHydration();
