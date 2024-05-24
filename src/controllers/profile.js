@@ -4,12 +4,12 @@ import { fileURLToPath } from 'node:url';
 import ArsenalParser from '@wfcd/arsenal-parser';
 import express from 'express';
 import flatCache from 'flat-cache';
-
 import Profile from '@wfcd/profile-parser/Profile';
 import Stats from '@wfcd/profile-parser/Stats';
 import XpInfo from '@wfcd/profile-parser/XpInfo';
-import settings from '../lib/settings.js';
+
 import { cache, noResult } from '../lib/utilities.js';
+import settings from '../lib/settings.js';
 
 const router = express.Router({ strict: true });
 
@@ -30,7 +30,7 @@ router.get('/:username/?', cache('1 hour'), async (req, res) => {
 });
 
 router.get('/:username/xpInfo/?', cache('1 hour'), async (req, res) => {
-  let data = await get(req.params.username);
+  const data = await get(req.params.username);
   if (!data) return noResult(res);
 
   const xpInfo = data.Results[0].LoadOutInventory.XPInfo.map((xp) => new XpInfo(xp));
@@ -38,7 +38,7 @@ router.get('/:username/xpInfo/?', cache('1 hour'), async (req, res) => {
 });
 
 router.get('/:username/stats/?', cache('1 hour'), async (req, res) => {
-  let data = await get(req.params.username);
+  const data = await get(req.params.username);
   if (!data) return noResult(res);
 
   return res.status(200).json(new Stats(data.Stats));
