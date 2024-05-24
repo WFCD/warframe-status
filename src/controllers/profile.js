@@ -2,10 +2,12 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import ArsenalParser from '@wfcd/arsenal-parser';
-import ProfileParser from '@wfcd/profile-parser';
 import express from 'express';
 import flatCache from 'flat-cache';
 
+import Profile from '@wfcd/profile-parser/Profile';
+import Stats from '@wfcd/profile-parser/Stats';
+import XpInfo from '@wfcd/profile-parser/XpInfo';
 import settings from '../lib/settings.js';
 import { cache, noResult } from '../lib/utilities.js';
 
@@ -24,23 +26,22 @@ router.get('/:username/?', cache('1 hour'), async (req, res) => {
   const profile = await get(req.params.username);
   if (!profile) return noResult(res);
 
-  return res.status(200).json(new ProfileParser(profile));
+  return res.status(200).json(new Profile(profile.Results[0]));
 });
 
 router.get('/:username/xpInfo/?', cache('1 hour'), async (req, res) => {
   let data = await get(req.params.username);
   if (!data) return noResult(res);
 
-  data = new ProfileParser(data);
-  return res.status(200).json(data.profile.loadout.xpInfo);
+  const xpInfo = data.Results[0].LoadOutInventory.XPInfo.map((xp) => new XpInfo(xp));
+  return res.status(200).json(xpInfo);
 });
 
 router.get('/:username/stats/?', cache('1 hour'), async (req, res) => {
   let data = await get(req.params.username);
   if (!data) return noResult(res);
 
-  data = new ProfileParser(data);
-  return res.status(200).json(data.stats);
+  return res.status(200).json(new Stats(data.Stats));
 });
 
 let token;
