@@ -12,9 +12,8 @@ describe('profiles', () => {
       const res = await chai.request(server).get('/profile/tobiah/');
       res.should.have.status(200);
       should.exist(res.body);
-      res.body.should.include.keys('profile', 'stats');
-      res.body?.profile.should.include.keys('accountId', 'displayName', 'masteryRank', 'created');
-      res.body.profile.displayName.should.eq('Tobiah');
+      res.body.should.include.keys('accountId', 'displayName', 'masteryRank', 'created');
+      res.body.displayName.should.eq('Tobiah');
     });
     it('should error with bad username', async () => {
       const res = await chai.request(server).get('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda');
