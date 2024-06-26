@@ -65,7 +65,7 @@
     "husky": "^9.0.11",
     "install-peerdeps": "^3.0.3",
     "lint-staged": "^15.2.7",
-    "mocha": "^10.5.0",
+    "mocha": "^10.5.1",
     "nodemon": "^3.1.4",
     "prettier": "^3.3.2",
     "warframe-worldstate-parser": "^3.0.11"
