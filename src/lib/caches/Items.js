@@ -15,6 +15,12 @@ const i18nOnObject = true;
 const caches = ['weapons', 'warframes', 'items', 'mods'];
 
 /**
+ * @typedef ItemFilter
+ * @property {string} key key to filter by, dot-separated for nested keys
+ * @property {string} value value to filter by
+ */
+
+/**
  * Cache object
  * @typedef {Object} ItemCache
  * @property {Array<module:warframe-items.Item>} weapons
@@ -135,6 +141,33 @@ export default class ItemsCache {
   }
 
   /**
+   * Filter an array of items by a set of filters
+   * @param {Item[]} array array of items to filter
+   * @param {ItemFilter[]} filters array of filters to apply
+   * @returns {Item[]}
+   */
+  static #filterArray(array, filters) {
+    let filtered = array;
+    filters.forEach(({ key, value }) => {
+      const bys = key.split('.');
+      filtered = filtered
+        .filter((item) => key && this.#parseNestedKey(item, bys))
+        .filter((item) => {
+          const values = this.#parseNestedKey(item, bys);
+          if (!(item && values)) return undefined;
+          // parseNestedKey returns an array, so check all values in that array
+          if (values.find((entry) => entry.toString().toLowerCase().includes(value.toString().toLowerCase()))) {
+            return item;
+          }
+          return undefined;
+        })
+        .filter(Boolean)
+        .flat(Infinity);
+    });
+    return filtered;
+  }
+
+  /**
    * Wrapping function for all logic around getting a value from the cache
    * @param {string} key data section to fetch from
    * @param {string} language locale to fetch data for
@@ -143,9 +176,10 @@ export default class ItemsCache {
    * @param {Array<string>} only keys to preserve on the object
    * @param {string} term search term on the object
    * @param {number} max maximum allowed amount (changes matching algorithm)
+   * @param {ItemFilter[]} filter array of filters to apply
    * @returns {Promise<module:warframe-items.Item[]>}
    */
-  static async get(key, language, { by = 'name', remove, only, term, max }) {
+  static async get(key, language, { by = 'name', remove, only, term, max, filter }) {
     let base = ItemsCache.#cache.getKey(`${language}-${key}`);
     if (!term && !(remove || only)) return base;
     if (!base) {
@@ -156,20 +190,11 @@ export default class ItemsCache {
     // Allow nested keys separated by periods
     const bys = by.split('.');
     let filtered = base;
+    if (filter) {
+      filtered = this.#filterArray(filtered, filter);
+    }
     if (term && max !== 1) {
-      filtered = base
-        .filter((item) => item && this.#parseNestedKey(item, bys))
-        .map((item) => {
-          const values = this.#parseNestedKey(item, bys);
-          if (!(item && values)) return undefined;
-          // parseNestedKey returns an array, so check all values in that array
-          if (values.find((entry) => entry.toString().toLowerCase().includes(term.toString().toLowerCase()))) {
-            return item;
-          }
-          return undefined;
-        })
-        .filter((a) => a)
-        .flat(Infinity);
+      filtered = this.#filterArray(base, [{ key: by, value: term }]);
     }
     if (term && max === 1) {
       let keyDistance;

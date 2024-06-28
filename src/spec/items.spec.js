@@ -31,6 +31,20 @@ describe('items', () => {
     res.body[0].should.not.have.property('uniqueName');
     res.body[0].should.not.have.property('description');
   });
+  it('should filter with desired key:value pairs', async () => {
+    const res = await chai
+      .request(server)
+      .get('/items?only=name,category,introduced&filter=category:Warframes,introduced.name:Vanilla');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.be.eq(8);
+    res.body.forEach((item) => {
+      item.should.have.property('name');
+      item.should.have.property('category', 'Warframes');
+      item.should.have.property('introduced');
+      item.introduced.name.should.eq('Vanilla');
+    });
+  });
   it('should only include desired keys from dump', async () => {
     const res = await chai.request(server).get('/items?only=uniqueName,description');
     res.should.have.status(200);
