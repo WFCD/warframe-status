@@ -72,6 +72,7 @@ const makeLanguageCache = (language) => {
           uniqueName: ability.abilityUniqueName || ability.uniqueName || undefined,
           name: ability.abilityName || ability.name,
           description: ability.abilityDescription || ability.description,
+          imageName: ability.imageName ?? undefined,
         }));
       }
       delete itemClone.i18n;
