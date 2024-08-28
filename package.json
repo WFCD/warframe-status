@@ -48,7 +48,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "@sentry/types": "^8.26.0",
+    "@sentry/types": "^8.27.0",
     "@types/apicache": "^1.6.6",
     "@types/cors": "^2.8.17",
     "@types/cron": "^2.4.0",
