@@ -1,9 +1,9 @@
-FROM node:lts-alpine as build
+FROM node:lts-alpine AS build
 
 COPY package*.json ./
 RUN npm install
 
-FROM node:lts-alpine as production
+FROM node:lts-alpine AS production
 
 WORKDIR /app
 
