@@ -26,7 +26,7 @@ router.get('/:username/?', cache('1 hour'), async (req, res) => {
   const profile = await get(req.params.username);
   if (!profile) return noResult(res);
 
-  return res.status(200).json(new Profile(profile.Results[0]));
+  return res.status(200).json(new Profile(profile.Results[0], req.language));
 });
 
 router.get('/:username/xpInfo/?', cache('1 hour'), async (req, res) => {
