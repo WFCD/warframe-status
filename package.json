@@ -28,7 +28,7 @@
     "cors": "^2.8.5",
     "cron": "^3.1.7",
     "dotenv": "^16.4.5",
-    "express": "^4.21.0",
+    "express": "^4.21.1",
     "express-async-handler": "^1.2.0",
     "express-favicon-short-circuit": "^1.2.0",
     "flat-cache": "5.0.0",
