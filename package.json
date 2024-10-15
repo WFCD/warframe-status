@@ -33,7 +33,7 @@
     "express-favicon-short-circuit": "^1.2.0",
     "flat-cache": "5.0.0",
     "helmet": "^8.0.0",
-    "ip-address": "^10.0.0",
+    "ip-address": "^10.0.1",
     "json-fetch-cache": "^1.2.6",
     "node-fetch": "^3.3.2",
     "swagger-stats": "^0.99.7",
