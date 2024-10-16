@@ -135,7 +135,7 @@ describe('items', () => {
     Object.keys(res.body).length.should.be.greaterThan(0);
   });
   it('should return multiple items by a non-default key', async () => {
-    const res = await chai.request(server).get('/items/search/bronco.png?by=imageName');
+    const res = await chai.request(server).get('/items/search/bronco-65d3eb546d.png?by=imageName');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(0);
