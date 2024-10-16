@@ -129,7 +129,7 @@ describe('items', () => {
     res.body.length.should.eq(0);
   });
   it('should return an item by a non-default key', async () => {
-    const res = await chai.request(server).get('/items/bronco.png?by=imageName');
+    const res = await chai.request(server).get('/items/search/bronco-65d3eb546d.png?by=imageName');
     res.should.have.status(200);
     res.body.should.be.an('object');
     Object.keys(res.body).length.should.be.greaterThan(0);
