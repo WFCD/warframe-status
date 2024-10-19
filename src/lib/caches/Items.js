@@ -62,19 +62,21 @@ const makeLanguageCache = (language) => {
     merged[cacheType] = [...subCache].map((item) => {
       let itemClone = { ...item };
       if (language !== 'en' && itemClone.i18n && itemClone.i18n[language]) {
+        // Abilties are always sorted from first to fourth ability so using the index is safe
+        // Thanks DE :)
+        itemClone.i18n[language].abilities = itemClone.i18n[language].abilities?.map((ability, index) => ({
+          uniqueName: ability.abilityUniqueName || itemClone.abilities[index].uniqueName || undefined,
+          name: ability.abilityName || itemClone.abilities[index].name || undefined,
+          description: ability.description || itemClone.abilities[index].description || undefined,
+          imageName: itemClone.abilities[index].imageName ?? undefined,
+        }));
+
         itemClone = {
           ...itemClone,
           ...itemClone.i18n[language],
         };
       }
-      if (itemClone.abilities) {
-        itemClone.abilities = itemClone.abilities.map((ability) => ({
-          uniqueName: ability.abilityUniqueName || ability.uniqueName || undefined,
-          name: ability.abilityName || ability.name,
-          description: ability.abilityDescription || ability.description,
-          imageName: ability.imageName ?? undefined,
-        }));
-      }
+
       delete itemClone.i18n;
       return itemClone;
     });
