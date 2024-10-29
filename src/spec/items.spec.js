@@ -164,7 +164,7 @@ describe('items', () => {
     const res = await chai.request(server).get('/items/search/7?by=attacks.falloff.start');
     res.should.have.status(200);
     res.body.should.be.an('array');
-    res.body.length.should.eq(2);
+    res.body.length.should.eq(3);
     res.body[0].uniqueName.should.eq('/Lotus/Weapons/Tenno/Akimbo/AkimboShotGun');
     res.body[1].uniqueName.should.eq('/Lotus/Weapons/Tenno/Pistol/HandShotGun');
   });
