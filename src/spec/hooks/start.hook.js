@@ -1,5 +1,5 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
+import * as chai from 'chai';
+import chaiHttp, { request } from 'chai-http';
 
 import app from '../../app.js';
 import { port, host } from '../../lib/settings.js';
@@ -24,3 +24,5 @@ export const mochaHooks = {
     }
   },
 };
+
+export const req = (path) => request.execute(app).get(path);

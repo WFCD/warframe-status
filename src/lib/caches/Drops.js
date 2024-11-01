@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import flatCache from 'flat-cache';
+import { create } from 'flat-cache';
 
 import Logger from '../logger.js';
 
@@ -75,7 +75,7 @@ const FOUR_HOURS = 14400000;
 const dirName = dirname(fileURLToPath(import.meta.url));
 
 export default class DropsCache {
-  static #cache = flatCache.load('.drops', resolve(dirName, '../../../'));
+  static #cache = create({ cacheId: '.drops', cacheDir: resolve(dirName, '../../../') });
   static #lastUpdate;
 
   static {

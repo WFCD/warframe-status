@@ -1,12 +1,10 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import flatCache from 'flat-cache';
+import { create } from 'flat-cache';
 
 import Logger from '../logger.js';
 import { platforms, titleCase } from '../utilities.js';
-
-let logger;
 
 const FOUR_HOURS = 14400000;
 const dirName = dirname(fileURLToPath(import.meta.url));
@@ -60,17 +58,12 @@ const groupRivenData = (cacheStrData) => {
 };
 
 export default class RivensCache {
-  static #cache = flatCache.load('.rivens', resolve(dirName, '../../../'));
-  static #lastUpdate;
+  static #cache = create({ cacheId: '.rivens', cacheDir: resolve(dirName, '../../../') });
+  static #lastUpdate = this.#cache.getKey('last_updt');
+  static #logger = Logger('RIVENS');
 
-  static {
-    logger = Logger('RIVENS');
-    logger.level = 'info';
-    this.#lastUpdate = RivensCache.#cache.getKey('last_updt');
-  }
-
-  static async populate() {
-    this.#lastUpdate = RivensCache.#cache.getKey('last_updt');
+  static async populate(logger = this.#logger) {
+    this.#lastUpdate = this.#cache.getKey('last_updt');
     if (typeof this.#lastUpdate === 'undefined') this.#lastUpdate = 0;
     if (Date.now() - this.#lastUpdate <= FOUR_HOURS) {
       logger.debug('no rivens data update needed');
@@ -95,13 +88,14 @@ export default class RivensCache {
    * Get a riven data subset, filtered if query is provided
    * @param {string} platform platform for which to fetch data
    * @param {string} [term] filtering query
+   * @param {console} [logger] logger instance
    * @returns {ItemType}
    */
-  static get(platform, term) {
+  static async get(platform, term, logger = this.#logger) {
     let base = RivensCache.#cache.getKey(platform);
     if (!base) {
       logger.error('Rivens not hydrated. Forcing hydration.');
-      this.populate();
+      await this.populate();
       base = RivensCache.#cache.getKey(platform);
     }
     if (!term) return base;
