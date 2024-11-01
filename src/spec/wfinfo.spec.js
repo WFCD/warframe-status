@@ -1,5 +1,5 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
+import * as chai from 'chai';
+import chaiHttp, { request } from 'chai-http';
 
 import server from '../app.js';
 import settings from '../lib/settings.js';
@@ -21,7 +21,7 @@ describe('wfinfo', () => {
   describe('filtered_items', () => {
     if (settings.wfInfo.filteredItems) {
       it('should not be empty', async () => {
-        const res = await chai.request(server).get('/wfinfo/filtered_items');
+        const res = await request.execute(server).get('/wfinfo/filtered_items');
         res.should.have.status(200);
         res.body.should.be.an('object');
         Object.keys(res.body).length.should.eq(5);
@@ -29,12 +29,12 @@ describe('wfinfo', () => {
       });
       it('should be unavailable', async () => {
         settings.wfInfo.filteredItems = undefined;
-        const res = await chai.request(server).get('/wfinfo/filtered_items');
+        const res = await request.execute(server).get('/wfinfo/filtered_items');
         res.should.have.status(503);
       });
     } else {
       it('should be unavailable', async () => {
-        const res = await chai.request(server).get('/wfinfo/filtered_items');
+        const res = await request.execute(server).get('/wfinfo/filtered_items');
         res.should.have.status(503);
       });
     }
@@ -43,19 +43,19 @@ describe('wfinfo', () => {
   describe('prices', () => {
     if (settings.wfInfo.prices) {
       it('should not be empty', async () => {
-        const res = await chai.request(server).get('/wfinfo/prices');
+        const res = await request.execute(server).get('/wfinfo/prices');
         res.should.have.status(200);
         res.body.should.be.an('array');
         res.body[0].should.have.keys(['name', 'yesterday_vol', 'today_vol', 'custom_avg']);
       });
       it('should be unavailable', async () => {
         settings.wfInfo.prices = undefined;
-        const res = await chai.request(server).get('/wfinfo/prices');
+        const res = await request.execute(server).get('/wfinfo/prices');
         res.should.have.status(503);
       });
     } else {
       it('should be unavailable', async () => {
-        const res = await chai.request(server).get('/wfinfo/prices');
+        const res = await request.execute(server).get('/wfinfo/prices');
         res.should.have.status(503);
       });
     }

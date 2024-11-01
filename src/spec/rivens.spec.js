@@ -1,5 +1,5 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
+import * as chai from 'chai';
+import chaiHttp, { request } from 'chai-http';
 
 import server from '../app.js';
 import * as utils from '../lib/utilities.js';
@@ -16,14 +16,14 @@ describe('rivens', () => {
     describe(`/${platform}`, () => {
       it(`/${platform}/rivens`, async () => {
         if (!server.started) should.fail('server not started');
-        const res = await chai.request(server).get(`/${platform}/rivens`);
+        const res = await request.execute(server).get(`/${platform}/rivens`);
         res.should.have.status(200);
         res.should.have.property('body');
       });
 
       it(`/${platform}/rivens/search/:item`, async () => {
         if (!server.started) should.fail('server not started');
-        const res = await chai.request(server).get(`/${platform}/rivens/search/nikana`);
+        const res = await request.execute(server).get(`/${platform}/rivens/search/nikana`);
         res.should.have.status(200);
         res.should.have.property('body');
       });

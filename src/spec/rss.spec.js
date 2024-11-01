@@ -1,5 +1,5 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
+import * as chai from 'chai';
+import chaiHttp, { request } from 'chai-http';
 
 import server from '../app.js';
 
@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 describe('rss', () => {
   it('works', async () => {
     if (!server.started) should.fail('server not started');
-    const res = await chai.request(server).get('/rss');
+    const res = await request.execute(server).get('/rss');
     res.should.have.status(200);
     res.should.have.property('body');
   });

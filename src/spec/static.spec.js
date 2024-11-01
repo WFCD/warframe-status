@@ -1,5 +1,5 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
+import * as chai from 'chai';
+import chaiHttp, { request } from 'chai-http';
 
 import server from '../app.js';
 import { warframeData } from '../lib/utilities.js';
@@ -15,35 +15,35 @@ describe('static data', () => {
     .forEach((key) => {
       describe(key, () => {
         it(`should provide ${key} data`, async () => {
-          const res = await chai.request(server).get(`/${key}`);
+          const res = await request.execute(server).get(`/${key}`);
           should.exist(res.body);
           res.should.have.status(200);
         });
         it(`should provide searchability for ${key} data`, async () => {
-          const res = await chai.request(server).get(`/${key}/search/a,b,c`);
+          const res = await request.execute(server).get(`/${key}/search/a,b,c`);
           should.exist(res.body);
           res.body.should.not.have.property('errors');
           res.should.have.status(200);
         });
 
         const langTest = async (language, override) => {
-          let res = await chai.request(server).get(`/${key}?language=${language}`);
+          let res = await request.execute(server).get(`/${key}?language=${language}`);
           should.exist(res.body);
           res.body.should.not.have.property('errors');
           res.should.have.status(200);
           res.should.have.header('Content-Language', override || language);
 
-          res = await chai.request(server).get(`/${key}`).set('Accept-Language', language);
+          res = await request.execute(server).get(`/${key}`).set('Accept-Language', language);
           res.should.have.status(200);
           should.exist(res.body);
           res.should.have.header('Content-Language', override || language);
 
-          res = await chai.request(server).get(`/${key}/search/a,b,c?language=${language}`);
+          res = await request.execute(server).get(`/${key}/search/a,b,c?language=${language}`);
           res.should.have.status(200);
           should.exist(res.body);
           res.should.have.header('Content-Language', override || language);
 
-          res = await chai.request(server).get(`/${key}/search/a,b,c`).set('Accept-Language', language);
+          res = await request.execute(server).get(`/${key}/search/a,b,c`).set('Accept-Language', language);
           res.should.have.status(200);
           should.exist(res.body);
           res.should.have.header('Content-Language', override || language);
@@ -55,7 +55,7 @@ describe('static data', () => {
       });
     });
   it('nodes', async () => {
-    const res = await chai.request(server).get('/solNodes/search/Galatea,Silvanus,Calypso');
+    const res = await request.execute(server).get('/solNodes/search/Galatea,Silvanus,Calypso');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body[0].nodes[0].should.be.an('object');
@@ -63,7 +63,7 @@ describe('static data', () => {
     res.body[0].nodes.length.should.eq(3);
   });
   it('arcanes', async () => {
-    const res = await chai.request(server).get('/arcanes/search/Energize,Arachne,Grace,Montoya');
+    const res = await request.execute(server).get('/arcanes/search/Energize,Arachne,Grace,Montoya');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.eq(3);

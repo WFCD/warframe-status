@@ -7,7 +7,8 @@ timeout: 60000
 normal: 500
 slow: 2000
 fullTrace: true
-bail: true
+bail: false
+parallel: false
 require:
   - src/spec/hooks/env.js
   - src/spec/hooks/start.hook.js

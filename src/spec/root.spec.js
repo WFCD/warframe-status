@@ -1,5 +1,5 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
+import * as chai from 'chai';
+import chaiHttp, { request } from 'chai-http';
 
 import server from '../app.js';
 
@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 describe('root (/)', () => {
   it('should succeed', async () => {
-    const res = await chai.request(server).get('/');
+    const res = await request.execute(server).get('/');
     res.should.have.status(200);
     res.body.should.be.an('object');
     res.body.should.have.property('code').and.eq(200);
@@ -18,7 +18,7 @@ describe('root (/)', () => {
 
 describe('404', () => {
   it('should produce a Not Found error', async () => {
-    const res = await chai.request(server).get('/foo');
+    const res = await request.execute(server).get('/foo');
     res.should.have.status(404);
     res.body.should.be.an('object');
     res.body.should.have.property('code').and.eq(404);
