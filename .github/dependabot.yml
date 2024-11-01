@@ -14,6 +14,41 @@ updates:
     pull-request-branch-name:
       separator: '-'
     rebase-strategy: 'auto'
+    groups:
+      sentry:
+        patterns:
+          - '@sentry/'
+      warframe:
+        patterns:
+          - '@wfcd/'
+          - 'warframe-*'
+          - 'worldstate-emitter'
+      webserver:
+        patterns:
+          - 'express'
+          - 'apicache'
+          - 'express-async-handler'
+          - 'helmet'
+          - 'ip-address'
+          - 'swagger-stats'
+          - 'ws'
+      testing:
+        patterns:
+          - 'mocha'
+          - 'c8'
+          - 'chai'
+          - 'chai-http'
+      types:
+        patterns:
+          - '@types/'
+      lint:
+        patterns:
+          - 'eslint'
+          - 'eslint-plugin-*'
+          - 'eslint-config'
+          - '@commitlint/*'
+          - '@wfcd/eslint-config'
+
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
