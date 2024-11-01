@@ -37,12 +37,16 @@ export default class TwitchCache {
         this.#cache.setKey('last_updt', Date.now());
         this.#cache.save(true);
       } catch (e) {
-        logger.error('Cannot hydrate Twitch token');
+        logger.error('Cannot hydrate Twitch token', e);
       }
     }
   }
 
   static async populate(logger = Logger('TWITCH')) {
     return this.#hydrate(logger);
+  }
+
+  static get token() {
+    return this.#cache.getKey('token');
   }
 }

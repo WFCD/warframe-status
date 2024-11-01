@@ -17,7 +17,7 @@ router.get(
   '/',
   /* cache('1 week'), */ ah(async (req, res) => {
     if (res.writableEnded) return;
-    const results = RivensCache.get(req.platform);
+    const results = await RivensCache.get(req.platform);
     res.setHeader('Content-Language', req.language);
     res.json(results);
   })
@@ -28,7 +28,7 @@ router.get(
   /* cache('10 hours'), */ ah(async (req, res) => {
     if (res.writableEnded) return;
     const { query } = req.params;
-    const results = RivensCache.get(req.platform, query);
+    const results = await RivensCache.get(req.platform, query);
     res.setHeader('Content-Language', req.language);
     res.json(results);
   })

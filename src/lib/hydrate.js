@@ -9,9 +9,9 @@ import TwitchCache from './caches/Twitch.js';
 const hydrate = async () => {
   const logger = Logger('HYDRATE');
   logger.level = 'info';
-  await ItemsCache.populate();
-  await DropsCache.populate();
-  await RivensCache.populate();
+  await ItemsCache.populate(logger);
+  await DropsCache.populate(logger);
+  await RivensCache.populate(logger);
   await WFInfoCache.populate(logger);
   await TwitchCache.populate(logger);
 };

@@ -1,13 +1,10 @@
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
 import ArsenalParser from '@wfcd/arsenal-parser';
 import express from 'express';
-import { create } from 'flat-cache';
 import Profile from '@wfcd/profile-parser/Profile';
 import Stats from '@wfcd/profile-parser/Stats';
 import XpInfo from '@wfcd/profile-parser/XpInfo';
 
+import TwitchCache from '../lib/caches/Twitch.js';
 import { cache, noResult } from '../lib/utilities.js';
 import settings from '../lib/settings.js';
 
@@ -44,20 +41,11 @@ router.get('/:username/stats/?', cache('1 hour'), async (req, res) => {
   return res.status(200).json(new Stats(data.Stats));
 });
 
-let token;
-const dirName = dirname(fileURLToPath(import.meta.url));
-
-router.use((req, res, next) => {
-  const tokenCache = create({ cacheId: '.twitch', cacheDir: resolve(dirName, '../../') });
-  token = tokenCache.getKey('token');
-  next();
-});
-
 router.get(`/:username/arsenal/?`, cache('1 hour'), async (req, res) => {
   const { id, api } = settings.wfApi.arsenal;
 
   /* istanbul ignore if */
-  if (!token || token === 'unset') {
+  if (!TwitchCache.token) {
     return res.status(503).json({ code: 503, error: 'Service Unavailable' });
   }
   if (req.platform !== 'pc') return noResult(res);
@@ -67,7 +55,7 @@ router.get(`/:username/arsenal/?`, cache('1 hour'), async (req, res) => {
       'User-Agent': process.env.USER_AGENT || 'Node.js Fetch',
       Origin: `https://${id}.ext-twitch.tv`,
       Referer: `https://${id}.ext-twitch.tv`,
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${TwitchCache.token}`,
     },
   }).then((d) => d.json());
   /* istanbul ignore if */
