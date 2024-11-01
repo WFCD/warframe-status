@@ -16,35 +16,35 @@ describe('static data', () => {
     .forEach((key) => {
       describe(key, () => {
         it(`should provide ${key} data`, async () => {
-          const res = req(`/${key}`);
+          const res = await req(`/${key}`);
           should.exist(res.body);
           res.should.have.status(200);
         });
         it(`should provide searchability for ${key} data`, async () => {
-          const res = req(`/${key}/search/a,b,c`);
+          const res = await req(`/${key}/search/a,b,c`);
           should.exist(res.body);
           res.body.should.not.have.property('errors');
           res.should.have.status(200);
         });
 
         const langTest = async (language, override) => {
-          let res = req(`/${key}?language=${language}`);
+          let res = await req(`/${key}?language=${language}`);
           should.exist(res.body);
           res.body.should.not.have.property('errors');
           res.should.have.status(200);
           res.should.have.header('Content-Language', override || language);
 
-          res = req(`/${key}`).set('Accept-Language', language);
+          res = await req(`/${key}`).set('Accept-Language', language);
           res.should.have.status(200);
           should.exist(res.body);
           res.should.have.header('Content-Language', override || language);
 
-          res = req(`/${key}/search/a,b,c?language=${language}`);
+          res = await req(`/${key}/search/a,b,c?language=${language}`);
           res.should.have.status(200);
           should.exist(res.body);
           res.should.have.header('Content-Language', override || language);
 
-          res = req(`/${key}/search/a,b,c`).set('Accept-Language', language);
+          res = await req(`/${key}/search/a,b,c`).set('Accept-Language', language);
           res.should.have.status(200);
           should.exist(res.body);
           res.should.have.header('Content-Language', override || language);
@@ -56,7 +56,7 @@ describe('static data', () => {
       });
     });
   it('nodes', async () => {
-    const res = req('/solNodes/search/Galatea,Silvanus,Calypso');
+    const res = await req('/solNodes/search/Galatea,Silvanus,Calypso');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body[0].nodes[0].should.be.an('object');
@@ -64,7 +64,7 @@ describe('static data', () => {
     res.body[0].nodes.length.should.eq(3);
   });
   it('arcanes', async () => {
-    const res = req('/arcanes/search/Energize,Arachne,Grace,Montoya');
+    const res = await req('/arcanes/search/Energize,Arachne,Grace,Montoya');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.eq(3);

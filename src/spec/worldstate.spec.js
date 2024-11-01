@@ -64,7 +64,7 @@ describe('worldstate', () => {
     describe(`/${platform}`, () => {
       it('should succeed', async () => {
         if (!app.started) should.fail('server not started');
-        let res = req(`/${platform}`).redirects(2).send();
+        let res = await req(`/${platform}`).redirects(2).send();
         res.should.have.status(200);
         res.should.have.property('body');
         res.body.should.be.an('object');
@@ -75,7 +75,7 @@ describe('worldstate', () => {
         keys.forEach((key) => {
           it(`/${platform}/${key}`, async () => {
             if (!app.started) should.fail('server not started');
-            res = req(`/${platform}/${key}`).redirects(2).send();
+            res = await req(`/${platform}/${key}`).redirects(2).send();
             res.should.have.status(200);
             res.should.have.property('body');
           });
@@ -84,12 +84,12 @@ describe('worldstate', () => {
             if (platform === 'ns') return;
 
             // /:platform/:locale/:field
-            res = req(`/${platform}/${lang}/${key}`).redirects(2).send();
+            res = await req(`/${platform}/${lang}/${key}`).redirects(2).send();
             res.should.have.status(200);
             res.should.have.property('body');
 
             // /:platform/:field?language=:locale
-            res = req(`/${platform}/${key}?language=${lang}`).redirects(2).send();
+            res = await req(`/${platform}/${key}?language=${lang}`).redirects(2).send();
             res.should.have.status(200);
             res.should.have.property('body');
 
@@ -107,20 +107,20 @@ describe('worldstate', () => {
       });
       it(`/${platform}/en`, async () => {
         if (!app.started) should.fail('server not started');
-        const res = req(`/${platform}/en`).redirects(2).send();
+        const res = await req(`/${platform}/en`).redirects(2).send();
         res.should.have.status(200);
         res.should.have.property('body');
       });
     });
   });
   it('should produce a Not Found error', async () => {
-    let res = req('/pc/foo');
+    let res = await req('/pc/foo');
     res.should.have.status(404);
     res.body.should.be.an('object');
     res.body.should.have.property('code').and.eq(404);
     res.body.should.have.property('error').and.eq('No such worldstate field');
 
-    res = req('/pc/en/foo');
+    res = await req('/pc/en/foo');
     res.should.have.status(404);
     res.body.should.be.an('object');
     res.body.should.have.property('code').and.eq(404);

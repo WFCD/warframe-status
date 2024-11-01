@@ -15,13 +15,13 @@ describe('rivens', () => {
   platforms.forEach((platform) => {
     describe(`/${platform}`, () => {
       it(`/${platform}/rivens`, async () => {
-        const res = req(`/${platform}/rivens`);
+        const res = await req(`/${platform}/rivens`);
         res.should.have.status(200);
         res.should.have.property('body');
       });
 
       it(`/${platform}/rivens/search/:item`, async () => {
-        const res = req(`/${platform}/rivens/search/nikana`);
+        const res = await req(`/${platform}/rivens/search/nikana`);
         res.should.have.status(200);
         res.should.have.property('body');
       });

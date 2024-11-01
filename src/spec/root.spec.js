@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 describe('root (/)', () => {
   it('should succeed', async () => {
-    const res = req('/');
+    const res = await req('/');
     res.should.have.status(200);
     res.body.should.be.an('object');
     res.body.should.have.property('code').and.eq(200);
@@ -18,7 +18,7 @@ describe('root (/)', () => {
 
 describe('404', () => {
   it('should produce a Not Found error', async () => {
-    const res = req('/foo');
+    const res = await req('/foo');
     res.should.have.status(404);
     res.body.should.be.an('object');
     res.body.should.have.property('code').and.eq(404);

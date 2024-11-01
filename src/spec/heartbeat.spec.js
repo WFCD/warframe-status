@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 describe('heartbeat', () => {
   it('should succeed', async () => {
-    const res = req('/heartbeat');
+    const res = await req('/heartbeat');
     res.should.have.status(200);
     res.body.should.be.an('object');
     res.body.should.have.property('code').and.eq(200);

@@ -14,21 +14,21 @@ describe('pricecheck', () => {
   });
   it('handles no results', async function noResSearch() {
     this.timeout = 40000;
-    const res = req('/pricecheck/string/poopoo%20prime');
+    const res = await req('/pricecheck/string/poopoo%20prime');
     res.should.have.status(200);
     res.body.should.be.a('string');
     res.body.should.include('no such item');
   });
   it('supports string search', async function stringSearch() {
     this.timeout = 60000;
-    const res = req('/pricecheck/string/nikana%20prime');
+    const res = await req('/pricecheck/string/nikana%20prime');
     res.should.have.status(200);
     res.body.should.be.a('string');
     res.body.should.not.include('no such item');
   });
   it('supports attachment search', async function attachmentSearch() {
     this.timeout = 60000;
-    const res = req('/pricecheck/attachment/nikana%20prime');
+    const res = await req('/pricecheck/attachment/nikana%20prime');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body[0].should.be.an('object');
@@ -42,7 +42,7 @@ describe('pricecheck', () => {
   });
   it('supports raw search', async function rawSearch() {
     this.timeout = 60000;
-    const res = req('/pricecheck/find/nikana%20prime');
+    const res = await req('/pricecheck/find/nikana%20prime');
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThanOrEqual(3);

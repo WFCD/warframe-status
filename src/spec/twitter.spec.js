@@ -12,7 +12,7 @@ describe('twitter', () => {
   describe('/', async () => {
     it.skip('should get twitter data', async function root() {
       if (!twitter.active) this.skip();
-      const res = req('/twitter');
+      const res = await req('/twitter');
       res.should.have.status(200);
       should.exist(res.body);
       res.body.should.be.an('array');
@@ -27,7 +27,7 @@ describe('twitter', () => {
     });
     it('should error with data off', async () => {
       twitter.active = false;
-      const res = req('/twitter');
+      const res = await req('/twitter');
       res.should.have.status(404);
       res.body.should.be.an('object').and.include.all.keys('code', 'error');
       res.body.code.should.eq(404);

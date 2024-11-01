@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 describe('rss', () => {
   it('works', async () => {
     if (!server.started) should.fail('server not started');
-    const res = req('/rss');
+    const res = await req('/rss');
     res.should.have.status(200);
     res.should.have.property('body');
   });
