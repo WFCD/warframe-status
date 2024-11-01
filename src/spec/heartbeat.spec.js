@@ -1,14 +1,14 @@
 import * as chai from 'chai';
-import chaiHttp, { request } from 'chai-http';
+import chaiHttp from 'chai-http';
 
-import server from '../app.js';
+import { req } from './hooks/start.hook.js';
 
 chai.should();
 chai.use(chaiHttp);
 
 describe('heartbeat', () => {
   it('should succeed', async () => {
-    const res = await request.execute(server).get('/heartbeat');
+    const res = req('/heartbeat');
     res.should.have.status(200);
     res.body.should.be.an('object');
     res.body.should.have.property('code').and.eq(200);

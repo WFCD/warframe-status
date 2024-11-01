@@ -1,12 +1,12 @@
 import * as chai from 'chai';
-import chaiHttp, { request } from 'chai-http';
+import chaiHttp from 'chai-http';
 
-import server from '../app.js';
 import * as utils from '../lib/utilities.js';
+
+import { req } from './hooks/start.hook.js';
 
 const { platforms: p, platformAliases: pa } = utils;
 
-const should = chai.should();
 chai.use(chaiHttp);
 
 const platforms = [...p, ...pa];
@@ -15,15 +15,13 @@ describe('rivens', () => {
   platforms.forEach((platform) => {
     describe(`/${platform}`, () => {
       it(`/${platform}/rivens`, async () => {
-        if (!server.started) should.fail('server not started');
-        const res = await request.execute(server).get(`/${platform}/rivens`);
+        const res = req(`/${platform}/rivens`);
         res.should.have.status(200);
         res.should.have.property('body');
       });
 
       it(`/${platform}/rivens/search/:item`, async () => {
-        if (!server.started) should.fail('server not started');
-        const res = await request.execute(server).get(`/${platform}/rivens/search/nikana`);
+        const res = req(`/${platform}/rivens/search/nikana`);
         res.should.have.status(200);
         res.should.have.property('body');
       });
