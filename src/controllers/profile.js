@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 
 import ArsenalParser from '@wfcd/arsenal-parser';
 import express from 'express';
-import flatCache from 'flat-cache';
+import { create } from 'flat-cache';
 import Profile from '@wfcd/profile-parser/Profile';
 import Stats from '@wfcd/profile-parser/Stats';
 import XpInfo from '@wfcd/profile-parser/XpInfo';
@@ -48,7 +48,7 @@ let token;
 const dirName = dirname(fileURLToPath(import.meta.url));
 
 router.use((req, res, next) => {
-  const tokenCache = flatCache.load('.twitch', resolve(dirName, '../../'));
+  const tokenCache = create({ cacheId: '.twitch', cacheDir: resolve(dirName, '../../') });
   token = tokenCache.getKey('token');
   next();
 });

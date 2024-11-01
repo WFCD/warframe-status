@@ -1,7 +1,7 @@
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import flatCache from 'flat-cache';
+import { create } from 'flat-cache';
 
 import Logger from './logger.js';
 import { wfInfo, build } from './settings.js';
@@ -20,7 +20,7 @@ const TWO_DAYS = 172800000;
 const hydrateWfInfo = async (logger) => {
   const start = Date.now();
   // WF Info caches
-  const wfInfoCache = flatCache.load('.wfinfo', resolve(dirName, '../../'));
+  const wfInfoCache = create({ cacheId: '.wfinfo', cacheDir: resolve(dirName, '../../') });
   if (Date.now() - (wfInfoCache.getKey('last_updt') || 0) >= TWO_HOURS / 2) {
     if (filteredItemsSrc) {
       const itemsRes = await fetch(filteredItemsSrc);
@@ -53,7 +53,7 @@ const hydrateWfInfo = async (logger) => {
 // TODO: Eventually migrate to a standalone cache class
 const hydrateTwitch = async (logger) => {
   // Twitch extension token cache
-  const twitchCache = flatCache.load('.twitch', resolve(dirName, '../../'));
+  const twitchCache = create({ cacheId: '.twitch', cacheDir: resolve(dirName, '../../') });
   const CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko'; // twitch's client id
   const WF_ARSENAL_ID = 'ud1zj704c0eb1s553jbkayvqxjft97';
   const TWITCH_CHANNEL_ID = '89104719'; // tobitenno

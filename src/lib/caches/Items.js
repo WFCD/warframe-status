@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import flatCache from 'flat-cache';
+import { create } from 'flat-cache';
 import Items from 'warframe-items';
 import data from 'warframe-worldstate-data';
 
@@ -85,7 +85,7 @@ const makeLanguageCache = (language) => {
 };
 
 export default class ItemsCache {
-  static #cache = flatCache.load('.items', resolve(dirName, '../../../'));
+  static #cache = create({ cacheId: '.items', cacheDir: resolve(dirName, '../../../') });
   static #lastUpdate = 0;
 
   static {

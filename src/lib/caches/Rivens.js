@@ -1,7 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import flatCache from 'flat-cache';
+import { create } from 'flat-cache';
 
 import Logger from '../logger.js';
 import { platforms, titleCase } from '../utilities.js';
@@ -60,7 +60,7 @@ const groupRivenData = (cacheStrData) => {
 };
 
 export default class RivensCache {
-  static #cache = flatCache.load('.rivens', resolve(dirName, '../../../'));
+  static #cache = create({ cacheId: '.rivens', cacheDir: resolve(dirName, '../../../') });
   static #lastUpdate;
 
   static {
