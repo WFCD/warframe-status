@@ -60,7 +60,7 @@
     "@wfcd/eslint-config": "latest",
     "c8": "^10.1.2",
     "chai": "^4.5.0",
-    "chai-http": "^4.4.0",
+    "chai-http": "^5.1.1",
     "cross-env": "^7.0.3",
     "husky": "^9.1.6",
     "install-peerdeps": "^3.0.3",
