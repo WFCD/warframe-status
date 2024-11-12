@@ -31,7 +31,7 @@
     "express": "^4.21.1",
     "express-async-handler": "^1.2.0",
     "express-favicon-short-circuit": "^1.2.0",
-    "flat-cache": "^6.1.1",
+    "flat-cache": "^6.1.2",
     "helmet": "^8.0.0",
     "ip-address": "^10.0.1",
     "json-fetch-cache": "^1.2.6",
