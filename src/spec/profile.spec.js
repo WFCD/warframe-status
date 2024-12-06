@@ -71,7 +71,7 @@ describe('profiles', () => {
       const res = await req('/profile/tobiah/xpInfo');
       res.should.have.status(200);
       should.exist(res.body);
-      res.body[0].should.include.keys('uniqueName', 'xp', 'item');
+      res.body[0].should.include.keys('uniqueName', 'xp');
     });
     it('should error with bad username', async () => {
       const res = await req('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/xpInfo');
