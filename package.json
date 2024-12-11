@@ -59,7 +59,7 @@
     "@types/twitter": "^1.7.4",
     "@types/ws": "^8.5.10",
     "@wfcd/eslint-config": "latest",
-    "c8": "^10.1.2",
+    "c8": "^10.1.3",
     "chai": "^5.1.2",
     "chai-http": "^5.1.1",
     "cross-env": "^7.0.3",
