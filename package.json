@@ -46,7 +46,7 @@
     "ws": "^7.5.10"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.6.0",
+    "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
     "@sentry/types": "^8.44.0",
     "@types/apicache": "^1.6.6",
