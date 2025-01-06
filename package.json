@@ -49,7 +49,7 @@
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
     "@sentry/types": "^8.47.0",
-    "@types/apicache": "^1.6.6",
+    "@types/apicache": "^1.6.7",
     "@types/chai-http": "^4.2.4",
     "@types/cors": "^2.8.17",
     "@types/cron": "^2.4.0",
