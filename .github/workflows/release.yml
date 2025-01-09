@@ -45,6 +45,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '14'
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GH_PACKAGES_TOKEN }}
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4
         id: semantic
@@ -53,12 +63,15 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          DOCKER_REGISTRY_USER: ${{ github.repository_owner }}
+          DOCKER_REGISTRY_PASSWORD: ${{ secrets.GH_PACKAGES_TOKEN }}
         with:
-          semantic_version: 17
           extra_plugins: |
             @eclass/semantic-release-sentry-releases@2.11.0
+            @codedependant/semantic-release-docker
             @semantic-release/git
             @semantic-release/exec
+            @semantic-release/changelog
       - name: Read .release file
         id: release
         run: echo "release=$(cat .release)" >> $GITHUB_OUTPUT
@@ -101,29 +114,3 @@ jobs:
       - name: Deploy - Start Process
         if: ${{ steps.release.outputs.release == 'yes'  }}
         run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && pm2 start warframe-status.json'
-  registry-release:
-    needs: semantic-release
-    if: ${{ needs.semantic-release.outputs.release == 'yes'  }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GH_PACKAGES_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            ghcr.io/wfcd/warframe-status:latest
-            ghcr.io/wfcd/warframe-status:${{ needs.semantic-release.outputs.new_version }}
