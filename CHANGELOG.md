@@ -1,3 +1,10 @@
+## [2.3.3](https://github.com/wfcd/warframe-status/compare/v2.3.2...v2.3.3) (2025-01-17)
+
+
+### Bug Fixes
+
+* bump warframe-worldstate-data from 2.18.0 to 2.19.0 ([#1775](https://github.com/wfcd/warframe-status/issues/1775)) ([9bd571b](https://github.com/wfcd/warframe-status/commit/9bd571b12e9eb46d04b73fb6557f320967aac5f2))
+
 ## [2.3.2](https://github.com/wfcd/warframe-status/compare/v2.3.1...v2.3.2) (2025-01-16)
 
 
