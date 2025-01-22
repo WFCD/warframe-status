@@ -1,9 +1,9 @@
-FROM node:lts-alpine AS build
+FROM node:iron-alpine AS build
 
 COPY package*.json ./
 RUN npm install
 
-FROM node:lts-alpine AS production
+FROM node:iron-alpine AS production
 
 WORKDIR /app
 
