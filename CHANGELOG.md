@@ -1,3 +1,10 @@
+## [2.3.6](https://github.com/wfcd/warframe-status/compare/v2.3.5...v2.3.6) (2025-01-22)
+
+
+### Bug Fixes
+
+* update profile-parser to fix timeouts ([#1779](https://github.com/wfcd/warframe-status/issues/1779)) ([262a971](https://github.com/wfcd/warframe-status/commit/262a9716f327ad7ba65c2e427c6cf02434dd6f48))
+
 ## [2.3.5](https://github.com/wfcd/warframe-status/compare/v2.3.4...v2.3.5) (2025-01-22)
 
 
