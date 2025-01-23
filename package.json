@@ -66,7 +66,7 @@
     "husky": "^9.1.7",
     "install-peerdeps": "^3.0.3",
     "lint-staged": "^15.4.1",
-    "mocha": "^11.0.1",
+    "mocha": "^11.1.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.4.2"
   },
