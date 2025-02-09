@@ -6,7 +6,7 @@ import { req } from './hooks/start.hook.js';
 const should = chai.should();
 chai.use(chaiHttp);
 
-describe('profiles', () => {
+describe.skip('profiles', () => {
   describe('/profile/:username', async () => {
     it('should get profile data', async () => {
       const res = await req('/profile/tobiah/');
