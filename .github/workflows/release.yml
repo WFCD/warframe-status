@@ -67,7 +67,7 @@ jobs:
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.GH_PACKAGES_TOKEN }}
         with:
           extra_plugins: |
-            @eclass/semantic-release-sentry-releases@2.11.0
+            @eclass/semantic-release-sentry-releases
             @codedependant/semantic-release-docker
             @semantic-release/git
             @semantic-release/exec
