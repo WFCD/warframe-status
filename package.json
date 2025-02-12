@@ -20,7 +20,7 @@
   },
   "prettier": "@wfcd/eslint-config/prettier",
   "dependencies": {
-    "@sentry/node": "^8.54.0",
+    "@sentry/node": "^9.0.1",
     "@wfcd/arsenal-parser": "^2.0.2",
     "@wfcd/profile-parser": "^1.4.1",
     "apicache": "^1.6.3",
