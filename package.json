@@ -68,7 +68,7 @@
     "lint-staged": "^15.4.3",
     "mocha": "^11.1.0",
     "nodemon": "^3.1.9",
-    "prettier": "^3.5.0"
+    "prettier": "^3.5.1"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.9",
