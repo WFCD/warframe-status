@@ -23,7 +23,7 @@ export const trimPlatform = (path) => (path.replace('/', '').trim().split('/')[0
 
 /**
  * Group an array by a field value
- * @param  {Object[]} array array of objects to broup
+ * @param  {Object[]} array array of objects to group
  * @param  {string} field field to group by
  * @returns {Object}       [description]
  */
