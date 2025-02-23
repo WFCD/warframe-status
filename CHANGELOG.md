@@ -1,3 +1,10 @@
+## [2.3.18](https://github.com/wfcd/warframe-status/compare/v2.3.17...v2.3.18) (2025-02-23)
+
+
+### Bug Fixes
+
+* safer upstream handling of parsed external data ([#1824](https://github.com/wfcd/warframe-status/issues/1824)) ([87a2716](https://github.com/wfcd/warframe-status/commit/87a27163a1af501632dd75a7326187ab3496113f))
+
 ## [2.3.17](https://github.com/wfcd/warframe-status/compare/v2.3.16...v2.3.17) (2025-02-21)
 
 
