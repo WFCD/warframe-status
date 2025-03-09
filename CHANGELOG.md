@@ -1,3 +1,10 @@
+## [2.3.25](https://github.com/wfcd/warframe-status/compare/v2.3.24...v2.3.25) (2025-03-09)
+
+
+### Bug Fixes
+
+* use `playerId` whenfetching profile from DE ([#1840](https://github.com/wfcd/warframe-status/issues/1840)) ([74dbb51](https://github.com/wfcd/warframe-status/commit/74dbb51a6dc51e155c4720296c6b066b0b15cf30))
+
 ## [2.3.24](https://github.com/wfcd/warframe-status/compare/v2.3.23...v2.3.24) (2025-03-06)
 
 
