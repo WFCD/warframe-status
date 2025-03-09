@@ -77,7 +77,7 @@ jobs:
         run: echo "release=$(cat .release)" >> $GITHUB_OUTPUT
       - name: Create Sentry release
         if: ${{ steps.release.outputs.release == 'yes'  }}
-        uses: getsentry/action-release@v2
+        uses: getsentry/action-release@v3
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
