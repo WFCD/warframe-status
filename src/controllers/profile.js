@@ -10,8 +10,8 @@ import settings from '../lib/settings.js';
 
 const router = express.Router({ strict: true });
 
-const get = async (username) => {
-  const profileUrl = `${settings.wfApi.profile}?n=${encodeURIComponent(username)}`;
+const get = async (id) => {
+  const profileUrl = `${settings.wfApi.profile}?playerId=${encodeURIComponent(id)}`;
   const data = await fetch(profileUrl, { headers: { 'User-Agent': process.env.USER_AGENT || 'Node.js Fetch' } });
 
   if (data.status !== 200) return undefined;
@@ -19,14 +19,14 @@ const get = async (username) => {
   return data.json();
 };
 
-router.get('/:username/?', cache('1 hour'), async (req, res) => {
+router.get('/:playerId/?', cache('1 hour'), async (req, res) => {
   const profile = await get(req.params.username);
   if (!profile) return noResult(res);
 
   return res.status(200).json(new Profile(profile.Results[0], req.language));
 });
 
-router.get('/:username/xpInfo/?', cache('1 hour'), async (req, res) => {
+router.get('/:playerId/xpInfo/?', cache('1 hour'), async (req, res) => {
   const data = await get(req.params.username);
   if (!data) return noResult(res);
 
@@ -34,7 +34,7 @@ router.get('/:username/xpInfo/?', cache('1 hour'), async (req, res) => {
   return res.status(200).json(xpInfo);
 });
 
-router.get('/:username/stats/?', cache('1 hour'), async (req, res) => {
+router.get('/:playerId/stats/?', cache('1 hour'), async (req, res) => {
   const data = await get(req.params.username);
   if (!data) return noResult(res);
 
