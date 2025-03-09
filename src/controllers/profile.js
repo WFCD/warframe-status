@@ -11,7 +11,7 @@ import settings from '../lib/settings.js';
 const router = express.Router({ strict: true });
 
 const get = async (username) => {
-  const profileUrl = `${settings.wfApi.profile}?n=${encodeURIComponent(username)}`;
+  const profileUrl = `${settings.wfApi.profile}?playerId=${encodeURIComponent(username)}`;
   const data = await fetch(profileUrl, { headers: { 'User-Agent': process.env.USER_AGENT || 'Node.js Fetch' } });
 
   if (data.status !== 200) return undefined;
