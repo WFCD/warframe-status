@@ -6,7 +6,7 @@ updates:
       interval: 'daily'
       time: '00:00'
     commit-message:
-      prefix: "ci"
+      prefix: 'ci'
     labels:
       - 'Scope: Dependencies'
       - 'Type: Maintenance'
@@ -19,6 +19,7 @@ updates:
         patterns:
           - '@sentry/'
       warframe:
+        prefix: 'fix'
         patterns:
           - '@wfcd/'
           - 'warframe-*'
@@ -56,7 +57,7 @@ updates:
       day: 'saturday'
       time: '00:00'
     commit-message:
-      prefix: "ci"
+      prefix: 'ci'
     labels:
       - 'Scope: Dependencies'
       - 'Type: Maintenance'
