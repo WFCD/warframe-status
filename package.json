@@ -53,7 +53,7 @@
     "@types/chai-http": "^4.2.4",
     "@types/cors": "^2.8.17",
     "@types/cron": "^2.4.0",
-    "@types/express": "^5.0.0",
+    "@types/express": "^5.0.1",
     "@types/flat-cache": "^2.0.2",
     "@types/helmet": "4.0.0",
     "@types/twitter": "^1.7.4",
