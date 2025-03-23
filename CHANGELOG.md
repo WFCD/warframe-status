@@ -1,3 +1,10 @@
+## [2.3.31](https://github.com/wfcd/warframe-status/compare/v2.3.30...v2.3.31) (2025-03-23)
+
+
+### Bug Fixes
+
+* profile endpoints not using the proper params ([#1854](https://github.com/wfcd/warframe-status/issues/1854)) ([dde4bcc](https://github.com/wfcd/warframe-status/commit/dde4bccb9e5f33318b13e4670223d1a0b7d4328f))
+
 ## [2.3.30](https://github.com/wfcd/warframe-status/compare/v2.3.29...v2.3.30) (2025-03-21)
 
 
