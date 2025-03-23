@@ -20,14 +20,14 @@ const get = async (id) => {
 };
 
 router.get('/:playerId/?', cache('1 hour'), async (req, res) => {
-  const profile = await get(req.params.username);
+  const profile = await get(req.params.playerId);
   if (!profile) return noResult(res);
 
   return res.status(200).json(new Profile(profile.Results[0], req.language));
 });
 
 router.get('/:playerId/xpInfo/?', cache('1 hour'), async (req, res) => {
-  const data = await get(req.params.username);
+  const data = await get(req.params.playerId);
   if (!data) return noResult(res);
 
   const xpInfo = data.Results[0].LoadOutInventory.XPInfo.map((xp) => new XpInfo(xp));
