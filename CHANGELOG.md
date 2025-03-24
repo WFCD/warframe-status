@@ -1,3 +1,10 @@
+## [2.3.32](https://github.com/wfcd/warframe-status/compare/v2.3.31...v2.3.32) (2025-03-24)
+
+
+### Bug Fixes
+
+* bump the warframe group with 3 updates ([#1855](https://github.com/wfcd/warframe-status/issues/1855)) ([56e5875](https://github.com/wfcd/warframe-status/commit/56e5875da677f05dbbc1a63fcdbf85782f8ce686))
+
 ## [2.3.31](https://github.com/wfcd/warframe-status/compare/v2.3.30...v2.3.31) (2025-03-23)
 
 
