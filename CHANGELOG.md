@@ -1,3 +1,10 @@
+## [2.3.33](https://github.com/wfcd/warframe-status/compare/v2.3.32...v2.3.33) (2025-03-24)
+
+
+### Bug Fixes
+
+* playerId in profile-stats ([#1856](https://github.com/wfcd/warframe-status/issues/1856)) ([e6dcfe2](https://github.com/wfcd/warframe-status/commit/e6dcfe2c5ef34b4397a827b19a7553067c93214b))
+
 ## [2.3.32](https://github.com/wfcd/warframe-status/compare/v2.3.31...v2.3.32) (2025-03-24)
 
 
