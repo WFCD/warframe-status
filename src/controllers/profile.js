@@ -35,7 +35,7 @@ router.get('/:playerId/xpInfo/?', cache('1 hour'), async (req, res) => {
 });
 
 router.get('/:playerId/stats/?', cache('1 hour'), async (req, res) => {
-  const data = await get(req.params.username);
+  const data = await get(req.params.playerId);
   if (!data) return noResult(res);
 
   return res.status(200).json(new Stats(data.Stats));
