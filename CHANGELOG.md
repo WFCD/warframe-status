@@ -1,3 +1,11 @@
+## [2.3.39](https://github.com/wfcd/warframe-status/compare/v2.3.38...v2.3.39) (2025-04-02)
+
+
+### Bug Fixes
+
+* bump warframe-items from 1.1269.0 to 1.1269.8 ([#1864](https://github.com/wfcd/warframe-status/issues/1864)) ([3f8f1bb](https://github.com/wfcd/warframe-status/commit/3f8f1bb40c3aa35bbd356ff75002ebb0f9134e91))
+* bump worldstate-parser@4.5.1 ([e26f81a](https://github.com/wfcd/warframe-status/commit/e26f81a806a73958396c80c560461ff9bb793d1f))
+
 ## [2.3.38](https://github.com/wfcd/warframe-status/compare/v2.3.37...v2.3.38) (2025-03-31)
 
 
