@@ -60,6 +60,7 @@ router.get('/:field/?', (req, res) => {
   // filter out any fields that can't be language codes (>5 characters)
   if (!Object.keys(ws).includes(req.params.field) && req.params.field.length > 4) {
     res.status(404).json({ error: 'No such worldstate field', code: 404 });
+    return;
   }
   if (ws?.[req.params.field]) {
     res.setHeader('Content-Language', req.language);
