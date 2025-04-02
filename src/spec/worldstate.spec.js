@@ -60,6 +60,12 @@ data.mods = await grab('mods');
 // because it takes time for the worldstate emitter to get fired up and updating,
 // so this needs to always run last
 describe('worldstate', () => {
+  it('should 404 on invalid worldstate keys', async () => {
+    if (!app.started) should.fail('server not started');
+    // purposeful typo
+    const res = await req(`/pc/deepArchimedia`).redirects(2).send();
+    res.should.have.status(404);
+  });
   platforms.forEach((platform) => {
     describe(`/${platform}`, () => {
       it('should succeed', async () => {
