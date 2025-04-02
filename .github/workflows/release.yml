@@ -32,6 +32,13 @@ jobs:
           npx commitlint --last --verbose
           npm run build
           npm test
+      - name: Notify
+        if: failure()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISC_STATUS_WH }}
+        with:
+          args: '<:github:1017808825765605376> warframe-status failed to verify before deploy\n<@&1357021068446928993>'
+        uses: Ilshidur/action-discord@master
   semantic-release:
     runs-on: ubuntu-latest
     needs: [test]
