@@ -1,3 +1,10 @@
+## [2.3.40](https://github.com/wfcd/warframe-status/compare/v2.3.39...v2.3.40) (2025-04-02)
+
+
+### Bug Fixes
+
+* 404 unknown fields ([#1866](https://github.com/wfcd/warframe-status/issues/1866)) ([4e94a24](https://github.com/wfcd/warframe-status/commit/4e94a2448be510dc3f4fbd3bb80ac58bc2ab95b6))
+
 ## [2.3.39](https://github.com/wfcd/warframe-status/compare/v2.3.38...v2.3.39) (2025-04-02)
 
 
