@@ -19,7 +19,8 @@ updates:
         patterns:
           - '@sentry/'
       warframe:
-        prefix: 'fix'
+        commit-message:
+          prefix: 'fix'
         patterns:
           - '@wfcd/*'
           - 'warframe-*'
