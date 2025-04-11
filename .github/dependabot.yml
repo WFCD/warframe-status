@@ -21,7 +21,7 @@ updates:
       warframe:
         prefix: 'fix'
         patterns:
-          - '@wfcd/'
+          - '@wfcd/*'
           - 'warframe-*'
           - 'worldstate-emitter'
       webserver:

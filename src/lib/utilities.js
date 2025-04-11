@@ -1,7 +1,7 @@
 import 'colors';
 import asyncHandler from 'express-async-handler';
 import wfData from 'warframe-worldstate-data';
-import wfItems from 'warframe-items';
+import wfItems from '@wfcd/items';
 import WorldStateEmitter from 'worldstate-emitter';
 import apiCache from 'apicache';
 

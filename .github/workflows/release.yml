@@ -27,7 +27,7 @@ jobs:
           TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
         run: |
           npm ci
-          npm i warframe-items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
+          npm i @wfcd/items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
           npm run lint
           npx commitlint --last --verbose
           npm run build
