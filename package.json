@@ -18,11 +18,11 @@
     "test": "cross-env HOSTNAME=localhost c8 mocha",
     "update:spec": "curl --url https://docs.warframestat.us/openapi.json -G -o src/api-spec/openapi.json --silent"
   },
-  "prettier": "@wfcd/eslint-config/prettier",
   "dependencies": {
     "@sentry/node": "^8.55.0",
-    "@wfcd/arsenal-parser": "^2.0.2",
-    "@wfcd/profile-parser": "^1.4.1",
+    "@wfcd/arsenal-parser": "^2.0.3",
+    "@wfcd/items": "^1.1270.0",
+    "@wfcd/profile-parser": "^1.5.0",
     "apicache": "^1.6.3",
     "colors": "1.4.0",
     "cors": "^2.8.5",
@@ -37,7 +37,6 @@
     "json-fetch-cache": "^1.2.6",
     "node-fetch": "^3.3.2",
     "swagger-stats": "^0.99.7",
-    "warframe-items": "^1.1269.72",
     "warframe-nexus-query": "^2.1.0",
     "warframe-worldstate-data": "^2.24.8",
     "warframe-worldstate-parser": "^4.5.1",
@@ -74,9 +73,5 @@
     "bufferutil": "^4.0.9",
     "prom-client": "^11.5.3",
     "utf-8-validate": "^5.0.10"
-  },
-  "engines": {
-    "node": ">=18.0.0 < 19",
-    "npm": ">=10.0.0 < 11"
   }
 }

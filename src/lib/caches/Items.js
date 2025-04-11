@@ -2,7 +2,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { create } from 'flat-cache';
-import Items from 'warframe-items';
+import Items from '@wfcd/items';
 import data from 'warframe-worldstate-data';
 
 import Logger from '../logger.js';
@@ -23,10 +23,10 @@ const caches = ['weapons', 'warframes', 'items', 'mods'];
 /**
  * Cache object
  * @typedef {Object} ItemCache
- * @property {Array<module:warframe-items.Item>} weapons
- * @property {Array<module:warframe-items.Item>} warframes
- * @property {Array<module:warframe-items.Item>} items
- * @property {Array<module:warframe-items.Item>} mods
+ * @property {Array<module:@wfcd/items.Item>} weapons
+ * @property {Array<module:@wfcd/items.Item>} warframes
+ * @property {Array<module:@wfcd/items.Item>} items
+ * @property {Array<module:@wfcd/items.Item>} mods
  */
 
 /**
@@ -113,12 +113,12 @@ export default class ItemsCache {
 
   /**
    * Clean up the item or array of items
-   * @param {module:warframe-items.Item | Array<module:warframe-items.Item>} result
+   * @param {module:@wfcd/items.Item | Array<module:@wfcd/items.Item>} result
    *  result or array of results to clean up
    * @param {Array<string>} only keys to keep on object
    * @param {Array<string>} remove keys to remove on object
    * @private
-   * @returns {module:warframe-items.Item | Array<module:warframe-items.Item>}
+   * @returns {module:@wfcd/items.Item | Array<module:@wfcd/items.Item>}
    */
   static #cleanup(result, { only, remove }) {
     if (!result) return undefined;
@@ -127,7 +127,7 @@ export default class ItemsCache {
       return result.map((subr) => ItemsCache.#cleanup(subr, { only, remove }));
     }
 
-    /** @type {module:warframe-items.Item} */
+    /** @type {module:@wfcd/items.Item} */
     const clone = { ...result };
     if (Array.isArray(only) && only.length) {
       Object.keys(clone).forEach((field) => {
@@ -180,7 +180,7 @@ export default class ItemsCache {
    * @param {string} term search term on the object
    * @param {number} max maximum allowed amount (changes matching algorithm)
    * @param {ItemFilter[]} filter array of filters to apply
-   * @returns {Promise<module:warframe-items.Item[]>}
+   * @returns {Promise<module:@wfcd/items.Item[]>}
    */
   static async get(key, language, { by = 'name', remove, only, term, max, filter }) {
     let base = ItemsCache.#cache.getKey(`${language}-${key}`);
@@ -233,7 +233,7 @@ export default class ItemsCache {
    * Utility function for following nested keys. Since some keys have values that are
    * an array of non-keyed objects, this function iterates over those arrays and can
    * return multiple values for a single key path.
-   * @param {module:warframe-items.Item | Array<module:warframe-items.Item>} item data to search
+   * @param {module:@wfcd/items.Item | Array<module:@wfcd/items.Item>} item data to search
    * @param {Array<string>} by array of keys to follow
    * @returns {Array<string> | undefined} list of results or undefined if no matching keys
    */

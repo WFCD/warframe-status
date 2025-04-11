@@ -18,7 +18,7 @@ jobs:
           cache: npm
       - run: |
           npm ci
-          npm i warframe-items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
+          npm i @wfcd/items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
           npm run lint
           npx commitlint --last --verbose
         env:
@@ -44,7 +44,7 @@ jobs:
           NODE_ENV: 'test'
         run: |
           npm ci
-          npm i warframe-items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
+          npm i @wfcd/items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
           npm run build
           npm test
       - name: Coveralls
