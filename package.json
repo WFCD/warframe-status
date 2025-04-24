@@ -66,7 +66,7 @@
     "install-peerdeps": "^3.0.3",
     "lint-staged": "^15.5.1",
     "mocha": "^11.1.0",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.10",
     "prettier": "^3.5.3"
   },
   "optionalDependencies": {
