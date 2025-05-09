@@ -50,7 +50,7 @@
     "@sentry/types": "^8.55.0",
     "@types/apicache": "^1.6.7",
     "@types/chai-http": "^4.2.4",
-    "@types/cors": "^2.8.17",
+    "@types/cors": "^2.8.18",
     "@types/cron": "^2.4.0",
     "@types/express": "^5.0.1",
     "@types/flat-cache": "^2.0.2",
