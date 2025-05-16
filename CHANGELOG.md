@@ -1,3 +1,10 @@
+## [2.3.61](https://github.com/wfcd/warframe-status/compare/v2.3.60...v2.3.61) (2025-05-16)
+
+
+### Bug Fixes
+
+* bump @wfcd/items from 1.1270.216 to 1.1270.224 ([#1909](https://github.com/wfcd/warframe-status/issues/1909)) ([2f35eba](https://github.com/wfcd/warframe-status/commit/2f35ebac244ce78c8733a1bc33b3253c351e5b81))
+
 ## [2.3.60](https://github.com/wfcd/warframe-status/compare/v2.3.59...v2.3.60) (2025-05-15)
 
 
