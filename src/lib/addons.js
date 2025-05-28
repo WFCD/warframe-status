@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import swagger from 'swagger-stats';
 import * as Sentry from '@sentry/node';
 
-import spec from '../api-spec/openapi.json' assert { type: 'json' };
+import spec from '../api-spec/openapi.json' with { type: 'json' };
 
 import hydrate from './hydrate.js';
 import { sentry } from './settings.js';

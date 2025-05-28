@@ -19,14 +19,14 @@ const get = async (id) => {
   return data.json();
 };
 
-router.get('/:playerId/?', cache('1 hour'), async (req, res) => {
+router.get('/:playerId{/}', cache('1 hour'), async (req, res) => {
   const profile = await get(req.params.playerId);
   if (!profile) return noResult(res);
 
   return res.status(200).json(new Profile(profile.Results[0], req.language));
 });
 
-router.get('/:playerId/xpInfo/?', cache('1 hour'), async (req, res) => {
+router.get('/:playerId/xpInfo{/}', cache('1 hour'), async (req, res) => {
   const data = await get(req.params.playerId);
   if (!data) return noResult(res);
 
@@ -34,14 +34,14 @@ router.get('/:playerId/xpInfo/?', cache('1 hour'), async (req, res) => {
   return res.status(200).json(xpInfo);
 });
 
-router.get('/:playerId/stats/?', cache('1 hour'), async (req, res) => {
+router.get('/:playerId/stats{/}', cache('1 hour'), async (req, res) => {
   const data = await get(req.params.playerId);
   if (!data) return noResult(res);
 
   return res.status(200).json(new Stats(data.Stats));
 });
 
-router.get(`/:username/arsenal/?`, cache('1 hour'), async (req, res) => {
+router.get(`/:username/arsenal{/}`, cache('1 hour'), async (req, res) => {
   const { id, api } = settings.wfApi.arsenal;
 
   /* istanbul ignore if */
