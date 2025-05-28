@@ -53,9 +53,9 @@ router.get('/', (req, res) => {
   res.json(ws);
 });
 
-router.use('/rivens/?', rivens);
+router.use(['/rivens/', '/rivens'], rivens);
 
-router.get('/:field/?', (req, res) => {
+router.get(['/:field/', '/:field'], (req, res) => {
   const ws = get(req.platform, req.language);
   // filter out any fields that can't be language codes (>5 characters)
   if (!Object.keys(ws).includes(req.params.field) && req.params.field.length > 4) {
@@ -81,7 +81,7 @@ router.get('/:field/?', (req, res) => {
   }
 });
 
-router.get('/:language/:field/?', cache('1 minute'), (req, res) => {
+router.get(['/:language/:field/', '/:language/:field'], cache('1 minute'), (req, res) => {
   if (languages.includes(req.params.language.substring(0, 2).toLowerCase())) {
     req.language = req.params.language.substring(0, 2).toLowerCase();
   }

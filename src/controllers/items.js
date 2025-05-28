@@ -95,7 +95,7 @@ router.get(
  * @return {Array<Item>} 200 - successful operation
  */
 router.get(
-  '/:item/?',
+  ['/:item/', '/:item'],
   cache('10 hours'),
   ah(async (req, res) => {
     const { remove, only, filter, by } = req.query;
@@ -148,7 +148,7 @@ router.get(
  * @return {Array<Item>} 200 - successful operation
  */
 router.get(
-  '/search/:query/?',
+  ['/search/:query/', '/search/:query'],
   cache('10 hours'),
   ah(async (req, res) => {
     const { remove, only, by = 'name', filter } = req.query;

@@ -24,7 +24,7 @@ router.get('/', cache('10 hours'), (req, res) => {
   return res.status(200).json(warframeData[req.language][req.key]);
 });
 
-router.get('/search/:query/?', cache('10 hours'), (req, res) => {
+router.get(['/search/:query/', '/search/:query'], cache('10 hours'), (req, res) => {
   res.setHeader('Content-Language', req.language);
   let values = [];
   let results = [];

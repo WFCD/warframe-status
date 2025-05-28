@@ -6,7 +6,7 @@ import { cache, ah } from '../lib/utilities.js';
 const router = express.Router();
 
 router.get(
-  '/filtered_items/?',
+  ['/filtered_items/', '/filtered_items'],
   cache('1 hour'),
   ah(async (req, res) => {
     return res
@@ -16,7 +16,7 @@ router.get(
 );
 
 router.get(
-  '/prices/?',
+  ['/prices/', '/prices'],
   cache('1 hour'),
   ah(async (req, res) => {
     return res

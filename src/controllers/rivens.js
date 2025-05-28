@@ -24,7 +24,7 @@ router.get(
 );
 
 router.get(
-  '/search/:query/?',
+  ['/search/:query/', '/search/:query'],
   /* cache('10 hours'), */ ah(async (req, res) => {
     if (res.writableEnded) return;
     const { query } = req.params;

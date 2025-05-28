@@ -37,7 +37,7 @@ router.get(
  * @description Query-based drop search, responses are cached for an hour
  */
 router.get(
-  '/search/:query/?',
+  ['/search/:query/', '/search/:query'],
   cache('1 hour'),
   ah(async (req, res) => {
     const drops = await DropsCache.get({ term: req.params.query, groupedBy: req.query.grouped_by });

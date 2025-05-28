@@ -49,11 +49,17 @@ router.use((req, res, next) => {
   next();
 });
 
-router.use(`/:platform(${platforms.join('|')}|${platformAliases.join('|')})`, worldstate);
-router.use(`/:data(${Object.keys(warframeData).join('|')})`, data);
+router.use(
+  [...platforms, ...platformAliases].map((p) => `/${p}`),
+  worldstate
+);
+router.use(
+  Object.keys(warframeData).map((d) => `/${d}`),
+  data
+);
 router.use('/pricecheck', pricecheck);
 router.use('/heartbeat', heartbeat);
-router.use('/:itype(warframes|weapons|items|mods)', items);
+router.use(['warframes', 'weapons', 'items', 'mods'].map((itype) => [`/${itype}`, `/${itype}/`]).flat(), items);
 router.use('/twitter', twitter);
 router.use('/profile', profile);
 router.use('/drops', drops);
