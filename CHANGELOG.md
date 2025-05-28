@@ -1,3 +1,10 @@
+## [2.3.63](https://github.com/wfcd/warframe-status/compare/v2.3.62...v2.3.63) (2025-05-28)
+
+
+### Bug Fixes
+
+* upgrade express to v5 ([#1914](https://github.com/wfcd/warframe-status/issues/1914)) ([7fa0f92](https://github.com/wfcd/warframe-status/commit/7fa0f92d5d318afc14b285bdd9a0a42488ae3bde))
+
 ## [2.3.62](https://github.com/wfcd/warframe-status/compare/v2.3.61...v2.3.62) (2025-05-28)
 
 
