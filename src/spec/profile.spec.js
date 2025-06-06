@@ -67,11 +67,12 @@ describe.skip('profiles', () => {
     });
   });
   describe('/profile/:username/xpInfo', async () => {
-    it('should get profile xp info', async () => {
+    it('should get profile xp info without item', async () => {
       const res = await req('/profile/tobiah/xpInfo');
       res.should.have.status(200);
       should.exist(res.body);
       res.body[0].should.include.keys('uniqueName', 'xp');
+      res.body[0].should.not.property('item');
     });
     it('should error with bad username', async () => {
       const res = await req('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/xpInfo');
