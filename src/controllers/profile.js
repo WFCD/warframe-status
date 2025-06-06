@@ -23,14 +23,14 @@ router.get(['/:playerId/', '/:playerId'], cache('1 hour'), async (req, res) => {
   const profile = await get(req.params.playerId);
   if (!profile) return noResult(res);
 
-  return res.status(200).json(new Profile(profile.Results[0], req.language));
+  return res.status(200).json(new Profile(profile.Results[0], req.language, req.query.withItem || false));
 });
 
 router.get(['/:playerId/xpInfo/', '/:playerId/xpInfo'], cache('1 hour'), async (req, res) => {
   const data = await get(req.params.playerId);
   if (!data) return noResult(res);
 
-  const xpInfo = data.Results[0].LoadOutInventory.XPInfo.map((xp) => new XpInfo(xp));
+  const xpInfo = data.Results[0].LoadOutInventory.XPInfo.map((xp) => new XpInfo(xp, req.query.withItem || false));
   return res.status(200).json(xpInfo);
 });
 
