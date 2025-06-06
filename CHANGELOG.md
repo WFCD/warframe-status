@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/wfcd/warframe-status/compare/v2.3.66...v2.4.0) (2025-06-06)
+
+
+### Features
+
+* add a `withItem` query ([#1920](https://github.com/wfcd/warframe-status/issues/1920)) ([f5ffa9d](https://github.com/wfcd/warframe-status/commit/f5ffa9d96bbd41823cca37424a49f2e57683b0aa))
+
 ## [2.3.66](https://github.com/wfcd/warframe-status/compare/v2.3.65...v2.3.66) (2025-06-02)
 
 
