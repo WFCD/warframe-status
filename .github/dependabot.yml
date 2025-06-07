@@ -64,3 +64,18 @@ updates:
     pull-request-branch-name:
       separator: '-'
     rebase-strategy: 'auto'
+
+  - package-ecosystem: docker
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'saturday'
+      time: '00:00'
+    commit-message:
+      prefix: 'build'
+    labels:
+      - 'Scope: Dependencies'
+      - 'Type: Maintenance'
+    pull-request-branch-name:
+      separator: '-'
+    rebase-strategy: 'auto'
