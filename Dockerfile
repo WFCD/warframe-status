@@ -1,9 +1,9 @@
-FROM node:22.16.0-alpine AS build
+FROM node:24.1.0-alpine AS build
 
 COPY package*.json ./
 RUN npm install
 
-FROM node:22.16.0-alpine AS production
+FROM node:24.1.0-alpine AS production
 
 WORKDIR /app
 
