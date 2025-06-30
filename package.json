@@ -27,7 +27,7 @@
     "colors": "1.4.0",
     "cors": "^2.8.5",
     "cron": "^4.3.1",
-    "dotenv": "^16.6.0",
+    "dotenv": "^17.0.0",
     "express": "^5.1.0",
     "express-async-handler": "^1.2.0",
     "express-favicon-short-circuit": "^1.2.0",
