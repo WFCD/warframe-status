@@ -64,24 +64,28 @@ export default class RivensCache {
 
   static async populate(logger = this.#logger) {
     this.#lastUpdate = this.#cache.getKey('last_updt');
-    if (typeof this.#lastUpdate === 'undefined') this.#lastUpdate = 0;
-    if (Date.now() - this.#lastUpdate <= FOUR_HOURS) {
-      logger.debug('no rivens data update needed');
-      return;
-    }
-    logger.info('starting Rivens hydration');
-    const start = Date.now();
-    for await (const platform of platforms) {
-      const raw = await fetch(`https://www-static.warframe.com/repos/weeklyRivens${platform.toUpperCase()}.json`);
-      const text = await raw.text();
-      this.#cache.setKey(platform, groupRivenData(text));
-    }
+    try {
+      if (typeof this.#lastUpdate === 'undefined') this.#lastUpdate = 0;
+      if (Date.now() - this.#lastUpdate <= FOUR_HOURS) {
+        logger.debug('no rivens data update needed');
+        return;
+      }
+      logger.info('starting Rivens hydration');
+      const start = Date.now();
+      for await (const platform of platforms) {
+        const raw = await fetch(`https://www-static.warframe.com/repos/weeklyRivens${platform.toUpperCase()}.json`);
+        const text = await raw.text();
+        this.#cache.setKey(platform, groupRivenData(text));
+      }
 
-    this.#cache.setKey('last_updt', Date.now());
-    this.#cache.save(true);
-    // done
-    const end = Date.now();
-    logger.info(`Rivens hydration complete in ${end - start}ms`);
+      this.#cache.setKey('last_updt', Date.now());
+      this.#cache.save(true);
+      // done
+      const end = Date.now();
+      logger.info(`Rivens hydration complete in ${end - start}ms`);
+    } catch (e) {
+      logger.error(`Riven hydration failed: ${e.message}`);
+    }
   }
 
   /**
