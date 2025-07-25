@@ -1,3 +1,11 @@
+## [2.4.5](https://github.com/wfcd/warframe-status/compare/v2.4.4...v2.4.5) (2025-07-25)
+
+
+### Bug Fixes
+
+* bump the warframe group ([#1940](https://github.com/wfcd/warframe-status/issues/1940)) ([8e000c0](https://github.com/wfcd/warframe-status/commit/8e000c0a56724d678f369ae2883a9825bd58bfa1))
+* upgrade to worldstate-parser@3 ([8ce4254](https://github.com/wfcd/warframe-status/commit/8ce4254c75886f3f2a5dbecff6c63210e621a2ee))
+
 ## [2.4.4](https://github.com/wfcd/warframe-status/compare/v2.4.3...v2.4.4) (2025-06-26)
 
 
