@@ -1,3 +1,10 @@
+## [2.4.6](https://github.com/wfcd/warframe-status/compare/v2.4.5...v2.4.6) (2025-07-25)
+
+
+### Bug Fixes
+
+* allow riven hydration to fail, update emitter ([d1c89f1](https://github.com/wfcd/warframe-status/commit/d1c89f1d17c48e9ff44c71fe5f80978a94a07a04))
+
 ## [2.4.5](https://github.com/wfcd/warframe-status/compare/v2.4.4...v2.4.5) (2025-07-25)
 
 
