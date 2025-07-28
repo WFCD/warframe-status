@@ -1,3 +1,10 @@
+## [2.4.7](https://github.com/wfcd/warframe-status/compare/v2.4.6...v2.4.7) (2025-07-28)
+
+
+### Bug Fixes
+
+* bump @wfcd/items from 1.1270.774 to 1.1270.795 ([#1951](https://github.com/wfcd/warframe-status/issues/1951)) ([a65aba6](https://github.com/wfcd/warframe-status/commit/a65aba69dcc8237e41124c71a210438d2b698a88))
+
 ## [2.4.6](https://github.com/wfcd/warframe-status/compare/v2.4.5...v2.4.6) (2025-07-25)
 
 
