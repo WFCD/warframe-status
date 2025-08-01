@@ -19,7 +19,7 @@
     "update:spec": "curl --url https://docs.warframestat.us/openapi.json -G -o src/api-spec/openapi.json --silent"
   },
   "dependencies": {
-    "@sentry/node": "^8.55.0",
+    "@sentry/node": "^10.0.0",
     "@wfcd/arsenal-parser": "^2.0.4",
     "@wfcd/items": "^1.1270.802",
     "@wfcd/profile-parser": "^2.0.1",
