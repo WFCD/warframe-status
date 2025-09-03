@@ -26,6 +26,18 @@ client.on('message', (d) => {
   const packed = JSON.parse(d);
   switch (packed.event) {
     case 'ws:provide':
+      if (packed.packet.code) {
+        logger.error(`Error: ${packed.packet.code} - ${packed.packet.message}`);
+      } else {
+        logger.info(`Received ws:provide event with packet: ${JSON.stringify(packed.packet)}`);
+      }
+      break;
+    case 'ws:event':
+      if (packed.packet.key) {
+        logger.info(`${packed.packet.key} ${packed.packet.ws.timestamp}`);
+      } else {
+        logger.info(`${packed.event} ${packed.packet.ws.timestamp}`);
+      }
       logger.info(`${packed.packet.platform} ${packed.packet.language} ${packed.packet.ws.timestamp}`);
       break;
     case 'twitter:provide':

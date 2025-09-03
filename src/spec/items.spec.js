@@ -13,9 +13,10 @@ const withTimestamp = (path) => `${path}${path.includes('?') ? '&' : '?'}ts=${Da
 describe('items', () => {
   it('should return all items', async () => {
     const res = await req('/items');
+    const items = [...new Items()];
     res.should.have.status(200);
     res.body.should.be.an('array');
-    res.body.length.should.be.equal(new Items().length);
+    res.body.length.should.be.equal(items.length);
   });
   it('should include required keys', async () => {
     const res = await req('/items');
