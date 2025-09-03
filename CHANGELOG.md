@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/wfcd/warframe-status/compare/v2.4.8...v2.5.0) (2025-09-03)
+
+
+### Features
+
+* upgrades ([#1966](https://github.com/wfcd/warframe-status/issues/1966)) ([dd9de3e](https://github.com/wfcd/warframe-status/commit/dd9de3e716caedeb193f02466046c778781af165))
+
 ## [2.4.8](https://github.com/wfcd/warframe-status/compare/v2.4.7...v2.4.8) (2025-08-17)
 
 
