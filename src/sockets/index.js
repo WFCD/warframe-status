@@ -16,7 +16,7 @@ const requestWS = ({ platform, language } = {}) => {
     };
   }
   try {
-    const ws = worldState.getWorldsate(language);
+    const ws = worldState.getWorldstate(language);
     return { platform, language, ws };
   } catch (e) {
     return { code: 500, message: e.message.split('.')[0] };
