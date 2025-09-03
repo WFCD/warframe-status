@@ -35,6 +35,7 @@
     "helmet": "^8.1.0",
     "ip-address": "^10.0.1",
     "json-fetch-cache": "^1.2.6",
+    "json5": "^2.2.3",
     "node-fetch": "^3.3.2",
     "swagger-stats": "^0.99.7",
     "warframe-nexus-query": "^2.1.0",

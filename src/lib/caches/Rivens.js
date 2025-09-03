@@ -2,6 +2,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { create } from 'flat-cache';
+import JSON5 from 'json5';
 
 import Logger from '../logger.js';
 import { platforms, titleCase } from '../utilities.js';
@@ -31,7 +32,7 @@ const dirName = dirname(fileURLToPath(import.meta.url));
 const groupRivenData = (cacheStrData) => {
   /* istanbul ignore if */ if (!cacheStrData.length) return {};
   const stripped = cacheStrData.replace(/NaN/g, 0).replace(/WARNING:.*\n/, '');
-  const parsed = JSON.parse(stripped);
+  const parsed = JSON5.parse(stripped);
 
   const byType = {};
   parsed.forEach((rivenD) => {
