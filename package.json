@@ -21,8 +21,8 @@
   "dependencies": {
     "@sentry/node": "^10.8.0",
     "@wfcd/arsenal-parser": "^2.0.4",
-    "@wfcd/items": "^1.1270.839",
-    "@wfcd/profile-parser": "^2.0.3",
+    "@wfcd/items": "^1.1270.840",
+    "@wfcd/profile-parser": "^2.0.4",
     "apicache": "^1.6.3",
     "colors": "1.4.0",
     "cors": "^2.8.5",
