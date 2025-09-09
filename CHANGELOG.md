@@ -1,3 +1,10 @@
+## [2.5.4](https://github.com/wfcd/warframe-status/compare/v2.5.3...v2.5.4) (2025-09-09)
+
+
+### Bug Fixes
+
+* bump warframe-worldstate-parser from 5.0.3 to 5.0.4 ([#1976](https://github.com/wfcd/warframe-status/issues/1976)) ([ef3d979](https://github.com/wfcd/warframe-status/commit/ef3d97975e894d19c8feb86608796e425319b4d3))
+
 ## [2.5.3](https://github.com/wfcd/warframe-status/compare/v2.5.2...v2.5.3) (2025-09-08)
 
 
