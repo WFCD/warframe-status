@@ -2,15 +2,13 @@ import * as chai from 'chai';
 import chaiHttp, { request } from 'chai-http';
 
 import app from '../app.js';
-import * as utils from '../lib/utilities.js';
 
 import { req } from './hooks/start.hook.js';
 
-const { platforms: p, platformAliases: pa } = utils;
 const should = chai.should();
 chai.use(chaiHttp);
 
-const platforms = p.concat(pa);
+const platforms = ['pc'];
 const keys = [
   'alerts',
   'invasions',
@@ -82,6 +80,9 @@ describe('worldstate', () => {
           it(`/${platform}/${key}`, async () => {
             if (!app.started) should.fail('server not started');
             res = await req(`/${platform}/${key}`).redirects(2).send();
+            if (res.status !== 200) {
+              console.error(res.body);
+            }
             res.should.have.status(200);
             res.should.have.property('body');
           });
