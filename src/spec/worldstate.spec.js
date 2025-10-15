@@ -69,6 +69,9 @@ describe('worldstate', () => {
       it('should succeed', async () => {
         if (!app.started) should.fail('server not started');
         let res = await req(`/${platform}`).redirects(2).send();
+        if (res.status !== 200) {
+          console.error(res.body);
+        }
         res.should.have.status(200);
         res.should.have.property('body');
         res.body.should.be.an('object');
@@ -80,9 +83,6 @@ describe('worldstate', () => {
           it(`/${platform}/${key}`, async () => {
             if (!app.started) should.fail('server not started');
             res = await req(`/${platform}/${key}`).redirects(2).send();
-            if (res.status !== 200) {
-              console.error(res.body);
-            }
             res.should.have.status(200);
             res.should.have.property('body');
           });
