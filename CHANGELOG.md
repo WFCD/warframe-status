@@ -1,3 +1,13 @@
+## [2.5.13](https://github.com/wfcd/warframe-status/compare/v2.5.12...v2.5.13) (2025-10-15)
+
+
+### Bug Fixes
+
+* log out errors ([3d70d9e](https://github.com/wfcd/warframe-status/commit/3d70d9e7220188e72ca17ad27275d1100d9f5d19))
+* new DE api url ([fbbe75c](https://github.com/wfcd/warframe-status/commit/fbbe75c01abd1b8f395615ff1b0da609b05c992d))
+* only test pc, log out errors ([02ddf48](https://github.com/wfcd/warframe-status/commit/02ddf4880026453c3894c8c1da72b940dce9477f))
+* temporarily skip worldstate tests ([c2a9af2](https://github.com/wfcd/warframe-status/commit/c2a9af2894cec191cad3d1b936f3636d768a1ddc))
+
 ## [2.5.12](https://github.com/wfcd/warframe-status/compare/v2.5.11...v2.5.12) (2025-10-15)
 
 
