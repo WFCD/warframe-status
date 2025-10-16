@@ -32,6 +32,9 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+      - uses: wenoa/setup-wireguard@main
+        with:
+          WG_CONFIG: ${{ secrets.WG_CONFIG }}
       - name: Verify
         env:
           CI: true

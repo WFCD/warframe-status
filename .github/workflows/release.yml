@@ -18,6 +18,9 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+      - uses: wenoa/setup-wireguard@main
+        with:
+          WG_CONFIG: ${{ secrets.WG_CONFIG }}
       - name: Verify
         env:
           CI: true
@@ -91,33 +94,3 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         with:
           environment: production
-      # Built from https://blog.benoitblanchon.fr/github-action-run-ssh-commands/
-      - name: Deploy - Configure
-        if: ${{ steps.release.outputs.release == 'yes'  }}
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/prod.key
-          chmod 600 ~/.ssh/prod.key
-          cat >>~/.ssh/config <<END
-          Host prod
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile ~/.ssh/prod.key
-            StrictHostKeyChecking no
-          END
-        env:
-          SSH_USER: ${{ secrets.PROD_SSH_USER }}
-          SSH_KEY: ${{ secrets.PROD_SSH_KEY }}
-          SSH_HOST: ${{ secrets.PROD_SSH_HOST }}
-      - name: Deploy - Stop Process
-        if: ${{ steps.release.outputs.release == 'yes'  }}
-        run: ssh prod 'source ~/.zshrc && pm2 kill'
-      - name: Deploy - Update server
-        if: ${{ steps.release.outputs.release == 'yes'  }}
-        run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && git checkout -- . && git fetch --all && git reset --hard origin/main'
-      - name: Deploy - Update dependencies
-        if: ${{ steps.release.outputs.release == 'yes'  }}
-        run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && rm -rf node_modules && nvm install && nvm use && npm ci&& npm run build && npm i -g pm2@latest'
-      - name: Deploy - Start Process
-        if: ${{ steps.release.outputs.release == 'yes'  }}
-        run: ssh prod 'source ~/.zshrc && cd ~/warframe-status && pm2 start warframe-status.json'
