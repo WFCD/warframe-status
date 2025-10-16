@@ -58,7 +58,7 @@ router.use(['/rivens/', '/rivens'], rivens);
 router.get(['/:field/', '/:field'], (req, res) => {
   const ws = get(req.platform, req.language);
   // filter out any fields that can't be language codes (>5 characters)
-  if (!Object.keys(ws).includes(req.params.field) && req.params.field.length > 4) {
+  if (!ws || (!Object.keys(ws).includes(req.params.field) && req.params.field.length > 4)) {
     res.status(404).json({ error: 'No such worldstate field', code: 404 });
     return;
   }
@@ -86,7 +86,7 @@ router.get(['/:language/:field/', '/:language/:field'], cache('1 minute'), (req,
     req.language = req.params.language.substring(0, 2).toLowerCase();
   }
   const ws = get(req.platform, req.language);
-  if (!Object.keys(ws).includes(req.params.field)) {
+  if (!ws || !Object.keys(ws).includes(req.params.field)) {
     res.status(404).json({ error: 'No such worldstate field', code: 404 });
     return;
   }

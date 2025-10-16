@@ -57,7 +57,7 @@ data.mods = await grab('mods');
 // this spec is a little polluted,
 // because it takes time for the worldstate emitter to get fired up and updating,
 // so this needs to always run last
-describe.skip('worldstate', () => {
+describe('worldstate', () => {
   it('should 404 on invalid worldstate keys', async () => {
     if (!app.started) should.fail('server not started');
     // purposeful typo
