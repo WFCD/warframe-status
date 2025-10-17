@@ -1,3 +1,14 @@
+## [2.5.14](https://github.com/wfcd/warframe-status/compare/v2.5.13...v2.5.14) (2025-10-17)
+
+
+### Bug Fixes
+
+* null checks, emitter features support ([452aa95](https://github.com/wfcd/warframe-status/commit/452aa956282a0351ccefec7f77f25f4e2bff90af))
+* temporarily skip worldstate tests ([1ca6dca](https://github.com/wfcd/warframe-status/commit/1ca6dca75575e4bed4929fabd24bc4dbd67f49d7))
+* temporarily skip worldstate tests ([5b74737](https://github.com/wfcd/warframe-status/commit/5b74737f55f319989cfbd536f36a1ed44510f18e))
+* turn off another flaky test ([6b3516a](https://github.com/wfcd/warframe-status/commit/6b3516ada1db90d2e03305eb9f80822fede0ab4d))
+* wireguard test ([1b6b391](https://github.com/wfcd/warframe-status/commit/1b6b3914647e7a67d211d84c1cf5abafa327872d))
+
 ## [2.5.13](https://github.com/wfcd/warframe-status/compare/v2.5.12...v2.5.13) (2025-10-15)
 
 
