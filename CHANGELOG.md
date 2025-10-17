@@ -1,3 +1,10 @@
+## [2.5.15](https://github.com/wfcd/warframe-status/compare/v2.5.14...v2.5.15) (2025-10-17)
+
+
+### Bug Fixes
+
+* update worldstate-emitter ([eb1e229](https://github.com/wfcd/warframe-status/commit/eb1e229058c4b477a93a8768893763767f4891e8))
+
 ## [2.5.14](https://github.com/wfcd/warframe-status/compare/v2.5.13...v2.5.14) (2025-10-17)
 
 
