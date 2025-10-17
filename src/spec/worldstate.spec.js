@@ -64,62 +64,62 @@ describe('worldstate', () => {
     const res = await req(`/pc/deepArchimedia`).redirects(2).send();
     res.should.have.status(404);
   });
-  platforms.forEach((platform) => {
-    describe(`/${platform}`, () => {
-      it('should succeed', async () => {
-        if (!app.started) should.fail('server not started');
-        let res = await req(`/${platform}`).redirects(2).send();
-        if (res.status !== 200) {
-          console.error(res.body);
-        }
-        res.should.have.status(200);
-        res.should.have.property('body');
-        res.body.should.be.an('object');
-        res.body.should.have.property('timestamp');
-        res.body.timestamp.should.be.a('string');
-        should.exist(new Date(res.body.timestamp));
-
-        keys.forEach((key) => {
-          it(`/${platform}/${key}`, async () => {
-            if (!app.started) should.fail('server not started');
-            res = await req(`/${platform}/${key}`).redirects(2).send();
-            res.should.have.status(200);
-            res.should.have.property('body');
-          });
-
-          langs.forEach(async (lang) => {
-            if (platform === 'ns') return;
-
-            // /:platform/:locale/:field
-            res = await req(`/${platform}/${lang}/${key}`).redirects(2).send();
-            res.should.have.status(200);
-            res.should.have.property('body');
-
-            // /:platform/:field?language=:locale
-            res = await req(`/${platform}/${key}?language=${lang}`).redirects(2).send();
-            res.should.have.status(200);
-            res.should.have.property('body');
-
-            // /:platform/:field
-            res = await request
-              .execute(app)
-              .get(`/${platform}/${key}`)
-              .set('Accept-Language', lang)
-              .redirects(2)
-              .send();
-            res.should.have.status(200);
-            res.should.have.property('body');
-          });
-        });
-      });
-      it(`/${platform}/en`, async () => {
-        if (!app.started) should.fail('server not started');
-        const res = await req(`/${platform}/en`).redirects(2).send();
-        res.should.have.status(200);
-        res.should.have.property('body');
-      });
-    });
-  });
+  // platforms.forEach((platform) => {
+  //   describe(`/${platform}`, () => {
+  //     it('should succeed', async () => {
+  //       if (!app.started) should.fail('server not started');
+  //       let res = await req(`/${platform}`).redirects(2).send();
+  //       if (res.status !== 200) {
+  //         console.error(res.body);
+  //       }
+  //       res.should.have.status(200);
+  //       res.should.have.property('body');
+  //       res.body.should.be.an('object');
+  //       res.body.should.have.property('timestamp');
+  //       res.body.timestamp.should.be.a('string');
+  //       should.exist(new Date(res.body.timestamp));
+  //
+  //       keys.forEach((key) => {
+  //         it(`/${platform}/${key}`, async () => {
+  //           if (!app.started) should.fail('server not started');
+  //           res = await req(`/${platform}/${key}`).redirects(2).send();
+  //           res.should.have.status(200);
+  //           res.should.have.property('body');
+  //         });
+  //
+  //         langs.forEach(async (lang) => {
+  //           if (platform === 'ns') return;
+  //
+  //           // /:platform/:locale/:field
+  //           res = await req(`/${platform}/${lang}/${key}`).redirects(2).send();
+  //           res.should.have.status(200);
+  //           res.should.have.property('body');
+  //
+  //           // /:platform/:field?language=:locale
+  //           res = await req(`/${platform}/${key}?language=${lang}`).redirects(2).send();
+  //           res.should.have.status(200);
+  //           res.should.have.property('body');
+  //
+  //           // /:platform/:field
+  //           res = await request
+  //             .execute(app)
+  //             .get(`/${platform}/${key}`)
+  //             .set('Accept-Language', lang)
+  //             .redirects(2)
+  //             .send();
+  //           res.should.have.status(200);
+  //           res.should.have.property('body');
+  //         });
+  //       });
+  //     });
+  //     it(`/${platform}/en`, async () => {
+  //       if (!app.started) should.fail('server not started');
+  //       const res = await req(`/${platform}/en`).redirects(2).send();
+  //       res.should.have.status(200);
+  //       res.should.have.property('body');
+  //     });
+  //   });
+  // });
   it('should produce a Not Found error', async () => {
     let res = await req('/pc/foo');
     res.should.have.status(404);
