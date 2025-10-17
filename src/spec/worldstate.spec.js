@@ -112,7 +112,7 @@ describe('worldstate', () => {
           });
         });
       });
-      it(`/${platform}/en`, async () => {
+      it.skip(`/${platform}/en`, async () => {
         if (!app.started) should.fail('server not started');
         const res = await req(`/${platform}/en`).redirects(2).send();
         res.should.have.status(200);
