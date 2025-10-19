@@ -68,6 +68,8 @@ export const wfApi = {
   },
 };
 
+export const useWorldstate = process.env.USE_WORLDSTATE === 'true' ?? false;
+
 const settings = {
   twitter,
   wfInfo,
@@ -81,6 +83,7 @@ const settings = {
   admin,
   features,
   wfApi,
+  useWorldstate,
 };
 
 export default process.env.NODE_ENV === 'test' ? settings : Object.freeze(settings);

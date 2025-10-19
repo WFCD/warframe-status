@@ -13,7 +13,7 @@ const TWITCH_CHANNEL_ID = '89104719'; // tobitenno
 const dirName = dirname(fileURLToPath(import.meta.url));
 
 export default class TwitchCache {
-  static #cache = create({ cacheId: '.twitch', cacheDir: resolve(dirName, '../../../') });
+  static #cache = create({ cacheId: '.twitch', cacheDir: resolve(dirName, '../../../caches') });
 
   static async #hydrate(logger = Logger('TWITCH')) {
     if (

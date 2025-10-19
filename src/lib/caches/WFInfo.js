@@ -16,7 +16,7 @@ export default class WFInfoCache {
   static #load() {
     WFInfoCache.#cache = create({
       cacheId: '.wfinfo',
-      cacheDir: resolve(dirname(fileURLToPath(import.meta.url)), '../../../'),
+      cacheDir: resolve(dirname(fileURLToPath(import.meta.url)), '../../../caches'),
     });
   }
 

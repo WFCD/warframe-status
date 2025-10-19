@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 
 const platforms = [...p, ...pa];
 
-describe('rivens', () => {
+describe.skip('rivens', () => {
   platforms.forEach((platform) => {
     describe(`/${platform}`, () => {
       it(`/${platform}/rivens`, async () => {

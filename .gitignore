@@ -20,12 +20,12 @@ tmp/
 .run/
 
 # flatcache for the items
-.items
-.wfinfo
-.twitch
-.drops
-.rivens
-.hy-info
+caches/.items
+caches/.wfinfo
+caches/.twitch
+caches/.drops
+caches/.rivens
+caches/.hy-info
 
 # eslint cache
 .eslintcache
