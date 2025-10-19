@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/wfcd/warframe-status/compare/v2.5.15...v2.6.0) (2025-10-19)
+
+
+### Features
+
+* feature flag in front of worldstate ([#2010](https://github.com/wfcd/warframe-status/issues/2010)) ([23852f9](https://github.com/wfcd/warframe-status/commit/23852f90dcc77ab41daaf8903ebd48c358ba17fa))
+
 ## [2.5.15](https://github.com/wfcd/warframe-status/compare/v2.5.14...v2.5.15) (2025-10-17)
 
 
