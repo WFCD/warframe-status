@@ -2,7 +2,8 @@ import url from 'node:url';
 
 import { Router } from 'express';
 
-import { logger, cache, platforms, warframeData, platformAliases, languages, useWorldstate } from '../lib/utilities.js';
+import { logger, cache, platforms, warframeData, platformAliases, languages } from '../lib/utilities.js';
+import { useWorldstate } from '../lib/settings.js';
 
 import pricecheck from './pricecheck.js';
 import worldstate from './worldstate.js';
