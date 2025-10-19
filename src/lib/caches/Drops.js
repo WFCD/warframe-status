@@ -75,7 +75,7 @@ const FOUR_HOURS = 14400000;
 const dirName = dirname(fileURLToPath(import.meta.url));
 
 export default class DropsCache {
-  static #cache = create({ cacheId: '.drops', cacheDir: resolve(dirName, '../../../') });
+  static #cache = create({ cacheId: '.drops', cacheDir: resolve(dirName, '../../../caches') });
   static #lastUpdate;
 
   static {

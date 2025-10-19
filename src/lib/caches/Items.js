@@ -85,7 +85,7 @@ const makeLanguageCache = (language) => {
 };
 
 export default class ItemsCache {
-  static #cache = create({ cacheId: '.items', cacheDir: resolve(dirName, '../../../') });
+  static #cache = create({ cacheId: '.items', cacheDir: resolve(dirName, '../../../caches') });
   static #lastUpdate = 0;
 
   static {

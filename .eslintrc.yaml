@@ -10,3 +10,4 @@ rules:
   no-underscore-dangle: 'off'
   no-restricted-syntax: 'off'
   import/no-named-as-default-member: 'off'
+  import/prefer-default-export: 'off'

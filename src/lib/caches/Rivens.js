@@ -59,7 +59,7 @@ const groupRivenData = (cacheStrData) => {
 };
 
 export default class RivensCache {
-  static #cache = create({ cacheId: '.rivens', cacheDir: resolve(dirName, '../../../') });
+  static #cache = create({ cacheId: '.rivens', cacheDir: resolve(dirName, '../../../caches') });
   static #lastUpdate = this.#cache.getKey('last_updt');
   static #logger = Logger('RIVENS');
 
