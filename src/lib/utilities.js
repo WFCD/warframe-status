@@ -5,6 +5,7 @@ import wfItems from '@wfcd/items';
 import WorldStateEmitter from 'worldstate-emitter';
 import apiCache from 'apicache';
 
+import { useWorldstate } from './settings.js';
 import initLogger from './logger.js';
 
 export const platforms = ['pc', 'ps4', 'xb1', 'swi'];
@@ -12,7 +13,7 @@ export const platformAliases = ['ns'];
 
 // Note: other worldstates have been synced into pc
 //    and all default to pc in src/controllers/worldstate.js
-export const worldState = await WorldStateEmitter.make();
+export const worldState = useWorldstate ? await WorldStateEmitter.make() : undefined;
 
 /**
  * Trim down to the first path route
