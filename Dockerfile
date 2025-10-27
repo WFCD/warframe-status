@@ -5,6 +5,7 @@ RUN npm install
 
 FROM node:jod-alpine AS production
 
+LABEL org.opencontainers.image.source = "https://github.com/WFCD/warframe-status"
 WORKDIR /app
 
 COPY ./ /app/
