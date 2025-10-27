@@ -1,3 +1,10 @@
+## [2.6.3](https://github.com/wfcd/warframe-status/compare/v2.6.2...v2.6.3) (2025-10-27)
+
+
+### Bug Fixes
+
+* label dockerfile ([a83c522](https://github.com/wfcd/warframe-status/commit/a83c52208379571bdf27ab3b02416e1e93c4612b))
+
 ## [2.6.2](https://github.com/wfcd/warframe-status/compare/v2.6.1...v2.6.2) (2025-10-22)
 
 
