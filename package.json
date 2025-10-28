@@ -52,7 +52,7 @@
     "@types/apicache": "^1.6.8",
     "@types/chai-http": "^4.2.4",
     "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.4",
+    "@types/express": "^5.0.5",
     "@types/flat-cache": "^2.0.2",
     "@types/helmet": "4.0.0",
     "@types/twitter": "^1.7.4",
