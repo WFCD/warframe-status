@@ -1,3 +1,10 @@
+## [2.6.7](https://github.com/wfcd/warframe-status/compare/v2.6.6...v2.6.7) (2025-11-04)
+
+
+### Bug Fixes
+
+* wrap wfinfo data lookup ([b86d597](https://github.com/wfcd/warframe-status/commit/b86d597f74bba5c1e51ff1b23a3411fffbec636b))
+
 ## [2.6.6](https://github.com/wfcd/warframe-status/compare/v2.6.5...v2.6.6) (2025-11-03)
 
 
