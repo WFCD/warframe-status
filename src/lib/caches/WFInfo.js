@@ -27,8 +27,16 @@ export default class WFInfoCache {
     // WF Info caches
     if (Date.now() - (this.#cache.getKey('last_updt') || 0) >= TWO_HOURS / 2) {
       if (filteredItemsSrc) {
-        const itemsRes = await fetch(filteredItemsSrc);
-        const itemsRaw = await itemsRes.text();
+        let itemsRes;
+        let itemsRaw;
+        try {
+          itemsRes = await fetch(filteredItemsSrc);
+          itemsRaw = await itemsRes.text();
+        } catch (e) {
+          logger.error(`Failed to fetch wfinfo filtered items`, e);
+          return;
+        }
+
         try {
           const d = JSON.parse(itemsRaw);
           this.#cache.setKey('filteredItems', d);
