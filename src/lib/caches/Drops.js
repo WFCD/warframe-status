@@ -93,15 +93,19 @@ export default class DropsCache {
     }
     logger.info('starting Drops hydration');
     const start = Date.now();
-    const raw = await fetch('https://drops.warframestat.us/data/all.slim.json');
-    const text = await raw.text();
-    const formatted = formatData(text);
-    this.#cache.setKey('data', formatted);
+    try {
+      const raw = await fetch('https://drops.warframestat.us/data/all.slim.json');
+      const text = await raw.text();
+      const formatted = formatData(text);
+      this.#cache.setKey('data', formatted);
 
-    this.#lastUpdate = Date.now();
-    this.#cache.setKey('last_updt', this.#lastUpdate);
+      this.#lastUpdate = Date.now();
+      this.#cache.setKey('last_updt', this.#lastUpdate);
 
-    this.#cache.save(true);
+      this.#cache.save(true);
+    } catch (e) {
+      logger.error('Failed to hydrate Drops data', e);
+    }
     // done
     const end = Date.now();
     logger.info(`Drops hydration complete in ${end - start}ms`);
