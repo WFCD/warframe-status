@@ -1,3 +1,11 @@
+## [2.6.8](https://github.com/wfcd/warframe-status/compare/v2.6.7...v2.6.8) (2025-11-11)
+
+
+### Bug Fixes
+
+* bump @wfcd/items from 1.1270.885 to 1.1270.886 ([#2026](https://github.com/wfcd/warframe-status/issues/2026)) ([ff320e8](https://github.com/wfcd/warframe-status/commit/ff320e843f630c117b4096f51a00e524ade786f4))
+* wrap drops hydrate to allow continuing ([787eec7](https://github.com/wfcd/warframe-status/commit/787eec75bb89bc7030e2e8ffbd93511088d0f0f7))
+
 ## [2.6.7](https://github.com/wfcd/warframe-status/compare/v2.6.6...v2.6.7) (2025-11-04)
 
 
