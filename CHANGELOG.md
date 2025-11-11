@@ -1,3 +1,10 @@
+## [2.6.9](https://github.com/wfcd/warframe-status/compare/v2.6.8...v2.6.9) (2025-11-11)
+
+
+### Bug Fixes
+
+* bump ip-address from 10.0.1 to 10.1.0 in the webserver group ([#2025](https://github.com/wfcd/warframe-status/issues/2025)) ([3fdfd64](https://github.com/wfcd/warframe-status/commit/3fdfd64b2fe6aadb10e28fd76e50bfac76e6f124))
+
 ## [2.6.8](https://github.com/wfcd/warframe-status/compare/v2.6.7...v2.6.8) (2025-11-11)
 
 
