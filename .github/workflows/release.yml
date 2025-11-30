@@ -18,9 +18,10 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      - uses: wenoa/setup-wireguard@main
+      - name: Setup WireGuard
+        uses: niklaskeerl/easy-wireguard-action@v2
         with:
-          WG_CONFIG: ${{ secrets.WG_CONFIG }}
+          WG_CONFIG_FILE: ${{ secrets.WG_CONFIG }}
       - name: Verify
         env:
           CI: true
