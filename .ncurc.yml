@@ -1,0 +1,2 @@
+reject:
+  - prom-client # Exclude prom-client due to requirement by swagger-stats
