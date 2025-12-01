@@ -5,5 +5,4 @@
   - npm test
 package*.json:
   - prettier --write
-  - npm dedupe
   - npx sort-package-json
