@@ -1,3 +1,10 @@
+## [2.6.12](https://github.com/wfcd/warframe-status/compare/v2.6.11...v2.6.12) (2025-12-01)
+
+
+### Bug Fixes
+
+* dep updates ([e38d56f](https://github.com/wfcd/warframe-status/commit/e38d56ffd4cf28cfa435dfb2c8f9121dd209f290))
+
 ## [2.6.11](https://github.com/wfcd/warframe-status/compare/v2.6.10...v2.6.11) (2025-11-30)
 
 
