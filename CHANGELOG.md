@@ -1,3 +1,10 @@
+## [2.6.13](https://github.com/wfcd/warframe-status/compare/v2.6.12...v2.6.13) (2025-12-01)
+
+
+### Bug Fixes
+
+* remove files from docker ([a0a70e0](https://github.com/wfcd/warframe-status/commit/a0a70e084ad2e9d35190f23bb709110c743ffb95))
+
 ## [2.6.12](https://github.com/wfcd/warframe-status/compare/v2.6.11...v2.6.12) (2025-12-01)
 
 
