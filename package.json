@@ -21,7 +21,7 @@
   "dependencies": {
     "@sentry/node": "^10.28.0",
     "@wfcd/arsenal-parser": "^2.0.6",
-    "@wfcd/items": "^1.1272.14",
+    "@wfcd/items": "^1.1272.19",
     "@wfcd/profile-parser": "^2.0.10",
     "apicache": "^1.6.3",
     "colors": "1.4.0",
@@ -40,7 +40,7 @@
     "swagger-stats": "^0.99.7",
     "warframe-nexus-query": "^2.1.1",
     "warframe-worldstate-data": "^3.1.14",
-    "warframe-worldstate-parser": "^5.2.10",
+    "warframe-worldstate-parser": "^5.2.11",
     "winston": "^3.18.3",
     "worldstate-emitter": "^2.2.12",
     "ws": "^8.18.3"
