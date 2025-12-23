@@ -45,8 +45,9 @@ jobs:
           WFINFO_PRICES: ${{ secrets.WFINFO_PRICES }}
           NODE_ENV: 'test'
         run: |
+          node -v
+          npm -v
           npm ci
-          npm i @wfcd/items@latest warframe-worldstate-parser@latest warframe-worldstate-data@latest @wfcd/arsenal-parser@latest
           npm run build
           npm test
       - name: Coveralls
