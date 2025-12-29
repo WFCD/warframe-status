@@ -1,7 +1,6 @@
 import express from 'express';
-
-import { cache, ah } from '../lib/utilities.js';
 import DropsCache from '../lib/caches/Drops.js';
+import { ah, cache } from '../lib/utilities.js';
 
 const router = express.Router();
 
@@ -24,9 +23,9 @@ const router = express.Router();
 router.get(
   '/',
   cache('24 hours'),
-  ah(async (req, res) => {
+  ah(async (_req, res) => {
     res.json(await DropsCache.get());
-  })
+  }),
 );
 
 /**
@@ -40,9 +39,12 @@ router.get(
   ['/search/:query/', '/search/:query'],
   cache('1 hour'),
   ah(async (req, res) => {
-    const drops = await DropsCache.get({ term: req.params.query, groupedBy: req.query.grouped_by });
+    const drops = await DropsCache.get({
+      term: req.params.query,
+      groupedBy: req.query.grouped_by,
+    });
     res.json(drops);
-  })
+  }),
 );
 
 export default router;

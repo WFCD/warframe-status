@@ -1,11 +1,10 @@
 import cluster from 'node:cluster';
-
+import * as Sentry from '@sentry/node';
 import cors from 'cors';
 import { CronJob } from 'cron';
 import expressShortCircuit from 'express-favicon-short-circuit';
 import helmet from 'helmet';
 import swagger from 'swagger-stats';
-import * as Sentry from '@sentry/node';
 
 import spec from '../api-spec/openapi.json' with { type: 'json' };
 

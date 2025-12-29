@@ -3,7 +3,7 @@
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["src/*", "main.js", "commitlint.config.js", "package.json"]
+    "includes": ["src/**", "main.js", "commitlint.config.js", "package.json"]
   },
   "formatter": {
     "enabled": true,
@@ -22,7 +22,10 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "complexity": { "useArrowFunction": "off" },
+      "complexity": {
+        "useArrowFunction": "error",
+        "noStaticOnlyClass": "off"
+      },
       "style": { "noNonNullAssertion": "off", "useImportType": "on" },
       "suspicious": { "noExplicitAny": "warn" }
     },

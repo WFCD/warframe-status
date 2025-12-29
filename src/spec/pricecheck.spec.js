@@ -37,7 +37,9 @@ describe.skip('pricecheck', () => {
     res.body[0].title.should.include('Nikana Prime');
     res.body[0].fields.should.be.an('array');
     res.body[0].fields.length.should.eq(4);
-    res.body[0].thumbnail.url.should.include('https://warframe.market/static/assets');
+    res.body[0].thumbnail.url.should.include(
+      'https://warframe.market/static/assets',
+    );
     res.body[0].footer.icon_url.should.include('https://warframestat.us/');
   });
   it('supports raw search', async function rawSearch() {
@@ -50,7 +52,10 @@ describe.skip('pricecheck', () => {
   });
   it('503s when disabled', async () => {
     settings.priceChecks = false;
-    const res = await req('/pricecheck/attachment/nikana%20prime').set('Cache-Control', 'no-cache');
+    const res = await req('/pricecheck/attachment/nikana%20prime').set(
+      'Cache-Control',
+      'no-cache',
+    );
     res.should.have.status(503);
     res.body.should.be.an('object');
     res.body.should.have.property('error', 'Service temporarily unavailable');

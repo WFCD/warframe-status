@@ -26,7 +26,13 @@ describe('wfinfo', () => {
         res.should.have.status(200);
         res.body.should.be.an('object');
         Object.keys(res.body).length.should.eq(5);
-        res.body.should.have.keys(['timestamp', 'errors', 'relics', 'eqmt', 'ignored_items']);
+        res.body.should.have.keys([
+          'timestamp',
+          'errors',
+          'relics',
+          'eqmt',
+          'ignored_items',
+        ]);
       });
       it('should be unavailable', async () => {
         settings.wfInfo.filteredItems = undefined;
@@ -47,7 +53,12 @@ describe('wfinfo', () => {
         const res = await req('/wfinfo/prices');
         res.should.have.status(200);
         res.body.should.be.an('array');
-        res.body[0].should.have.keys(['name', 'yesterday_vol', 'today_vol', 'custom_avg']);
+        res.body[0].should.have.keys([
+          'name',
+          'yesterday_vol',
+          'today_vol',
+          'custom_avg',
+        ]);
       });
       it('should be unavailable', async () => {
         settings.wfInfo.prices = undefined;

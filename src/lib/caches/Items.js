@@ -1,8 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-
-import { create } from 'flat-cache';
 import Items from '@wfcd/items';
+import { create } from 'flat-cache';
 import data from 'warframe-worldstate-data';
 
 import Logger from '../logger.js';
@@ -64,10 +63,19 @@ const makeLanguageCache = (language) => {
       if (language !== 'en' && itemClone.i18n && itemClone.i18n[language]) {
         // Abilties are always sorted from first to fourth ability so using the index is safe
         // Thanks DE :)
-        itemClone.i18n[language].abilities = itemClone.i18n[language].abilities?.map((ability, index) => ({
-          uniqueName: ability.abilityUniqueName || itemClone.abilities[index].uniqueName || undefined,
-          name: ability.abilityName || itemClone.abilities[index].name || undefined,
-          description: ability.description || itemClone.abilities[index].description || undefined,
+        itemClone.i18n[language].abilities = itemClone.i18n[
+          language
+        ].abilities?.map((ability, index) => ({
+          uniqueName:
+            ability.abilityUniqueName ||
+            itemClone.abilities[index].uniqueName ||
+            undefined,
+          name:
+            ability.abilityName || itemClone.abilities[index].name || undefined,
+          description:
+            ability.description ||
+            itemClone.abilities[index].description ||
+            undefined,
           imageName: itemClone.abilities[index].imageName ?? undefined,
         }));
 
@@ -85,30 +93,37 @@ const makeLanguageCache = (language) => {
 };
 
 export default class ItemsCache {
-  static #cache = create({ cacheId: '.items', cacheDir: resolve(dirName, '../../../caches') });
+  static #cache = create({
+    cacheId: '.items',
+    cacheDir: resolve(dirName, '../../../caches'),
+  });
   static #lastUpdate = 0;
 
   static {
     logger = Logger('ITEMS');
     logger.level = 'info';
-    this.#lastUpdate = ItemsCache.#cache.getKey('last_updt');
+    ItemsCache.#lastUpdate = ItemsCache.#cache.getKey('last_updt');
   }
 
   static async populate() {
-    this.#lastUpdate = ItemsCache.#cache.getKey('last_updt');
-    if (typeof this.#lastUpdate === 'undefined') this.#lastUpdate = 0;
-    if (Date.now() - this.#lastUpdate <= FOUR_HOURS) {
+    ItemsCache.#lastUpdate = ItemsCache.#cache.getKey('last_updt');
+    if (typeof ItemsCache.#lastUpdate === 'undefined')
+      ItemsCache.#lastUpdate = 0;
+    if (Date.now() - ItemsCache.#lastUpdate <= FOUR_HOURS) {
       logger.debug('No items update needed');
       return;
     }
     data.locales.forEach((language) => {
       const cacheForLang = makeLanguageCache(language);
       caches.forEach((cacheType) => {
-        this.#cache.setKey(`${language}-${cacheType}`, cacheForLang[cacheType]);
+        ItemsCache.#cache.setKey(
+          `${language}-${cacheType}`,
+          cacheForLang[cacheType],
+        );
       });
     });
-    this.#cache.setKey('last_updt', Date.now());
-    this.#cache.save(true);
+    ItemsCache.#cache.setKey('last_updt', Date.now());
+    ItemsCache.#cache.save(true);
   }
 
   /**
@@ -154,12 +169,19 @@ export default class ItemsCache {
     filters.forEach(({ key, value }) => {
       const bys = key.split('.');
       filtered = filtered
-        .filter((item) => key && this.#parseNestedKey(item, bys))
+        .filter((item) => key && ItemsCache.#parseNestedKey(item, bys))
         .filter((item) => {
-          const values = this.#parseNestedKey(item, bys);
+          const values = ItemsCache.#parseNestedKey(item, bys);
           if (!(item && values)) return undefined;
           // parseNestedKey returns an array, so check all values in that array
-          if (values.find((entry) => entry.toString().toLowerCase().includes(value.toString().toLowerCase()))) {
+          if (
+            values.find((entry) =>
+              entry
+                .toString()
+                .toLowerCase()
+                .includes(value.toString().toLowerCase()),
+            )
+          ) {
             return item;
           }
           return undefined;
@@ -182,41 +204,59 @@ export default class ItemsCache {
    * @param {ItemFilter[]} filter array of filters to apply
    * @returns {Promise<module:@wfcd/items.Item[]>}
    */
-  static async get(key, language, { by = 'name', remove, only, term, max, filter }) {
+  static async get(
+    key,
+    language,
+    { by = 'name', remove, only, term, max, filter },
+  ) {
     let base = ItemsCache.#cache.getKey(`${language}-${key}`);
     if (!term && !(remove || only)) return base;
     if (!base) {
       logger.error('Items not hydrated. Forcing hydration.');
-      await this.populate();
+      await ItemsCache.populate();
       base = ItemsCache.#cache.getKey(`${language}-${key}`);
     }
     // Allow nested keys separated by periods
     const bys = by.split('.');
     let filtered = base;
     if (filter) {
-      filtered = this.#filterArray(filtered, filter);
+      filtered = ItemsCache.#filterArray(filtered, filter);
     }
     if (term && max !== 1) {
-      filtered = this.#filterArray(base, [{ key: by, value: term }]);
+      filtered = ItemsCache.#filterArray(base, [{ key: by, value: term }]);
     }
     if (term && max === 1) {
       let keyDistance;
       let exact = false;
       filtered = undefined;
       base
-        .filter((item) => item && this.#parseNestedKey(item, bys))
+        .filter((item) => item && ItemsCache.#parseNestedKey(item, bys))
         .forEach((item) => {
-          const values = this.#parseNestedKey(item, bys);
+          const values = ItemsCache.#parseNestedKey(item, bys);
           // parseNestedKey returns an array, so check all values in that array
-          if (values.find((entry) => entry.toString().toLowerCase() === term.toString().toLowerCase())) {
+          if (
+            values.find(
+              (entry) =>
+                entry.toString().toLowerCase() ===
+                term.toString().toLowerCase(),
+            )
+          ) {
             filtered = item;
             exact = true;
           }
           if (!exact) {
             // parseNestedKey returns an array, so check all values in that array
             values.forEach((entry) => {
-              if (entry.toString().toLowerCase().includes(term.toString().toLowerCase())) {
-                const distance = entry.toString().toLowerCase().replace(term.toString().toLowerCase(), '').length;
+              if (
+                entry
+                  .toString()
+                  .toLowerCase()
+                  .includes(term.toString().toLowerCase())
+              ) {
+                const distance = entry
+                  .toString()
+                  .toLowerCase()
+                  .replace(term.toString().toLowerCase(), '').length;
                 if (!keyDistance || distance < keyDistance) {
                   keyDistance = distance;
                   filtered = item;
@@ -226,7 +266,7 @@ export default class ItemsCache {
           }
         });
     }
-    return this.#cleanup(filtered, { remove, only });
+    return ItemsCache.#cleanup(filtered, { remove, only });
   }
 
   /**
@@ -250,7 +290,9 @@ export default class ItemsCache {
       // components array will be checked.
       if (!prevNode[currentValue]) {
         if (Array.isArray(prevNode)) {
-          resultList = Array.from(prevNode, (element) => this.#parseNestedKey(element, by.slice(index)))
+          resultList = Array.from(prevNode, (element) =>
+            ItemsCache.#parseNestedKey(element, by.slice(index)),
+          )
             .flat(Infinity)
             .filter((element) => element); // remove falsey values
         }

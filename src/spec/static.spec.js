@@ -44,15 +44,20 @@ describe('static data', () => {
           should.exist(res.body);
           res.should.have.header('Content-Language', override || language);
 
-          res = await req(`/${key}/search/a,b,c`).set('Accept-Language', language);
+          res = await req(`/${key}/search/a,b,c`).set(
+            'Accept-Language',
+            language,
+          );
           res.should.have.status(200);
           should.exist(res.body);
           res.should.have.header('Content-Language', override || language);
         };
         languages.forEach((language) => {
-          it(`should support ${language} overrides`, async () => langTest(language));
+          it(`should support ${language} overrides`, async () =>
+            langTest(language));
         });
-        it('should default to english on fake languages', async () => langTest('uz', 'en'));
+        it('should default to english on fake languages', async () =>
+          langTest('uz', 'en'));
       });
     });
   it('nodes', async () => {

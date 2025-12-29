@@ -2281,7 +2281,15 @@
         }
       },
       "arcane": {
-        "required": ["effect", "info", "location", "name", "rarity", "regex", "thumbnail"],
+        "required": [
+          "effect",
+          "info",
+          "location",
+          "name",
+          "rarity",
+          "regex",
+          "thumbnail"
+        ],
         "type": "object",
         "properties": {
           "regex": {
@@ -2558,7 +2566,12 @@
         }
       },
       "construction": {
-        "required": ["fomorianProgress", "id", "razorbackProgress", "unknownProgress"],
+        "required": [
+          "fomorianProgress",
+          "id",
+          "razorbackProgress",
+          "unknownProgress"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2583,7 +2596,17 @@
         "minItems": 1,
         "type": "array",
         "items": {
-          "required": ["discount", "eta", "expiry", "id", "item", "originalPrice", "salePrice", "sold", "total"],
+          "required": [
+            "discount",
+            "eta",
+            "expiry",
+            "id",
+            "item",
+            "originalPrice",
+            "salePrice",
+            "sold",
+            "total"
+          ],
           "type": "object",
           "properties": {
             "sold": {
@@ -2974,10 +2997,23 @@
       "faction": {
         "type": "string",
         "description": "A Faction in Warframe",
-        "enum": ["Orokin", "Corrupted", "Infested", "Corpus", "Grineer", "Tenno"]
+        "enum": [
+          "Orokin",
+          "Corrupted",
+          "Infested",
+          "Corpus",
+          "Grineer",
+          "Tenno"
+        ]
       },
       "factions": {
-        "required": ["FC_CORPUS", "FC_CORRUPTED", "FC_GRINEER", "FC_INFESTATION", "FC_OROKIN"],
+        "required": [
+          "FC_CORPUS",
+          "FC_CORRUPTED",
+          "FC_GRINEER",
+          "FC_INFESTATION",
+          "FC_OROKIN"
+        ],
         "type": "object",
         "properties": {
           "FC_GRINEER": {
@@ -3035,7 +3071,18 @@
       },
       "fissure": {
         "type": "object",
-        "required": ["activation", "enemy", "eta", "expired", "expiry", "id", "missionType", "node", "tier", "tierNum"],
+        "required": [
+          "activation",
+          "enemy",
+          "eta",
+          "expired",
+          "expiry",
+          "id",
+          "missionType",
+          "node",
+          "tier",
+          "tierNum"
+        ],
         "properties": {
           "node": {
             "minLength": 1,
@@ -4135,7 +4182,15 @@
       },
       "polarity": {
         "type": "string",
-        "enum": ["Vazarin", "Madurai", "Naramon", "Zenurik", "Unairu", "Penjaga", "Unbra"]
+        "enum": [
+          "Vazarin",
+          "Madurai",
+          "Naramon",
+          "Zenurik",
+          "Unairu",
+          "Penjaga",
+          "Unbra"
+        ]
       },
       "primaryWeapon": {
         "type": "object",
@@ -4329,7 +4384,15 @@
       },
       "reward": {
         "type": "object",
-        "required": ["asString", "color", "countedItems", "credits", "itemString", "items", "thumbnail"],
+        "required": [
+          "asString",
+          "color",
+          "countedItems",
+          "credits",
+          "itemString",
+          "items",
+          "thumbnail"
+        ],
         "properties": {
           "countedItems": {
             "minItems": 1,
@@ -4808,7 +4871,17 @@
         }
       },
       "sortie": {
-        "required": ["activation", "boss", "eta", "expired", "expiry", "faction", "id", "rewardPool", "variants"],
+        "required": [
+          "activation",
+          "boss",
+          "eta",
+          "expired",
+          "expiry",
+          "faction",
+          "id",
+          "rewardPool",
+          "variants"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -4834,7 +4907,14 @@
             "uniqueItems": true,
             "type": "array",
             "items": {
-              "required": ["boss", "missionType", "modifier", "modifierDescription", "node", "planet"],
+              "required": [
+                "boss",
+                "missionType",
+                "modifier",
+                "modifierDescription",
+                "node",
+                "planet"
+              ],
               "type": "object",
               "properties": {
                 "node": {
@@ -4882,7 +4962,13 @@
         }
       },
       "sortieData": {
-        "required": ["bosses", "endStates", "modifierDescriptions", "modifierTypes", "modifiers"],
+        "required": [
+          "bosses",
+          "endStates",
+          "modifierDescriptions",
+          "modifierTypes",
+          "modifiers"
+        ],
         "type": "object",
         "properties": {
           "modifierTypes": {

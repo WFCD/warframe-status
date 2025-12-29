@@ -48,14 +48,18 @@ describe('drops', () => {
         res.should.have.status(200);
         res.body.should.be.an('array');
         res.body.length.should.be.greaterThan(0);
-        res.body.map(({ place }) => place).should.include('Sedna/Hydron (Defense), Rot A');
+        res.body
+          .map(({ place }) => place)
+          .should.include('Sedna/Hydron (Defense), Rot A');
       });
       it('should be case insensitive', async () => {
         const res = await req('/drops/search/sedna%2Fhydron (defense)');
         res.should.have.status(200);
         res.body.should.be.an('array');
         res.body.length.should.be.greaterThan(0);
-        res.body.map(({ place }) => place).should.include('Sedna/Hydron (Defense), Rot A');
+        res.body
+          .map(({ place }) => place)
+          .should.include('Sedna/Hydron (Defense), Rot A');
       });
     });
     it('should search by item and place', async () => {
@@ -63,7 +67,9 @@ describe('drops', () => {
       res.should.have.status(200);
       res.body.should.be.an('array');
       res.body.length.should.be.greaterThan(0);
-      res.body.map(({ place }) => place).should.include('Sedna/Hydron (Defense), Rot A');
+      res.body
+        .map(({ place }) => place)
+        .should.include('Sedna/Hydron (Defense), Rot A');
       res.body.map(({ item }) => item).should.include('Forma');
     });
     it('should group by location', async () => {

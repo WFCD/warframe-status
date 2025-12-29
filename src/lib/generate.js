@@ -1,9 +1,9 @@
-import converter from 'express-jsdoc-swagger';
-import YAML from 'json-to-pretty-yaml';
 import { writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import app from '../app.js';
 import { fileURLToPath } from 'node:url';
+import converter from 'express-jsdoc-swagger';
+import YAML from 'json-to-pretty-yaml';
+import app from '../app.js';
 
 const dirName = dirname(fileURLToPath(import.meta.url));
 
@@ -31,7 +31,8 @@ const options = {
   servers: [
     {
       url: 'https://api.warframestat.us/',
-      description: 'Preferred production server. Others may be disallowed in the future.',
+      description:
+        'Preferred production server. Others may be disallowed in the future.',
     },
   ],
   filesPattern: './*.js',

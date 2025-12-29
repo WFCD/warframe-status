@@ -40,7 +40,9 @@ const groupRivenData = (cacheStrData) => {
       rivenD.compatibility = `Veiled ${rivenD.itemType}`;
     }
 
-    rivenD.compatibility = titleCase(rivenD.compatibility.replace('<ARCHWING>', '').trim());
+    rivenD.compatibility = titleCase(
+      rivenD.compatibility.replace('<ARCHWING>', '').trim(),
+    );
 
     if (!byType[rivenD.itemType]) {
       byType[rivenD.itemType] = {};
@@ -52,35 +54,43 @@ const groupRivenData = (cacheStrData) => {
       };
     }
 
-    byType[rivenD.itemType][rivenD.compatibility][rivenD.rerolled ? 'rerolled' : 'unrolled'] = rivenD;
+    byType[rivenD.itemType][rivenD.compatibility][
+      rivenD.rerolled ? 'rerolled' : 'unrolled'
+    ] = rivenD;
   });
 
   return byType;
 };
 
 export default class RivensCache {
-  static #cache = create({ cacheId: '.rivens', cacheDir: resolve(dirName, '../../../caches') });
+  static #cache = create({
+    cacheId: '.rivens',
+    cacheDir: resolve(dirName, '../../../caches'),
+  });
   static #lastUpdate = this.#cache.getKey('last_updt');
   static #logger = Logger('RIVENS');
 
-  static async populate(logger = this.#logger) {
-    this.#lastUpdate = this.#cache.getKey('last_updt');
+  static async populate(logger = RivensCache.#logger) {
+    RivensCache.#lastUpdate = RivensCache.#cache.getKey('last_updt');
     try {
-      if (typeof this.#lastUpdate === 'undefined') this.#lastUpdate = 0;
-      if (Date.now() - this.#lastUpdate <= FOUR_HOURS) {
+      if (typeof RivensCache.#lastUpdate === 'undefined')
+        RivensCache.#lastUpdate = 0;
+      if (Date.now() - RivensCache.#lastUpdate <= FOUR_HOURS) {
         logger.debug('no rivens data update needed');
         return;
       }
       logger.info('starting Rivens hydration');
       const start = Date.now();
       for await (const platform of platforms) {
-        const raw = await fetch(`https://www-static.warframe.com/repos/weeklyRivens${platform.toUpperCase()}.json`);
+        const raw = await fetch(
+          `https://www-static.warframe.com/repos/weeklyRivens${platform.toUpperCase()}.json`,
+        );
         const text = await raw.text();
-        this.#cache.setKey(platform, groupRivenData(text));
+        RivensCache.#cache.setKey(platform, groupRivenData(text));
       }
 
-      this.#cache.setKey('last_updt', Date.now());
-      this.#cache.save(true);
+      RivensCache.#cache.setKey('last_updt', Date.now());
+      RivensCache.#cache.save(true);
       // done
       const end = Date.now();
       logger.info(`Rivens hydration complete in ${end - start}ms`);
@@ -96,11 +106,11 @@ export default class RivensCache {
    * @param {console} [logger] logger instance
    * @returns {ItemType}
    */
-  static async get(platform, term, logger = this.#logger) {
+  static async get(platform, term, logger = RivensCache.#logger) {
     let base = RivensCache.#cache.getKey(platform);
     if (!base) {
       logger.error('Rivens not hydrated. Forcing hydration.');
-      await this.populate();
+      await RivensCache.populate();
       base = RivensCache.#cache.getKey(platform);
     }
     if (!term) return base;

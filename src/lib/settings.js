@@ -7,12 +7,14 @@ import makeLogger from './logger.js';
 
 export const env = process.env.NODE_ENV;
 
-/* istanbul ignore next */ if (['development', 'test'].includes(env)) dotenv.config();
+/* istanbul ignore next */ if (['development', 'test'].includes(env))
+  dotenv.config();
 
 const logger = makeLogger('BOOTSTRAP');
 
 // reshape ipv6 addresses to ipv4
-const raw = process.env.HOSTNAME || process.env.HOST || process.env.IP || 'localhost';
+const raw =
+  process.env.HOSTNAME || process.env.HOST || process.env.IP || 'localhost';
 let resolved;
 try {
   if (Address6.isValid(raw)) {
@@ -22,9 +24,11 @@ try {
     resolved = raw;
     logger.info('Nice, you gave an ip on the first try.');
   } else {
-    logger.warn(`Not using an ip address? YOLO: ${raw}. Attempting to resolve...`);
+    logger.warn(
+      `Not using an ip address? YOLO: ${raw}. Attempting to resolve...`,
+    );
     const addresses = await dns.resolve4(raw);
-    const first = addresses.find((record, index) => index === 0);
+    const first = addresses.find((_record, index) => index === 0);
     if (first) {
       logger.info(`Great Scott! ${first} should be an ipv4 address!`);
       resolved = first;
@@ -41,13 +45,16 @@ export const host = resolved;
 export const port = process.env.PORT || 3001;
 
 export const twitter = {
-  active: process.env.TWITTER_TIMEOUT && process.env.TWITTER_SECRET && process.env.TWITTER_BEARER_TOKEN,
+  active:
+    process.env.TWITTER_TIMEOUT &&
+    process.env.TWITTER_SECRET &&
+    process.env.TWITTER_BEARER_TOKEN,
 };
 export const wfInfo = {
   filteredItems: process.env.WFINFO_FILTERED_ITEMS,
   prices: process.env.WFINFO_PRICES,
 };
-export const build = !!(process.env.BUILD && process.env.BUILD.trim().startsWith('build'));
+export const build = !!process.env.BUILD?.trim().startsWith('build');
 export const priceChecks = !process.env.DISABLE_PRICECHECKS;
 export const sentry = process.env.SENTRY_DSN;
 export const release = {
@@ -86,4 +93,6 @@ const settings = {
   useWorldstate,
 };
 
-export default process.env.NODE_ENV === 'test' ? settings : Object.freeze(settings);
+export default process.env.NODE_ENV === 'test'
+  ? settings
+  : Object.freeze(settings);

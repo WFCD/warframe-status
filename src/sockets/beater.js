@@ -14,11 +14,13 @@ const init = (wss) => {
 
   const interval = setInterval(() => {
     wss.clients.forEach((ws) => {
-      if (ws.isAlive === false) return ws.terminate();
+      if (ws.isAlive === false) {
+        ws.terminate();
+        return;
+      }
 
       ws.isAlive = false;
       ws.ping(noop);
-      return 0;
     });
   }, 30000);
 

@@ -5,6 +5,7 @@ Largley using default.css
 with some color changes
 */
 :root {
+  /* biome-ignore lint/correctness/noUnknownProperty: this is from express-status-monitor */
   -internal-root-color: white;
 }
 
@@ -165,7 +166,7 @@ canvas {
 }
 
 .status-code:before {
-  content: '';
+  content: "";
   display: inline-block;
   width: 8px;
   height: 8px;
