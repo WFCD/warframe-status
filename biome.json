@@ -3,7 +3,7 @@
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["src/*", "main.js", "package.json"]
+    "includes": ["src/*", "main.js", "commitlint.config.js", "package.json"]
   },
   "formatter": {
     "enabled": true,
