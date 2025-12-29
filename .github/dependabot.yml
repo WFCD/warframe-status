@@ -43,11 +43,8 @@ updates:
           - '@types/'
       lint:
         patterns:
-          - 'eslint'
-          - 'eslint-plugin-*'
-          - 'eslint-config'
           - '@commitlint/*'
-          - '@wfcd/eslint-config'
+          - '@biomejs/*'
 
   - package-ecosystem: github-actions
     directory: '/'

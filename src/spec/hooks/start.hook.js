@@ -13,7 +13,6 @@ app.listen(port, host, () => {
 });
 
 // this specific named export is required
-// eslint-disable-next-line import/prefer-default-export
 export const mochaHooks = {
   beforeAll(done) {
     this.timeout = 60000;

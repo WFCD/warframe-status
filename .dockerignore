@@ -66,20 +66,14 @@ caches/
 # Project configs
 .babelrc
 .c8rc
-.codeclimate.yml
-.eslintignore
-.eslintrc.yaml
 .github/
 .husky/
 .mocharc.yaml
 .ncurc.yml
 .nvmrc
-.prettierrc
 .releaserc.yaml
-app.json
 CHANGELOG.md
 commitlint.config.js
 docker-compose.example.yml
 LICENSE
-Procfile
 README.md

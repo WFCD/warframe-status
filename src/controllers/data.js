@@ -55,7 +55,7 @@ router.get(['/search/:query/', '/search/:query'], cache('10 hours'), (req, res) 
           value = results.length > 0 ? results : [];
           break;
 
-        case 'solNodes':
+        case 'solNodes': {
           keyResults = solKeys.filter((solNodeKey) => solNodeKey.toLowerCase().includes(loweredQuery));
           solKeys.forEach((solKey) => {
             if (
@@ -69,11 +69,10 @@ router.get(['/search/:query/', '/search/:query'], cache('10 hours'), (req, res) 
             values[0].keys = overwriteResults(values[0].keys, keyResults);
             values[0].nodes = overwriteResults(values[0].nodes, nodeResults);
           } else {
-            // eslint-disable-next-line no-case-declarations
             value = { keys: keyResults, nodes: nodeResults };
           }
           break;
-
+        }
         case 'synthTargets':
           results = [];
           // Loop through the synth targets, checking if the name contains the search string

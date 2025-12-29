@@ -44,7 +44,6 @@ listener.on('finish', (api) => {
   // const raw = JSON.stringify(api, null, 2);
   // fs.writeFileSync(path.join(__dirname, '../api-spec/openapi.json'), raw);
   writeFileSync(join(dirName, '../api-spec/openapi.yaml'), YAML.stringify(api));
-  // eslint-disable-next-line no-console
   console.log('Wrote docs');
   process.exit(0);
 });

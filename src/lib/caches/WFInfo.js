@@ -64,7 +64,6 @@ export default class WFInfoCache {
 
   static {
     this.#load();
-    // eslint-disable-next-line no-new
     new CronJob(
       '0 5 * * * *',
       /* istanbul ignore next */

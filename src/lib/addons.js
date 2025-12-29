@@ -28,7 +28,6 @@ const initSecurity = (app) => {
 };
 
 const initSwagger = (app) => {
-  // eslint-disable-next-line max-len
   // const swaggerAuth = (req, user, pass) => (!isProd || (user === admin.user && pass === admin.pass));
   const swaggConfig = {
     swaggerSpec: spec,
