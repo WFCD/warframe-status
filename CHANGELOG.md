@@ -1,3 +1,11 @@
+## [2.6.17](https://github.com/wfcd/warframe-status/compare/v2.6.16...v2.6.17) (2025-12-29)
+
+
+### Bug Fixes
+
+* dependency updates ([c3933a8](https://github.com/wfcd/warframe-status/commit/c3933a80b1f616f501d82dee4d68fd1e4db5eb71))
+* migrate to biome ([#2054](https://github.com/wfcd/warframe-status/issues/2054)) ([27800c9](https://github.com/wfcd/warframe-status/commit/27800c91016a069eeb1cdfd2d1ad3bffbbe22a2b))
+
 ## [2.6.16](https://github.com/wfcd/warframe-status/compare/v2.6.15...v2.6.16) (2025-12-28)
 
 
