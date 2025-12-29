@@ -1,8 +1,8 @@
 '*,!*.js,!package*.json':
-  - prettier --write
+  - biome format --write
 '*.js,!*/generate.js':
-  - eslint --cache --fix
+  - biome check --write
   - npm test
 package*.json:
-  - prettier --write
+  - biome check --write
   - npx sort-package-json

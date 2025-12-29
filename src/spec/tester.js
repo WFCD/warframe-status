@@ -1,7 +1,6 @@
 import WebSocket from 'ws';
-
-import { host, port } from '../lib/settings.js';
 import makeLogger from '../lib/logger.js';
+import { host, port } from '../lib/settings.js';
 
 const logger = makeLogger('PROC');
 
@@ -29,7 +28,9 @@ client.on('message', (d) => {
       if (packed.packet.code) {
         logger.error(`Error: ${packed.packet.code} - ${packed.packet.message}`);
       } else {
-        logger.info(`Received ws:provide event with packet: ${JSON.stringify(packed.packet)}`);
+        logger.info(
+          `Received ws:provide event with packet: ${JSON.stringify(packed.packet)}`,
+        );
       }
       break;
     case 'ws:event':
@@ -38,7 +39,9 @@ client.on('message', (d) => {
       } else {
         logger.info(`${packed.event} ${packed.packet.ws.timestamp}`);
       }
-      logger.info(`${packed.packet.platform} ${packed.packet.language} ${packed.packet.ws.timestamp}`);
+      logger.info(
+        `${packed.packet.platform} ${packed.packet.language} ${packed.packet.ws.timestamp}`,
+      );
       break;
     case 'twitter:provide':
       // do nothing
@@ -64,4 +67,11 @@ client.on('message', (d) => {
   }
 });
 
-client.on('open', () => client.send(JSON.stringify({ event: 'ws:req', packet: { platform: 'pc', language: 'en' } })));
+client.on('open', () =>
+  client.send(
+    JSON.stringify({
+      event: 'ws:req',
+      packet: { platform: 'pc', language: 'en' },
+    }),
+  ),
+);

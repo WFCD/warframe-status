@@ -3,7 +3,7 @@ import { socketLogger as logger, worldState } from '../lib/utilities.js';
 const safeParse = (data) => {
   try {
     return JSON.parse(data);
-  } catch (e) {
+  } catch (_e) {
     return {};
   }
 };
@@ -42,13 +42,25 @@ const index = (socket, req) => {
 
     switch (request.event) {
       case 'ws:req':
-        socket.send(JSON.stringify({ event: 'ws:provide', packet: requestWS(request.packet) }));
+        socket.send(
+          JSON.stringify({
+            event: 'ws:provide',
+            packet: requestWS(request.packet),
+          }),
+        );
         break;
       case 'twitter':
-        socket.send(JSON.stringify({ event: 'twitter:provide', packet: worldState.getTwitter() }));
+        socket.send(
+          JSON.stringify({
+            event: 'twitter:provide',
+            packet: worldState.getTwitter(),
+          }),
+        );
         break;
       case 'rss':
-        socket.send(JSON.stringify({ event: 'rss:provide', packet: worldState.getRss() }));
+        socket.send(
+          JSON.stringify({ event: 'rss:provide', packet: worldState.getRss() }),
+        );
         break;
       default:
         socket.send(JSON.stringify({ status: 400 }));
@@ -56,7 +68,9 @@ const index = (socket, req) => {
     }
   });
 
-  socket.on('close', (reason) => logger.warn(`socket disconnected because ${reason}`));
+  socket.on('close', (reason) =>
+    logger.warn(`socket disconnected because ${reason}`),
+  );
   socket.on('error', logger.error);
 };
 

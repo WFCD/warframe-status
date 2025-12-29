@@ -1,10 +1,10 @@
-import Logger from './logger.js';
-import { build } from './settings.js';
+import DropsCache from './caches/Drops.js';
 import ItemsCache from './caches/Items.js';
 import RivensCache from './caches/Rivens.js';
-import DropsCache from './caches/Drops.js';
-import WFInfoCache from './caches/WFInfo.js';
 import TwitchCache from './caches/Twitch.js';
+import WFInfoCache from './caches/WFInfo.js';
+import Logger from './logger.js';
+import { build } from './settings.js';
 
 const hydrate = async () => {
   const logger = Logger('HYDRATE');

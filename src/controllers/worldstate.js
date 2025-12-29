@@ -1,10 +1,10 @@
 import express from 'express';
 
-import { logger, worldState, cache, languages } from '../lib/utilities.js';
+import { cache, languages, logger, worldState } from '../lib/utilities.js';
 
 import rivens from './rivens.js';
 
-const get = (platform, language) => {
+const get = (language) => {
   try {
     return worldState.getWorldstate(language);
   } catch (e) /* istanbul ignore next */ {
@@ -15,7 +15,10 @@ const get = (platform, language) => {
 
 const redirectCheck = (req, res) => {
   if (req.platform !== 'pc') {
-    const redirPath = req.originalUrl.replace(/\/(ps4|psn|swi|xb1|ns)\/?/gi, '/pc/');
+    const redirPath = req.originalUrl.replace(
+      /\/(ps4|psn|swi|xb1|ns)\/?/gi,
+      '/pc/',
+    );
     return res.redirect(301, redirPath);
   }
   return false;
@@ -41,14 +44,14 @@ router.use((req, res, next) => {
     /* istanbul ignore if */
     if (redirected) return;
     next();
-  } catch (e) {
+  } catch (_e) {
     // swallow for now
   }
 });
 
 router.get('/', (req, res) => {
   if (res.writableEnded) return;
-  const ws = get(req.platform, req.language);
+  const ws = get(req.language);
   res.setHeader('Content-Language', req.language);
   res.json(ws);
 });
@@ -56,9 +59,12 @@ router.get('/', (req, res) => {
 router.use(['/rivens/', '/rivens'], rivens);
 
 router.get(['/:field/', '/:field'], (req, res) => {
-  const ws = get(req.platform, req.language);
+  const ws = get(req.language);
   // filter out any fields that can't be language codes (>5 characters)
-  if (!ws || (!Object.keys(ws).includes(req.params.field) && req.params.field.length > 4)) {
+  if (
+    !ws ||
+    (!Object.keys(ws).includes(req.params.field) && req.params.field.length > 4)
+  ) {
     res.status(404).json({ error: 'No such worldstate field', code: 404 });
     return;
   }
@@ -69,8 +75,11 @@ router.get(['/:field/', '/:field'], (req, res) => {
       return;
     }
     res.json(ws[req.params.field]);
-  } else if (req.params.field && languages.includes(req.params.field.substring(0, 2).toLowerCase())) {
-    const ows = get(req.platform, req.params.field.substring(0, 2).toLowerCase());
+  } else if (
+    req.params.field &&
+    languages.includes(req.params.field.substring(0, 2).toLowerCase())
+  ) {
+    const ows = get(req.params.field.substring(0, 2).toLowerCase());
     if (Array.isArray(ows)) {
       res.json(filterArray(req, ows));
       return;
@@ -81,27 +90,31 @@ router.get(['/:field/', '/:field'], (req, res) => {
   }
 });
 
-router.get(['/:language/:field/', '/:language/:field'], cache('1 minute'), (req, res) => {
-  if (languages.includes(req.params.language.substring(0, 2).toLowerCase())) {
-    req.language = req.params.language.substring(0, 2).toLowerCase();
-  }
-  const ws = get(req.platform, req.language);
-  if (!ws || !Object.keys(ws).includes(req.params.field)) {
-    res.status(404).json({ error: 'No such worldstate field', code: 404 });
-    return;
-  }
-  const fieldData = ws?.[req.params.field];
-
-  if (fieldData) {
-    res.setHeader('Content-Language', req.language);
-    if (Array.isArray(fieldData)) {
-      res.json(filterArray(req, fieldData));
+router.get(
+  ['/:language/:field/', '/:language/:field'],
+  cache('1 minute'),
+  (req, res) => {
+    if (languages.includes(req.params.language.substring(0, 2).toLowerCase())) {
+      req.language = req.params.language.substring(0, 2).toLowerCase();
+    }
+    const ws = get(req.language);
+    if (!ws || !Object.keys(ws).includes(req.params.field)) {
+      res.status(404).json({ error: 'No such worldstate field', code: 404 });
       return;
     }
-    res.json(fieldData);
-  } else if (!res.writableEnded) {
-    res.status(404).json({ error: 'No such worldstate field', code: 404 });
-  }
-});
+    const fieldData = ws?.[req.params.field];
+
+    if (fieldData) {
+      res.setHeader('Content-Language', req.language);
+      if (Array.isArray(fieldData)) {
+        res.json(filterArray(req, fieldData));
+        return;
+      }
+      res.json(fieldData);
+    } else if (!res.writableEnded) {
+      res.status(404).json({ error: 'No such worldstate field', code: 404 });
+    }
+  },
+);
 
 export default router;

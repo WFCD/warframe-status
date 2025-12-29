@@ -2,7 +2,7 @@ import express from 'express';
 import Nexus from 'warframe-nexus-query';
 
 import settings from '../lib/settings.js';
-import { logger, ah, cache, noResult } from '../lib/utilities.js';
+import { ah, cache, logger, noResult } from '../lib/utilities.js';
 
 const router = express.Router();
 const unavailable = {
@@ -11,7 +11,7 @@ const unavailable = {
 };
 const nexusQuerier = new Nexus({ logger, skipNexus: true });
 
-router.use((req, res, next) => {
+router.use((req, _res, next) => {
   req.platform = req.get('platform');
   next();
 });
@@ -27,13 +27,24 @@ router.get(
     try {
       switch (req.params.type) {
         case 'string':
-          value = await nexusQuerier.priceCheckQueryString(req.params.query, undefined, req.platform);
+          value = await nexusQuerier.priceCheckQueryString(
+            req.params.query,
+            undefined,
+            req.platform,
+          );
           break;
         case 'find':
-          value = await nexusQuerier.priceCheckQuery(req.params.query, req.platform);
+          value = await nexusQuerier.priceCheckQuery(
+            req.params.query,
+            req.platform,
+          );
           break;
         case 'attachment':
-          value = await nexusQuerier.priceCheckQueryAttachment(req.params.query, undefined, req.platform);
+          value = await nexusQuerier.priceCheckQueryAttachment(
+            req.params.query,
+            undefined,
+            req.platform,
+          );
           break;
       }
       /* istanbul ignore else */
@@ -49,7 +60,7 @@ router.get(
         code: 500,
       });
     }
-  })
+  }),
 );
 
 export default router;

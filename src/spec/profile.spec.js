@@ -12,11 +12,18 @@ describe.skip('profiles', () => {
       const res = await req('/profile/tobiah/');
       res.should.have.status(200);
       should.exist(res.body);
-      res.body.should.include.keys('accountId', 'displayName', 'masteryRank', 'created');
+      res.body.should.include.keys(
+        'accountId',
+        'displayName',
+        'masteryRank',
+        'created',
+      );
       res.body.displayName.should.eq('Tobiah');
     });
     it('should error with bad username', async () => {
-      const res = await req('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda');
+      const res = await req(
+        '/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda',
+      );
       res.should.have.status(404);
       res.body.should.be.an('object').and.include.all.keys('code', 'error');
       res.body.code.should.eq(404);
@@ -30,7 +37,12 @@ describe.skip('profiles', () => {
         res.should.have.status(200);
         should.exist(res.body);
         res.body.should.include.keys('account', 'loadout');
-        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body?.account.should.include.keys(
+          'name',
+          'masteryRank',
+          'lastUpdated',
+          'glyph',
+        );
         res.body.account.name.should.eq('Tobiah');
       });
       it.skip('xbox', async () => {
@@ -38,28 +50,50 @@ describe.skip('profiles', () => {
         res.should.have.status(200);
         should.exist(res.body);
         res.body.should.include.keys('account', 'loadout');
-        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body?.account.should.include.keys(
+          'name',
+          'masteryRank',
+          'lastUpdated',
+          'glyph',
+        );
         res.body.account.name.should.eq('[DE]Megan');
       });
       it.skip('psn', async () => {
-        const res = await req('/profile/ErydisTheLucario/arsenal/?platform=ps4');
+        const res = await req(
+          '/profile/ErydisTheLucario/arsenal/?platform=ps4',
+        );
         res.should.have.status(200);
         should.exist(res.body);
         res.body.should.include.keys('account', 'loadout');
-        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body?.account.should.include.keys(
+          'name',
+          'masteryRank',
+          'lastUpdated',
+          'glyph',
+        );
         res.body.account.name.should.eq('povo844');
       });
       it('switch', async () => {
-        const res = await req('/profile/tobiah/arsenal/').set('platform', 'swi');
+        const res = await req('/profile/tobiah/arsenal/').set(
+          'platform',
+          'swi',
+        );
         res.should.have.status(200);
         should.exist(res.body);
         res.body.should.include.keys('account', 'loadout');
-        res.body?.account.should.include.keys('name', 'masteryRank', 'lastUpdated', 'glyph');
+        res.body?.account.should.include.keys(
+          'name',
+          'masteryRank',
+          'lastUpdated',
+          'glyph',
+        );
         res.body.account.name.should.eq('Tobiah');
       });
     });
     it('should error with bad username', async () => {
-      const res = await req('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/arsenal/');
+      const res = await req(
+        '/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/arsenal/',
+      );
       res.should.have.status(404);
       res.body.should.be.an('object').and.include.all.keys('code', 'error');
       res.body.code.should.eq(404);
@@ -75,7 +109,9 @@ describe.skip('profiles', () => {
       res.body[0].should.not.property('item');
     });
     it('should error with bad username', async () => {
-      const res = await req('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/xpInfo');
+      const res = await req(
+        '/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/xpInfo',
+      );
       res.should.have.status(404);
       res.body.should.be.an('object').and.include.all.keys('code', 'error');
       res.body.code.should.eq(404);
@@ -90,7 +126,9 @@ describe.skip('profiles', () => {
       res.body.should.include.keys('guildName', 'xp', 'missionsCompleted');
     });
     it('should error with bad username', async () => {
-      const res = await req('/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/stats');
+      const res = await req(
+        '/profile/asdasdaasdaasasdasdaasdaasdaasdasdaasdaasda/stats',
+      );
       res.should.have.status(404);
       res.body.should.be.an('object').and.include.all.keys('code', 'error');
       res.body.code.should.eq(404);

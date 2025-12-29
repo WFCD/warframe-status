@@ -1,8 +1,7 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-
-import { create } from 'flat-cache';
 import { CronJob } from 'cron';
+import { create } from 'flat-cache';
 
 import Logger from '../logger.js';
 import settings, { wfInfo } from '../settings.js';
@@ -16,16 +15,22 @@ export default class WFInfoCache {
   static #load() {
     WFInfoCache.#cache = create({
       cacheId: '.wfinfo',
-      cacheDir: resolve(dirname(fileURLToPath(import.meta.url)), '../../../caches'),
+      cacheDir: resolve(
+        dirname(fileURLToPath(import.meta.url)),
+        '../../../caches',
+      ),
     });
   }
 
   static async #hydrate(logger = Logger('WFINFO')) {
-    if (!this.#cache) this.#load();
+    if (!WFInfoCache.#cache) WFInfoCache.#load();
 
     const start = Date.now();
     // WF Info caches
-    if (Date.now() - (this.#cache.getKey('last_updt') || 0) >= TWO_HOURS / 2) {
+    if (
+      Date.now() - (WFInfoCache.#cache.getKey('last_updt') || 0) >=
+      TWO_HOURS / 2
+    ) {
       if (filteredItemsSrc) {
         let itemsRes;
         let itemsRaw;
@@ -39,7 +44,7 @@ export default class WFInfoCache {
 
         try {
           const d = JSON.parse(itemsRaw);
-          this.#cache.setKey('filteredItems', d);
+          WFInfoCache.#cache.setKey('filteredItems', d);
         } catch (e) {
           logger.error(`Failed to update wfinfo filtered items`, e);
         }
@@ -49,13 +54,13 @@ export default class WFInfoCache {
         const pricesRaw = await pricesRes.text();
         try {
           const d = JSON.parse(pricesRaw);
-          this.#cache.setKey('prices', d);
+          WFInfoCache.#cache.setKey('prices', d);
         } catch (e) {
           logger.error(`Failed to update wfinfo Prices`, e);
         }
       }
-      this.#cache.setKey('last_updt', Date.now());
-      this.#cache.save(true);
+      WFInfoCache.#cache.setKey('last_updt', Date.now());
+      WFInfoCache.#cache.save(true);
 
       const end = Date.now();
       logger.info(`WFInfo Hydration complete in ${end - start}ms`);
@@ -63,8 +68,7 @@ export default class WFInfoCache {
   }
 
   static {
-    this.#load();
-    // eslint-disable-next-line no-new
+    WFInfoCache.#load();
     new CronJob(
       '0 5 * * * *',
       /* istanbul ignore next */
@@ -73,25 +77,25 @@ export default class WFInfoCache {
         WFInfoCache.#load();
       },
       undefined,
-      true
+      true,
     );
   }
 
   static get items() {
     if (settings.wfInfo.filteredItems) {
-      return this.#cache.getKey('filteredItems');
+      return WFInfoCache.#cache.getKey('filteredItems');
     }
     return undefined;
   }
 
   static get prices() {
     if (settings.wfInfo?.prices) {
-      return this.#cache.getKey('prices');
+      return WFInfoCache.#cache.getKey('prices');
     }
     return undefined;
   }
 
   static populate(logger = Logger('WFINFO')) {
-    return this.#hydrate(logger);
+    return WFInfoCache.#hydrate(logger);
   }
 }

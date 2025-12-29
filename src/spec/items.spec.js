@@ -8,7 +8,8 @@ import { req } from './hooks/start.hook.js';
 const should = chai.should();
 chai.use(chaiHttp);
 
-const withTimestamp = (path) => `${path}${path.includes('?') ? '&' : '?'}ts=${Date.now()}`;
+const withTimestamp = (path) =>
+  `${path}${path.includes('?') ? '&' : '?'}ts=${Date.now()}`;
 
 describe('items', () => {
   it('should return all items', async () => {
@@ -24,7 +25,13 @@ describe('items', () => {
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(0);
     res.body.forEach((item) => {
-      item.should.include.all.keys('uniqueName', 'name', 'category', 'type', 'tradable');
+      item.should.include.all.keys(
+        'uniqueName',
+        'name',
+        'category',
+        'type',
+        'tradable',
+      );
     });
   });
   it('should remove keys from dump', async () => {
@@ -36,7 +43,9 @@ describe('items', () => {
     res.body[0].should.not.have.property('description');
   });
   it('should filter with desired key:value pairs', async () => {
-    const res = await req('/items?only=name,category,introduced&filter=category:Warframes,introduced.name:Vanilla');
+    const res = await req(
+      '/items?only=name,category,introduced&filter=category:Warframes,introduced.name:Vanilla',
+    );
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.eq(8);
@@ -83,7 +92,10 @@ describe('items', () => {
     res.body[0].name.should.eq('Excalibur Umbra');
   });
   it('should accommodate alternate languages', async () => {
-    let res = await req('/items/search/excalibur%20umbra').set('Accept-Language', 'zh');
+    let res = await req('/items/search/excalibur%20umbra').set(
+      'Accept-Language',
+      'zh',
+    );
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(1);
@@ -92,7 +104,9 @@ describe('items', () => {
     res.body[0].description.should.include('来自');
     res.should.have.header('Content-Language', 'zh');
 
-    res = await req('/items/search/excalibur%20umbra?language=zh&only=name,description');
+    res = await req(
+      '/items/search/excalibur%20umbra?language=zh&only=name,description',
+    );
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(1);
@@ -101,7 +115,10 @@ describe('items', () => {
     res.body[0].description.should.include('来自');
     res.should.have.header('Content-Language', 'zh');
 
-    res = await req('/items/search/excalibur%20umbra').set('Accept-Language', 'it');
+    res = await req('/items/search/excalibur%20umbra').set(
+      'Accept-Language',
+      'it',
+    );
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(1);
@@ -110,7 +127,9 @@ describe('items', () => {
     res.body[0].description.should.include("Dall'ombra");
     res.should.have.header('Content-Language', 'it');
 
-    res = await req('/items/search/excalibur%20umbra?language=it&only=name,description');
+    res = await req(
+      '/items/search/excalibur%20umbra?language=it&only=name,description',
+    );
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(1);
@@ -167,7 +186,9 @@ describe('items', () => {
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.eq(27);
-    res.body[0].uniqueName.should.eq('/Lotus/Weapons/Tenno/Akimbo/AkimboShotGun');
+    res.body[0].uniqueName.should.eq(
+      '/Lotus/Weapons/Tenno/Akimbo/AkimboShotGun',
+    );
     res.body[1].uniqueName.should.eq('/Lotus/Weapons/Tenno/Pistol/HandShotGun');
   });
   it('should return empty array for unmatchable nested keys', async () => {
@@ -217,7 +238,9 @@ describe('warframes', () => {
     res.body.length.should.be.greaterThan(0);
   });
   it('should remove keys from dump', async () => {
-    const res = await req(withTimestamp(`/warframes?remove=uniqueName,description`));
+    const res = await req(
+      withTimestamp(`/warframes?remove=uniqueName,description`),
+    );
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(0);
@@ -225,7 +248,9 @@ describe('warframes', () => {
     res.body[0].should.not.have.property('description');
   });
   it('should only include desired keys from dump', async () => {
-    const res = await req(withTimestamp(`/warframes?only=uniqueName,description`));
+    const res = await req(
+      withTimestamp(`/warframes?only=uniqueName,description`),
+    );
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(0);

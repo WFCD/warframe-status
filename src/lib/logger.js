@@ -1,5 +1,5 @@
 import 'colors';
-import { transports, createLogger, format } from 'winston';
+import { createLogger, format, transports } from 'winston';
 
 const { combine, label, printf, colorize } = format;
 
@@ -33,7 +33,9 @@ const color = (scope = 'PROC') => {
 const setup = (scope = 'PROC') => {
   /* Logger setup */
   const transport = new transports.Console({ colorize: true });
-  const logFormat = printf((info) => `[${info.label}] ${info.level}: ${info.message}`);
+  const logFormat = printf(
+    (info) => `[${info.label}] ${info.level}: ${info.message}`,
+  );
   const logger = createLogger({
     format: combine(colorize(), label({ label: color(scope) }), logFormat),
     transports: [transport],

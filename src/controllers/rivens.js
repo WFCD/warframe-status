@@ -5,11 +5,12 @@ import { ah, platforms, trimPlatform } from '../lib/utilities.js';
 
 const router = express.Router({ strict: true });
 
-router.use((req, res, next) => {
+router.use((req, _res, next) => {
   req.platform = trimPlatform(req.baseUrl);
   if (req.platform === 'ns') req.platform = 'swi';
   /* istanbul ignore if */
-  if (!platforms.includes(req.platform)) req.platform = req.header('platform') || 'pc';
+  if (!platforms.includes(req.platform))
+    req.platform = req.header('platform') || 'pc';
   next();
 });
 
@@ -20,7 +21,7 @@ router.get(
     const results = await RivensCache.get(req.platform);
     res.setHeader('Content-Language', req.language);
     res.json(results);
-  })
+  }),
 );
 
 router.get(
@@ -31,7 +32,7 @@ router.get(
     const results = await RivensCache.get(req.platform, query);
     res.setHeader('Content-Language', req.language);
     res.json(results);
-  })
+  }),
 );
 
 export default router;

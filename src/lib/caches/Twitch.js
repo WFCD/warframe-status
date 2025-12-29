@@ -13,13 +13,16 @@ const TWITCH_CHANNEL_ID = '89104719'; // tobitenno
 const dirName = dirname(fileURLToPath(import.meta.url));
 
 export default class TwitchCache {
-  static #cache = create({ cacheId: '.twitch', cacheDir: resolve(dirName, '../../../caches') });
+  static #cache = create({
+    cacheId: '.twitch',
+    cacheDir: resolve(dirName, '../../../caches'),
+  });
 
   static async #hydrate(logger = Logger('TWITCH')) {
     if (
       CLIENT_ID &&
-      Date.now() - (this.#cache.getKey('last_updt') || 0) >= TWO_DAYS &&
-      this.#cache.getKey('token') !== 'unset'
+      Date.now() - (TwitchCache.#cache.getKey('last_updt') || 0) >= TWO_DAYS &&
+      TwitchCache.#cache.getKey('token') !== 'unset'
     ) {
       try {
         let raw = await fetch(`https://gql.twitch.tv/gql`, {
@@ -29,13 +32,15 @@ export default class TwitchCache {
           },
           body: `[{"operationName":"ExtensionsForChannel","variables":{"channelID":"${TWITCH_CHANNEL_ID}"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"d52085e5b03d1fc3534aa49de8f5128b2ee0f4e700f79bf3875dcb1c90947ac3"}}}]`,
         }).then((d) => d.json());
-        raw = raw?.[0]?.data?.user?.channel?.selfInstalledExtensions?.find((s) => {
-          return s?.token?.extensionID === WF_ARSENAL_ID;
-        })?.token?.jwt;
+        raw = raw?.[0]?.data?.user?.channel?.selfInstalledExtensions?.find(
+          (s) => {
+            return s?.token?.extensionID === WF_ARSENAL_ID;
+          },
+        )?.token?.jwt;
         raw = raw || 'unset';
-        this.#cache.setKey('token', raw);
-        this.#cache.setKey('last_updt', Date.now());
-        this.#cache.save(true);
+        TwitchCache.#cache.setKey('token', raw);
+        TwitchCache.#cache.setKey('last_updt', Date.now());
+        TwitchCache.#cache.save(true);
       } catch (e) {
         logger.error('Cannot hydrate Twitch token', e);
       }
@@ -43,10 +48,10 @@ export default class TwitchCache {
   }
 
   static async populate(logger = Logger('TWITCH')) {
-    return this.#hydrate(logger);
+    return TwitchCache.#hydrate(logger);
   }
 
   static get token() {
-    return this.#cache.getKey('token');
+    return TwitchCache.#cache.getKey('token');
   }
 }

@@ -1,7 +1,6 @@
 import express from 'express';
-
-import { noResult, trimPlatform, cache, ah } from '../lib/utilities.js';
 import Items from '../lib/caches/Items.js';
+import { ah, cache, noResult, trimPlatform } from '../lib/utilities.js';
 
 const router = express.Router();
 const splitKeys = (input) => (input || '').split(',').filter(Boolean);
@@ -57,9 +56,9 @@ router.get(
         remove: splitKeys(remove),
         only: splitKeys(only),
         filter: splitFilter(filter),
-      })
+      }),
     );
-  })
+  }),
 );
 
 /**
@@ -112,7 +111,7 @@ router.get(
       return res.status(200).json(result);
     }
     return noResult(res);
-  })
+  }),
 );
 
 /**
@@ -166,11 +165,11 @@ router.get(
           term: query,
           max: 0,
           filter: splitFilter(filter),
-        })
+        }),
       );
     }
     return res.status(200).json(results.flat());
-  })
+  }),
 );
 
 export default router;

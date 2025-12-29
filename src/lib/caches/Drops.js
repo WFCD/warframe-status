@@ -33,14 +33,32 @@ const formatData = (data) =>
       .replace('Hydrolyst (Special)', 'Hydrolyst (Capture)')
       .replace('The Law Of Retribution C', 'Law Of Retribution')
       .replace('The Jordas Verdict C', 'Jordas Verdict')
-      .replace('The Law Of Retribution (Nightmare) C', 'Law Of Retribution (Nightmare)')
-      .replace('Sanctuary/Elite Sanctuary Onslaught (Sanctuary Onslaught)', 'Elite Sanctuary Onslaught')
-      .replace('Sanctuary/Sanctuary Onslaught (Sanctuary Onslaught)', 'Sanctuary Onslaught')
+      .replace(
+        'The Law Of Retribution (Nightmare) C',
+        'Law Of Retribution (Nightmare)',
+      )
+      .replace(
+        'Sanctuary/Elite Sanctuary Onslaught (Sanctuary Onslaught)',
+        'Elite Sanctuary Onslaught',
+      )
+      .replace(
+        'Sanctuary/Sanctuary Onslaught (Sanctuary Onslaught)',
+        'Sanctuary Onslaught',
+      )
       .replace('/Lunaro Arena (Conclave)', '/Lunaro')
       .replace('/Lunaro Arena (Extra) (Conclave)', '/Lunaro')
-      .replace('Variant Cephalon Capture (Conclave)', 'Variant Cephalon Capture')
-      .replace('Variant Cephalon Capture (Extra) (Conclave)', 'Variant Cephalon Capture')
-      .replace('Variant Team Annihilation (Extra) (Conclave)', 'Variant Team Annihilation')
+      .replace(
+        'Variant Cephalon Capture (Conclave)',
+        'Variant Cephalon Capture',
+      )
+      .replace(
+        'Variant Cephalon Capture (Extra) (Conclave)',
+        'Variant Cephalon Capture',
+      )
+      .replace(
+        'Variant Team Annihilation (Extra) (Conclave)',
+        'Variant Team Annihilation',
+      )
       .replace('Variant Annihilation (Extra)', 'Variant Annihilation')
       .replace(' (Conclave)', '')
       .replace('Rotation ', 'Rot ')
@@ -75,34 +93,40 @@ const FOUR_HOURS = 14400000;
 const dirName = dirname(fileURLToPath(import.meta.url));
 
 export default class DropsCache {
-  static #cache = create({ cacheId: '.drops', cacheDir: resolve(dirName, '../../../caches') });
+  static #cache = create({
+    cacheId: '.drops',
+    cacheDir: resolve(dirName, '../../../caches'),
+  });
   static #lastUpdate;
 
   static {
     logger = Logger('DROPS');
     logger.level = 'info';
-    this.#lastUpdate = DropsCache.#cache.getKey('last_updt');
+    DropsCache.#lastUpdate = DropsCache.#cache.getKey('last_updt');
   }
 
   static async populate() {
-    this.#lastUpdate = DropsCache.#cache.getKey('last_updt');
-    if (typeof this.#lastUpdate === 'undefined') this.#lastUpdate = 0;
-    if (Date.now() - this.#lastUpdate <= FOUR_HOURS) {
+    DropsCache.#lastUpdate = DropsCache.#cache.getKey('last_updt');
+    if (typeof DropsCache.#lastUpdate === 'undefined')
+      DropsCache.#lastUpdate = 0;
+    if (Date.now() - DropsCache.#lastUpdate <= FOUR_HOURS) {
       logger.debug('no drops data update needed');
       return;
     }
     logger.info('starting Drops hydration');
     const start = Date.now();
     try {
-      const raw = await fetch('https://drops.warframestat.us/data/all.slim.json');
+      const raw = await fetch(
+        'https://drops.warframestat.us/data/all.slim.json',
+      );
       const text = await raw.text();
       const formatted = formatData(text);
-      this.#cache.setKey('data', formatted);
+      DropsCache.#cache.setKey('data', formatted);
 
-      this.#lastUpdate = Date.now();
-      this.#cache.setKey('last_updt', this.#lastUpdate);
+      DropsCache.#lastUpdate = Date.now();
+      DropsCache.#cache.setKey('last_updt', DropsCache.#lastUpdate);
 
-      this.#cache.save(true);
+      DropsCache.#cache.save(true);
     } catch (e) {
       logger.error('Failed to hydrate Drops data', e);
     }
@@ -121,7 +145,7 @@ export default class DropsCache {
     let base = /** @type {Array<Drop>} */ DropsCache.#cache.getKey('data');
     if (!base) {
       logger.error('Drops not hydrated. Forcing hydration.');
-      await this.populate();
+      await DropsCache.populate();
       base = DropsCache.#cache.getKey('data');
     }
     if (!term) return base;
@@ -131,13 +155,14 @@ export default class DropsCache {
       let qResults = base.filter(
         (drop) =>
           drop.place.toLowerCase().includes(query.toLowerCase()) ||
-          drop.item.toLowerCase().includes(query.toLowerCase())
+          drop.item.toLowerCase().includes(query.toLowerCase()),
       );
 
       qResults = qResults.length > 0 ? qResults : [];
 
       if (groupedBy && groupedBy === 'location') {
-        /* istanbul ignore if */ if (typeof filtered !== 'object') filtered = {};
+        /* istanbul ignore if */ if (typeof filtered !== 'object')
+          filtered = {};
 
         filtered = {
           ...groupLocation(qResults),

@@ -1,9 +1,9 @@
 import 'colors';
+import wfItems from '@wfcd/items';
+import apiCache from 'apicache';
 import asyncHandler from 'express-async-handler';
 import wfData from 'warframe-worldstate-data';
-import wfItems from '@wfcd/items';
 import WorldStateEmitter from 'worldstate-emitter';
-import apiCache from 'apicache';
 
 import initLogger from './logger.js';
 
@@ -19,7 +19,8 @@ export const worldState = await WorldStateEmitter.make();
  * @param {string} path full path to trim
  * @returns {string}
  */
-export const trimPlatform = (path) => (path.replace('/', '').trim().split('/')[0] || '').toLowerCase();
+export const trimPlatform = (path) =>
+  (path.replace('/', '').trim().split('/')[0] || '').toLowerCase();
 
 /**
  * Group an array by a field value
@@ -49,7 +50,8 @@ export const socketLogger = initLogger('SOCK');
 delete wfData.weapons;
 delete wfData.warframes;
 
-export const titleCase = (str) => str.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
+export const titleCase = (str) =>
+  str.toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
 
 export const noResult = (res) => {
   res.status(404).json({ error: 'No Result', code: 404 });
@@ -58,7 +60,8 @@ export const noResult = (res) => {
 export const appendKey = (req) => {
   const queries = Object.keys(req.query).map((q) => `${q}${req.query[q]}`);
   return (
-    `${req.method}${encodeURIComponent(req.path)}${req.platform || ''}${req.language || 'en'}${queries.join('')}` || ''
+    `${req.method}${encodeURIComponent(req.path)}${req.platform || ''}${req.language || 'en'}${queries.join('')}` ||
+    ''
   );
 };
 

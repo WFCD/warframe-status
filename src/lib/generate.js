@@ -1,9 +1,9 @@
-import converter from 'express-jsdoc-swagger';
-import YAML from 'json-to-pretty-yaml';
 import { writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import app from '../app.js';
 import { fileURLToPath } from 'node:url';
+import converter from 'express-jsdoc-swagger';
+import YAML from 'json-to-pretty-yaml';
+import app from '../app.js';
 
 const dirName = dirname(fileURLToPath(import.meta.url));
 
@@ -31,7 +31,8 @@ const options = {
   servers: [
     {
       url: 'https://api.warframestat.us/',
-      description: 'Preferred production server. Others may be disallowed in the future.',
+      description:
+        'Preferred production server. Others may be disallowed in the future.',
     },
   ],
   filesPattern: './*.js',
@@ -44,7 +45,6 @@ listener.on('finish', (api) => {
   // const raw = JSON.stringify(api, null, 2);
   // fs.writeFileSync(path.join(__dirname, '../api-spec/openapi.json'), raw);
   writeFileSync(join(dirName, '../api-spec/openapi.yaml'), YAML.stringify(api));
-  // eslint-disable-next-line no-console
   console.log('Wrote docs');
   process.exit(0);
 });

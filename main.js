@@ -12,7 +12,9 @@ const logger = makeLogger('HTTP');
 const cpus = Math.floor(os.cpus().length / 2);
 
 if (cluster.isPrimary && cpus > 2 && process.env.USE_CLUSTER === 'true') {
-  logger.info(`Master process ${process.pid} starting up with ${cpus} workers.`);
+  logger.info(
+    `Master process ${process.pid} starting up with ${cpus} workers.`,
+  );
   for (let i = 0; i < cpus; i += 1) cluster.fork();
 
   cluster.on('exit', (worker) => {

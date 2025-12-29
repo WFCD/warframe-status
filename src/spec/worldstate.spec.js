@@ -96,7 +96,9 @@ describe.skip('worldstate', () => {
             res.should.have.property('body');
 
             // /:platform/:field?language=:locale
-            res = await req(`/${platform}/${key}?language=${lang}`).redirects(2).send();
+            res = await req(`/${platform}/${key}?language=${lang}`)
+              .redirects(2)
+              .send();
             res.should.have.status(200);
             res.should.have.property('body');
 
