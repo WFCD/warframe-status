@@ -1,9 +1,8 @@
 import './lib/instrument.js';
 import express from 'express';
-
+import controllers from './controllers/index.js';
 import initAddons, { initSentry } from './lib/addons.js';
 import { logger } from './lib/utilities.js';
-import controllers from './controllers/index.js';
 
 const app = express();
 
@@ -16,7 +15,7 @@ logger.info('Setting up routes...');
 app.use(controllers);
 
 // oh no, nothing...fallback catch-all
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).json({ error: 'No such route.', code: 404 }).end();
 });
 await initSentry(app);

@@ -1,9 +1,8 @@
 import WebSocket, { WebSocketServer } from 'ws';
-
-import { socketLogger as logger, worldState } from './lib/utilities.js';
 import { host, port } from './lib/settings.js';
-import handler from './sockets/index.js';
+import { socketLogger as logger, worldState } from './lib/utilities.js';
 import heartbeater from './sockets/beater.js';
+import handler from './sockets/index.js';
 
 const init = (server) => {
   const wss = new WebSocketServer({ server, path: '/socket' });
