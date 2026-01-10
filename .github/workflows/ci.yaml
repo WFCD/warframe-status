@@ -15,9 +15,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: |
-          node -v
-          npm -v
-          npm ci
+          npm install
           npm run lint
           npx commitlint --last --verbose
         env:
@@ -46,9 +44,7 @@ jobs:
           WFINFO_PRICES: ${{ secrets.WFINFO_PRICES }}
           NODE_ENV: 'test'
         run: |
-          node -v
-          npm -v
-          npm ci
+          npm install
           npm run build
           npm test
       - name: Coveralls
