@@ -1,3 +1,10 @@
+## [2.6.18](https://github.com/wfcd/warframe-status/compare/v2.6.17...v2.6.18) (2026-01-10)
+
+
+### Bug Fixes
+
+* bump the lint group across 1 directory with 3 updates ([#2058](https://github.com/wfcd/warframe-status/issues/2058)) ([cc6f772](https://github.com/wfcd/warframe-status/commit/cc6f77250b19f36cad9e17049a6bf918c7049189))
+
 ## [2.6.17](https://github.com/wfcd/warframe-status/compare/v2.6.16...v2.6.17) (2025-12-29)
 
 
