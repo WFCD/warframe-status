@@ -26,6 +26,8 @@ caches/.twitch
 caches/.drops
 caches/.rivens
 caches/.hy-info
+# nexus query cache
+.cache/
 
 # eslint cache
 .eslintcache
