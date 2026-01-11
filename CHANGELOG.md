@@ -1,3 +1,10 @@
+## [2.6.19](https://github.com/wfcd/warframe-status/compare/v2.6.18...v2.6.19) (2026-01-11)
+
+
+### Bug Fixes
+
+* pricecheck is back ([bede5f6](https://github.com/wfcd/warframe-status/commit/bede5f6ccd9ed6a6c1123a299d931b6d01b202b5))
+
 ## [2.6.18](https://github.com/wfcd/warframe-status/compare/v2.6.17...v2.6.18) (2026-01-10)
 
 
