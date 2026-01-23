@@ -25,7 +25,7 @@
     "@wfcd/profile-parser": "^2.0.11",
     "apicache": "^1.6.3",
     "colors": "1.4.0",
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "cron": "^4.4.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
