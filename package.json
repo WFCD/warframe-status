@@ -46,7 +46,7 @@
     "ws": "^8.19.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.12",
+    "@biomejs/biome": "^2.3.13",
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
     "@sentry/types": "^10.32.1",
