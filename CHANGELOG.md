@@ -1,3 +1,10 @@
+## [2.6.28](https://github.com/wfcd/warframe-status/compare/v2.6.27...v2.6.28) (2026-02-23)
+
+
+### Bug Fixes
+
+* bump warframe-worldstate-data from 3.5.1 to 3.6.1 ([#2088](https://github.com/wfcd/warframe-status/issues/2088)) ([425e9ab](https://github.com/wfcd/warframe-status/commit/425e9ab8fc6b15746e9a52aba869343bb9851602))
+
 ## [2.6.27](https://github.com/wfcd/warframe-status/compare/v2.6.26...v2.6.27) (2026-02-17)
 
 
