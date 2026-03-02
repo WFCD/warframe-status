@@ -1,3 +1,10 @@
+## [2.6.31](https://github.com/wfcd/warframe-status/compare/v2.6.30...v2.6.31) (2026-03-02)
+
+
+### Bug Fixes
+
+* bump @wfcd/profile-parser from 2.0.11 to 2.0.12 ([#2096](https://github.com/wfcd/warframe-status/issues/2096)) ([eac45ee](https://github.com/wfcd/warframe-status/commit/eac45ee6d40dc14912b6bb573aee7fbd383270dc))
+
 ## [2.6.30](https://github.com/wfcd/warframe-status/compare/v2.6.29...v2.6.30) (2026-02-28)
 
 
