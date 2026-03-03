@@ -1,3 +1,10 @@
+## [2.6.32](https://github.com/wfcd/warframe-status/compare/v2.6.31...v2.6.32) (2026-03-03)
+
+
+### Bug Fixes
+
+* bump warframe-worldstate-parser from 5.2.16 to 5.2.17 ([#2098](https://github.com/wfcd/warframe-status/issues/2098)) ([7e8209d](https://github.com/wfcd/warframe-status/commit/7e8209d0f65f34c025511b74bd5b7f891fa62dde))
+
 ## [2.6.31](https://github.com/wfcd/warframe-status/compare/v2.6.30...v2.6.31) (2026-03-02)
 
 
