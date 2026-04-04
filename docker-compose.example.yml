@@ -1,15 +1,26 @@
 services:
   warframestatus:
     image: warframestatus:latest
-    build: . # you can remove this if you plan to use your own image
+    build:
+      context: .
+      dockerfile: Dockerfile
     # environment:
+      # All environment variables are optional - sensible defaults are enabled
+      # WorldState endpoints and WebSocket are enabled by default
+      
+      # External services (optional)
       # - TWITTER_KEY=
       # - TWITTER_SECRET=
       # - TWITTER_BEARER_TOKEN=
       # - WFINFO_FILTERED_ITEMS=
       # - WFINFO_PRICES=
       # - SENTRY_DSN=
-      # - BUILD=
-      # - LOG_LEVEL=
+      
+      # Advanced configuration (optional)
+      # - BUILD=build                # Force cache rebuild on startup
+      # - LOG_LEVEL=error            # Logging level: error, warn, log, debug, verbose
+      # - USE_CLUSTER=true           # Enable built-in clustering
+      # - USE_WORLDSTATE=false       # Disable WorldState endpoints (enabled by default)
+      # - FEATURES=                  # Override default features (default: SOCKET)
     expose:
       - 8080:3001 # Host port can be whatever you need it to be
