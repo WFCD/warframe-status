@@ -14,6 +14,8 @@ tmp/
 #nodemon dev config
 .nodemon
 .env
+.env.local
+.env*.local
 
 # JetBrains files
 .idea/
@@ -31,3 +33,7 @@ caches/.hy-info
 
 # eslint cache
 .eslintcache
+
+# TypeScript build output
+dist/
+*.tsbuildinfo

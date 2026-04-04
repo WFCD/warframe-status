@@ -1,6 +1,6 @@
 '*,!*.js,!package*.json':
   - biome format --write
-'*.js,!*/generate.js':
+'*.{js,ts},!*/generate.js':
   - biome check --write
   - npm test
 package*.json:

@@ -1,14 +1,13 @@
 exit: true
-spec: src/test/**/*.spec.ts
-exclude: src/test/**/*-integration.spec.ts
+spec: src/test/**/*-integration.spec.ts
 node-option:
   - import=tsx
 enableSourceMaps: true
 enable-source-maps: true
 checkLeaks: true
-timeout: 120000
-normal: 500
-slow: 2000
+timeout: 600000  # 10 minutes for integration tests (may need external API calls)
+normal: 5000
+slow: 10000
 fullTrace: true
 bail: false
 parallel: false
