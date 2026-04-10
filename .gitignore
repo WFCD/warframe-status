@@ -37,3 +37,6 @@ caches/.hy-info
 # TypeScript build output
 dist/
 *.tsbuildinfo
+
+# Leann indices
+.leann/
