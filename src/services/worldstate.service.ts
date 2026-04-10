@@ -39,7 +39,11 @@ export class WorldStateService implements OnModuleInit {
       );
       await new Promise<void>((resolve, reject) => {
         const timeout = setTimeout(() => {
-          reject(new Error('Timeout waiting for initial worldstate data'));
+          reject(
+            new Error(
+              `Timeout waiting for initial worldstate data :: ${process.env.WORLDSTATE_INIT_TIMEOUT || '60000'}ms`,
+            ),
+          );
         }, initTimeout);
 
         // Set up event listener before checking if data already exists
