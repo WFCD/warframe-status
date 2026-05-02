@@ -150,13 +150,17 @@ describe('items', () => {
     res.body.length.should.eq(0);
   });
   it('should return an item by a non-default key', async () => {
-    const res = await req('/items/%2FLotus%2FWeapons%2FTenno%2FPistol%2FHandShotGun/?by=uniqueName');
+    const res = await req(
+      '/items/%2FLotus%2FWeapons%2FTenno%2FPistol%2FHandShotGun/?by=uniqueName',
+    );
     res.should.have.status(200);
     res.body.should.be.an('object');
     Object.keys(res.body).length.should.be.greaterThan(0);
   });
   it('should return multiple items by a non-default key', async () => {
-    const res = await req('/items/search/%2FLotus%2FWeapons%2FTenno%2FPistol%2FHandShotGun/?by=uniqueName');
+    const res = await req(
+      '/items/search/%2FLotus%2FWeapons%2FTenno%2FPistol%2FHandShotGun/?by=uniqueName',
+    );
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.greaterThan(0);
