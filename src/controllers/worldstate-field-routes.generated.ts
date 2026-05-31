@@ -1,11 +1,18 @@
 // Auto-generated file - DO NOT EDIT MANUALLY
 // Generated from WorldStateDto source file
 // Run: npm run generate:routes to regenerate
-// Last generated: 2026-04-10T03:48:25.114Z
+// Last generated: 2026-05-31T03:22:25.452Z
 
 import { Controller, Get, Query, Req, Res } from '@nestjs/common';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import type { Request, Response } from 'express';
+import { WorldstateBaseController } from './worldstate-base.controller';
+
 // Import all parser types for OpenAPI documentation
 import {
   Alert,
@@ -35,12 +42,11 @@ import {
   WorldEvent,
   ZarimanCycle,
 } from 'warframe-worldstate-parser';
-import { WorldstateBaseController } from './worldstate-base.controller';
 
 /**
  * Generated controller with explicit routes for each worldstate field
  * Extends WorldstateBaseController to reuse shared getField() implementation
- *
+ * 
  * Total fields: 27
  * Array fields (support filtering): alerts, dailyDeals, darkSectors, events, fissures, flashSales, globalUpgrades, invasions, kuva, news, persistentEnemies, syndicateMissions
  * Object fields: timestamp, arbitration, cambionCycle, cetusCycle, constructionProgress, duviriCycle, earthCycle, nightwave, sentientOutposts, simaris, sortie, steelPath, vallisCycle, voidTrader, zarimanCycle
@@ -48,6 +54,7 @@ import { WorldstateBaseController } from './worldstate-base.controller';
 @Controller()
 @ApiTags('worldstate')
 export abstract class WorldstateFieldRoutesController extends WorldstateBaseController {
+
   /**
    * Get Timestamp of worldstate update
    * Route: GET /pc/timestamp
@@ -75,6 +82,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('timestamp', req, res, query);
   }
 
+
   /**
    * Get Active alerts
    * Route: GET /pc/alerts
@@ -97,8 +105,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcAlerts(
@@ -108,6 +115,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('alerts', req, res, query);
   }
+
 
   /**
    * Get Arbitration mission data
@@ -136,6 +144,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('arbitration', req, res, query);
   }
 
+
   /**
    * Get Cambion Drift cycle (Day/Fass or Night/Vome)
    * Route: GET /pc/cambionCycle
@@ -148,8 +157,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   })
   @ApiResponse({
     status: 200,
-    description:
-      'Cambion Drift cycle (Day/Fass or Night/Vome) retrieved successfully',
+    description: 'Cambion Drift cycle (Day/Fass or Night/Vome) retrieved successfully',
     type: CambionCycle,
   })
   @ApiResponse({
@@ -163,6 +171,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('cambionCycle', req, res, query);
   }
+
 
   /**
    * Get Cetus cycle (Day or Night)
@@ -191,6 +200,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('cetusCycle', req, res, query);
   }
 
+
   /**
    * Get Construction progress data
    * Route: GET /pc/constructionProgress
@@ -218,6 +228,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('constructionProgress', req, res, query);
   }
 
+
   /**
    * Get Daily deals from Darvo
    * Route: GET /pc/dailyDeals
@@ -240,8 +251,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcDailyDeals(
@@ -251,6 +261,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('dailyDeals', req, res, query);
   }
+
 
   /**
    * Get Dark sector conflicts
@@ -274,8 +285,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcDarkSectors(
@@ -285,6 +295,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('darkSectors', req, res, query);
   }
+
 
   /**
    * Get Duviri cycle information
@@ -313,6 +324,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('duviriCycle', req, res, query);
   }
 
+
   /**
    * Get Earth cycle (Day or Night)
    * Route: GET /pc/earthCycle
@@ -340,6 +352,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('earthCycle', req, res, query);
   }
 
+
   /**
    * Get Active events
    * Route: GET /pc/events
@@ -362,8 +375,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcEvents(
@@ -373,6 +385,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('events', req, res, query);
   }
+
 
   /**
    * Get Active void fissures
@@ -396,8 +409,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcFissures(
@@ -407,6 +419,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('fissures', req, res, query);
   }
+
 
   /**
    * Get Flash sales
@@ -430,8 +443,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcFlashSales(
@@ -441,6 +453,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('flashSales', req, res, query);
   }
+
 
   /**
    * Get Global upgrades/boosters
@@ -464,8 +477,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcGlobalUpgrades(
@@ -475,6 +487,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('globalUpgrades', req, res, query);
   }
+
 
   /**
    * Get Active invasions
@@ -498,8 +511,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcInvasions(
@@ -509,6 +521,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('invasions', req, res, query);
   }
+
 
   /**
    * Get Kuva missions
@@ -532,8 +545,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcKuva(
@@ -543,6 +555,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('kuva', req, res, query);
   }
+
 
   /**
    * Get Nightwave season data
@@ -571,6 +584,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('nightwave', req, res, query);
   }
 
+
   /**
    * Get News items
    * Route: GET /pc/news
@@ -593,8 +607,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcNews(
@@ -604,6 +617,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('news', req, res, query);
   }
+
 
   /**
    * Get Persistent enemies (Liches, Sisters)
@@ -627,8 +641,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcPersistentEnemies(
@@ -638,6 +651,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('persistentEnemies', req, res, query);
   }
+
 
   /**
    * Get Sentient anomaly outpost
@@ -666,6 +680,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('sentientOutposts', req, res, query);
   }
 
+
   /**
    * Get Sanctuary synthesis targets
    * Route: GET /pc/simaris
@@ -692,6 +707,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('simaris', req, res, query);
   }
+
 
   /**
    * Get Daily sortie missions
@@ -720,6 +736,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('sortie', req, res, query);
   }
 
+
   /**
    * Get Steel Path offerings
    * Route: GET /pc/steelPath
@@ -747,6 +764,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('steelPath', req, res, query);
   }
 
+
   /**
    * Get Syndicate missions
    * Route: GET /pc/syndicateMissions
@@ -769,8 +787,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   @ApiQuery({
     name: 'filter',
     required: false,
-    description:
-      'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
+    description: 'Filter results by field:value pairs, comma-separated (e.g., "active:true,tier:Lith")',
     example: 'active:true',
   })
   async getPcSyndicateMissions(
@@ -780,6 +797,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('syndicateMissions', req, res, query);
   }
+
 
   /**
    * Get Orb Vallis cycle (Warm or Cold)
@@ -808,6 +826,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('vallisCycle', req, res, query);
   }
 
+
   /**
    * Get Void trader (Baro Ki
    * Route: GET /pc/voidTrader
@@ -835,6 +854,7 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
     return this.getField('voidTrader', req, res, query);
   }
 
+
   /**
    * Get Zariman cycle
    * Route: GET /pc/zarimanCycle
@@ -861,4 +881,5 @@ export abstract class WorldstateFieldRoutesController extends WorldstateBaseCont
   ) {
     return this.getField('zarimanCycle', req, res, query);
   }
+
 }

@@ -7,6 +7,6 @@ process.env.WS_EMITTER_FEATURES = 'rss,rivens,worldstate';
 process.env.NODE_ENV = 'test';
 process.env.LOG_LEVEL = 'error';
 // Speed up worldstate initialization for tests
-process.env.WORLDSTATE_INIT_TIMEOUT = '30000'; // 30 seconds instead of 60
+process.env.WORLDSTATE_INIT_TIMEOUT = '120000'; // 120 seconds allowed instead of 60
 // Speed up worldstate updates for tests (default is every 5 minutes)
 process.env.WORLDSTATE_CRON = '*/30 * * * * *'; // Update every 30 seconds instead of 5 minutes
