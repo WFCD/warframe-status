@@ -1,3 +1,4 @@
+import { USE_WORLDSTATE_EXPLICIT } from '@nest/config/env';
 import type { INestApplication } from '@nestjs/common';
 import * as chai from 'chai';
 import chaiHttp, { request } from 'chai-http';
@@ -6,7 +7,7 @@ import { getApp } from '../hooks/setup.hook';
 chai.should();
 chai.use(chaiHttp);
 
-const USE_WORLDSTATE = process.env.USE_WORLDSTATE === 'true';
+const USE_WORLDSTATE = USE_WORLDSTATE_EXPLICIT;
 
 describe('worldstate', () => {
   let nestApp: INestApplication;

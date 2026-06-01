@@ -1,4 +1,5 @@
 import { TwitterNotFoundDto } from '@dto/twitter.dto';
+import { TWITTER_ACTIVE } from '@nest/config/integrations';
 import {
   Controller,
   Get,
@@ -26,7 +27,7 @@ export class TwitterController {
     private readonly worldStateService?: WorldStateService,
   ) {
     // Check if Twitter is active from environment
-    this.twitterActive = process.env.TWITTER_ACTIVE === 'true';
+    this.twitterActive = TWITTER_ACTIVE;
   }
 
   /**

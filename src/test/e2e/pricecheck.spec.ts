@@ -1,3 +1,4 @@
+import { PRICECHECKS_ENABLED_KEY } from '@nest/config/integrations';
 import * as chai from 'chai';
 import chaiHttp from 'chai-http';
 
@@ -51,8 +52,8 @@ describe('pricecheck', () => {
 
   it('503s when disabled', async () => {
     // Set environment variable to disable price checks
-    const originalValue = process.env.PRICECHECKS_ENABLED;
-    process.env.PRICECHECKS_ENABLED = 'false';
+    const originalValue = process.env[PRICECHECKS_ENABLED_KEY];
+    process.env[PRICECHECKS_ENABLED_KEY] = 'false';
 
     // Note: This test may fail because the service is already instantiated
     // with the original env var value. We'll test the behavior as best we can.
@@ -62,7 +63,7 @@ describe('pricecheck', () => {
     );
 
     // Restore original value
-    process.env.PRICECHECKS_ENABLED = originalValue;
+    process.env[PRICECHECKS_ENABLED_KEY] = originalValue;
 
     // The test in Express changes settings.priceChecks at runtime
     // In NestJS, the service reads the env var at construction time

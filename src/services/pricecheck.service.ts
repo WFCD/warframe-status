@@ -1,3 +1,4 @@
+import { PRICECHECKS_ENABLED } from '@nest/config/integrations';
 import { Inject, Injectable } from '@nestjs/common';
 import Nexus, { type Platform } from 'warframe-nexus-query';
 import type { LoggerService } from './logger.service';
@@ -20,7 +21,7 @@ export class PriceCheckService {
     });
 
     // Check if price checks are enabled from environment
-    this.priceChecksEnabled = process.env.PRICECHECKS_ENABLED !== 'false';
+    this.priceChecksEnabled = PRICECHECKS_ENABLED;
   }
 
   /**

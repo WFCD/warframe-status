@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import cluster from 'node:cluster';
 import os from 'node:os';
 import { AppModule } from '@nest/app.module';
-import { LOG_LEVEL } from '@nest/config/env';
+import { HOST, LOG_LEVEL, PORT, USE_CLUSTER } from '@nest/config/env';
 import { setupOpenApi } from '@nest/config/openapi-document';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
@@ -34,8 +34,8 @@ async function bootstrap(listenHttp = true) {
   // Get configuration from environment
   // For development: bind to 0.0.0.0 (all interfaces) so localhost works
   // For production: can override with HOST or IP env vars
-  const port = process.env.PORT || 3000;
-  const host = process.env.HOST || process.env.IP || '0.0.0.0';
+  const port = PORT;
+  const host = HOST;
 
   // Enable graceful shutdown
   app.enableShutdownHooks();
@@ -61,7 +61,7 @@ async function bootstrap(listenHttp = true) {
 
 async function startCluster() {
   const cpus = Math.floor(os.cpus().length / 2);
-  const useCluster = process.env.USE_CLUSTER === 'true';
+  const useCluster = USE_CLUSTER;
 
   if (cluster.isPrimary && cpus > 2 && useCluster) {
     mainLogger.info(

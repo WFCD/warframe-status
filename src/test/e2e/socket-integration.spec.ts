@@ -1,3 +1,4 @@
+import { USE_WORLDSTATE_EXPLICIT } from '@nest/config/env';
 import type { INestApplication } from '@nestjs/common';
 import { expect, use } from 'chai';
 import chaiHttp from 'chai-http';
@@ -64,7 +65,7 @@ describe('/socket', () => {
   describe('WebSocket Messages', () => {
     it('should handle ws:req message and return worldstate data', function (done) {
       // Skip if worldstate is not enabled
-      if (process.env.USE_WORLDSTATE !== 'true') {
+      if (!USE_WORLDSTATE_EXPLICIT) {
         this.skip();
       }
 
@@ -112,7 +113,7 @@ describe('/socket', () => {
 
     it('should handle ws:req with missing platform/language', function (done) {
       // Skip if worldstate is not enabled
-      if (process.env.USE_WORLDSTATE !== 'true') {
+      if (!USE_WORLDSTATE_EXPLICIT) {
         this.skip();
       }
 
@@ -156,7 +157,7 @@ describe('/socket', () => {
 
     it('should handle twitter message request', function (done) {
       // Skip if worldstate is not enabled
-      if (process.env.USE_WORLDSTATE !== 'true') {
+      if (!USE_WORLDSTATE_EXPLICIT) {
         this.skip();
       }
 
@@ -206,7 +207,7 @@ describe('/socket', () => {
 
     it('should handle rss message request', function (done) {
       // Skip if worldstate is not enabled
-      if (process.env.USE_WORLDSTATE !== 'true') {
+      if (!USE_WORLDSTATE_EXPLICIT) {
         this.skip();
       }
 

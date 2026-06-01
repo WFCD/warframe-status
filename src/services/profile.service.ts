@@ -1,3 +1,4 @@
+import { USER_AGENT } from '@nest/config/integrations';
 import { Inject, Injectable } from '@nestjs/common';
 import ArsenalParser from '@wfcd/arsenal-parser';
 import Profile, { type RawProfile } from '@wfcd/profile-parser/Profile';
@@ -35,7 +36,7 @@ export class ProfileService {
     this.arsenalApi =
       'https://content.warframe.com/dynamic/twitch/getActiveLoadout.php';
     this.arsenalId = 'ud1zj704c0eb1s553jbkayvqxjft97';
-    this.userAgent = process.env.USER_AGENT || 'Node.js Fetch';
+    this.userAgent = USER_AGENT;
   }
 
   /**

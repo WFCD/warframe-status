@@ -1,3 +1,7 @@
+import {
+  WFINFO_FILTERED_ITEMS,
+  WFINFO_PRICES,
+} from '@nest/config/integrations';
 import type { INestApplication } from '@nestjs/common';
 import * as chai from 'chai';
 import chaiHttp, { request } from 'chai-http';
@@ -14,7 +18,7 @@ describe('wfinfo', () => {
   });
 
   describe('filtered_items', () => {
-    if (process.env.WFINFO_FILTERED_ITEMS) {
+    if (WFINFO_FILTERED_ITEMS) {
       it('should not be empty', async () => {
         const res = await request
           .execute(nestApp.getHttpServer())
@@ -48,7 +52,7 @@ describe('wfinfo', () => {
   });
 
   describe('prices', () => {
-    if (process.env.WFINFO_PRICES) {
+    if (WFINFO_PRICES) {
       it('should not be empty', async () => {
         const res = await request
           .execute(nestApp.getHttpServer())

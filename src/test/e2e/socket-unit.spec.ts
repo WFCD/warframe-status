@@ -1,7 +1,4 @@
-// Set environment variables before any imports
-process.env.USE_WORLDSTATE = 'true';
-process.env.FEATURES = 'worldstate,SOCKET';
-process.env.WS_EMITTER_FEATURES = 'rss,rivens,worldstate';
+import '@nest/config/test-env-setup';
 
 import { AppModule } from '@nest/app.module';
 import type { INestApplication } from '@nestjs/common';

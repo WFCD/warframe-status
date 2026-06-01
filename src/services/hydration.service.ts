@@ -1,4 +1,5 @@
 import cluster from 'node:cluster';
+import { FORCE_BUILD, USE_CLUSTER } from '@nest/config/env';
 import {
   Inject,
   Injectable,
@@ -46,8 +47,8 @@ export class HydrationService implements OnModuleInit, OnApplicationBootstrap {
    * Only runs in primary process (or non-cluster mode)
    */
   async onModuleInit(): Promise<void> {
-    const forceBuild = process.env.BUILD === 'build';
-    const useCluster = process.env.USE_CLUSTER === 'true';
+    const forceBuild = FORCE_BUILD;
+    const useCluster = USE_CLUSTER;
     const isPrimary = !useCluster || cluster.isPrimary;
 
     if (forceBuild && isPrimary) {
@@ -80,7 +81,7 @@ export class HydrationService implements OnModuleInit, OnApplicationBootstrap {
    * Only runs in primary process (or non-cluster mode)
    */
   async onApplicationBootstrap(): Promise<void> {
-    const useCluster = process.env.USE_CLUSTER === 'true';
+    const useCluster = USE_CLUSTER;
     const isPrimary = !useCluster || cluster.isPrimary;
 
     if (!this.isBootstrapHydrationComplete && isPrimary) {
@@ -113,7 +114,7 @@ export class HydrationService implements OnModuleInit, OnApplicationBootstrap {
     timeZone: 'UTC',
   })
   async scheduledHydration(): Promise<void> {
-    const useCluster = process.env.USE_CLUSTER === 'true';
+    const useCluster = USE_CLUSTER;
     const isPrimary = !useCluster || cluster.isPrimary;
 
     if (!isPrimary) {

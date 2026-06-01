@@ -1,3 +1,7 @@
+import {
+  WFINFO_FILTERED_ITEMS,
+  WFINFO_PRICES,
+} from '@nest/config/integrations';
 import { Inject, Injectable } from '@nestjs/common';
 import type { Cache } from 'cache-manager';
 import { type LoggerService, LogScope } from './logger.service';
@@ -28,8 +32,8 @@ export class WFInfoCacheService {
     this.logger.setContext(LogScope.WFINFO);
     this.logger.setLevel('info');
 
-    this.filteredItemsUrl = process.env.WFINFO_FILTERED_ITEMS;
-    this.pricesUrl = process.env.WFINFO_PRICES;
+    this.filteredItemsUrl = WFINFO_FILTERED_ITEMS;
+    this.pricesUrl = WFINFO_PRICES;
   }
 
   async onModuleInit(): Promise<void> {

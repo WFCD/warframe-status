@@ -1,4 +1,4 @@
-process.env.USE_WORLDSTATE = 'true';
+import '@nest/config/test-env-setup';
 
 import { WorldstateController } from '@controllers/worldstate.controller';
 import type { INestApplication } from '@nestjs/common';

@@ -1,3 +1,4 @@
+import { BUILD_CACHE_PREFILL } from '@nest/config/env';
 import { Injectable, type OnModuleInit } from '@nestjs/common';
 import type { FlatCacheStore } from './flat-cache-store';
 import type { LoggerService } from './logger.service';
@@ -15,7 +16,7 @@ export abstract class BaseCacheService implements OnModuleInit {
 
   async onModuleInit(): Promise<void> {
     // Check if BUILD mode is enabled for initial population
-    if (process.env.BUILD?.trim().startsWith('build')) {
+    if (BUILD_CACHE_PREFILL) {
       await this.populate();
     }
   }

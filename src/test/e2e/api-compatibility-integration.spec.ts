@@ -1,4 +1,5 @@
 import { AppModule } from '@nest/app.module';
+import { SKIP_INTEGRATION, USE_WORLDSTATE_EXPLICIT } from '@nest/config/env';
 import type { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { Test } from '@nestjs/testing';
@@ -29,7 +30,7 @@ describe('API Compatibility (NestJS vs Express)', () => {
 
   before(async function () {
     // Skip if not in integration test mode
-    if (process.env.SKIP_INTEGRATION === 'true') {
+    if (SKIP_INTEGRATION) {
       this.skip();
     }
 
@@ -191,7 +192,7 @@ describe('API Compatibility (NestJS vs Express)', () => {
 
   describe('WorldState Endpoints (if enabled)', () => {
     before(function () {
-      if (process.env.USE_WORLDSTATE !== 'true') {
+      if (!USE_WORLDSTATE_EXPLICIT) {
         this.skip();
       }
     });
