@@ -7,8 +7,10 @@ export enum LogLevel {
   SILLY = 'silly',
 }
 
-export const fromString = (level: string): LogLevel => {
-  if (Object.values(LogLevel).includes(level as LogLevel))
+export const fromString = (level?: string): LogLevel => {
+  if (!level) return LogLevel.ERROR;
+  if (Object.values(LogLevel).includes(level as LogLevel)) {
     return level as LogLevel;
+  }
   return LogLevel.ERROR;
 };

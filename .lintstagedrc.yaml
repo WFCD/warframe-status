@@ -1,4 +1,4 @@
-'*,!*.js,!package*.json':
+'*,!*.{js,ts},!package*.json':
   - biome format --write
 '*.{js,ts},!*/generate.js':
   - biome check --write

@@ -36,7 +36,7 @@ export class ProfileService {
     this.arsenalApi =
       'https://content.warframe.com/dynamic/twitch/getActiveLoadout.php';
     this.arsenalId = 'ud1zj704c0eb1s553jbkayvqxjft97';
-    this.userAgent = USER_AGENT;
+    this.userAgent = USER_AGENT!;
   }
 
   /**
