@@ -4,7 +4,7 @@ import { EventEmitter } from 'node:events';
  * Mock WorldState data for testing
  */
 export const mockWorldStateData = {
-  timestamp: Date.now(),
+  timestamp: new Date().toISOString(),
   news: [],
   events: [],
   alerts: [
@@ -29,8 +29,37 @@ export const mockWorldStateData = {
   ],
   syndicateMissions: [],
   fissures: [],
-  sortie: null,
-  nightwave: null,
+  sortie: { boss: 'Kela', faction: 'Grineer', variants: [] },
+  nightwave: { active: true, phases: [] },
+  arbitration: { id: 'test-arbitration', node: 'Test Node' },
+  cambionCycle: { id: 'cambion', active: true },
+  cetusCycle: { id: 'cetus', active: true },
+  earthCycle: { id: 'earth', active: true },
+  vallisCycle: { id: 'vallis', active: true },
+  duviriCycle: { id: 'duviri', active: true },
+  zarimanCycle: { id: 'zariman', active: true },
+  simaris: { target: 'Test Target' },
+  steelPath: { currentReward: 'test' },
+  voidTrader: { active: false },
+  vaultTrader: { active: false, inventory: [] },
+  voidTraders: [],
+  dailyDeals: [],
+  darkSectors: [],
+  flashSales: [],
+  globalUpgrades: [],
+  kuva: [],
+  persistentEnemies: [],
+  conclaveChallenges: [],
+  archimedeas: [],
+  weeklyChallenges: [],
+  constructionProgress: { perrinSequence: 0 },
+  calendar: { events: [] },
+  buildLabel: 'test-build',
+  faceoffBonus: { active: false },
+  kinepage: { active: false },
+  questToConquerCancer: { active: false },
+  sentientOutposts: [],
+  archonHunt: { active: false },
 };
 
 /**

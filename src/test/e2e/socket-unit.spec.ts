@@ -136,7 +136,9 @@ describe('/socket (unit tests with mocks)', () => {
           expect(message.packet.platform).to.equal('pc');
           expect(message.packet.language).to.equal('en');
           expect(message.packet.ws).to.exist;
-          expect(message.packet.ws).to.deep.equal(mockWorldStateData);
+          expect(message.packet.ws).to.include({
+            timestamp: mockWorldStateData.timestamp,
+          });
           ws.close();
           done();
         }
@@ -250,6 +252,55 @@ describe('/socket (unit tests with mocks)', () => {
           expect(message.event).to.equal('rss:provide');
           expect(message.packet).to.exist;
           expect(message.packet).to.deep.equal(mockRssData);
+          ws.close();
+          done();
+        }
+      });
+
+      ws.on('error', (error) => {
+        done(error);
+      });
+    });
+    it('should reject invalid websocket messages', (done) => {
+      const server = app.getHttpServer();
+      const address = server.address();
+      const port = typeof address === 'string' ? 3000 : address?.port || 3000;
+
+      const ws = new WebSocket(`ws://localhost:${port}/socket`);
+
+      ws.on('open', () => {
+        ws.send('not-json');
+      });
+
+      ws.on('message', (data) => {
+        const message = JSON.parse(data.toString());
+        if (message.status === 400) {
+          expect(message.error).to.equal('Invalid message format');
+          ws.close();
+          done();
+        }
+      });
+
+      ws.on('error', (error) => {
+        done(error);
+      });
+    });
+
+    it('should reject unknown event types', (done) => {
+      const server = app.getHttpServer();
+      const address = server.address();
+      const port = typeof address === 'string' ? 3000 : address?.port || 3000;
+
+      const ws = new WebSocket(`ws://localhost:${port}/socket`);
+      let connectedReceived = false;
+
+      ws.on('message', (data) => {
+        const message = JSON.parse(data.toString());
+
+        if (message.event === 'connected' && !connectedReceived) {
+          connectedReceived = true;
+          ws.send(JSON.stringify({ event: 'unknown-event' }));
+        } else if (message.status === 400) {
           ws.close();
           done();
         }

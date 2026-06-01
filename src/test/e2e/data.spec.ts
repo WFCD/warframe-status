@@ -82,4 +82,10 @@ describe('DataController (static data)', () => {
     res.body.length.should.eq(3);
     res.body[0].should.be.an('object');
   });
+
+  it('should 404 for unknown data keys', async () => {
+    const res = await req('/definitely-not-a-data-key');
+    res.should.have.status(404);
+    res.body.message.should.include('definitely-not-a-data-key');
+  });
 });
