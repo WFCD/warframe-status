@@ -5,7 +5,8 @@ import {
   InternalServerErrorException,
   type OnModuleInit,
 } from '@nestjs/common';
-import type { EventEmitter2 } from '@nestjs/event-emitter';
+// biome-ignore lint/style/useImportType: nest requires this import to resolve the injectable
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import WorldStateEmitter from 'worldstate-emitter';
 import { type LoggerService, LogScope } from './logger.service';
 
@@ -20,7 +21,7 @@ export class WorldStateService implements OnModuleInit {
 
   constructor(
     @Inject('LOGGER_SERVICE') loggerService: LoggerService,
-    private readonly eventEmitter: EventEmitter2,
+    @Inject(EventEmitter2) private readonly eventEmitter: EventEmitter2,
   ) {
     this.logger = loggerService;
     this.logger.setContext(LogScope.WORLDSTATE);

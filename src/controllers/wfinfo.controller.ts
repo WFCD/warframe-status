@@ -1,4 +1,4 @@
-import { WFInfoUnavailableDto } from '@dto/wfinfo.dto';
+import { WFInfoPriceItemDto, WFInfoUnavailableDto } from '@dto/wfinfo.dto';
 import {
   Controller,
   Get,
@@ -14,7 +14,7 @@ import {
 import type { WFInfoCacheService } from '@services/wfinfo-cache.service';
 
 @ApiTags('wfinfo')
-@ApiExtraModels(WFInfoUnavailableDto)
+@ApiExtraModels(WFInfoUnavailableDto, WFInfoPriceItemDto)
 @Controller('wfinfo')
 export class WFInfoController {
   constructor(
@@ -108,10 +108,7 @@ export class WFInfoController {
     status: 200,
     description:
       'Market prices data with trading volumes and average prices for items',
-    schema: {
-      type: 'array',
-      items: { $ref: '#/components/schemas/WFInfoPriceItemDto' },
-    },
+    type: [WFInfoPriceItemDto],
   })
   @ApiResponse({
     status: 503,

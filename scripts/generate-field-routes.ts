@@ -31,16 +31,17 @@ interface FieldInfo {
  * Parse WorldStateDto source file to extract field information
  */
 function parseWorldStateDto(): FieldInfo[] {
-  const dtoPath = path.join(__dirname, '../src/dto/worldstate.dto.ts');
+  const dtoPath = path.join(
+    __dirname,
+    '../src/dto/worldstate-generated/world-state.dto.ts',
+  );
   const content = fs.readFileSync(dtoPath, 'utf-8');
   
   const fields: FieldInfo[] = [];
   
-  // Regex to match field declarations with @ApiProperty
-  // Matches patterns like:
-  //   @ApiProperty({ description: '...', type: Alert, ... })
-  //   fieldName?: Alert;
-  const fieldPattern = /@ApiProperty\s*\(\s*\{([^}]+)\}\s*\)\s*(\w+)\s*[?!]?\s*:\s*([^;]+);/g;
+  // Regex to match field declarations with @ApiProperty / @ApiPropertyOptional
+  const fieldPattern =
+    /@ApiProperty(?:Optional)?\s*\(\s*\{([^}]+)\}\s*\)\s*(\w+)\s*[?!]?\s*:\s*([^;]+);/g;
   
   let match;
   while ((match = fieldPattern.exec(content)) !== null) {
@@ -64,7 +65,9 @@ function parseWorldStateDto(): FieldInfo[] {
     }
     
     // Check if it's optional
-    const isOptional = /required:\s*false/i.test(apiPropertyContent);
+    const isOptional =
+      /required:\s*false/i.test(apiPropertyContent) ||
+      match[0].startsWith('@ApiPropertyOptional');
     
     fields.push({
       name: fieldName,
@@ -76,6 +79,39 @@ function parseWorldStateDto(): FieldInfo[] {
   }
   
   return fields;
+}
+
+const PRIMITIVE_TYPE_NAMES = new Set([
+  'number',
+  'Number',
+  'string',
+  'String',
+  'boolean',
+  'Boolean',
+  'unknown',
+  'Record<string, unknown>',
+]);
+
+function isImportableDtoType(typeName: string): boolean {
+  if (PRIMITIVE_TYPE_NAMES.has(typeName)) return false;
+  if (typeName.startsWith('{')) return false;
+  if (typeName.includes(' | ')) return false;
+  return typeName.endsWith('Dto');
+}
+
+function toSwaggerType(typeName: string, isArray: boolean): string {
+  const primitiveMap: Record<string, string> = {
+    string: 'String',
+    number: 'Number',
+    boolean: 'Boolean',
+    unknown: 'Object',
+  };
+
+  const mapped = primitiveMap[typeName] ?? typeName;
+  if (isArray) {
+    return `[${mapped}]`;
+  }
+  return mapped;
 }
 
 /**
@@ -90,13 +126,16 @@ function generateFieldMethod(field: FieldInfo): string {
   let responseDescription: string;
   
   if (field.name === 'timestamp') {
-    responseType = 'Number';
+    responseType = 'String';
     responseDescription = 'Timestamp retrieved successfully';
+  } else if (field.typeName === 'unknown' || field.typeName.startsWith('{')) {
+    responseType = 'Object';
+    responseDescription = `${field.description} retrieved successfully`;
   } else if (field.isArray) {
-    responseType = `[${field.typeName}]`;
+    responseType = toSwaggerType(field.typeName, true);
     responseDescription = `${field.description} retrieved successfully`;
   } else {
-    responseType = field.typeName;
+    responseType = toSwaggerType(field.typeName, false);
     responseDescription = `${field.description} retrieved successfully`;
   }
   
@@ -155,12 +194,14 @@ function generateControllerFile(fields: FieldInfo[]): string {
   // Collect all unique type names for imports (excluding primitives)
   const typeNames = new Set<string>();
   for (const field of fields) {
-    if (field.typeName !== 'number' && field.typeName !== 'Number' && field.typeName !== 'unknown') {
+    if (isImportableDtoType(field.typeName)) {
       typeNames.add(field.typeName);
     }
   }
   
-  const typeImports = Array.from(typeNames).sort().join(',\n  ');
+  const typeImports = typeNames.size > 0
+    ? `\nimport {\n  ${Array.from(typeNames).sort().join(',\n  ')},\n} from '@dto/worldstate-generated';\n`
+    : '';
   
   const methods = fields.map(generateFieldMethod).join('\n');
   
@@ -174,16 +215,10 @@ import {
   ApiOperation,
   ApiQuery,
   ApiResponse,
-  ApiTags,
 } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
 import { WorldstateBaseController } from './worldstate-base.controller';
-
-// Import generated DTO types for OpenAPI documentation
-import {
-  ${typeImports},
-} from '@dto/worldstate-generated';
-
+${typeImports}
 /**
  * Generated controller with explicit routes for each worldstate field
  * Extends WorldstateBaseController to reuse shared getField() implementation
@@ -193,7 +228,6 @@ import {
  * Object fields: ${fields.filter(f => !f.isArray).map(f => f.name).join(', ')}
  */
 @Controller()
-@ApiTags('worldstate')
 export abstract class WorldstateFieldRoutesController extends WorldstateBaseController {
 ${methods}
 }

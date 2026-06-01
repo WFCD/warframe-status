@@ -96,9 +96,10 @@ const baseProviders = [
 const conditionalProviders = [
   ...(USE_WORLDSTATE
     ? [
+        WorldStateService,
         {
           provide: 'WORLDSTATE_SERVICE',
-          useClass: WorldStateService,
+          useExisting: WorldStateService,
         },
       ]
     : []),

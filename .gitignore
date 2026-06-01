@@ -44,5 +44,10 @@ src/dto/worldstate-generated/*
 !src/dto/worldstate-generated/README.md
 src/controllers/worldstate-field-routes.generated.ts
 
+# Generated OpenAPI export and bundled docs artifacts
+docs/openapi/
+docs/web/openapi.json
+docs/web/openapi.yaml
+
 # Leann indices
 .leann/

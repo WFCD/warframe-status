@@ -196,7 +196,17 @@ npm test
 ## Documentation
 
 - **[MIGRATION_PLAN.md](./MIGRATION_PLAN.md)** - Express → NestJS migration status and remaining work
-- **[API Documentation](https://docs.warframestat.us/)** - Complete API reference
+- **[API Documentation](https://docs.warframestat.us/)** - Complete API reference (built from this repo)
+
+```bash
+# Export OpenAPI from Nest, lint with Redocly, and bundle static docs
+npm run docs:build
+
+# Local preview after building
+npm run docs:preview
+```
+
+Docs deploy automatically on release via `.github/workflows/release.yml`. Manual redeploy: Actions → **API docs** → Run workflow.
 
 ---
 

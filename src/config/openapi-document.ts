@@ -4,7 +4,9 @@ import { type OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import { OpenApiDocumentService } from '@services/openapi-document.service';
 
 export function createOpenApiDocument(app: INestApplication): OpenAPIObject {
-  return SwaggerModule.createDocument(app, config);
+  return SwaggerModule.createDocument(app, config, {
+    autoTagControllers: false,
+  });
 }
 
 export function setupOpenApi(app: INestApplication): OpenAPIObject {

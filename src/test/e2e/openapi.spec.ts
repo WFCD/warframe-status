@@ -2,6 +2,7 @@ import type { INestApplication } from '@nestjs/common';
 import type { OpenAPIObject } from '@nestjs/swagger';
 import * as chai from 'chai';
 import chaiHttp, { request } from 'chai-http';
+import packageJson from '../../../package.json' with { type: 'json' };
 import { createOpenApiDocument } from '@nest/config/openapi-document';
 import { getApp } from '../hooks/setup.hook';
 
@@ -33,6 +34,15 @@ describe('OpenAPI', () => {
       res.body.should.have.property('openapi').that.matches(/^3\./);
       res.body.should.have.property('paths');
       res.body.should.have.property('components');
+    });
+
+    it('should use package.json version and info x-logo extension', () => {
+      document.info.version.should.equal(packageJson.version);
+      document.info.should.have.property('x-logo').that.deep.equals({
+        url: 'https://docs.warframestat.com/wfcd_logo_color.png',
+        altText: 'Warframe Community Developers',
+      });
+      document.should.not.have.property('x-logo');
     });
 
     it('GET /openapi.yaml should return the spec', async () => {
@@ -107,6 +117,19 @@ describe('OpenAPI', () => {
     it('should include at least 40 component schemas', () => {
       const schemaNames = Object.keys(document.components?.schemas ?? {});
       schemaNames.length.should.be.at.least(40);
+    });
+
+    it('should define WFInfoPriceItemDto referenced by /wfinfo/prices', () => {
+      schemaRef(document, 'WFInfoPriceItemDto').should.be.an('object');
+
+      const pricesSchema =
+        document.paths['/wfinfo/prices']?.get?.responses?.['200']?.content?.[
+          'application/json'
+        ]?.schema;
+
+      pricesSchema?.items?.$ref.should.equal(
+        '#/components/schemas/WFInfoPriceItemDto',
+      );
     });
   });
 });

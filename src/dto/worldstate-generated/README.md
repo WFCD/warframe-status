@@ -8,6 +8,7 @@ This directory is **not tracked in git** (except this README). Files here are pr
 - Parser version bumps would otherwise create large, noisy diffs across dozens of files.
 - OpenAPI shape is validated at runtime by `src/test/e2e/openapi.spec.ts`.
 - Generated TypeScript is formatted with Biome (`biome check --write --unsafe`) after each run.
+- Property optionality and `| null` are merged from parser TypeScript source (GitHub/cache) with class-validator metadata from compiled `.mjs`.
 
 ## When files are created
 

@@ -25,7 +25,7 @@ import type { Request, Response } from 'express';
  * Controller for static Warframe data endpoints
  * Provides access to various static game data like synthesis targets, arcanes, tutorials, etc.
  */
-@ApiTags('synthTargets', 'data')
+@ApiTags('data')
 @ApiExtraModels(DataNotFoundDto, DataErrorDto)
 @Controller()
 export class DataController {
