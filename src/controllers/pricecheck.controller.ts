@@ -1,4 +1,10 @@
-import { asPlatform, isPlatform } from '@nest/guards/platform.guard.js';
+import {
+  PriceCheckErrorDto,
+  PriceCheckInvalidTypeDto,
+  PriceCheckNotFoundDto,
+  PriceCheckUnavailableDto,
+} from '@dto/pricecheck.dto';
+import { asPlatform } from '@nest/guards/platform.guard.js';
 import {
   Controller,
   Get,
@@ -21,13 +27,6 @@ import {
 import type { LoggerService } from '@services/logger.service';
 import type { PriceCheckService } from '@services/pricecheck.service';
 import type { Request, Response } from 'express';
-import { Platform } from 'warframe-nexus-query';
-import {
-  PriceCheckErrorDto,
-  PriceCheckInvalidTypeDto,
-  PriceCheckNotFoundDto,
-  PriceCheckUnavailableDto,
-} from '../dto/pricecheck.dto';
 
 /**
  * Controller for price checking endpoints

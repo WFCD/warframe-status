@@ -1,4 +1,10 @@
-import { Controller, Get, HttpStatus, Inject, Res } from '@nestjs/common';
+import { WFInfoUnavailableDto } from '@dto/wfinfo.dto';
+import {
+  Controller,
+  Get,
+  Inject,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import {
   ApiExtraModels,
   ApiOperation,
@@ -6,8 +12,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import type { WFInfoCacheService } from '@services/wfinfo-cache.service';
-import type { Response } from 'express';
-import { WFInfoUnavailableDto } from '../dto/wfinfo.dto';
 
 @ApiTags('wfinfo')
 @ApiExtraModels(WFInfoUnavailableDto)
@@ -76,17 +80,17 @@ export class WFInfoController {
     description: 'WFInfo data service is not configured or unavailable',
     type: WFInfoUnavailableDto,
   })
-  async getFilteredItems(@Res() res: Response) {
+  async getFilteredItems() {
     const items = await this.wfInfoCacheService.getFilteredItems();
 
     if (!items) {
-      return res.status(HttpStatus.SERVICE_UNAVAILABLE).json({
+      throw new ServiceUnavailableException({
         code: 503,
         error: 'WFInfo Data Services Unavailable',
       });
     }
 
-    return res.status(HttpStatus.OK).json(items);
+    return items;
   }
 
   /**
@@ -114,16 +118,16 @@ export class WFInfoController {
     description: 'WFInfo data service is not configured or unavailable',
     type: WFInfoUnavailableDto,
   })
-  async getPrices(@Res() res: Response) {
+  async getPrices() {
     const prices = await this.wfInfoCacheService.getPrices();
 
     if (!prices) {
-      return res.status(HttpStatus.SERVICE_UNAVAILABLE).json({
+      throw new ServiceUnavailableException({
         code: 503,
         error: 'WFInfo Data Services Unavailable',
       });
     }
 
-    return res.status(HttpStatus.OK).json(prices);
+    return prices;
   }
 }

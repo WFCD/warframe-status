@@ -1,7 +1,7 @@
+import { TwitterNotFoundDto } from '@dto/twitter.dto';
 import {
   Controller,
   Get,
-  HttpStatus,
   Inject,
   NotFoundException,
   Optional,
@@ -13,7 +13,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import type { WorldStateService } from '@services/worldstate.service';
-import { TwitterNotFoundDto } from '../dto/twitter.dto';
 
 @ApiTags('social')
 @ApiExtraModels(TwitterNotFoundDto)

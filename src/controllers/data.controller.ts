@@ -4,6 +4,7 @@ import {
   Get,
   HttpStatus,
   Inject,
+  InternalServerErrorException,
   Param,
   Req,
   Res,
@@ -475,7 +476,7 @@ export class DataController {
     @Param('query') query: string,
     @Req() req: Request,
     @Res() res: Response,
-  ): void {
+  ) {
     try {
       // Normalize the key to match correct case
       const normalizedKey = this.warframeDataService.normalizeKey(key);
@@ -500,10 +501,7 @@ export class DataController {
       res.status(HttpStatus.OK).json(results);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-        errors: [message],
-        code: 500,
-      });
+      throw new InternalServerErrorException(message);
     }
   }
 

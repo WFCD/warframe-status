@@ -2,21 +2,23 @@ import 'reflect-metadata';
 import cluster from 'node:cluster';
 import os from 'node:os';
 import { AppModule } from '@nest/app.module';
+import { LOG_LEVEL } from '@nest/config/env';
+import { setupOpenApi } from '@nest/config/openapi-document';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import { WsAdapter } from '@nestjs/platform-ws';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { LoggerService, LogScope } from '@services/logger.service';
-import * as yaml from 'js-yaml';
 
 // Create global logger for main.ts (replaces console.*)
 const mainLogger = new LoggerService();
 mainLogger.setContext(LogScope.PROC);
+mainLogger.setLevel(LOG_LEVEL);
 
 async function bootstrap(listenHttp = true) {
   // Create NestJS-specific logger instance
   const nestLogger = new LoggerService();
   nestLogger.setContext(LogScope.NEST);
+  nestLogger.setLevel(LOG_LEVEL);
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: nestLogger, // Use Winston for NestJS internal logs
@@ -27,59 +29,7 @@ async function bootstrap(listenHttp = true) {
   app.useWebSocketAdapter(new WsAdapter(app));
 
   // Setup OpenAPI documentation
-  const config = new DocumentBuilder()
-    .setTitle('Warframe Status API')
-    .setDescription(
-      'API for retrieving Warframe worldstate data, items, profiles, and more',
-    )
-    .setVersion('2.6.44')
-    .setContact(
-      'Warframe Community Developers',
-      'https://github.com/WFCD/warframe-status',
-      'tobiah@wfcd.dev',
-    )
-    .setLicense('Apache-2.0', 'https://www.apache.org/licenses/LICENSE-2.0')
-    .addServer('https://api.warframestat.us', 'Production')
-    .addServer('http://localhost:3000', 'Local Development')
-    .addTag('system', 'System health and status endpoints')
-    .addTag(
-      'worldstate',
-      'Warframe worldstate data - live game events, alerts, invasions, and more',
-    )
-    .addTag(
-      'items',
-      'Warframe items database - weapons, warframes, mods, and equipment',
-    )
-    .addTag('drops', 'Drop tables and loot information')
-    .addTag('rivens', 'Riven mod disposition and pricing statistics')
-    .addTag('wfinfo', 'WFInfo overlay application integration endpoints')
-    .addTag('pricecheck', 'Warframe.market price checking integration')
-    .addTag('profile', 'Player profile parsing and statistics')
-    .addTag('social', 'Social media feeds - Twitter and RSS')
-    .addTag(
-      'synthTargets',
-      'Sanctuary synthesis targets and other static Warframe data',
-    )
-    .addTag(
-      'data',
-      'Static Warframe data - arcanes, tutorials, conclave, sol nodes, and more',
-    )
-    .build();
-
-  const document = SwaggerModule.createDocument(app, config);
-
-  // Serve OpenAPI spec at /openapi.yaml
-  app.getHttpAdapter().get('/openapi.yaml', (_req: any, res: any) => {
-    const yamlDoc = yaml.dump(document, { skipInvalid: true });
-    res.header('Content-Type', 'text/yaml');
-    res.send(yamlDoc);
-  });
-
-  // Serve OpenAPI spec at /openapi.json
-  app.getHttpAdapter().get('/openapi.json', (_req: any, res: any) => {
-    res.header('Content-Type', 'application/json');
-    res.send(document);
-  });
+  setupOpenApi(app);
 
   // Get configuration from environment
   // For development: bind to 0.0.0.0 (all interfaces) so localhost works
@@ -93,12 +43,16 @@ async function bootstrap(listenHttp = true) {
   if (listenHttp) {
     await app.listen(port, host);
     const url = await app.getUrl();
-    mainLogger.info(`Worker process ${process.pid} is listening on ${url}`);
+    mainLogger.info(
+      `Worker process ${process.pid} is listening on ${url}`,
+      true,
+    );
   } else {
     // Initialize the app without listening (for cluster primary - hydration only)
     await app.init();
     mainLogger.info(
       `Primary process ${process.pid} initialized (hydration only, no HTTP listener)`,
+      true,
     );
   }
 

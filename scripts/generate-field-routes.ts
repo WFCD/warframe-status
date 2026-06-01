@@ -14,6 +14,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { formatGenerated } from './lib/format-generated.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -178,10 +179,10 @@ import {
 import type { Request, Response } from 'express';
 import { WorldstateBaseController } from './worldstate-base.controller';
 
-// Import all parser types for OpenAPI documentation
+// Import generated DTO types for OpenAPI documentation
 import {
   ${typeImports},
-} from 'warframe-worldstate-parser';
+} from '@dto/worldstate-generated';
 
 /**
  * Generated controller with explicit routes for each worldstate field
@@ -222,6 +223,8 @@ async function main() {
   
   console.log(`✅ Generated: ${outputPath}`);
   console.log(`📊 Total routes created: ${fields.length}`);
+  console.log('🧹 Formatting generated routes with Biome...');
+  formatGenerated('src/controllers/worldstate-field-routes.generated.ts');
   console.log('\n✨ Done! You can now use these routes in your worldstate controller.');
 }
 

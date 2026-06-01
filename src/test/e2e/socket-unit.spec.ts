@@ -5,6 +5,7 @@ process.env.WS_EMITTER_FEATURES = 'rss,rivens,worldstate';
 
 import { AppModule } from '@nest/app.module';
 import type { INestApplication } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { WsAdapter } from '@nestjs/platform-ws';
 import type { TestingModule } from '@nestjs/testing';
 import { Test } from '@nestjs/testing';
@@ -38,6 +39,9 @@ describe('/socket (unit tests with mocks)', () => {
     app.useWebSocketAdapter(new WsAdapter(app));
     await app.init();
     await app.listen(0); // Random port
+
+    // Wire gateway broadcast listeners to the mock emitter
+    app.get(EventEmitter2).emit('worldstate.ready');
   });
 
   after(async () => {

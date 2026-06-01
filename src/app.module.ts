@@ -2,6 +2,7 @@ import { DataController } from '@controllers/data.controller';
 import { DropsController } from '@controllers/drops.controller';
 import { HeartbeatController } from '@controllers/heartbeat.controller';
 import { ItemsController } from '@controllers/items.controller';
+import { OpenApiController } from '@controllers/openapi.controller';
 import { PriceCheckController } from '@controllers/pricecheck.controller';
 import { ProfileController } from '@controllers/profile.controller';
 import { RivensController } from '@controllers/rivens.controller';
@@ -11,14 +12,17 @@ import { WFInfoController } from '@controllers/wfinfo.controller';
 import { WorldstateController } from '@controllers/worldstate.controller';
 import { CacheModule } from '@modules/cache.module';
 import { LoggerModule } from '@modules/logger.module';
+import { USE_SOCKET, USE_WORLDSTATE } from '@nest/config/env';
 import { StatusGateway } from '@nest/gateways/status.gateway';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DropsCacheService } from '@services/drops-cache.service';
 import { HydrationService } from '@services/hydration.service';
 import { ItemsCacheService } from '@services/items-cache.service';
 import { LoggerService } from '@services/logger.service';
+import { OpenApiDocumentService } from '@services/openapi-document.service';
 import { PriceCheckService } from '@services/pricecheck.service';
 import { ProfileService } from '@services/profile.service';
 import { RivensCacheService } from '@services/rivens-cache.service';
@@ -27,14 +31,9 @@ import { WarframeDataService } from '@services/warframe-data.service';
 import { WFInfoCacheService } from '@services/wfinfo-cache.service';
 import { WorldStateService } from '@services/worldstate.service';
 
-// Feature flags - default to enabled for passive configuration
-// Users can explicitly disable by setting USE_WORLDSTATE=false or removing SOCKET from FEATURES
-const USE_WORLDSTATE = process.env.USE_WORLDSTATE !== 'false'; // Enabled by default
-const FEATURES = process.env.FEATURES?.split(',') || ['SOCKET']; // SOCKET enabled by default
-const USE_SOCKET = FEATURES.includes('SOCKET');
-
 // Base controllers (always enabled)
 const baseControllers = [
+  OpenApiController,
   HeartbeatController,
   ItemsController,
   DropsController,
@@ -61,6 +60,7 @@ const baseProviders = [
     provide: 'WarframeDataService',
     useClass: WarframeDataService,
   },
+  OpenApiDocumentService,
   {
     provide: 'PRICECHECK_SERVICE',
     useClass: PriceCheckService,
@@ -154,6 +154,7 @@ const conditionalProviders = [
         },
       ],
     }),
+    EventEmitterModule.forRoot(),
   ],
   controllers: [...baseControllers, ...conditionalControllers],
   providers: [...baseProviders, ...conditionalProviders],

@@ -38,7 +38,6 @@ export class HydrationService implements OnModuleInit, OnApplicationBootstrap {
   ) {
     this.logger = loggerService;
     this.logger.setContext(LogScope.HYDRATE);
-    this.logger.setLevel('info');
   }
 
   /**

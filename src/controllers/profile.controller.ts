@@ -1,3 +1,4 @@
+import { ArsenalUnavailableDto, ProfileNotFoundDto } from '@dto/profile.dto';
 import {
   Controller,
   Get,
@@ -21,7 +22,6 @@ import {
 } from '@nestjs/swagger';
 import type { ProfileService } from '@services/profile.service';
 import type { Request, Response } from 'express';
-import { ArsenalUnavailableDto, ProfileNotFoundDto } from '../dto/profile.dto';
 
 /**
  * Controller for player profile endpoints

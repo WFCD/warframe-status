@@ -30,6 +30,7 @@ caches/.rivens
 caches/.hy-info
 # nexus query cache
 .cache/
+scripts/.cache/
 
 # eslint cache
 .eslintcache
@@ -37,6 +38,11 @@ caches/.hy-info
 # TypeScript build output
 dist/
 *.tsbuildinfo
+
+# Generated worldstate OpenAPI DTOs and routes (see src/dto/worldstate-generated/README.md)
+src/dto/worldstate-generated/*
+!src/dto/worldstate-generated/README.md
+src/controllers/worldstate-field-routes.generated.ts
 
 # Leann indices
 .leann/

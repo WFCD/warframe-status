@@ -1,4 +1,5 @@
-import { Controller, Get, Inject, Param, Query } from '@nestjs/common';
+import { CompatibilityDto, RivenStatDto } from '@dto/rivens.dto';
+import { Controller, Get, Inject, Param } from '@nestjs/common';
 import {
   ApiExtraModels,
   ApiOperation,
@@ -10,11 +11,6 @@ import type {
   Platform,
   RivensCacheService,
 } from '@services/rivens-cache.service';
-import {
-  CompatibilityDto,
-  RivenDataDto,
-  RivenStatDto,
-} from '../dto/rivens.dto';
 
 @ApiTags('rivens')
 @ApiExtraModels(RivenStatDto, CompatibilityDto)

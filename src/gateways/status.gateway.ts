@@ -1,25 +1,16 @@
+import type { WorldStateReady } from '@nest/events/WorldStateReady';
 import { Inject, Optional } from '@nestjs/common';
+import { OnEvent } from '@nestjs/event-emitter';
 import {
-  ConnectedSocket,
-  MessageBody,
   type OnGatewayConnection,
   type OnGatewayDisconnect,
   type OnGatewayInit,
-  SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
 import type { LoggerService } from '@services/logger.service';
 import type { WorldStateService } from '@services/worldstate.service';
 import { type Server, WebSocket } from 'ws';
-
-interface WSRequest {
-  event: string;
-  packet?: {
-    platform?: string;
-    language?: string;
-  };
-}
 
 /**
  * WebSocket Gateway for real-time updates
@@ -46,10 +37,9 @@ export class StatusGateway
   /**
    * Initialize gateway after server is created
    */
-  afterInit(server: Server): void {
+  afterInit(_server: Server): void {
     this.logger.info('WebSocket gateway initialized');
     this.setupHeartbeat();
-    this.setupWorldStateListeners();
   }
 
   /**
@@ -69,7 +59,7 @@ export class StatusGateway
     client.send(JSON.stringify({ event: 'connected', status: 200 }));
 
     // Handle incoming messages
-    client.on('message', (data: any) => {
+    client.on('message', (data) => {
       try {
         const request = JSON.parse(data.toString());
         this.handleMessage(client, request);
@@ -85,7 +75,7 @@ export class StatusGateway
   /**
    * Handle client disconnection
    */
-  handleDisconnect(client: WebSocket): void {
+  handleDisconnect(_client: WebSocket): void {
     this.logger.warn('Socket disconnected');
   }
 
@@ -168,7 +158,7 @@ export class StatusGateway
    * Handle Twitter request
    */
   private async handleTwitterRequest(
-    packet: any,
+    _packet: any,
     client: WebSocket,
   ): Promise<void> {
     if (!this.worldStateService) {
@@ -184,7 +174,7 @@ export class StatusGateway
           packet: twitterData,
         }),
       );
-    } catch (error) {
+    } catch (_error) {
       client.send(JSON.stringify({ status: 400 }));
     }
   }
@@ -193,7 +183,7 @@ export class StatusGateway
    * Handle RSS request
    */
   private async handleRssRequest(
-    packet: any,
+    _packet: any,
     client: WebSocket,
   ): Promise<void> {
     if (!this.worldStateService) {
@@ -209,7 +199,7 @@ export class StatusGateway
           packet: rssData,
         }),
       );
-    } catch (error) {
+    } catch (_error) {
       client.send(JSON.stringify({ status: 400 }));
     }
   }
@@ -257,7 +247,8 @@ export class StatusGateway
   /**
    * Setup WorldState event listeners for broadcasting
    */
-  private setupWorldStateListeners(): void {
+  @OnEvent('worldstate.ready')
+  setupWorldStateListeners(_event: WorldStateReady): void {
     if (!this.worldStateService) {
       this.logger.warn('WorldState service not available for broadcasting');
       return;
@@ -271,20 +262,20 @@ export class StatusGateway
     }
 
     // Subscribe to WorldState events
-    emitter.on('tweet', (packet: any) => {
+    emitter.on('tweet', (packet) => {
       this.broadcast('tweet', packet);
     });
 
-    emitter.on('rss', (packet: any) => {
+    emitter.on('rss', (packet) => {
       this.broadcast('rss', packet);
     });
 
-    emitter.on('ws:update:event', (packet: any) => {
+    emitter.on('ws:update:event', (packet) => {
       this.broadcast('ws:event', packet);
       this.broadcast(packet.key, packet);
     });
 
-    emitter.on('ws:update:parsed', (packet: any) => {
+    emitter.on('ws:update:parsed', (packet) => {
       this.broadcast('ws:update', packet);
     });
 

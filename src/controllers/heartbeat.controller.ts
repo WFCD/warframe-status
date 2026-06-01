@@ -1,6 +1,6 @@
+import { HeartbeatResponseDto } from '@dto/heartbeat.dto';
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { HeartbeatResponseDto } from '../dto/heartbeat.dto';
 
 @ApiTags('system')
 @Controller('heartbeat')

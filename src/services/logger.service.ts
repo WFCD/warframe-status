@@ -1,3 +1,5 @@
+import { LOG_LEVEL } from '@nest/config/env';
+import { fromString, LogLevel } from '@nest/config/log-level';
 import {
   Injectable,
   type LoggerService as NestLoggerService,
@@ -31,14 +33,7 @@ export enum LogScope {
   WFINFO = 'WFINFO',
 }
 
-export enum LogLevel {
-  FATAL = 'fatal',
-  ERROR = 'error',
-  WARN = 'warn',
-  INFO = 'info',
-  DEBUG = 'debug',
-  SILLY = 'silly',
-}
+export { fromString, LogLevel } from '@nest/config/log-level';
 
 export const LogLevelColors: Record<LogLevel, string> = {
   [LogLevel.FATAL]: 'red',
@@ -57,6 +52,15 @@ export class LoggerService implements NestLoggerService {
   constructor() {
     this.context = LogScope.NEST;
     this.logger = this.createLogger(this.context);
+    this.logger.level = LOG_LEVEL;
+  }
+
+  get level() {
+    return this.logger.level as LogLevel;
+  }
+
+  set level(level: LogLevel) {
+    this.logger.level = level;
   }
 
   setContext(context: LogScope): void {
@@ -66,18 +70,21 @@ export class LoggerService implements NestLoggerService {
 
   private colorizeScope(scope: LogScope): string {
     switch (scope.toUpperCase()) {
+      case LogScope.TWITCH:
+      case LogScope.RIVENS:
       case LogScope.PROC:
         return colors.magenta(scope);
       case LogScope.REST:
+      case LogScope.WORLDSTATE:
+      case LogScope.HTTP:
         return colors.cyan(scope);
       case LogScope.SOCK:
         return colors.yellow(scope);
       case LogScope.BUILD:
+      case LogScope.HYDRATE:
         return colors.america(scope);
       case LogScope.CACHE:
         return colors.blue(scope);
-      case LogScope.HTTP:
-        return colors.cyan(scope);
       case LogScope.NEST:
       default:
         return colors.white(scope);
@@ -95,7 +102,7 @@ export class LoggerService implements NestLoggerService {
     });
 
     const logger = createLogger({
-      level: process.env.LOG_LEVEL || 'error',
+      level: LOG_LEVEL,
       format: combine(
         colorize(),
         timestamp(),
@@ -139,11 +146,27 @@ export class LoggerService implements NestLoggerService {
     this.logger.verbose(message);
   }
 
-  info(message: string): void {
+  info(message: string, alwaysLog?: boolean): void {
+    const originalLevel = this.logger.level;
+    if (alwaysLog) {
+      this.logger.level = LogLevel.SILLY;
+    }
     this.logger.info(message);
+    if (alwaysLog) {
+      this.logger.level = originalLevel;
+    }
+  }
+
+  silly(message: string): void {
+    this.logger.silly(message);
   }
 
   setLevel(level: string): void {
     this.logger.level = level;
+  }
+
+  /** Underlying Winston instance for libraries that expect winston.Logger. */
+  getWinston(): WinstonLogger {
+    return this.logger;
   }
 }

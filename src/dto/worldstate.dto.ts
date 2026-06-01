@@ -1,33 +1,32 @@
 import { ApiProperty } from '@nestjs/swagger';
-// Import parser classes directly - they already have @ApiProperty decorators
 import {
-  Alert,
-  CambionCycle,
-  CetusCycle,
-  ConstructionProgress,
-  DailyDeal,
-  DarkSector,
-  DuviriCycle,
-  EarthCycle,
-  ExternalMission,
-  Fissure,
-  FlashSale,
-  GlobalUpgrade,
-  Invasion,
-  Kuva,
-  News,
-  Nightwave,
-  PersistentEnemy,
-  SentientOutpost,
-  Simaris,
-  Sortie,
-  SteelPathOfferings,
-  SyndicateMission,
-  VallisCycle,
-  VoidTrader,
-  WorldEvent,
-  ZarimanCycle,
-} from 'warframe-worldstate-parser';
+  AlertDto,
+  CambionCycleDto,
+  CetusCycleDto,
+  ConstructionProgressDto,
+  DailyDealDto,
+  DarkSectorDto,
+  DuviriCycleDto,
+  EarthCycleDto,
+  ExternalMissionDto,
+  FissureDto,
+  FlashSaleDto,
+  GlobalUpgradeDto,
+  InvasionDto,
+  KuvaDto,
+  NewsDto,
+  NightwaveDto,
+  PersistentEnemyDto,
+  SentientOutpostDto,
+  SimarisDto,
+  SortieDto,
+  SteelPathOfferingsDto,
+  SyndicateMissionDto,
+  VallisCycleDto,
+  VoidTraderDto,
+  WorldEventDto,
+  ZarimanCycleDto,
+} from '@dto/worldstate-generated';
 
 /**
  * WorldState response - contains all current game state data
@@ -42,185 +41,185 @@ export class WorldStateDto {
 
   @ApiProperty({
     description: 'Active alerts',
-    type: [Alert],
+    type: [AlertDto],
     required: false,
   })
-  alerts?: Alert[];
+  alerts?: AlertDto[];
 
   @ApiProperty({
     description: 'Arbitration mission data',
-    type: ExternalMission,
+    type: ExternalMissionDto,
     required: false,
   })
-  arbitration?: ExternalMission;
+  arbitration?: ExternalMissionDto;
 
   @ApiProperty({
     description: 'Cambion Drift cycle (Day/Fass or Night/Vome)',
-    type: CambionCycle,
+    type: CambionCycleDto,
     required: false,
   })
-  cambionCycle?: CambionCycle;
+  cambionCycle?: CambionCycleDto;
 
   @ApiProperty({
     description: 'Cetus cycle (Day or Night)',
-    type: CetusCycle,
+    type: CetusCycleDto,
     required: false,
   })
-  cetusCycle?: CetusCycle;
+  cetusCycle?: CetusCycleDto;
 
   @ApiProperty({
     description: 'Construction progress data',
-    type: ConstructionProgress,
+    type: ConstructionProgressDto,
     required: false,
   })
-  constructionProgress?: ConstructionProgress;
+  constructionProgress?: ConstructionProgressDto;
 
   @ApiProperty({
     description: 'Daily deals from Darvo',
-    type: [DailyDeal],
+    type: [DailyDealDto],
     required: false,
   })
-  dailyDeals?: DailyDeal[];
+  dailyDeals?: DailyDealDto[];
 
   @ApiProperty({
     description: 'Dark sector conflicts',
-    type: [DarkSector],
+    type: [DarkSectorDto],
     required: false,
   })
-  darkSectors?: DarkSector[];
+  darkSectors?: DarkSectorDto[];
 
   @ApiProperty({
     description: 'Duviri cycle information',
-    type: DuviriCycle,
+    type: DuviriCycleDto,
     required: false,
   })
-  duviriCycle?: DuviriCycle;
+  duviriCycle?: DuviriCycleDto;
 
   @ApiProperty({
     description: 'Earth cycle (Day or Night)',
-    type: EarthCycle,
+    type: EarthCycleDto,
     required: false,
   })
-  earthCycle?: EarthCycle;
+  earthCycle?: EarthCycleDto;
 
   @ApiProperty({
     description: 'Active events',
-    type: [WorldEvent],
+    type: [WorldEventDto],
     required: false,
   })
-  events?: WorldEvent[];
+  events?: WorldEventDto[];
 
   @ApiProperty({
     description: 'Active void fissures',
-    type: [Fissure],
+    type: [FissureDto],
     required: false,
   })
-  fissures?: Fissure[];
+  fissures?: FissureDto[];
 
   @ApiProperty({
     description: 'Flash sales',
-    type: [FlashSale],
+    type: [FlashSaleDto],
     required: false,
   })
-  flashSales?: FlashSale[];
+  flashSales?: FlashSaleDto[];
 
   @ApiProperty({
     description: 'Global upgrades/boosters',
-    type: [GlobalUpgrade],
+    type: [GlobalUpgradeDto],
     required: false,
   })
-  globalUpgrades?: GlobalUpgrade[];
+  globalUpgrades?: GlobalUpgradeDto[];
 
   @ApiProperty({
     description: 'Active invasions',
-    type: [Invasion],
+    type: [InvasionDto],
     required: false,
   })
-  invasions?: Invasion[];
+  invasions?: InvasionDto[];
 
   @ApiProperty({
     description: 'Kuva missions',
-    type: [Kuva],
+    type: [KuvaDto],
     required: false,
   })
-  kuva?: Kuva[];
+  kuva?: KuvaDto[];
 
   @ApiProperty({
     description: 'Nightwave season data',
-    type: Nightwave,
+    type: NightwaveDto,
     required: false,
   })
-  nightwave?: Nightwave;
+  nightwave?: NightwaveDto;
 
   @ApiProperty({
     description: 'News items',
-    type: [News],
+    type: [NewsDto],
     required: false,
   })
-  news?: News[];
+  news?: NewsDto[];
 
   @ApiProperty({
     description: 'Persistent enemies (Liches, Sisters)',
-    type: [PersistentEnemy],
+    type: [PersistentEnemyDto],
     required: false,
   })
-  persistentEnemies?: PersistentEnemy[];
+  persistentEnemies?: PersistentEnemyDto[];
 
   @ApiProperty({
     description: 'Sentient anomaly outpost',
-    type: SentientOutpost,
+    type: SentientOutpostDto,
     required: false,
   })
-  sentientOutposts?: SentientOutpost;
+  sentientOutposts?: SentientOutpostDto;
 
   @ApiProperty({
     description: 'Sanctuary synthesis targets',
-    type: Simaris,
+    type: SimarisDto,
     required: false,
   })
-  simaris?: Simaris;
+  simaris?: SimarisDto;
 
   @ApiProperty({
     description: 'Daily sortie missions',
-    type: Sortie,
+    type: SortieDto,
     required: false,
   })
-  sortie?: Sortie;
+  sortie?: SortieDto;
 
   @ApiProperty({
     description: 'Steel Path offerings',
-    type: SteelPathOfferings,
+    type: SteelPathOfferingsDto,
     required: false,
   })
-  steelPath?: SteelPathOfferings;
+  steelPath?: SteelPathOfferingsDto;
 
   @ApiProperty({
     description: 'Syndicate missions',
-    type: [SyndicateMission],
+    type: [SyndicateMissionDto],
     required: false,
   })
-  syndicateMissions?: SyndicateMission[];
+  syndicateMissions?: SyndicateMissionDto[];
 
   @ApiProperty({
     description: 'Orb Vallis cycle (Warm or Cold)',
-    type: VallisCycle,
+    type: VallisCycleDto,
     required: false,
   })
-  vallisCycle?: VallisCycle;
+  vallisCycle?: VallisCycleDto;
 
   @ApiProperty({
     description: "Void trader (Baro Ki'Teer) data",
-    type: VoidTrader,
+    type: VoidTraderDto,
     required: false,
   })
-  voidTrader?: VoidTrader;
+  voidTrader?: VoidTraderDto;
 
   @ApiProperty({
     description: 'Zariman cycle',
-    type: ZarimanCycle,
+    type: ZarimanCycleDto,
     required: false,
   })
-  zarimanCycle?: ZarimanCycle;
+  zarimanCycle?: ZarimanCycleDto;
 }
 
 /**

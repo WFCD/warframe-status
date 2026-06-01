@@ -1,3 +1,4 @@
+import { DropDto, DropRewardDto, LocationGroupDto } from '@dto/drops.dto';
 import { Controller, Get, Inject, Param, Query } from '@nestjs/common';
 import {
   ApiExtraModels,
@@ -8,7 +9,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import type { DropsCacheService } from '@services/drops-cache.service';
-import { DropDto, DropRewardDto, LocationGroupDto } from '../dto/drops.dto';
 
 @ApiTags('drops')
 @ApiExtraModels(DropDto, LocationGroupDto, DropRewardDto)

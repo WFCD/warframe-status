@@ -1,3 +1,4 @@
+import { RssFeedItemDto } from '@dto/rss.dto';
 import { Controller, Get, Inject } from '@nestjs/common';
 import {
   ApiExtraModels,
@@ -6,7 +7,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import type { WorldStateService } from '@services/worldstate.service';
-import { RssFeedItemDto } from '../dto/rss.dto';
 
 @ApiTags('social')
 @ApiExtraModels(RssFeedItemDto)

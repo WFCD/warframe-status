@@ -1,4 +1,5 @@
 import { AppModule } from '@nest/app.module';
+import { setupOpenApi } from '@nest/config/openapi-document';
 import type { NestApplication } from '@nestjs/core';
 import { WsAdapter } from '@nestjs/platform-ws';
 import type { TestingModule } from '@nestjs/testing';
@@ -45,6 +46,7 @@ export async function setupApp(): Promise<NestApplication> {
 
   // Match the same configuration as the main app
   await app.init();
+  setupOpenApi(app);
 
   // Start listening on a random port for WebSocket tests
   await app.listen(0); // Port 0 = random available port

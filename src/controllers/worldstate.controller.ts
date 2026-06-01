@@ -2,11 +2,9 @@ import {
   Controller,
   Get,
   HttpStatus,
-  Inject,
   NotFoundException,
   Param,
   Query,
-  Redirect,
   Req,
   Res,
 } from '@nestjs/common';
@@ -17,11 +15,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import type { LoggerService } from '@services/logger.service';
-import type { WarframeDataService } from '@services/warframe-data.service';
-import type { WorldStateService } from '@services/worldstate.service';
 import type { Request, Response } from 'express';
-import { Platform } from 'warframe-nexus-query';
+import { WorldStateDto } from '@dto/worldstate.dto';
 import { WorldstateFieldRoutesController } from './worldstate-field-routes.generated';
 
 const PLATFORMS = ['pc', 'ps4', 'psn', 'xb1', 'swi', 'ns'];
@@ -65,13 +60,6 @@ function filterArray(
 @Controller()
 @ApiTags('worldstate')
 export class WorldstateController extends WorldstateFieldRoutesController {
-  constructor(
-    @Inject('WarframeDataService')
-    private readonly warframeDataService: WarframeDataService,
-  ) {
-    super();
-  }
-
   /**
    * GET /:platform - Get worldstate for a specific platform
    * @return {Object} worldstate data
@@ -87,22 +75,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
   @ApiResponse({
     status: 200,
     description: 'Complete worldstate data for the platform',
-    schema: {
-      type: 'object',
-      properties: {
-        timestamp: { type: 'string', format: 'date-time' },
-        news: { type: 'array', items: { type: 'object' } },
-        events: { type: 'array', items: { type: 'object' } },
-        alerts: { type: 'array', items: { type: 'object' } },
-        sortie: { type: 'object' },
-        syndicateMissions: { type: 'array', items: { type: 'object' } },
-        fissures: { type: 'array', items: { type: 'object' } },
-        invasions: { type: 'array', items: { type: 'object' } },
-        voidTrader: { type: 'object' },
-        dailyDeals: { type: 'array', items: { type: 'object' } },
-        nightwave: { type: 'object' },
-      },
-    },
+    type: WorldStateDto,
   })
   @ApiResponse({ status: 301, description: 'Redirected to PC platform' })
   @ApiResponse({ status: 404, description: 'WorldState not found' })
@@ -151,7 +124,11 @@ export class WorldstateController extends WorldstateFieldRoutesController {
   /**
    * GET /:platform/:field
    * Get a specific field from the worldstate
+   * @param platform
    * @param {string} field worldstate field name
+   * @param query
+   * @param req
+   * @param res
    * @return {Object|Array} worldstate field data
    * @summary Get specific worldstate field
    */
