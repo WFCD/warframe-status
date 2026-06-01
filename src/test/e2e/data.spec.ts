@@ -1,3 +1,4 @@
+import type { WarframeData } from '@services/warframe-data.service';
 import * as chai from 'chai';
 import chaiHttp from 'chai-http';
 import wfData from 'warframe-worldstate-data';
@@ -8,7 +9,7 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 describe('DataController (static data)', () => {
-  const warframeData = wfData as any;
+  const warframeData = wfData as unknown as WarframeData;
   const dataKeys = Object.keys(warframeData);
   const languages = warframeData.locales.filter((l: string) => l !== 'en_US');
 

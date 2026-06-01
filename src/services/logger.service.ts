@@ -1,5 +1,5 @@
 import { LOG_LEVEL } from '@nest/config/env';
-import { fromString, LogLevel } from '@nest/config/log-level';
+import { LogLevel } from '@nest/config/log-level';
 import {
   Injectable,
   type LoggerService as NestLoggerService,
@@ -85,7 +85,6 @@ export class LoggerService implements NestLoggerService {
         return colors.america(scope);
       case LogScope.CACHE:
         return colors.blue(scope);
-      case LogScope.NEST:
       default:
         return colors.white(scope);
     }

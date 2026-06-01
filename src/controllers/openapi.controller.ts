@@ -1,6 +1,6 @@
 import { Controller, Get, Header, Inject } from '@nestjs/common';
-import { ApiExcludeController } from '@nestjs/swagger';
 import type { OpenAPIObject } from '@nestjs/swagger';
+import { ApiExcludeController } from '@nestjs/swagger';
 import { OpenApiDocumentService } from '@services/openapi-document.service';
 import * as yaml from 'js-yaml';
 

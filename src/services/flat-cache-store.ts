@@ -5,11 +5,11 @@ import { create } from 'flat-cache';
 interface Cache {
   load(cacheId: string, cacheDir?: string): void;
   loadFile(pathToFile: string): void;
-  all(): { [key: string]: any };
+  all(): { [key: string]: unknown };
   keys(): string[];
-  setKey(key: string, value: any): void;
+  setKey(key: string, value: unknown): void;
   removeKey(key: string): void;
-  getKey(key: string): any;
+  getKey(key: string): unknown;
   save(noPrune?: boolean): void;
   removeCacheFile(): boolean;
   destroy(): void;
@@ -120,14 +120,14 @@ export class FlatCacheStore implements CacheStore {
     }
 
     // Simple pattern matching (supports * wildcard)
-    const regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
+    const regex = new RegExp(`^${pattern.replace(/\*/g, '.*')}$`);
     return allKeys.filter((key) => regex.test(key));
   }
 
   async ttl(key: string): Promise<number> {
     const cached = this.cache.getKey(key) as CachedValue<unknown> | undefined;
 
-    if (!cached || !cached.expires) {
+    if (!cached?.expires) {
       return -1; // No expiration set
     }
 

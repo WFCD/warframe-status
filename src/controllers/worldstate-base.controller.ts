@@ -1,7 +1,8 @@
+import type { RequestWithLanguage } from '@nest/types/express';
 import { Inject, NotFoundException } from '@nestjs/common';
 import type { LoggerService } from '@services/logger.service';
 import type { WorldStateService } from '@services/worldstate.service';
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
 
 /**
  * Helper to filter arrays by query parameters
@@ -16,7 +17,10 @@ function filterArray(
   if (filterParam) {
     filterParam.split(',').forEach((filter) => {
       const [key, value] = filter.split(':');
-      filtered = filtered.filter((item: any) => String(item[key]) === value);
+      filtered = filtered.filter((item) => {
+        const record = item as Record<string, unknown>;
+        return String(record[key]) === value;
+      });
     });
   }
 
@@ -47,11 +51,11 @@ export abstract class WorldstateBaseController {
    */
   protected async getField(
     field: string,
-    req: Request,
+    req: RequestWithLanguage,
     res: Response,
     query: Record<string, unknown> = {},
   ) {
-    const language = (req as any).language || 'en';
+    const language = req.language || 'en';
     const ws = (await this.worldStateService.getWorldstate(language)) as Record<
       string,
       unknown

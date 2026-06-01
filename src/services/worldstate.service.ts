@@ -5,7 +5,6 @@ import {
   InternalServerErrorException,
   type OnModuleInit,
 } from '@nestjs/common';
-// biome-ignore lint/style/useImportType: nest requires this import to resolve the injectable
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import WorldStateEmitter from 'worldstate-emitter';
 import { type LoggerService, LogScope } from './logger.service';

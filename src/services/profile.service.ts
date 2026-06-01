@@ -1,18 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import ArsenalParser from '@wfcd/arsenal-parser';
-import Profile from '@wfcd/profile-parser/Profile';
-import Stats from '@wfcd/profile-parser/Stats';
-import XpInfo from '@wfcd/profile-parser/XpInfo';
+import Profile, { type RawProfile } from '@wfcd/profile-parser/Profile';
+import Stats, { type RawStats } from '@wfcd/profile-parser/Stats';
+import XpInfo, { type RawXpItem } from '@wfcd/profile-parser/XpInfo';
+import type { Locale } from 'warframe-worldstate-data';
 import type { TwitchCacheService } from './twitch-cache.service';
 
 interface ProfileData {
-  Results: Array<{
-    LoadOutInventory: {
-      XPInfo: unknown[];
-    };
-    [key: string]: unknown;
-  }>;
-  Stats: unknown;
+  Results: RawProfile[];
+  Stats: RawStats;
 }
 
 interface ArsenalData {
@@ -58,7 +54,7 @@ export class ProfileService {
       }
 
       return response.json();
-    } catch (error) {
+    } catch (_error) {
       return undefined;
     }
   }
@@ -73,11 +69,11 @@ export class ProfileService {
   ): Promise<Profile | undefined> {
     const data = await this.getProfileData(playerId);
 
-    if (!data || !data.Results || data.Results.length === 0) {
+    if (!data?.Results || data.Results.length === 0) {
       return undefined;
     }
 
-    return new Profile(data.Results[0] as any, language as any, withItem);
+    return new Profile(data.Results[0], language as Locale, withItem);
   }
 
   /**
@@ -89,12 +85,12 @@ export class ProfileService {
   ): Promise<XpInfo[] | undefined> {
     const data = await this.getProfileData(playerId);
 
-    if (!data || !data.Results || data.Results.length === 0) {
+    if (!data?.Results || data.Results.length === 0) {
       return undefined;
     }
 
     const xpInfo = data.Results[0].LoadOutInventory.XPInfo.map(
-      (xp: any) => new XpInfo(xp, withItem as any),
+      (xp) => new XpInfo(xp as RawXpItem, 'en', withItem),
     );
 
     return xpInfo;
@@ -106,11 +102,11 @@ export class ProfileService {
   async getStats(playerId: string): Promise<Stats | undefined> {
     const data = await this.getProfileData(playerId);
 
-    if (!data || !data.Stats) {
+    if (!data?.Stats) {
       return undefined;
     }
 
-    return new Stats(data.Stats as any);
+    return new Stats(data.Stats);
   }
 
   /**
@@ -150,8 +146,10 @@ export class ProfileService {
       }
 
       const parser = new ArsenalParser();
-      return parser.parseClipboard(JSON.stringify(data));
-    } catch (error) {
+      return parser.parseClipboard(
+        JSON.stringify(data),
+      ) as unknown as ArsenalParser;
+    } catch (_error) {
       return undefined;
     }
   }

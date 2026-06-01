@@ -2,38 +2,50 @@ import { Injectable } from '@nestjs/common';
 import wfData from 'warframe-worldstate-data';
 
 export interface WarframeData {
-  [key: string]: any;
-  en: any;
-  de: any;
-  es: any;
-  fr: any;
-  it: any;
-  ko: any;
-  pl: any;
-  pt: any;
-  ru: any;
-  zh: any;
-  cs: any;
-  sr: any;
-  uk: any;
-  arcanes: any[];
-  archonShards: any;
-  conclave: any;
-  events: any;
-  factions: any;
-  fissureModifiers: any;
+  [key: string]: unknown;
+  en: Record<string, unknown>;
+  de: Record<string, unknown>;
+  es: Record<string, unknown>;
+  fr: Record<string, unknown>;
+  it: Record<string, unknown>;
+  ko: Record<string, unknown>;
+  pl: Record<string, unknown>;
+  pt: Record<string, unknown>;
+  ru: Record<string, unknown>;
+  zh: Record<string, unknown>;
+  cs: Record<string, unknown>;
+  sr: Record<string, unknown>;
+  uk: Record<string, unknown>;
+  arcanes: SearchableItem[];
+  archonShards: unknown;
+  conclave: unknown;
+  events: unknown;
+  factions: unknown;
+  fissureModifiers: unknown;
   languages: string[];
-  missionTypes: any;
-  operationTypes: any;
-  persistentEnemy: any;
-  solNodes: Record<string, any>;
-  sortie: any;
-  syndicates: any;
-  tutorials: any[];
-  upgradeTypes: any;
-  synthTargets: any[];
-  steelPath: any;
+  missionTypes: unknown;
+  operationTypes: unknown;
+  persistentEnemy: unknown;
+  solNodes: Record<string, SolNodeItem>;
+  sortie: unknown;
+  syndicates: unknown;
+  tutorials: SearchableItem[];
+  upgradeTypes: unknown;
+  synthTargets: NamedItem[];
+  steelPath: unknown;
   locales: string[];
+}
+
+interface NamedItem {
+  name: string;
+}
+
+interface SearchableItem extends NamedItem {
+  regex: string;
+}
+
+interface SolNodeItem {
+  value?: string;
 }
 
 /**
@@ -84,11 +96,11 @@ export class WarframeDataService {
   /**
    * Get data for a specific key and language
    */
-  getData(key: string, language: string = 'en'): any {
+  getData(key: string, language: string = 'en'): unknown {
     // Some keys are language-specific (arcanes, solNodes, synthTargets)
     // Others are language-agnostic (tutorials)
-    const langData = this.data[language];
-    if (langData && langData[key]) {
+    const langData = this.data[language] as Record<string, unknown> | undefined;
+    if (langData?.[key]) {
       return langData[key];
     }
     return this.data[key];
@@ -108,18 +120,18 @@ export class WarframeDataService {
   /**
    * Search data by key and query
    */
-  search(key: string, queries: string[], language: string = 'en'): any[] {
-    const results: any[] = [];
+  search(key: string, queries: string[], language: string = 'en'): unknown[] {
+    const results: unknown[] = [];
 
     queries.forEach((query) => {
       const loweredQuery = query.toLowerCase();
-      let value: any;
+      let value: unknown;
 
       switch (key) {
         case 'arcanes': {
-          const arcanes = this.getData(key, language);
+          const arcanes = this.getData(key, language) as SearchableItem[];
           const filtered = arcanes.filter(
-            (arcane: any) =>
+            (arcane) =>
               new RegExp(arcane.regex).test(loweredQuery) ||
               arcane.name.toLowerCase().includes(loweredQuery),
           );
@@ -130,7 +142,7 @@ export class WarframeDataService {
         case 'tutorials': {
           const tutorials = this.data.tutorials;
           const filtered = tutorials.filter(
-            (tutorial: any) =>
+            (tutorial) =>
               new RegExp(tutorial.regex).test(loweredQuery) ||
               tutorial.name.toLowerCase().includes(loweredQuery),
           );
@@ -140,7 +152,7 @@ export class WarframeDataService {
 
         case 'solNodes': {
           const keyResults: string[] = [];
-          const nodeResults: any[] = [];
+          const nodeResults: SolNodeItem[] = [];
 
           // Search by key
           this.solKeys.forEach((solKey) => {
@@ -151,8 +163,14 @@ export class WarframeDataService {
 
           // Search by value (node name)
           this.solKeys.forEach((solKey) => {
-            const node = this.data[language]?.solNodes?.[solKey];
-            if (node && node.value?.toLowerCase().includes(loweredQuery)) {
+            const langData = this.data[language] as
+              | Record<string, unknown>
+              | undefined;
+            const solNodes = langData?.solNodes as
+              | Record<string, SolNodeItem>
+              | undefined;
+            const node = solNodes?.[solKey];
+            if (node?.value?.toLowerCase().includes(loweredQuery)) {
               nodeResults.push(node);
             }
           });
@@ -162,8 +180,8 @@ export class WarframeDataService {
         }
 
         case 'synthTargets': {
-          const synthTargets = this.getData(key, language);
-          const filtered = synthTargets.filter((synth: any) =>
+          const synthTargets = this.getData(key, language) as NamedItem[];
+          const filtered = synthTargets.filter((synth) =>
             synth.name.toLowerCase().includes(loweredQuery),
           );
           value = filtered;
@@ -172,15 +190,22 @@ export class WarframeDataService {
 
         default: {
           // Generic search for other keys
-          const keyResults: any[] = [];
-          const dataObj = this.data[language]?.[key] || this.data[key];
+          const keyResults: unknown[] = [];
+          const langData = this.data[language] as
+            | Record<string, unknown>
+            | undefined;
+          const dataObj = langData?.[key] ?? this.data[key];
 
           if (dataObj && typeof dataObj === 'object') {
-            Object.keys(dataObj).forEach((selectedDataKey) => {
-              if (selectedDataKey.toLowerCase().includes(loweredQuery)) {
-                keyResults.push(dataObj[selectedDataKey]);
-              }
-            });
+            Object.keys(dataObj as Record<string, unknown>).forEach(
+              (selectedDataKey) => {
+                if (selectedDataKey.toLowerCase().includes(loweredQuery)) {
+                  keyResults.push(
+                    (dataObj as Record<string, unknown>)[selectedDataKey],
+                  );
+                }
+              },
+            );
           }
 
           value = keyResults;
@@ -190,10 +215,24 @@ export class WarframeDataService {
 
       if (value) {
         if (key === 'solNodes') {
+          const solNodeValue = value as {
+            keys: string[];
+            nodes: SolNodeItem[];
+          };
           // For solNodes, merge results
-          if (results.length > 0 && results[0].keys && results[0].nodes) {
-            results[0].keys = results[0].keys.concat(value.keys);
-            results[0].nodes = results[0].nodes.concat(value.nodes);
+          if (
+            results.length > 0 &&
+            typeof results[0] === 'object' &&
+            results[0] !== null &&
+            'keys' in results[0] &&
+            'nodes' in results[0]
+          ) {
+            const existing = results[0] as {
+              keys: string[];
+              nodes: SolNodeItem[];
+            };
+            existing.keys = existing.keys.concat(solNodeValue.keys);
+            existing.nodes = existing.nodes.concat(solNodeValue.nodes);
           } else {
             results.push(value);
           }
@@ -204,10 +243,20 @@ export class WarframeDataService {
     });
 
     // Deduplicate solNodes results
-    if (key === 'solNodes' && results.length > 0 && results[0].keys) {
+    if (
+      key === 'solNodes' &&
+      results.length > 0 &&
+      typeof results[0] === 'object' &&
+      results[0] !== null &&
+      'keys' in results[0]
+    ) {
+      const solNodeResults = results[0] as {
+        keys: string[];
+        nodes: SolNodeItem[];
+      };
       results[0] = {
-        keys: Array.from(new Set(results[0].keys)),
-        nodes: Array.from(new Set(results[0].nodes)),
+        keys: Array.from(new Set(solNodeResults.keys)),
+        nodes: Array.from(new Set(solNodeResults.nodes)),
       };
     }
 

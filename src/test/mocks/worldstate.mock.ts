@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 
 /**
  * Mock WorldState data for testing
@@ -91,19 +91,19 @@ export class MockWorldStateService extends EventEmitter {
   }
 
   // Helper methods for testing event broadcasting
-  emitTweet(packet: any): void {
+  emitTweet(packet: unknown): void {
     this.emit('tweet', packet);
   }
 
-  emitRss(packet: any): void {
+  emitRss(packet: unknown): void {
     this.emit('rss', packet);
   }
 
-  emitWsUpdateEvent(packet: any): void {
+  emitWsUpdateEvent(packet: unknown): void {
     this.emit('ws:update:event', packet);
   }
 
-  emitWsUpdateParsed(packet: any): void {
+  emitWsUpdateParsed(packet: unknown): void {
     this.emit('ws:update:parsed', packet);
   }
 }

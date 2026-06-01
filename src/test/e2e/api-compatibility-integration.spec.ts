@@ -51,7 +51,7 @@ describe('API Compatibility (NestJS vs Express)', () => {
     try {
       const appModule = await import('../../../app.js');
       expressApp = appModule.default;
-    } catch (error) {
+    } catch (_error) {
       console.warn('Express app not available, skipping compatibility tests');
       this.skip();
     }

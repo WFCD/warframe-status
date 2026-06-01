@@ -1,9 +1,9 @@
+import { createOpenApiDocument } from '@nest/config/openapi-document';
 import type { INestApplication } from '@nestjs/common';
 import type { OpenAPIObject } from '@nestjs/swagger';
 import * as chai from 'chai';
 import chaiHttp, { request } from 'chai-http';
 import packageJson from '../../../package.json' with { type: 'json' };
-import { createOpenApiDocument } from '@nest/config/openapi-document';
 import { getApp } from '../hooks/setup.hook';
 
 chai.should();
@@ -41,6 +41,8 @@ describe('OpenAPI', () => {
       document.info.should.have.property('x-logo').that.deep.equals({
         url: 'https://docs.warframestat.com/wfcd_logo_color.png',
         altText: 'Warframe Community Developers',
+        backgroundColor: 'transparent',
+        href: 'https://github.com/WFCD/',
       });
       document.should.not.have.property('x-logo');
     });
@@ -119,7 +121,7 @@ describe('OpenAPI', () => {
       schemaNames.length.should.be.at.least(40);
     });
 
-    it('should define WFInfoPriceItemDto referenced by /wfinfo/prices', () => {
+    it('should include WFInfoPriceItemDto on /wfinfo/prices', () => {
       schemaRef(document, 'WFInfoPriceItemDto').should.be.an('object');
 
       const pricesSchema =

@@ -3,15 +3,16 @@ FROM node:krypton-alpine AS build
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files and build tooling config
 COPY package*.json ./
 COPY tsconfig*.json ./
 COPY nest-cli.json ./
+COPY biome.json ./
 
-# Install dependencies (including dev dependencies for build)
-RUN npm ci
+# Install dependencies without lifecycle scripts (prepare runs codegen and needs scripts/)
+RUN npm ci --ignore-scripts
 
-# Copy source code
+# Copy source and codegen scripts needed for build
 COPY src/ ./src/
 COPY scripts/ ./scripts/
 

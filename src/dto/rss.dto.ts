@@ -19,7 +19,7 @@ export interface RssFeedItemDataDto {
   categories: string;
   enclosures: object;
   meta: object;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**

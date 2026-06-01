@@ -1,3 +1,5 @@
+import { WorldStateDto } from '@dto/worldstate.dto';
+import type { RequestWithLanguage } from '@nest/types/express';
 import {
   Controller,
   Get,
@@ -15,8 +17,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import type { Request, Response } from 'express';
-import { WorldStateDto } from '@dto/worldstate.dto';
+import type { Response } from 'express';
 import { WorldstateFieldRoutesController } from './worldstate-field-routes.generated';
 
 const PLATFORMS = ['pc', 'ps4', 'psn', 'xb1', 'swi', 'ns'];
@@ -50,7 +51,10 @@ function filterArray(
   if (filterParam) {
     filterParam.split(',').forEach((filter) => {
       const [key, value] = filter.split(':');
-      filtered = filtered.filter((item: any) => String(item[key]) === value);
+      filtered = filtered.filter((item) => {
+        const record = item as Record<string, unknown>;
+        return String(record[key]) === value;
+      });
     });
   }
 
@@ -81,7 +85,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
   @ApiResponse({ status: 404, description: 'WorldState not found' })
   async getWorldstate(
     @Param('platform') platform: string,
-    @Req() req: Request,
+    @Req() req: RequestWithLanguage,
     @Res() res: Response,
   ) {
     this.logger.info(`Requested worldstate for ${platform}`);
@@ -111,7 +115,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
     }
 
     this.logger.info(`Resolving pc (original: ${platform})`);
-    const language = (req as any).language || 'en';
+    const language = req.language || 'en';
     const ws = await this.worldStateService.getWorldstate(language);
     this.logger.debug(`Resolved worldState... ${JSON.stringify(ws, null, 2)}`);
     res.setHeader('Content-Language', language);
@@ -168,7 +172,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
     @Param('platform') platform: string,
     @Param('field') field: string,
     @Query() query: Record<string, unknown>,
-    @Req() req: Request,
+    @Req() req: RequestWithLanguage,
     @Res() res: Response,
   ) {
     // Check if this is a valid platform for worldstate
@@ -206,7 +210,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
       return res.redirect(HttpStatus.MOVED_PERMANENTLY, redirPath);
     }
 
-    let language = (req as any).language || 'en';
+    let language = req.language || 'en';
     const ws = this.worldStateService.getWorldstate(language) as Record<
       string,
       unknown

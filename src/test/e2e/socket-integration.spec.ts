@@ -1,6 +1,6 @@
 import type { INestApplication } from '@nestjs/common';
 import { expect, use } from 'chai';
-import chaiHttp, { request } from 'chai-http';
+import chaiHttp from 'chai-http';
 import { WebSocket } from 'ws';
 import { getApp } from '../hooks/setup.hook';
 

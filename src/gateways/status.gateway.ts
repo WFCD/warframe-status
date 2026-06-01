@@ -1,4 +1,10 @@
 import type { WorldStateReady } from '@nest/events/WorldStateReady';
+import type {
+  AliveWebSocket,
+  SocketClientMessage,
+  SocketHandshakeRequest,
+  WorldStateSocketRequest,
+} from '@nest/types/websocket';
 import { Inject, Optional } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import {
@@ -45,14 +51,14 @@ export class StatusGateway
   /**
    * Handle client connection
    */
-  handleConnection(client: WebSocket, req: any): void {
+  handleConnection(client: WebSocket, req: SocketHandshakeRequest): void {
     const remoteAddress = req.socket?.remoteAddress || 'unknown';
     this.logger.info(`Socket connection established with ${remoteAddress}`);
 
-    // Set up client heartbeat tracking
-    (client as any).isAlive = true;
+    const aliveClient = client as AliveWebSocket;
+    aliveClient.isAlive = true;
     client.on('pong', function heartbeat() {
-      (this as any).isAlive = true;
+      (this as AliveWebSocket).isAlive = true;
     });
 
     // Send connected event
@@ -82,19 +88,19 @@ export class StatusGateway
   /**
    * Handle incoming WebSocket message
    */
-  private handleMessage(client: WebSocket, request: any): void {
+  private handleMessage(client: WebSocket, request: SocketClientMessage): void {
     const { event, packet } = request;
     this.logger.info(`Socket received request for ${event}`);
 
     switch (event) {
       case 'ws:req':
-        this.handleWorldStateRequest(packet, client);
+        this.handleWorldStateRequest(packet ?? {}, client);
         break;
       case 'twitter':
-        this.handleTwitterRequest(packet, client);
+        this.handleTwitterRequest(packet ?? {}, client);
         break;
       case 'rss':
-        this.handleRssRequest(packet, client);
+        this.handleRssRequest(packet ?? {}, client);
         break;
       default:
         client.send(JSON.stringify({ status: 400 }));
@@ -105,7 +111,10 @@ export class StatusGateway
   /**
    * Handle WebSocket request
    */
-  private handleWorldStateRequest(packet: any, client: WebSocket): void {
+  private handleWorldStateRequest(
+    packet: Record<string, unknown>,
+    client: WebSocket,
+  ): void {
     if (!this.worldStateService) {
       client.send(
         JSON.stringify({
@@ -119,7 +128,7 @@ export class StatusGateway
       return;
     }
 
-    const { platform, language } = packet || {};
+    const { platform, language } = packet as WorldStateSocketRequest;
 
     if (!platform && !language) {
       client.send(
@@ -158,7 +167,7 @@ export class StatusGateway
    * Handle Twitter request
    */
   private async handleTwitterRequest(
-    _packet: any,
+    _packet: Record<string, unknown>,
     client: WebSocket,
   ): Promise<void> {
     if (!this.worldStateService) {
@@ -183,7 +192,7 @@ export class StatusGateway
    * Handle RSS request
    */
   private async handleRssRequest(
-    _packet: any,
+    _packet: Record<string, unknown>,
     client: WebSocket,
   ): Promise<void> {
     if (!this.worldStateService) {
@@ -207,7 +216,7 @@ export class StatusGateway
   /**
    * Broadcast message to all connected clients
    */
-  private broadcast(event: string, packet: any): void {
+  private broadcast(event: string, packet: unknown): void {
     if (!this.server) return;
 
     const message = JSON.stringify({ event, packet });
@@ -225,14 +234,15 @@ export class StatusGateway
     this.heartbeatInterval = setInterval(() => {
       if (!this.server) return;
 
-      this.server.clients.forEach((ws: any) => {
-        if (ws.isAlive === false) {
-          ws.terminate();
+      this.server.clients.forEach((ws) => {
+        const aliveClient = ws as AliveWebSocket;
+        if (aliveClient.isAlive === false) {
+          aliveClient.terminate();
           return;
         }
 
-        ws.isAlive = false;
-        ws.ping(() => {});
+        aliveClient.isAlive = false;
+        aliveClient.ping(() => {});
       });
     }, 30000); // 30 seconds
 

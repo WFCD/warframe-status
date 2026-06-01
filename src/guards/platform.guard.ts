@@ -9,14 +9,14 @@ import type { Platform } from 'warframe-nexus-query';
 
 const VALID_PLATFORMS = ['pc', 'ps4', 'psn', 'xb1', 'swi', 'ns'];
 
-export const isPlatform = (input: any): input is Platform => {
+export const isPlatform = (input: unknown): input is Platform => {
   if (typeof input === 'string') {
     return VALID_PLATFORMS.includes(input.toLowerCase());
   }
   return false;
 };
 
-export const asPlatform = (input: any): Platform | undefined => {
+export const asPlatform = (input: unknown): Platform | undefined => {
   if (isPlatform(input)) {
     return input as Platform;
   }
