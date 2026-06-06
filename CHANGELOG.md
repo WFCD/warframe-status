@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/wfcd/warframe-status/compare/v2.6.55...v3.0.0) (2026-06-06)
+
+
+* feat!: nest migration ([#2136](https://github.com/wfcd/warframe-status/issues/2136)) ([4715374](https://github.com/wfcd/warframe-status/commit/4715374b4c8e7f05ac0766752063b4f68e76029b))
+
+
+### BREAKING CHANGES
+
+* Migrate to typescript & nestjs
+
 ## [2.6.55](https://github.com/wfcd/warframe-status/compare/v2.6.54...v2.6.55) (2026-05-30)
 
 
