@@ -206,7 +206,7 @@ npm run docs:build
 npm run docs:preview
 ```
 
-Docs deploy automatically on release via `.github/workflows/release.yml`. Manual redeploy: Actions → **API docs** → Run workflow.
+Docs deploy automatically on release via `.github/workflows/release.yml`. If that step fails or is skipped, manually redeploy from GitHub Actions → **API docs** → **Run workflow** (optional `ref` for branch/tag/SHA, defaults to `main`).
 
 ---
 
