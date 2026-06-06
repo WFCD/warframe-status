@@ -39,3 +39,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/web
           cname: docs.warframestat.us
+          publish_branch: 'gh-pages'
