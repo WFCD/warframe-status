@@ -18,8 +18,4 @@ jobs:
     uses: ./.github/workflows/deploy-docs.yml
     with:
       ref: ${{ inputs.ref }}
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     secrets: inherit

@@ -208,6 +208,8 @@ npm run docs:preview
 
 Docs deploy automatically on release via `.github/workflows/release.yml`. If that step fails or is skipped, manually redeploy from GitHub Actions → **API docs** → **Run workflow** (optional `ref` for branch/tag/SHA, defaults to `main`).
 
+Deploy uses `GITHUB_TOKEN` with `contents: write`. Keep `gh-pages` unprotected so Actions can push freely; also ensure repo workflow permissions are **Read and write**.
+
 ---
 
 ## Development

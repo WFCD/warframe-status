@@ -102,8 +102,4 @@ jobs:
     needs: [semantic-release]
     if: needs.semantic-release.outputs.release == 'yes'
     uses: ./.github/workflows/deploy-docs.yml
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     secrets: inherit
