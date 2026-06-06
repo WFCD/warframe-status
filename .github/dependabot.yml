@@ -10,41 +10,15 @@ updates:
     labels:
       - 'Scope: Dependencies'
       - 'Type: Maintenance'
-    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 14
     pull-request-branch-name:
       separator: '-'
     rebase-strategy: 'auto'
     groups:
-      sentry:
+      default:
         patterns:
-          - '@sentry/'
-      warframe:
-        patterns:
-          - '@wfcd/*'
-          - 'warframe-*'
-          - 'worldstate-emitter'
-      webserver:
-        patterns:
-          - 'express'
-          - 'apicache'
-          - 'express-async-handler'
-          - 'helmet'
-          - 'ip-address'
-          - 'swagger-stats'
-          - 'ws'
-      testing:
-        patterns:
-          - 'mocha'
-          - 'c8'
-          - 'chai'
-          - 'chai-http'
-      types:
-        patterns:
-          - '@types/'
-      lint:
-        patterns:
-          - '@commitlint/*'
-          - '@biomejs/*'
+          - '*'
 
   - package-ecosystem: github-actions
     directory: '/'
@@ -57,10 +31,15 @@ updates:
     labels:
       - 'Scope: Dependencies'
       - 'Type: Maintenance'
-    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 14
     pull-request-branch-name:
       separator: '-'
     rebase-strategy: 'auto'
+    groups:
+      default:
+        patterns:
+          - '*'
 
   - package-ecosystem: docker
     directory: '/'
@@ -73,6 +52,12 @@ updates:
     labels:
       - 'Scope: Dependencies'
       - 'Type: Maintenance'
+    cooldown:
+      default-days: 14
     pull-request-branch-name:
       separator: '-'
     rebase-strategy: 'auto'
+    groups:
+      default:
+        patterns:
+          - '*'

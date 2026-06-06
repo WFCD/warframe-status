@@ -1,14 +1,11 @@
 {
   "exclude": [
-    "src/spec/**",
-    "src/controllers/index.js",
-    "src/lib/*"
+    "src/test/**",
+    "scripts/**",
+    "src/controllers/worldstate-field-routes.generated.ts",
+    "src/dto/worldstate-generated/**"
   ],
-  "reporter": [
-    "lcov",
-    "text",
-    "html"
-  ],
+  "reporter": ["lcov", "text", "html"],
   "source-map": true,
   "sourceMap": true,
   "produce-source-map": true,

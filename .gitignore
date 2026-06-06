@@ -14,6 +14,8 @@ tmp/
 #nodemon dev config
 .nodemon
 .env
+.env.local
+.env*.local
 
 # JetBrains files
 .idea/
@@ -28,6 +30,24 @@ caches/.rivens
 caches/.hy-info
 # nexus query cache
 .cache/
+scripts/.cache/
 
 # eslint cache
 .eslintcache
+
+# TypeScript build output
+dist/
+*.tsbuildinfo
+
+# Generated worldstate OpenAPI DTOs and routes (see src/dto/worldstate-generated/README.md)
+src/dto/worldstate-generated/*
+!src/dto/worldstate-generated/README.md
+src/controllers/worldstate-field-routes.generated.ts
+
+# Generated OpenAPI export and bundled docs artifacts
+docs/openapi/
+docs/web/openapi.json
+docs/web/openapi.yaml
+
+# Leann indices
+.leann/

@@ -1,0 +1,452 @@
+
+> warframe-status@2.6.44 test:nest
+> cross-env HOST=localhost mocha --config .mocharc.nest.yaml
+
+
+
+  items
+    1) should return all items
+    2) should include required keys
+    3) should remove keys from dump
+    4) should filter with desired key:value pairs
+    5) should only include desired keys from dump
+    6) should be case insensitive
+    7) should be searchable for a single result
+    8) should give error when not found
+    9) should be searchable for multiple results
+    10) should accommodate alternate languages
+    11) should return empty array for unmatchable
+    12) should return an item by a non-default key
+    13) should return multiple items by a non-default key
+    14) should return an item by nested keys
+    15) should give error for unmatchable nested keys
+    16) should return multiple items by nested keys
+    17) should return empty array for unmatchable nested keys
+
+  weapons
+    18) should return all weapons
+    19) should remove keys from dump
+    20) should only include desired keys from dump
+
+  warframes
+    21) should return all warframes
+    22) should remove keys from dump
+    23) should only include desired keys from dump
+    24) should be searchable for a single result
+    25) should be searchable for multiple results
+
+  mods
+    26) should resolve the most exact match
+    27) should resolve only desired language
+
+
+  0 passing (4s)
+  27 failing
+
+  1) items
+       should return all items:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:15:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  2) items
+       should include required keys:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:23:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  3) items
+       should remove keys from dump:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:39:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  4) items
+       should filter with desired key:value pairs:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:48:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  5) items
+       should only include desired keys from dump:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:63:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  6) items
+       should be case insensitive:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:73:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  7) items
+       should be searchable for a single result:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:80:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  8) items
+       should give error when not found:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:87:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  9) items
+       should be searchable for multiple results:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:95:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  10) items
+       should accommodate alternate languages:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:103:21)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  11) items
+       should return empty array for unmatchable:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:151:21)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  12) items
+       should return an item by a non-default key:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:163:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  13) items
+       should return multiple items by a non-default key:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:170:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  14) items
+       should return an item by nested keys:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:177:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  15) items
+       should give error for unmatchable nested keys:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:185:21)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  16) items
+       should return multiple items by nested keys:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:199:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  17) items
+       should return empty array for unmatchable nested keys:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:210:21)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  18) weapons
+       should return all weapons:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:224:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  19) weapons
+       should remove keys from dump:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:231:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  20) weapons
+       should only include desired keys from dump:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:240:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  21) warframes
+       should return all warframes:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:252:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  22) warframes
+       should remove keys from dump:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:259:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  23) warframes
+       should only include desired keys from dump:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:270:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  24) warframes
+       should be searchable for a single result:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:282:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  25) warframes
+       should be searchable for multiple results:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:289:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  26) mods
+       should resolve the most exact match:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:299:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  27) mods
+       should resolve only desired language:
+     TypeError: Cannot read properties of undefined (reading 'execute')
+      at req (file:///var/home/tobiah/projects/warframe/status/src/nest/test/hooks/setup.hook.ts:1:486)
+      at Context.<anonymous> (/var/home/tobiah/projects/warframe/status/src/nest/test/e2e/items.spec.ts:309:23)
+      at callFn (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:366:21)
+      at Runnable.run (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runnable.js:354:5)
+      at Runner.runTest (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:719:10)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:842:12
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:634:14)
+      at /var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:644:7
+      at next (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:527:14)
+      at Immediate.<anonymous> (/var/home/tobiah/projects/warframe/status/node_modules/mocha/lib/runner.js:612:5)
+      at process.processImmediate (node:internal/timers:484:21)
+
+
+

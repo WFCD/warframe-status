@@ -1,0 +1,15 @@
+apis:
+  main:
+    root: ./docs/openapi/openapi.json
+extends:
+  - recommended
+rules:
+  security-defined: off
+  no-unused-components: warn
+  no-ambiguous-paths: off
+  no-identical-paths: off
+logo:
+  image: https://docs.warframestat.us/wfcd_logo_color.png
+  altText: Warframe Community Developers
+  link: https://github.com/wfcd/
+  favicon: https://docs.warframestat.us/wfcd_logo_color.png
