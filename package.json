@@ -82,7 +82,8 @@
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.22.4",
     "typescript": "^5.9.3",
-    "typescript-json-schema": "^0.67.4"
+    "typescript-json-schema": "^0.67.4",
+    "utf-8-validate": "^5.0.10"
   },
   "optionalDependencies": {
     "bufferutil": "^4.1.0",
