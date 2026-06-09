@@ -31,7 +31,7 @@ export class RssFeedItemDto {
     example: 'https://www.warframe.com/news/rss',
     type: String,
   })
-  url: string;
+  url!: string;
 
   @ApiProperty({
     description: 'Array of RSS feed items',
@@ -67,7 +67,7 @@ export class RssFeedItemDto {
       },
     },
   })
-  items: RssFeedItemDataDto[];
+  items!: RssFeedItemDataDto[];
 }
 
 /**

@@ -9,14 +9,14 @@ export class DropDto {
     example: 'Lua/Apollo (Survival)',
     type: String,
   })
-  place: string;
+  place!: string;
 
   @ApiProperty({
     description: 'Name of the item that drops',
     example: 'Rotation C',
     type: String,
   })
-  item: string;
+  item!: string;
 
   @ApiProperty({
     description: 'Rarity tier of the drop',
@@ -52,7 +52,7 @@ export class DropRewardDto {
     example: 'Axi A14 Relic',
     type: String,
   })
-  item: string;
+  item!: string;
 
   @ApiProperty({
     description: 'Rarity tier of the drop',
@@ -87,7 +87,7 @@ export class LocationGroupDto {
     description: 'Array of drops available at this location',
     type: [DropRewardDto],
   })
-  rewards: DropRewardDto[];
+  rewards!: DropRewardDto[];
 }
 
 /**

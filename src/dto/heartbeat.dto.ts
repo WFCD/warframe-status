@@ -9,12 +9,12 @@ export class HeartbeatResponseDto {
     example: 'Success',
     type: String,
   })
-  message: string;
+  message!: string;
 
   @ApiProperty({
     description: 'HTTP status code',
     example: 200,
     type: Number,
   })
-  code: number;
+  code!: number;
 }

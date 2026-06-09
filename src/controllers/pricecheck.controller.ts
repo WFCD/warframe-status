@@ -169,7 +169,10 @@ export class PriceCheckController {
         });
       }
     } catch (error) {
-      this.logger.error(`Error price checking '${query}':`, error);
+      this.logger.error(
+        `Error price checking '${query}':`,
+        error instanceof Error ? error.stack : String(error),
+      );
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         error: `An error ocurred pricechecking \`${query}\``,
         code: 500,

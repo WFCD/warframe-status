@@ -70,7 +70,10 @@ export class StatusGateway
         const request = JSON.parse(data.toString());
         this.handleMessage(client, request);
       } catch (error) {
-        this.logger.error('Error parsing WebSocket message', error);
+        this.logger.error(
+          'Error parsing WebSocket message',
+          error instanceof Error ? error.stack : String(error),
+        );
         client.send(
           JSON.stringify({ status: 400, error: 'Invalid message format' }),
         );

@@ -23,14 +23,14 @@ export class PriceCheckUnavailableDto {
     example: 'Service temporarily unavailable',
     type: String,
   })
-  error: string;
+  error!: string;
 
   @ApiProperty({
     description: 'HTTP status code',
     example: 503,
     type: Number,
   })
-  code: number;
+  code!: number;
 }
 
 /**
@@ -42,14 +42,14 @@ export class PriceCheckNotFoundDto {
     example: 'No Result',
     type: String,
   })
-  error: string;
+  error!: string;
 
   @ApiProperty({
     description: 'HTTP status code',
     example: 404,
     type: Number,
   })
-  code: number;
+  code!: number;
 }
 
 /**
@@ -61,14 +61,14 @@ export class PriceCheckInvalidTypeDto {
     example: 'Invalid type: foo',
     type: String,
   })
-  error: string;
+  error!: string;
 
   @ApiProperty({
     description: 'HTTP status code',
     example: 404,
     type: Number,
   })
-  code: number;
+  code!: number;
 }
 
 /**
@@ -80,12 +80,12 @@ export class PriceCheckErrorDto {
     example: 'An error ocurred pricechecking `Excalibur Prime`',
     type: String,
   })
-  error: string;
+  error!: string;
 
   @ApiProperty({
     description: 'HTTP status code',
     example: 500,
     type: Number,
   })
-  code: number;
+  code!: number;
 }

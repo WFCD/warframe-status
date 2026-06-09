@@ -71,7 +71,7 @@
     "@types/flat-cache": "^2.0.2",
     "@types/js-yaml": "^4.0.9",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^22.19.17",
+    "@types/node": "^24.12.4",
     "@types/twitter": "^1.7.4",
     "@types/ws": "^8.18.1",
     "c8": "^11.0.0",
@@ -82,7 +82,7 @@
     "lint-staged": "^17.0.7",
     "mocha": "^11.7.6",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "typescript-json-schema": "^0.67.4",
     "utf-8-validate": "^5.0.10"
   },

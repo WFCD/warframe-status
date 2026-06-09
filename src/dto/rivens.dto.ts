@@ -14,63 +14,63 @@ export class RivenStatDto {
     example: 'Rifle',
     type: String,
   })
-  itemType: string;
+  itemType!: string;
 
   @ApiProperty({
     description: 'Weapon compatibility name',
     example: 'Soma',
     type: String,
   })
-  compatibility: string;
+  compatibility!: string;
 
   @ApiProperty({
     description: 'Whether this stat is for rerolled rivens',
     example: false,
     type: Boolean,
   })
-  rerolled: boolean;
+  rerolled!: boolean;
 
   @ApiProperty({
     description: 'Average platinum price',
     example: 125.5,
     type: Number,
   })
-  avg: number;
+  avg!: number;
 
   @ApiProperty({
     description: 'Standard deviation of prices',
     example: 45.2,
     type: Number,
   })
-  stddev: number;
+  stddev!: number;
 
   @ApiProperty({
     description: 'Minimum observed price',
     example: 50,
     type: Number,
   })
-  min: number;
+  min!: number;
 
   @ApiProperty({
     description: 'Maximum observed price',
     example: 500,
     type: Number,
   })
-  max: number;
+  max!: number;
 
   @ApiProperty({
     description: 'Population/sample size',
     example: 234,
     type: Number,
   })
-  pop: number;
+  pop!: number;
 
   @ApiProperty({
     description: 'Median price',
     example: 120,
     type: Number,
   })
-  median: number;
+  median!: number;
 }
 
 /**
