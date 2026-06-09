@@ -42,7 +42,7 @@ export const config = new DocumentBuilder()
   .addExtension(
     'x-logo',
     {
-      url: 'https://docs.warframestat.com/wfcd_logo_color.png',
+      url: 'https://docs.warframestat.us/wfcd_logo_color.png',
       backgroundColor: 'transparent',
       altText: 'Warframe Community Developers',
       href: 'https://github.com/WFCD/',

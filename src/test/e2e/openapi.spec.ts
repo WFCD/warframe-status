@@ -39,7 +39,7 @@ describe('OpenAPI', () => {
     it('should use package.json version and info x-logo extension', () => {
       document.info.version.should.equal(packageJson.version);
       document.info.should.have.property('x-logo').that.deep.equals({
-        url: 'https://docs.warframestat.com/wfcd_logo_color.png',
+        url: 'https://docs.warframestat.us/wfcd_logo_color.png',
         altText: 'Warframe Community Developers',
         backgroundColor: 'transparent',
         href: 'https://github.com/WFCD/',

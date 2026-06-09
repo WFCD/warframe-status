@@ -14,6 +14,7 @@
     "docs:export": "dotenvx run -f .env.test --ignore=MISSING_ENV_FILE -- tsx scripts/export-openapi.ts",
     "docs:lint": "npm run docs:export && redocly lint --config .redocly.yaml docs/openapi/openapi.json",
     "docs:preview": "npm run docs:build && redocly preview -d docs/web",
+    "docs:serve": "npm run docs:build && npx serve -s docs/web",
     "generate:dtos": "tsx scripts/generate-worldstate-dtos.ts",
     "generate:routes": "tsx scripts/generate-field-routes.ts",
     "lint": "biome check",
