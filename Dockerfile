@@ -23,6 +23,7 @@ RUN npm run build
 FROM node:krypton-alpine AS production
 
 LABEL org.opencontainers.image.source="https://github.com/WFCD/warframe-status"
+LABEL org.opencontainers.image.description="Warframe Community Developers REST API for worldstate and other utility data."
 
 WORKDIR /app
 
