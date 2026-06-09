@@ -1,5 +1,10 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { DocumentBuilder } from '@nestjs/swagger';
-import packageJson from '../../package.json' with { type: 'json' };
+
+const packageJson = JSON.parse(
+  readFileSync(join(process.cwd(), 'package.json'), 'utf8'),
+) as { version: string };
 
 export const config = new DocumentBuilder()
   .setTitle('Warframe Status API')

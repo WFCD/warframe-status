@@ -1,5 +1,4 @@
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 import { create } from 'flat-cache';
 
 interface Cache {
@@ -47,8 +46,7 @@ export class FlatCacheStore implements CacheStore {
   private defaultTtl: number;
 
   constructor(config: FlatCacheStoreConfig) {
-    const dirName = dirname(fileURLToPath(import.meta.url));
-    const cacheDir = config.cacheDir || resolve(dirName, '../../../caches');
+    const cacheDir = config.cacheDir || resolve(process.cwd(), 'caches');
 
     this.cache = create({
       cacheId: config.cacheId,

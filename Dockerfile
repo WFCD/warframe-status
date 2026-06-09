@@ -44,5 +44,5 @@ ENV NODE_ENV=production
 
 EXPOSE 3001
 
-# Use node directly to run the built application
-ENTRYPOINT ["node", "dist/main.js"]
+# ESM build output needs tsx to resolve extensionless relative imports
+ENTRYPOINT ["node", "--import", "tsx", "dist/main.js"]

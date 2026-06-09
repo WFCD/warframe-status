@@ -4,7 +4,7 @@ import {
   PriceCheckNotFoundDto,
   PriceCheckUnavailableDto,
 } from '@dto/pricecheck.dto';
-import { asPlatform } from '@nest/guards/platform.guard.js';
+import { asPlatform } from '@nest/guards/platform.guard';
 import {
   Controller,
   Get,
