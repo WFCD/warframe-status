@@ -88,6 +88,14 @@ smoke_probe() {
     -sS "${CURL_OPTS[@]}" -w $'\n%{http_code}' "http://127.0.0.1:${STATUS_PORT}${path}"
 }
 
+smoke_data_ok() {
+  local path="$1"
+  local body
+
+  body="$(smoke_curl "$path" 2>/dev/null)" || return 1
+  grep -qE '^[\[{]' <<<"$body"
+}
+
 smoke_log_failure() {
   local label="$1"
   local path="$2"
@@ -136,7 +144,7 @@ smoke_image() {
 
   # Static data endpoint — bundled in warframe-worldstate-data, no live worldstate fetch.
   for attempt in $(seq 1 30); do
-    if smoke_curl "$SMOKE_DATA_PATH" 2>/dev/null | grep -q '^\['; then
+    if smoke_data_ok "$SMOKE_DATA_PATH"; then
       echo "Data endpoint OK (${SMOKE_DATA_PATH})"
       return 0
     fi

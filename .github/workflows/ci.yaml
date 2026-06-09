@@ -53,7 +53,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
   docker-image:
-    name: Docker image
     runs-on: ubuntu-latest
     env:
       WARP_HOST_PORT: '18080'
