@@ -127,36 +127,21 @@ It's highly recommended to use the local loopback (127.0.0.1) for HOST/HOSTNAME
 
 ## Docker Deployment
 
-### NestJS
-
 ```bash
 # Build image
-docker build -f Dockerfile.nest -t warframe-status-nest:latest .
+docker build -t ghcr.io/wfcd/warframe-status:latest .
 
 # Run container
 docker run -d \
   --name warframe-status \
   -p 3001:3001 \
-  -e USE_WORLDSTATE=true \
-  -e FEATURES=SOCKET,worldstate \
   -v ./caches:/app/caches \
-  warframe-status-nest:latest
+  ghcr.io/wfcd/warframe-status:latest
 ```
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for comprehensive deployment guide.
+Or use `docker-compose.example.yml` for a compose-based setup.
 
-### Express
-
-```bash
-# Build image
-docker build -t warframe-status:latest .
-
-# Run container
-docker run -d \
-  --name warframe-status \
-  -p 3001:3001 \
-  warframe-status:latest
-```
+Warframe content servers are geo-restricted. If the host cannot reach them, run behind a [Cloudflare WARP](https://developers.cloudflare.com/warp-client/) sidecar — see `docker-compose.warp.example.yml` and [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ---
 

@@ -75,5 +75,7 @@ caches/
 CHANGELOG.md
 commitlint.config.js
 docker-compose.example.yml
+docker-compose.warp.example.yml
+DEPLOYMENT.md
 LICENSE
 README.md

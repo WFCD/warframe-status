@@ -29,10 +29,8 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      - name: Setup WireGuard
-        uses: niklaskeerl/easy-wireguard-action@fdecd3aabde0060ec80f89aa03070ae0705fedba # v2
-        with:
-          WG_CONFIG_FILE: ${{ secrets.WG_CONFIG }}
+      - name: Setup WARP
+        run: .github/scripts/ci-warp.sh start
       - name: Verify
         env:
           CI: true
@@ -44,15 +42,18 @@ jobs:
           WFINFO_PRICES: ${{ secrets.WFINFO_PRICES }}
           NODE_ENV: 'test'
         run: |
-          npm install
-          npm run build
-          npm run docs:lint
-          npm test
+          .github/scripts/ci-warp.sh run '
+            npm install
+            npm run build
+            npm run docs:lint
+            npm test
+          '
       - name: Coveralls
         uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b # v2.3.6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
   docker-image:
+    name: Docker image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -65,5 +66,11 @@ jobs:
         uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
+          load: true
+          tags: ghcr.io/wfcd/warframe-status:ci
           push: false
+      - name: Smoke test through WARP
+        run: .github/scripts/ci-warp.sh smoke ghcr.io/wfcd/warframe-status:ci
+      - name: Validate WARP compose
+        run: docker compose -f docker-compose.warp.example.yml config --quiet
