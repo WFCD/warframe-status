@@ -16,7 +16,7 @@
 
 services:
   warp:
-    image: caomingjun/warp
+    image: caomingjun/warp@sha256:905b91c3fe197a625611064ef0664f27e9ecdd0a30a91c4ae7046e06a2bf2643
     restart: unless-stopped
     device_cgroup_rules:
       - 'c 10:200 rwm'

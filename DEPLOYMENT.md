@@ -23,7 +23,7 @@ cp docker-compose.example.yml docker-compose.yml
 docker compose up -d
 ```
 
-`docker-compose.example.yml` runs the API directly on the host network stack. Use it when the host already has working egress to Warframe content servers.
+`docker-compose.example.yml` runs the API on Docker's default bridge network with a published host port. Use it when the host already has working egress to Warframe content servers.
 
 ## Cloudflare WARP sidecar
 
