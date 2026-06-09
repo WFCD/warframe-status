@@ -11,6 +11,7 @@ WARP_IMAGE="${WARP_IMAGE:-caomingjun/warp}"
 NODE_IMAGE="${NODE_IMAGE:-node:22-bookworm}"
 WORKSPACE="${GITHUB_WORKSPACE:-$PWD}"
 WARP_HOST_PORT="${WARP_HOST_PORT:-8080}"
+CURL_OPTS=(--connect-timeout 5 --max-time 10)
 
 cleanup() {
   docker rm -f "$STATUS_CONTAINER" "$WARP_CONTAINER" >/dev/null 2>&1 || true
@@ -38,7 +39,7 @@ start_warp() {
 wait_for_warp() {
   for attempt in $(seq 1 30); do
     if docker run --rm --network "container:${WARP_CONTAINER}" curlimages/curl:8.12.1 \
-      -sf https://www.cloudflare.com/cdn-cgi/trace | grep -q 'warp=on'; then
+      -sf "${CURL_OPTS[@]}" https://www.cloudflare.com/cdn-cgi/trace | grep -q 'warp=on'; then
       echo "WARP connected"
       return 0
     fi
@@ -64,7 +65,7 @@ run_with_warp() {
       docker_args+=(-e "${var}=${!var}")
     fi
   done
-  docker_args+=("$NODE_IMAGE" bash -lc "$1")
+  docker_args+=("$NODE_IMAGE" bash -lc "$*")
 
   "${docker_args[@]}"
 }
@@ -78,7 +79,7 @@ smoke_image() {
   local base_url="http://localhost:${WARP_HOST_PORT}"
 
   for attempt in $(seq 1 30); do
-    if curl -sf "${base_url}/heartbeat" >/dev/null; then
+    if curl -sf "${CURL_OPTS[@]}" "${base_url}/heartbeat" >/dev/null; then
       echo "Heartbeat OK"
       break
     fi
@@ -91,7 +92,7 @@ smoke_image() {
   done
 
   for attempt in $(seq 1 60); do
-    if curl -sf "${base_url}/pc/alerts" | grep -q '^\['; then
+    if curl -sf "${CURL_OPTS[@]}" "${base_url}/pc/alerts" | grep -q '^\['; then
       echo "Worldstate OK through WARP"
       return 0
     fi
@@ -119,7 +120,7 @@ case "${1:-}" in
     trap cleanup EXIT
     start_warp
     wait_for_warp
-    run_with_warp "$1"
+    run_with_warp "$@"
     ;;
   smoke)
     shift
