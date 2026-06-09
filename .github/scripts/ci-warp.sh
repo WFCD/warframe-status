@@ -11,6 +11,7 @@ WARP_IMAGE="${WARP_IMAGE:-caomingjun/warp}"
 NODE_IMAGE="${NODE_IMAGE:-node:22-bookworm}"
 WORKSPACE="${GITHUB_WORKSPACE:-$PWD}"
 WARP_HOST_PORT="${WARP_HOST_PORT:-8080}"
+STATUS_PORT="${STATUS_PORT:-3001}"
 CURL_OPTS=(--connect-timeout 5 --max-time 10)
 
 cleanup() {
@@ -70,20 +71,26 @@ run_with_warp() {
   "${docker_args[@]}"
 }
 
+# Curl the API inside the shared WARP network namespace. Host curls to published
+# ports often fail because WARP intercepts Docker bridge traffic.
+smoke_curl() {
+  local path="$1"
+  docker run --rm --network "container:${WARP_CONTAINER}" curlimages/curl:8.12.1 \
+    -sf "${CURL_OPTS[@]}" "http://127.0.0.1:${STATUS_PORT}${path}"
+}
+
 smoke_image() {
   local image="$1"
 
   docker rm -f "$STATUS_CONTAINER" >/dev/null 2>&1 || true
   docker run -d --name "$STATUS_CONTAINER" --network "container:${WARP_CONTAINER}" "$image" >/dev/null
 
-  local base_url="http://localhost:${WARP_HOST_PORT}"
-
-  for attempt in $(seq 1 30); do
-    if curl -sf "${CURL_OPTS[@]}" "${base_url}/heartbeat" >/dev/null; then
+  for attempt in $(seq 1 45); do
+    if smoke_curl /heartbeat >/dev/null; then
       echo "Heartbeat OK"
       break
     fi
-    if [[ "$attempt" -eq 30 ]]; then
+    if [[ "$attempt" -eq 45 ]]; then
       echo "Heartbeat failed"
       docker logs "$STATUS_CONTAINER" || true
       return 1
@@ -92,7 +99,7 @@ smoke_image() {
   done
 
   for attempt in $(seq 1 60); do
-    if curl -sf "${CURL_OPTS[@]}" "${base_url}/pc/alerts" | grep -q '^\['; then
+    if smoke_curl /pc/alerts | grep -q '^\['; then
       echo "Worldstate OK through WARP"
       return 0
     fi
