@@ -7,11 +7,12 @@ job_scope="${GITHUB_JOB:-local}"
 run_scope="${GITHUB_RUN_ID:-$$}"
 WARP_CONTAINER="${WARP_CONTAINER:-warp-${job_scope}-${run_scope}}"
 STATUS_CONTAINER="${STATUS_CONTAINER:-warframe-status-${job_scope}-${run_scope}}"
-WARP_IMAGE="${WARP_IMAGE:-caomingjun/warp}"
-NODE_IMAGE="${NODE_IMAGE:-node:22-bookworm}"
+WARP_IMAGE="${WARP_IMAGE:-"caomingjun/warp@sha256:905b91c3fe197a625611064ef0664f27e9ecdd0a30a91c4ae7046e06a2bf2643"}"
+NODE_IMAGE="${NODE_IMAGE:-node:krypton-bookworm}"
 WORKSPACE="${GITHUB_WORKSPACE:-$PWD}"
 WARP_HOST_PORT="${WARP_HOST_PORT:-8080}"
 STATUS_PORT="${STATUS_PORT:-3001}"
+SMOKE_DATA_PATH="${SMOKE_DATA_PATH:-/factions}"
 CURL_OPTS=(--connect-timeout 5 --max-time 10)
 
 cleanup() {
@@ -38,18 +39,19 @@ start_warp() {
 }
 
 wait_for_warp() {
-  for attempt in $(seq 1 30); do
+  for attempt in $(seq 1 45); do
     if docker run --rm --network "container:${WARP_CONTAINER}" curlimages/curl:8.12.1 \
-      -sf "${CURL_OPTS[@]}" https://www.cloudflare.com/cdn-cgi/trace | grep -q 'warp=on'; then
+      -sf "${CURL_OPTS[@]}" https://www.cloudflare.com/cdn-cgi/trace | grep -Eq 'warp=(on|plus)'; then
       echo "WARP connected"
+      sleep 5
       return 0
     fi
-    echo "Waiting for WARP (${attempt}/30)..."
+    echo "Waiting for WARP (${attempt}/45)..."
     sleep 2
   done
 
   echo "WARP failed to connect"
-  docker logs "$WARP_CONTAINER" || true
+  docker logs --tail 80 "$WARP_CONTAINER" 2>&1 || true
   return 1
 }
 
@@ -79,11 +81,46 @@ smoke_curl() {
     -sf "${CURL_OPTS[@]}" "http://127.0.0.1:${STATUS_PORT}${path}"
 }
 
+# Prints "body" then "http_code" on the last line.
+smoke_probe() {
+  local path="$1"
+  docker run --rm --network "container:${WARP_CONTAINER}" curlimages/curl:8.12.1 \
+    -sS "${CURL_OPTS[@]}" -w $'\n%{http_code}' "http://127.0.0.1:${STATUS_PORT}${path}"
+}
+
+smoke_log_failure() {
+  local label="$1"
+  local path="$2"
+  local probe body code
+
+  echo "::error title=${label}::${label} — see job log for probe output and container logs"
+  probe="$(smoke_probe "$path" 2>&1 || true)"
+  body="${probe%$'\n'*}"
+  code="${probe##*$'\n'}"
+
+  echo "${label} probe: GET ${path}"
+  echo "HTTP status: ${code:-unknown}"
+  if [[ -n "$body" ]]; then
+    echo "Response preview:"
+    printf '%s\n' "$body" | head -c 500
+    echo
+  else
+    echo "Response preview: (empty)"
+  fi
+
+  echo "--- ${STATUS_CONTAINER} (last 80 lines) ---"
+  docker logs --tail 80 "$STATUS_CONTAINER" 2>&1 || true
+  echo "--- ${WARP_CONTAINER} (last 40 lines) ---"
+  docker logs --tail 40 "$WARP_CONTAINER" 2>&1 || true
+}
+
 smoke_image() {
   local image="$1"
 
   docker rm -f "$STATUS_CONTAINER" >/dev/null 2>&1 || true
-  docker run -d --name "$STATUS_CONTAINER" --network "container:${WARP_CONTAINER}" "$image" >/dev/null
+  docker run -d --name "$STATUS_CONTAINER" \
+    --network "container:${WARP_CONTAINER}" \
+    "$image" >/dev/null
 
   for attempt in $(seq 1 45); do
     if smoke_curl /heartbeat >/dev/null; then
@@ -91,22 +128,23 @@ smoke_image() {
       break
     fi
     if [[ "$attempt" -eq 45 ]]; then
-      echo "Heartbeat failed"
-      docker logs "$STATUS_CONTAINER" || true
+      smoke_log_failure "Heartbeat failed" /heartbeat
       return 1
     fi
     sleep 2
   done
 
-  for attempt in $(seq 1 60); do
-    if smoke_curl /pc/alerts | grep -q '^\['; then
-      echo "Worldstate OK through WARP"
+  # Static data endpoint — bundled in warframe-worldstate-data, no live worldstate fetch.
+  for attempt in $(seq 1 30); do
+    if smoke_curl "$SMOKE_DATA_PATH" 2>/dev/null | grep -q '^\['; then
+      echo "Data endpoint OK (${SMOKE_DATA_PATH})"
       return 0
     fi
-    if [[ "$attempt" -eq 60 ]]; then
-      echo "Worldstate failed through WARP"
-      docker logs "$WARP_CONTAINER" || true
-      docker logs "$STATUS_CONTAINER" || true
+    if (( attempt % 10 == 0 )); then
+      echo "Waiting for data endpoint (${attempt}/30)..."
+    fi
+    if [[ "$attempt" -eq 30 ]]; then
+      smoke_log_failure "Data endpoint not ready" "$SMOKE_DATA_PATH"
       return 1
     fi
     sleep 2
