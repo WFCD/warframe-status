@@ -1,3 +1,15 @@
+# [3.1.0](https://github.com/wfcd/warframe-status/compare/v3.0.2...v3.1.0) (2026-06-09)
+
+
+### Bug Fixes
+
+* **container:** description label ([65fddf9](https://github.com/wfcd/warframe-status/commit/65fddf9f71ee9d8c9a7bc3a512abcad6ee4ca15f))
+
+
+### Features
+
+* bump typescript to v6 ([#2184](https://github.com/wfcd/warframe-status/issues/2184)) ([be690ef](https://github.com/wfcd/warframe-status/commit/be690eff04b790d8bc98a6109fe2545012ef5e77))
+
 ## [3.0.2](https://github.com/wfcd/warframe-status/compare/v3.0.1...v3.0.2) (2026-06-09)
 
 
