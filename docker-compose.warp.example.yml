@@ -1,0 +1,65 @@
+# Route warframe-status outbound traffic through Cloudflare WARP.
+#
+# Warframe content servers are geo-restricted. A WARP sidecar shares its network
+# stack with the API container so worldstate, RSS, rivens, and profile requests
+# egress through WARP instead of the host.
+#
+# Usage:
+#   cp docker-compose.warp.example.yml docker-compose.yml
+#   docker compose up -d
+#
+# First start can take ~30s while WARP registers. Check:
+#   docker compose logs -f warp
+#   curl http://localhost:8080/heartbeat
+#
+# Optional: set WARP_LICENSE_KEY for WARP+ (higher throughput).
+
+services:
+  warp:
+    image: caomingjun/warp@sha256:905b91c3fe197a625611064ef0664f27e9ecdd0a30a91c4ae7046e06a2bf2643
+    restart: unless-stopped
+    device_cgroup_rules:
+      - 'c 10:200 rwm'
+    cap_add:
+      - NET_ADMIN
+      - MKNOD
+      - AUDIT_WRITE
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv4.conf.all.src_valid_mark=1
+    environment:
+      - WARP_SLEEP=2
+      # - WARP_LICENSE_KEY=
+      # - BETA_FIX_HOST_CONNECTIVITY=1  # if host cannot reach published ports
+    volumes:
+      - warp-data:/var/lib/cloudflare-warp
+    ports:
+      - "8080:3001" # Host port can be whatever you need it to be
+
+  warframestatus:
+    image: ghcr.io/wfcd/warframe-status:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    network_mode: service:warp
+    depends_on:
+      - warp
+    # environment:
+      # All environment variables are optional - sensible defaults are enabled
+      # - BUILD=build
+      # - LOG_LEVEL=error
+      # - USE_CLUSTER=true
+      # - USE_WORLDSTATE=false
+      # - FEATURES=
+      # - TWITTER_KEY=
+      # - TWITTER_SECRET=
+      # - TWITTER_BEARER_TOKEN=
+      # - WFINFO_FILTERED_ITEMS=
+      # - WFINFO_PRICES=
+      # - SENTRY_DSN=
+    volumes:
+      - ./caches:/app/caches
+
+volumes:
+  warp-data:

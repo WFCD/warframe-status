@@ -10,6 +10,8 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    env:
+      WARP_PORTS: ''
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -18,10 +20,6 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      - name: Setup WireGuard
-        uses: niklaskeerl/easy-wireguard-action@fdecd3aabde0060ec80f89aa03070ae0705fedba # v2
-        with:
-          WG_CONFIG_FILE: ${{ secrets.WG_CONFIG }}
       - name: Verify
         env:
           CI: true
@@ -30,12 +28,14 @@ jobs:
           TWITTER_TIMEOUT: ${{ secrets.TWITTER_TIMEOUT }}
           TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
         run: |
-          npm install
-          npm run lint
-          npx commitlint --last --verbose
-          npm run build
-          npm run docs:lint
-          npm test
+          .github/scripts/ci-warp.sh run '
+            npm install
+            npm run lint
+            npx commitlint --last --verbose
+            npm run build
+            npm run docs:lint
+            npm test
+          '
       - name: Notify
         if: failure()
         env:
