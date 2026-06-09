@@ -1,4 +1,5 @@
 import { createOpenApiDocument } from '@nest/config/openapi-document';
+import { VALID_PLATFORMS } from '@nest/guards/platform.guard';
 import type { INestApplication } from '@nestjs/common';
 import type { OpenAPIObject } from '@nestjs/swagger';
 import * as chai from 'chai';
@@ -82,16 +83,18 @@ describe('OpenAPI', () => {
       document.paths.should.have.property('/pc/timestamp');
     });
 
-    it('should document platform worldstate route with WorldStateDto response', () => {
-      document.paths.should.have.property('/{platform}');
+    it('should document platform worldstate routes with WorldStateDto response', () => {
+      for (const platform of VALID_PLATFORMS) {
+        document.paths.should.have.property(`/${platform}`);
 
-      const platformGet = document.paths['/{platform}']?.get;
-      platformGet?.should.be.an('object');
+        const platformGet = document.paths[`/${platform}`]?.get;
+        platformGet?.should.be.an('object');
 
-      const responseSchema =
-        platformGet?.responses?.['200']?.content?.['application/json']?.schema;
+        const responseSchema =
+          platformGet?.responses?.['200']?.content?.['application/json']?.schema;
 
-      responseSchema?.$ref.should.equal('#/components/schemas/WorldStateDto');
+        responseSchema?.$ref.should.equal('#/components/schemas/WorldStateDto');
+      }
     });
   });
 
