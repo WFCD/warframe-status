@@ -7,7 +7,7 @@ import {
 import type { Request } from 'express';
 import type { Platform } from 'warframe-nexus-query';
 
-const VALID_PLATFORMS = ['pc', 'ps4', 'psn', 'xb1', 'swi', 'ns'];
+export const VALID_PLATFORMS = ['pc', 'ps4', 'psn', 'xb1', 'swi', 'ns'];
 
 export const isPlatform = (input: unknown): input is Platform => {
   if (typeof input === 'string') {

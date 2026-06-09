@@ -37,6 +37,14 @@ describe('worldstate', () => {
       res.body.timestamp.should.be.a('string');
     });
 
+    it('should not be handled as a static data key', async () => {
+      const res = await request.execute(nestApp.getHttpServer()).get('/pc');
+      res.should.have.status(200);
+      if (typeof res.body?.message === 'string') {
+        res.body.message.should.not.include("Data key 'pc'");
+      }
+    });
+
     it('should get alerts', async () => {
       const res = await request
         .execute(nestApp.getHttpServer())

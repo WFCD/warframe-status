@@ -31,8 +31,7 @@ import { WarframeDataService } from '@services/warframe-data.service';
 import { WFInfoCacheService } from '@services/wfinfo-cache.service';
 import { WorldStateService } from '@services/worldstate.service';
 
-// Base controllers (always enabled)
-const baseControllers = [
+const controllers = [
   OpenApiController,
   HeartbeatController,
   ItemsController,
@@ -42,12 +41,8 @@ const baseControllers = [
   PriceCheckController,
   ProfileController,
   TwitterController, // Always loaded, but returns 404 when TWITTER_ACTIVE is not set
-  DataController, // Always loaded for static data endpoints (synthTargets, arcanes, etc.)
-];
-
-// Conditional controllers based on feature flags
-const conditionalControllers = [
   ...(USE_WORLDSTATE ? [WorldstateController, RssController] : []),
+  DataController, // :key catch-all; keep last so /pc and other reserved paths win
 ];
 
 // Base providers (always enabled)
@@ -157,7 +152,7 @@ const conditionalProviders = [
     }),
     EventEmitterModule.forRoot(),
   ],
-  controllers: [...baseControllers, ...conditionalControllers],
+  controllers,
   providers: [...baseProviders, ...conditionalProviders],
 })
 export class AppModule {}

@@ -18,6 +18,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { isPlatform } from '@nest/guards/platform.guard';
 import type { WarframeDataService } from '@services/warframe-data.service';
 import type { Request, Response } from 'express';
 
@@ -393,6 +394,15 @@ export class DataController {
    * Internal method to get data for any key
    */
   private getData(key: string, req: Request, res: Response): void {
+    if (isPlatform(key)) {
+      res.status(HttpStatus.NOT_FOUND).json({
+        error: 'Not Found',
+        statusCode: 404,
+        message: `Platform '${key}' not found`,
+      });
+      return;
+    }
+
     // Normalize the key to match correct case
     const normalizedKey = this.warframeDataService.normalizeKey(key);
 

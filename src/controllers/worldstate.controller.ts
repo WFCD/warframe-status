@@ -17,10 +17,13 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { VALID_PLATFORMS } from '@nest/guards/platform.guard';
 import type { Response } from 'express';
 import { WorldstateFieldRoutesController } from './worldstate-field-routes.generated';
 
-const PLATFORMS = ['pc', 'ps4', 'psn', 'xb1', 'swi', 'ns'];
+const PLATFORMS = [...VALID_PLATFORMS];
+const PLATFORM_PATHS = PLATFORMS.map((platform) => `${platform}`);
+const PLATFORM_FIELD_PATHS = PLATFORMS.map((platform) => `${platform}/:field`);
 
 const LANGUAGES = [
   'de',
@@ -37,6 +40,12 @@ const LANGUAGES = [
   'uk',
   'en',
 ];
+
+const LANGUAGE_FIELD_PATHS = LANGUAGES.map((language) => `${language}/:field`);
+
+function firstPathSegment(path: string): string {
+  return path.split('/').filter(Boolean)[0] || '';
+}
 
 /**
  * Helper to filter arrays by query parameters
@@ -69,7 +78,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
    * @return {Object} worldstate data
    * @summary Get worldstate for platform
    */
-  @Get(':platform')
+  @Get(PLATFORM_PATHS)
   @ApiOperation({ summary: 'Get worldstate data for a specific platform' })
   @ApiParam({
     name: 'platform',
@@ -84,22 +93,11 @@ export class WorldstateController extends WorldstateFieldRoutesController {
   @ApiResponse({ status: 301, description: 'Redirected to PC platform' })
   @ApiResponse({ status: 404, description: 'WorldState not found' })
   async getWorldstate(
-    @Param('platform') platform: string,
     @Req() req: RequestWithLanguage,
     @Res() res: Response,
   ) {
+    const platform = firstPathSegment(req.path);
     this.logger.info(`Requested worldstate for ${platform}`);
-
-    // Check if this is a valid platform for worldstate
-    if (!PLATFORMS.includes(platform.toLowerCase())) {
-      this.logger.warn('Unsupported platform');
-      // Not a valid platform - return 404
-      throw new NotFoundException({
-        error: 'Not Found',
-        statusCode: 404,
-        message: `Platform '${platform}' not found`,
-      });
-    }
 
     // Redirect non-PC platforms to PC
     if (
@@ -114,7 +112,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
       return res.redirect(HttpStatus.MOVED_PERMANENTLY, redirPath);
     }
 
-    this.logger.info(`Resolving pc (original: ${platform})`);
+    this.logger.debug(`Resolving pc (original: ${platform})`);
     const language = req.language || 'en';
     const ws = await this.worldStateService.getWorldstate(language);
     this.logger.debug(`Resolved worldState... ${JSON.stringify(ws, null, 2)}`);
@@ -136,7 +134,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
    * @return {Object|Array} worldstate field data
    * @summary Get specific worldstate field
    */
-  @Get(':platform/:field')
+  @Get(PLATFORM_FIELD_PATHS)
   @ApiOperation({ summary: 'Get a specific field from worldstate' })
   @ApiParam({
     name: 'platform',
@@ -169,34 +167,12 @@ export class WorldstateController extends WorldstateFieldRoutesController {
   @ApiResponse({ status: 301, description: 'Redirected to PC platform' })
   @ApiResponse({ status: 404, description: 'Worldstate field not found' })
   getWorldstateField(
-    @Param('platform') platform: string,
     @Param('field') field: string,
     @Query() query: Record<string, unknown>,
     @Req() req: RequestWithLanguage,
     @Res() res: Response,
   ) {
-    // Check if this is a valid platform for worldstate
-    if (!PLATFORMS.includes(platform.toLowerCase())) {
-      // Not a platform - might be a language/field combo or invalid
-      if (LANGUAGES.includes(platform.substring(0, 2).toLowerCase())) {
-        // This is /:language/:field for worldstate
-        return this.getWorldstateFieldWithLanguage(platform, field, query, res);
-      }
-      // Invalid route
-      throw new NotFoundException();
-    }
-
-    // Check if this might be a language/field route with a platform that's also a language
-    if (LANGUAGES.includes(platform.substring(0, 2).toLowerCase())) {
-      // This is actually /:language/:field, handle it differently
-      return this.getWorldstateFieldWithLanguage(platform, field, query, res);
-    }
-
-    // Check if this might be a language/field route instead (e.g., /en/alerts)
-    if (LANGUAGES.includes(platform.substring(0, 2).toLowerCase())) {
-      // This is actually /:language/:field, handle it differently
-      return this.getWorldstateFieldWithLanguage(platform, field, query, res);
-    }
+    const platform = firstPathSegment(req.path);
 
     // Redirect non-PC platforms to PC
     if (
@@ -262,6 +238,33 @@ export class WorldstateController extends WorldstateFieldRoutesController {
       error: 'No such worldstate field',
       code: 404,
     });
+  }
+
+  /**
+   * GET /:language/:field
+   * Get a worldstate field in a specific language
+   */
+  @Get(LANGUAGE_FIELD_PATHS)
+  @ApiOperation({ summary: 'Get a worldstate field in a specific language' })
+  @ApiParam({
+    name: 'language',
+    description: 'Language code for localized worldstate data',
+    enum: LANGUAGES,
+  })
+  @ApiParam({
+    name: 'field',
+    description: 'Worldstate field name (e.g., alerts, invasions, fissures)',
+  })
+  @ApiResponse({ status: 200, description: 'Worldstate field data' })
+  @ApiResponse({ status: 404, description: 'Worldstate field not found' })
+  getWorldstateFieldByLanguage(
+    @Param('field') field: string,
+    @Query() query: Record<string, unknown>,
+    @Req() req: RequestWithLanguage,
+    @Res() res: Response,
+  ) {
+    const language = firstPathSegment(req.path);
+    return this.getWorldstateFieldWithLanguage(language, field, query, res);
   }
 
   /**
