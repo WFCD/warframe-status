@@ -9,12 +9,12 @@ export class ItemNotFoundDto {
     example: 'No Result',
     type: String,
   })
-  error: string;
+  error!: string;
 
   @ApiProperty({
     description: 'HTTP status code',
     example: 404,
     type: Number,
   })
-  code: number;
+  code!: number;
 }

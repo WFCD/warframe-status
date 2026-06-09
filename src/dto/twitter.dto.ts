@@ -9,21 +9,21 @@ export class TwitterNotFoundDto {
     example: 404,
     type: Number,
   })
-  statusCode: number;
+  statusCode!: number;
 
   @ApiProperty({
     description: 'Error message',
     example: 'No Twitter Data',
     type: String,
   })
-  error: string;
+  error!: string;
 
   @ApiProperty({
     description: 'HTTP status code (duplicate)',
     example: 404,
     type: Number,
   })
-  code: number;
+  code!: number;
 }
 
 /**

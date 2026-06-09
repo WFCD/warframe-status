@@ -9,21 +9,21 @@ export class DataNotFoundDto {
     example: 'Not Found',
     type: String,
   })
-  error: string;
+  error!: string;
 
   @ApiProperty({
     description: 'HTTP status code',
     example: 404,
     type: Number,
   })
-  statusCode: number;
+  statusCode!: number;
 
   @ApiProperty({
     description: 'Detailed error message',
     example: "Data key 'invalid' not found",
     type: String,
   })
-  message: string;
+  message!: string;
 }
 
 /**
@@ -35,12 +35,12 @@ export class DataErrorDto {
     type: [String],
     example: ['Search failed for key: invalid'],
   })
-  errors: string[];
+  errors!: string[];
 
   @ApiProperty({
     description: 'HTTP status code',
     example: 500,
     type: Number,
   })
-  code: number;
+  code!: number;
 }

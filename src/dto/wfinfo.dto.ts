@@ -9,14 +9,14 @@ export class WFInfoUnavailableDto {
     example: 503,
     type: Number,
   })
-  code: number;
+  code!: number;
 
   @ApiProperty({
     description: 'Error message',
     example: 'WFInfo Data Services Unavailable',
     type: String,
   })
-  error: string;
+  error!: string;
 }
 
 /**

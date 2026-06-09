@@ -38,14 +38,14 @@ export class ProfileNotFoundDto {
     example: 'No Result',
     type: String,
   })
-  error: string;
+  error!: string;
 
   @ApiProperty({
     description: 'HTTP status code',
     example: 404,
     type: Number,
   })
-  code: number;
+  code!: number;
 }
 
 /**
@@ -57,12 +57,12 @@ export class ArsenalUnavailableDto {
     example: 503,
     type: Number,
   })
-  code: number;
+  code!: number;
 
   @ApiProperty({
     description: 'Error message',
     example: 'Service Unavailable',
     type: String,
   })
-  error: string;
+  error!: string;
 }
