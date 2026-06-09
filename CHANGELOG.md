@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/wfcd/warframe-status/compare/v3.1.0...v3.1.1) (2026-06-09)
+
+
+### Bug Fixes
+
+* platform root path lost in data ([942bd51](https://github.com/wfcd/warframe-status/commit/942bd518c7ca2765c75dfccfd4197664370ac967))
+
 # [3.1.0](https://github.com/wfcd/warframe-status/compare/v3.0.2...v3.1.0) (2026-06-09)
 
 
