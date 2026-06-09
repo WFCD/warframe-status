@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/wfcd/warframe-status/compare/v3.0.0...v3.0.1) (2026-06-09)
+
+
+### Bug Fixes
+
+* bad startup path ([d6fc96d](https://github.com/wfcd/warframe-status/commit/d6fc96d7b15eb9eb459405a1664d09488effd88c))
+
 # [3.0.0](https://github.com/wfcd/warframe-status/compare/v2.6.55...v3.0.0) (2026-06-06)
 
 
