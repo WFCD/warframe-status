@@ -63,7 +63,9 @@ curl http://localhost:8080/pc/alerts
 Pull-request and release tests use the same WARP sidecar image (`caomingjun/warp`) via [`.github/scripts/ci-warp.sh`](./.github/scripts/ci-warp.sh):
 
 - **Test job** — starts WARP, runs `npm test` in a Node container with `network_mode: container:warp`
-- **Docker image job** — builds the image, runs it behind WARP the same way as `docker-compose.warp.example.yml`, then checks `/heartbeat` and `/pc/alerts` on host port `8080`
+- **Docker image job** — builds the image, runs it behind WARP the same way as `docker-compose.warp.example.yml`, then checks `/heartbeat` and `/pc/alerts` on host port `18080` (CI uses a non-default port so parallel jobs do not collide on shared runners)
+
+Container names are scoped per job and run (`warp-<job>-<run_id>`) so Test and Docker image can run concurrently.
 
 No WireGuard config or Cloudflare Zero Trust secrets are required.
 

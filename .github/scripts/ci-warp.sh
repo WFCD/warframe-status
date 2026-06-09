@@ -3,17 +3,22 @@
 # Used in CI so test egress matches the docker-compose.warp.example.yml deployment path.
 set -euo pipefail
 
-WARP_CONTAINER="${WARP_CONTAINER:-warp}"
-STATUS_CONTAINER="${STATUS_CONTAINER:-warframe-status}"
+job_scope="${GITHUB_JOB:-local}"
+run_scope="${GITHUB_RUN_ID:-$$}"
+WARP_CONTAINER="${WARP_CONTAINER:-warp-${job_scope}-${run_scope}}"
+STATUS_CONTAINER="${STATUS_CONTAINER:-warframe-status-${job_scope}-${run_scope}}"
 WARP_IMAGE="${WARP_IMAGE:-caomingjun/warp}"
 NODE_IMAGE="${NODE_IMAGE:-node:22-bookworm}"
 WORKSPACE="${GITHUB_WORKSPACE:-$PWD}"
 WARP_HOST_PORT="${WARP_HOST_PORT:-8080}"
-WARP_PORTS="${WARP_PORTS:-${WARP_HOST_PORT}:3001}"
+
+cleanup() {
+  docker rm -f "$STATUS_CONTAINER" "$WARP_CONTAINER" >/dev/null 2>&1 || true
+}
 
 start_warp() {
   local -a port_args=()
-  if [[ -n "${WARP_PORTS:-}" ]]; then
+  if [[ -n "${WARP_PORTS-}" ]]; then
     port_args+=(-p "$WARP_PORTS")
   fi
 
@@ -111,6 +116,7 @@ case "${1:-}" in
       echo "usage: $0 run <shell command>" >&2
       exit 1
     fi
+    trap cleanup EXIT
     start_warp
     wait_for_warp
     run_with_warp "$1"
@@ -121,6 +127,8 @@ case "${1:-}" in
       echo "usage: $0 smoke <image>" >&2
       exit 1
     fi
+    : "${WARP_PORTS:=${WARP_HOST_PORT}:3001}"
+    trap cleanup EXIT
     start_warp
     wait_for_warp
     smoke_image "$1"
