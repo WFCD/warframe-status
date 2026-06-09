@@ -1,3 +1,7 @@
+import {
+  ApiMessageNotFoundResponse,
+  ApiStructuredNotFoundResponse,
+} from '@nest/config/openapi-responses';
 import { WorldStateDto } from '@dto/worldstate.dto';
 import type { RequestWithLanguage } from '@nest/types/express';
 import {
@@ -79,11 +83,10 @@ export class WorldstateController extends WorldstateFieldRoutesController {
    * @summary Get worldstate for platform
    */
   @Get(PLATFORM_PATHS)
-  @ApiOperation({ summary: 'Get worldstate data for a specific platform' })
-  @ApiParam({
-    name: 'platform',
-    description: 'Platform identifier (pc, ps4, psn, xb1, swi, ns)',
-    enum: PLATFORMS,
+  @ApiOperation({
+    summary: 'Get worldstate data for a specific platform',
+    description:
+      'Use a platform path prefix (pc, ps4, psn, xb1, swi, ns). Non-PC platforms redirect to pc.',
   })
   @ApiResponse({
     status: 200,
@@ -91,7 +94,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
     type: WorldStateDto,
   })
   @ApiResponse({ status: 301, description: 'Redirected to PC platform' })
-  @ApiResponse({ status: 404, description: 'WorldState not found' })
+  @ApiMessageNotFoundResponse('Live worldstate is not available')
   async getWorldstate(
     @Req() req: RequestWithLanguage,
     @Res() res: Response,
@@ -135,11 +138,10 @@ export class WorldstateController extends WorldstateFieldRoutesController {
    * @summary Get specific worldstate field
    */
   @Get(PLATFORM_FIELD_PATHS)
-  @ApiOperation({ summary: 'Get a specific field from worldstate' })
-  @ApiParam({
-    name: 'platform',
-    description: 'Platform identifier (pc, ps4, psn, xb1, swi, ns)',
-    enum: PLATFORMS,
+  @ApiOperation({
+    summary: 'Get a specific field from worldstate',
+    description:
+      'Use a platform path prefix (pc, ps4, psn, xb1, swi, ns) before the field name.',
   })
   @ApiParam({
     name: 'field',
@@ -165,7 +167,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
     },
   })
   @ApiResponse({ status: 301, description: 'Redirected to PC platform' })
-  @ApiResponse({ status: 404, description: 'Worldstate field not found' })
+  @ApiStructuredNotFoundResponse()
   getWorldstateField(
     @Param('field') field: string,
     @Query() query: Record<string, unknown>,
@@ -245,18 +247,17 @@ export class WorldstateController extends WorldstateFieldRoutesController {
    * Get a worldstate field in a specific language
    */
   @Get(LANGUAGE_FIELD_PATHS)
-  @ApiOperation({ summary: 'Get a worldstate field in a specific language' })
-  @ApiParam({
-    name: 'language',
-    description: 'Language code for localized worldstate data',
-    enum: LANGUAGES,
+  @ApiOperation({
+    summary: 'Get a worldstate field in a specific language',
+    description:
+      'Use a language path prefix (de, es, fr, it, ko, pl, pt, ru, zh, cs, sr, uk, en) before the field name.',
   })
   @ApiParam({
     name: 'field',
     description: 'Worldstate field name (e.g., alerts, invasions, fissures)',
   })
   @ApiResponse({ status: 200, description: 'Worldstate field data' })
-  @ApiResponse({ status: 404, description: 'Worldstate field not found' })
+  @ApiStructuredNotFoundResponse()
   getWorldstateFieldByLanguage(
     @Param('field') field: string,
     @Query() query: Record<string, unknown>,

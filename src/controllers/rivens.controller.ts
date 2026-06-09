@@ -1,4 +1,8 @@
 import { CompatibilityDto, RivenStatDto } from '@dto/rivens.dto';
+import {
+  ApiInternalErrorResponse,
+  ApiMessageNotFoundResponse,
+} from '@nest/config/openapi-responses';
 import { Controller, Get, Inject, Param } from '@nestjs/common';
 import {
   ApiExtraModels,
@@ -14,6 +18,7 @@ import type {
 
 @ApiTags('rivens')
 @ApiExtraModels(RivenStatDto, CompatibilityDto)
+@ApiMessageNotFoundResponse('Riven cache is unavailable for the platform')
 @Controller(':platform/rivens')
 export class RivensController {
   constructor(
@@ -50,6 +55,7 @@ export class RivensController {
       },
     },
   })
+  @ApiInternalErrorResponse('Rivens cache could not be hydrated')
   async getAllRivens(@Param('platform') platform: string) {
     // Normalize platform: 'ns' -> 'swi'
     const normalizedPlatform = (
@@ -95,6 +101,7 @@ export class RivensController {
       },
     },
   })
+  @ApiInternalErrorResponse('Rivens cache could not be hydrated')
   async searchRivens(
     @Param('platform') platform: string,
     @Param('query') query: string,

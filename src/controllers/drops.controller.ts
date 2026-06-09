@@ -1,4 +1,8 @@
 import { DropDto, DropRewardDto, LocationGroupDto } from '@dto/drops.dto';
+import {
+  ApiInternalErrorResponse,
+  ApiMessageNotFoundResponse,
+} from '@nest/config/openapi-responses';
 import { Controller, Get, Inject, Param, Query } from '@nestjs/common';
 import {
   ApiExtraModels,
@@ -12,6 +16,7 @@ import type { DropsCacheService } from '@services/drops-cache.service';
 
 @ApiTags('drops')
 @ApiExtraModels(DropDto, LocationGroupDto, DropRewardDto)
+@ApiMessageNotFoundResponse('Drops cache is unavailable')
 @Controller('drops')
 export class DropsController {
   constructor(
@@ -36,6 +41,7 @@ export class DropsController {
     description: 'Array of all drops in the game',
     type: [DropDto],
   })
+  @ApiInternalErrorResponse('Drops cache could not be hydrated')
   async getAllDrops() {
     return this.dropsCacheService.get();
   }
@@ -84,6 +90,7 @@ export class DropsController {
       ],
     },
   })
+  @ApiInternalErrorResponse('Drops cache could not be hydrated')
   async searchDrops(
     @Param('query') query: string,
     @Query('grouped_by') groupedBy?: string,

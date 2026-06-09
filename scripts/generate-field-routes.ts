@@ -158,7 +158,8 @@ function generateFieldMethod(field: FieldInfo): string {
   })
   @ApiResponse({
     status: 404,
-    description: 'Field not present in worldstate',
+    description: 'Worldstate or field is not available',
+    type: ApiMessageNotFoundDto,
   })`;
   
   // Add filter query parameter for array fields
@@ -210,6 +211,7 @@ function generateControllerFile(fields: FieldInfo[]): string {
 // Run: npm run generate:routes to regenerate
 // Last generated: ${timestamp}
 
+import { ApiMessageNotFoundDto } from '@dto/errors.dto';
 import { Controller, Get, Query, Req, Res } from '@nestjs/common';
 import {
   ApiOperation,

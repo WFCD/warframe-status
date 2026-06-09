@@ -1,0 +1,16 @@
+# Operations without a client-facing 4xx response.
+# See controller @ApiResponse decorators for documented 2xx/5xx error shapes.
+docs/openapi/openapi.json:
+  operation-4xx-response:
+    - '#/paths/~1heartbeat/get/responses'
+    - '#/paths/~1weapons/get/responses'
+    - '#/paths/~1warframes/get/responses'
+    - '#/paths/~1items/get/responses'
+    - '#/paths/~1mods/get/responses'
+    - '#/paths/~1weapons~1search~1{query}/get/responses'
+    - '#/paths/~1warframes~1search~1{query}/get/responses'
+    - '#/paths/~1items~1search~1{query}/get/responses'
+    - '#/paths/~1mods~1search~1{query}/get/responses'
+    - '#/paths/~1wfinfo~1filtered_items/get/responses'
+    - '#/paths/~1wfinfo~1prices/get/responses'
+    - '#/paths/~1rss/get/responses'

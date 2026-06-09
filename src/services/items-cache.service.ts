@@ -79,10 +79,13 @@ export class ItemsCacheService extends BaseCacheService {
     await super.onModuleInit();
   }
 
-  async populate(): Promise<void> {
+  async populate(options?: { force?: boolean }): Promise<void> {
     this.lastUpdate = await this.getLastUpdate();
 
-    if (Date.now() - this.lastUpdate <= FOUR_HOURS) {
+    if (
+      !options?.force &&
+      Date.now() - this.lastUpdate <= FOUR_HOURS
+    ) {
       this.logger.debug('No items update needed');
       return;
     }
@@ -211,25 +214,32 @@ export class ItemsCacheService extends BaseCacheService {
 
     let base = await this.cacheStore.get<ProcessedItem[]>(`${language}-${key}`);
 
-    if (!term && !(remove || only)) {
-      return base;
+    if (!base) {
+      this.logger.error('Items not hydrated. Forcing hydration.');
+      await this.populate({ force: true });
+      base = await this.cacheStore.get<ProcessedItem[]>(`${language}-${key}`);
     }
 
     if (!base) {
-      this.logger.error('Items not hydrated. Forcing hydration.');
-      await this.populate();
-      base = await this.cacheStore.get<ProcessedItem[]>(`${language}-${key}`);
+      this.logger.error(
+        `Items cache missing for ${language}-${key} after hydration`,
+      );
+      return undefined;
+    }
+
+    if (!term && !(remove || only)) {
+      return base;
     }
 
     const bys = by.split('.');
     let filtered: ProcessedItem[] | ProcessedItem | undefined = base;
 
     if (filter) {
-      filtered = this.filterArray(filtered as ProcessedItem[], filter);
+      filtered = this.filterArray(base, filter);
     }
 
     if (term && max !== 1) {
-      filtered = this.filterArray(base!, [{ key: by, value: term }]);
+      filtered = this.filterArray(base, [{ key: by, value: term }]);
     }
 
     if (term && max === 1) {
@@ -237,7 +247,7 @@ export class ItemsCacheService extends BaseCacheService {
       let exact = false;
       filtered = undefined;
 
-      base!
+      base
         .filter((item) => item && this.parseNestedKey(item, bys).length > 0)
         .forEach((item) => {
           const values = this.parseNestedKey(item, bys);

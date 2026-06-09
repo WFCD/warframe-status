@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import type { Cache } from 'cache-manager';
 import JSON5 from 'json5';
 import { type LoggerService, LogScope } from './logger.service';
@@ -125,7 +125,9 @@ export class RivensCacheService {
     }
 
     if (!base) {
-      throw new Error(`Failed to load rivens data for platform: ${platform}`);
+      throw new NotFoundException(
+        `Failed to load rivens data for platform: ${platform}`,
+      );
     }
 
     if (!term) {

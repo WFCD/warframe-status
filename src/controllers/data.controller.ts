@@ -18,6 +18,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { ApiDetailedNotFoundResponse } from '@nest/config/openapi-responses';
 import { isPlatform } from '@nest/guards/platform.guard';
 import type { WarframeDataService } from '@services/warframe-data.service';
 import type { Request, Response } from 'express';
@@ -28,6 +29,9 @@ import type { Request, Response } from 'express';
  */
 @ApiTags('data')
 @ApiExtraModels(DataNotFoundDto, DataErrorDto)
+@ApiDetailedNotFoundResponse(
+  'Unknown data keys and platforms return this response shape',
+)
 @Controller()
 export class DataController {
   constructor(

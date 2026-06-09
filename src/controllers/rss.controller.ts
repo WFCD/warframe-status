@@ -1,4 +1,5 @@
 import { RssFeedItemDto } from '@dto/rss.dto';
+import { ApiInternalErrorResponse } from '@nest/config/openapi-responses';
 import { Controller, Get, Inject } from '@nestjs/common';
 import {
   ApiExtraModels,
@@ -34,6 +35,7 @@ export class RssController {
       'Array of RSS feeds, each containing a URL and array of feed items',
     type: [RssFeedItemDto],
   })
+  @ApiInternalErrorResponse('Worldstate emitter is unavailable')
   getRss() {
     return this.worldStateService.getRss();
   }

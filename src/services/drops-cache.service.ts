@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import type { Cache } from 'cache-manager';
 import { type LoggerService, LogScope } from './logger.service';
 
@@ -104,7 +104,7 @@ export class DropsCacheService {
     }
 
     if (!base) {
-      throw new Error('Failed to load drops data');
+      throw new NotFoundException('Failed to load drops data');
     }
 
     if (!options?.term) {

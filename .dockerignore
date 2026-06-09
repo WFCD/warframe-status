@@ -64,6 +64,7 @@ caches/
 .gitattributes
 
 # Project configs
+.redocly.lint-ignore.yaml
 .babelrc
 .c8rc
 .github/

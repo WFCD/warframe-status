@@ -19,7 +19,6 @@ export const config = new DocumentBuilder()
   )
   .setLicense('Apache-2.0', 'https://www.apache.org/licenses/LICENSE-2.0')
   .addServer('https://api.warframestat.us', 'Production')
-  .addServer('http://localhost:3000', 'Local Development')
   .addTag('system', 'System health and status endpoints')
   .addTag(
     'worldstate',
