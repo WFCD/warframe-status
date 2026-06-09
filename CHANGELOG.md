@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/wfcd/warframe-status/compare/v3.0.1...v3.0.2) (2026-06-09)
+
+
+### Bug Fixes
+
+* logo path ([638d17f](https://github.com/wfcd/warframe-status/commit/638d17f9ac1dc11c8e3821c2f34e1e2530759c49))
+
 ## [3.0.1](https://github.com/wfcd/warframe-status/compare/v3.0.0...v3.0.1) (2026-06-09)
 
 
