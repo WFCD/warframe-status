@@ -1,3 +1,11 @@
+# [3.2.0](https://github.com/wfcd/warframe-status/compare/v3.1.1...v3.2.0) (2026-06-10)
+
+
+### Features
+
+* cors ([26c56c1](https://github.com/wfcd/warframe-status/commit/26c56c1dc7fc5ba2c71f16a8274980983dfafe7f))
+* support market mod ranks ([c6d12b9](https://github.com/wfcd/warframe-status/commit/c6d12b9d61ba6b6a92fffe5ccc14034aaac5012d))
+
 ## [3.1.1](https://github.com/wfcd/warframe-status/compare/v3.1.0...v3.1.1) (2026-06-09)
 
 
