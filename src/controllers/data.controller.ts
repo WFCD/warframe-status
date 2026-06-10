@@ -1,4 +1,6 @@
 import { DataErrorDto, DataNotFoundDto } from '@dto/data.dto';
+import { ApiDetailedNotFoundResponse } from '@nest/config/openapi-responses';
+import { isPlatform } from '@nest/guards/platform.guard';
 import {
   Controller,
   Get,
@@ -18,8 +20,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { ApiDetailedNotFoundResponse } from '@nest/config/openapi-responses';
-import { isPlatform } from '@nest/guards/platform.guard';
 import type { WarframeDataService } from '@services/warframe-data.service';
 import type { Request, Response } from 'express';
 

@@ -91,7 +91,8 @@ describe('OpenAPI', () => {
         platformGet?.should.be.an('object');
 
         const responseSchema =
-          platformGet?.responses?.['200']?.content?.['application/json']?.schema;
+          platformGet?.responses?.['200']?.content?.['application/json']
+            ?.schema;
 
         responseSchema?.$ref.should.equal('#/components/schemas/WorldStateDto');
       }

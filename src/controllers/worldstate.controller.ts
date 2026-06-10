@@ -1,8 +1,9 @@
+import { WorldStateDto } from '@dto/worldstate.dto';
 import {
   ApiMessageNotFoundResponse,
   ApiStructuredNotFoundResponse,
 } from '@nest/config/openapi-responses';
-import { WorldStateDto } from '@dto/worldstate.dto';
+import { VALID_PLATFORMS } from '@nest/guards/platform.guard';
 import type { RequestWithLanguage } from '@nest/types/express';
 import {
   Controller,
@@ -21,7 +22,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { VALID_PLATFORMS } from '@nest/guards/platform.guard';
 import type { Response } from 'express';
 import { WorldstateFieldRoutesController } from './worldstate-field-routes.generated';
 
@@ -95,10 +95,7 @@ export class WorldstateController extends WorldstateFieldRoutesController {
   })
   @ApiResponse({ status: 301, description: 'Redirected to PC platform' })
   @ApiMessageNotFoundResponse('Live worldstate is not available')
-  async getWorldstate(
-    @Req() req: RequestWithLanguage,
-    @Res() res: Response,
-  ) {
+  async getWorldstate(@Req() req: RequestWithLanguage, @Res() res: Response) {
     const platform = firstPathSegment(req.path);
     this.logger.info(`Requested worldstate for ${platform}`);
 

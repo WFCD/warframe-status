@@ -82,10 +82,7 @@ export class ItemsCacheService extends BaseCacheService {
   async populate(options?: { force?: boolean }): Promise<void> {
     this.lastUpdate = await this.getLastUpdate();
 
-    if (
-      !options?.force &&
-      Date.now() - this.lastUpdate <= FOUR_HOURS
-    ) {
+    if (!options?.force && Date.now() - this.lastUpdate <= FOUR_HOURS) {
       this.logger.debug('No items update needed');
       return;
     }
