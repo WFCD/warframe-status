@@ -28,6 +28,8 @@ async function bootstrap(listenHttp = true) {
   // Use WebSocket adapter
   app.useWebSocketAdapter(new WsAdapter(app));
 
+  app.enableCors();
+
   // Setup OpenAPI documentation
   setupOpenApi(app);
 

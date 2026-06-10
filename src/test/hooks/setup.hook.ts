@@ -44,6 +44,8 @@ export async function setupApp(): Promise<NestApplication> {
   // Use WebSocket adapter
   app.useWebSocketAdapter(new WsAdapter(app));
 
+  app.enableCors();
+
   // Match the same configuration as the main app
   await app.init();
   setupOpenApi(app);
