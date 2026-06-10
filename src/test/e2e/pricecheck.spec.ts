@@ -50,6 +50,26 @@ describe('pricecheck', () => {
     res.body.should.not.include('no such item');
   });
 
+  it('supports mod rank filter', async function () {
+    this.timeout(60000);
+    const res = await req('/pricecheck/find/blind%20rage?rank=10');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body.length.should.be.greaterThanOrEqual(1);
+    res.body[0].name.should.match(/\(R10\)$/);
+  });
+
+  it('supports comparing multiple mod ranks', async function () {
+    this.timeout(60000);
+    const res = await req('/pricecheck/attachment/blind%20rage?ranks=0,10');
+    res.should.have.status(200);
+    res.body.should.be.an('array');
+    res.body[0].fields.should.be.an('array');
+    res.body[0].fields.length.should.be.greaterThanOrEqual(2);
+    res.body[0].fields[0].name.should.include('R0');
+    res.body[0].fields[1].name.should.include('R10');
+  });
+
   it('503s when disabled', async () => {
     // Set environment variable to disable price checks
     const originalValue = process.env[PRICECHECKS_ENABLED_KEY];

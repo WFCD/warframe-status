@@ -12,6 +12,7 @@ import {
   Inject,
   NotFoundException,
   Param,
+  Query,
   Req,
   Res,
   ServiceUnavailableException,
@@ -21,11 +22,13 @@ import {
   ApiHeader,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import type { LoggerService } from '@services/logger.service';
 import type { PriceCheckService } from '@services/pricecheck.service';
+import { parsePriceCheckOptions } from '@nest/utils/parsePriceCheckOptions';
 import type { Request, Response } from 'express';
 
 /**
@@ -55,7 +58,7 @@ export class PriceCheckController {
   @ApiOperation({
     summary: 'Price check items on warframe.market',
     description:
-      'Query warframe.market for item prices. Supports three response types: "string" (formatted text), "find" (raw data), and "attachment" (Discord embed format). Requires PRICECHECKS_ENABLED=true.',
+      'Query warframe.market for item prices. Supports three response types: "string" (formatted text), "find" (raw data), and "attachment" (Discord embed format). Optional query params filter mod rank and other order modifiers. Requires PRICECHECKS_ENABLED=true.',
   })
   @ApiParam({
     name: 'type',
@@ -76,6 +79,27 @@ export class PriceCheckController {
     description:
       'Platform to query (pc, ps4, xb1, swi, ns). Defaults to pc if not provided.',
     example: 'pc',
+  })
+  @ApiQuery({
+    name: 'rank',
+    required: false,
+    description: 'Filter mod orders to a specific rank (0-10)',
+    example: 10,
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'ranks',
+    required: false,
+    description: 'Compare multiple mod ranks in one response (comma-separated, e.g. 0,5,10)',
+    example: '0,10',
+    type: String,
+  })
+  @ApiQuery({
+    name: 'rankLt',
+    required: false,
+    description: 'Filter mod orders to ranks less than this value',
+    example: 5,
+    type: Number,
   })
   @ApiResponse({
     status: 200,
@@ -120,6 +144,16 @@ export class PriceCheckController {
   async priceCheck(
     @Param('type') type: string,
     @Param('query') query: string,
+    @Query('rank') rank: string | undefined,
+    @Query('ranks') ranks: string | undefined,
+    @Query('rankLt') rankLt: string | undefined,
+    @Query('charges') charges: string | undefined,
+    @Query('chargesLt') chargesLt: string | undefined,
+    @Query('amberStars') amberStars: string | undefined,
+    @Query('amberStarsLt') amberStarsLt: string | undefined,
+    @Query('cyanStars') cyanStars: string | undefined,
+    @Query('cyanStarsLt') cyanStarsLt: string | undefined,
+    @Query('subtype') subtype: string | undefined,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<void> {
@@ -133,6 +167,18 @@ export class PriceCheckController {
 
     // Get platform from header
     const platform = asPlatform(req.get('platform'));
+    const options = parsePriceCheckOptions({
+      rank,
+      ranks,
+      rankLt,
+      charges,
+      chargesLt,
+      amberStars,
+      amberStarsLt,
+      cyanStars,
+      cyanStarsLt,
+      subtype,
+    });
 
     try {
       let value: unknown;
@@ -142,15 +188,21 @@ export class PriceCheckController {
           value = await this.priceCheckService.priceCheckQueryString(
             query,
             platform,
+            options,
           );
           break;
         case 'find':
-          value = await this.priceCheckService.priceCheckQuery(query, platform);
+          value = await this.priceCheckService.priceCheckQuery(
+            query,
+            platform,
+            options,
+          );
           break;
         case 'attachment':
           value = await this.priceCheckService.priceCheckQueryAttachment(
             query,
             platform,
+            options,
           );
           break;
         default:

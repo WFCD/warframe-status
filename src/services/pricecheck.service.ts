@@ -1,6 +1,6 @@
 import { PRICECHECKS_ENABLED } from '@nest/config/integrations';
 import { Inject, Injectable } from '@nestjs/common';
-import Nexus, { type Platform } from 'warframe-nexus-query';
+import Nexus, { type Platform, type PriceCheckOptions } from 'warframe-nexus-query';
 import type { LoggerService } from './logger.service';
 
 /**
@@ -37,8 +37,14 @@ export class PriceCheckService {
   async priceCheckQueryString(
     query: string,
     platform?: Platform,
+    options: PriceCheckOptions = {},
   ): Promise<string> {
-    return this.nexusQuerier.priceCheckQueryString(query, undefined, platform);
+    return this.nexusQuerier.priceCheckQueryString(
+      query,
+      undefined,
+      platform,
+      options,
+    );
   }
 
   /**
@@ -47,8 +53,9 @@ export class PriceCheckService {
   async priceCheckQuery(
     query: string,
     platform?: Platform,
+    options: PriceCheckOptions = {},
   ): Promise<unknown[]> {
-    return this.nexusQuerier.priceCheckQuery(query, platform);
+    return this.nexusQuerier.priceCheckQuery(query, platform, options);
   }
 
   /**
@@ -57,11 +64,13 @@ export class PriceCheckService {
   async priceCheckQueryAttachment(
     query: string,
     platform?: Platform,
+    options: PriceCheckOptions = {},
   ): Promise<unknown[]> {
     return this.nexusQuerier.priceCheckQueryAttachment(
       query,
       undefined,
       platform,
+      options,
     );
   }
 }

@@ -49,7 +49,7 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "tsx": "^4.22.4",
-    "warframe-nexus-query": "^2.2.3",
+    "warframe-nexus-query": "^2.3.0",
     "warframe-worldstate-data": "^3.16.1",
     "warframe-worldstate-parser": "^5.3.9",
     "winston": "^3.19.0",
