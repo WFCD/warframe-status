@@ -1,6 +1,9 @@
 import { PRICECHECKS_ENABLED } from '@nest/config/integrations';
 import { Inject, Injectable } from '@nestjs/common';
-import Nexus, { type Platform, type PriceCheckOptions } from 'warframe-nexus-query';
+import Nexus, {
+  type Platform,
+  type PriceCheckOptions,
+} from 'warframe-nexus-query';
 import type { LoggerService } from './logger.service';
 
 /**
