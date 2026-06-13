@@ -5,6 +5,7 @@ import {
   PriceCheckUnavailableDto,
 } from '@dto/pricecheck.dto';
 import { asPlatform } from '@nest/guards/platform.guard';
+import { parsePriceCheckOptions } from '@nest/utils/parsePriceCheckOptions';
 import {
   Controller,
   Get,
@@ -28,7 +29,6 @@ import {
 } from '@nestjs/swagger';
 import type { LoggerService } from '@services/logger.service';
 import type { PriceCheckService } from '@services/pricecheck.service';
-import { parsePriceCheckOptions } from '@nest/utils/parsePriceCheckOptions';
 import type { Request, Response } from 'express';
 
 /**
@@ -90,7 +90,8 @@ export class PriceCheckController {
   @ApiQuery({
     name: 'ranks',
     required: false,
-    description: 'Compare multiple mod ranks in one response (comma-separated, e.g. 0,5,10)',
+    description:
+      'Compare multiple mod ranks in one response (comma-separated, e.g. 0,5,10)',
     example: '0,10',
     type: String,
   })

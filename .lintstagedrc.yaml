@@ -4,5 +4,4 @@
   - biome check --write
   - npm test
 package*.json:
-  - biome check --write
   - npx sort-package-json
