@@ -51,7 +51,7 @@
     "tsx": "^4.22.4",
     "warframe-nexus-query": "^2.3.0",
     "warframe-worldstate-data": "^3.16.1",
-    "warframe-worldstate-parser": "^5.3.9",
+    "warframe-worldstate-parser": "^5.3.13",
     "winston": "^3.19.0",
     "worldstate-emitter": "^2.5.0",
     "ws": "^8.21.0"
