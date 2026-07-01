@@ -1,3 +1,10 @@
+## [3.2.4](https://github.com/wfcd/warframe-status/compare/v3.2.3...v3.2.4) (2026-07-01)
+
+
+### Bug Fixes
+
+* upstream profile domain ([#2205](https://github.com/wfcd/warframe-status/issues/2205)) ([a855de2](https://github.com/wfcd/warframe-status/commit/a855de2c56a83f5d0680bee39372c69a88801939))
+
 ## [3.2.3](https://github.com/wfcd/warframe-status/compare/v3.2.2...v3.2.3) (2026-06-21)
 
 
