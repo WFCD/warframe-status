@@ -31,10 +31,9 @@ export class ProfileService {
     @Inject('TWITCH_CACHE_SERVICE')
     private readonly twitchCacheService: TwitchCacheService,
   ) {
-    this.profileUrl =
-      'https://content.warframe.com/dynamic/getProfileViewingData.php';
+    this.profileUrl = 'https://api.warframe.com/cdn/getProfileViewingData.php';
     this.arsenalApi =
-      'https://content.warframe.com/dynamic/twitch/getActiveLoadout.php';
+      'https://api.warframe.com/cdn/twitch/getActiveLoadout.php';
     this.arsenalId = 'ud1zj704c0eb1s553jbkayvqxjft97';
     this.userAgent = USER_AGENT!;
   }
