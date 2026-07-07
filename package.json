@@ -39,7 +39,7 @@
     "@nestjs/swagger": "^11.4.5",
     "@nestjs/websockets": "^11.1.24",
     "@wfcd/arsenal-parser": "^2.1.2",
-    "@wfcd/items": "^1.1274.63",
+    "@wfcd/items": "^1.1274.64",
     "@wfcd/profile-parser": "^2.0.13",
     "cache-manager": "^7.2.8",
     "colors": "1.4.0",
@@ -51,7 +51,7 @@
     "tsx": "^4.22.4",
     "warframe-nexus-query": "^2.3.0",
     "warframe-worldstate-data": "^3.16.1",
-    "warframe-worldstate-parser": "^5.4.0",
+    "warframe-worldstate-parser": "^5.4.1",
     "winston": "^3.19.0",
     "worldstate-emitter": "^2.5.0",
     "ws": "^8.21.0"
