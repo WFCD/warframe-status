@@ -168,6 +168,28 @@ export class HydrationService implements OnModuleInit, OnApplicationBootstrap {
   }
 
   /**
+   * Check every even minute that the wfinfo data exists
+   */
+  @Cron('0 */2 * * * *', {
+    name: 'wfinfo-cache-hydration',
+    timeZone: 'UTC',
+  })
+  async checkWfInfo(): Promise<void> {
+    const useCluster = USE_CLUSTER;
+    const isPrimary = !useCluster || cluster.isPrimary;
+
+    if (!isPrimary) {
+      this.logger.debug(
+        'Worker: Skipping scheduled hydration (runs on primary only)',
+      );
+      return;
+    }
+
+    this.logger.info('Primary: Scheduled wfinfo cache hydration started');
+    await this.wfinfoCache.populate();
+  }
+
+  /**
    * Wait for cache-ready signal from primary process
    */
   private async waitForCacheReady(): Promise<void> {
