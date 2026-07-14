@@ -81,6 +81,8 @@ export class WFInfoCacheService {
    */
   private async hydrate(): Promise<void> {
     const start = Date.now();
+    let filteredUpdated = false;
+    let pricesUpdated = false;
 
     // Fetch filtered items if URL is configured
     if (this.filteredItemsUrl) {
@@ -92,6 +94,7 @@ export class WFInfoCacheService {
           const data = JSON.parse(itemsRaw);
           if (data && Object.keys(data?.relics ?? {})?.length > 0) {
             await this.cache.set('filteredItems', data);
+            filteredUpdated = true;
           } else {
             this.logger.error(
               `Fetched invalid data from wfinfo filtered items`,
@@ -122,6 +125,7 @@ export class WFInfoCacheService {
           if ((data?.length ?? 0) > 0) {
             // don't allow setting invalid data
             await this.cache.set('prices', data);
+            pricesUpdated = true;
           } else {
             this.logger.error(`Fetched invalid data from wfinfo prices`);
           }
@@ -137,7 +141,9 @@ export class WFInfoCacheService {
 
     if (
       (await this.cache.get('prices')) &&
-      (await this.cache.get('filteredItems'))
+      (await this.cache.get('filteredItems')) &&
+      pricesUpdated &&
+      filteredUpdated
     ) {
       // don't set last update unless both caches are successfully set, forcing hydrate to rerun at the next minute
       this.lastUpdate = Date.now();
