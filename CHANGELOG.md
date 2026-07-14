@@ -1,3 +1,10 @@
+## [3.2.9](https://github.com/wfcd/warframe-status/compare/v3.2.8...v3.2.9) (2026-07-14)
+
+
+### Bug Fixes
+
+* aggressively hydrate wfinfo data ([#2213](https://github.com/wfcd/warframe-status/issues/2213)) ([743a9c9](https://github.com/wfcd/warframe-status/commit/743a9c9cf9555a43b2b4e08fddc2094463d5acef))
+
 ## [3.2.8](https://github.com/wfcd/warframe-status/compare/v3.2.7...v3.2.8) (2026-07-14)
 
 
