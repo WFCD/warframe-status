@@ -90,7 +90,13 @@ export class WFInfoCacheService {
 
         try {
           const data = JSON.parse(itemsRaw);
-          await this.cache.set('filteredItems', data);
+          if (data && Object.keys(data?.relics ?? {})?.length > 0) {
+            await this.cache.set('filteredItems', data);
+          } else {
+            this.logger.error(
+              `Fetched invalid data from wfinfo filtered items`,
+            );
+          }
         } catch (error) {
           const err = error as Error;
           this.logger.error(
@@ -113,7 +119,12 @@ export class WFInfoCacheService {
 
         try {
           const data = JSON.parse(pricesRaw);
-          await this.cache.set('prices', data);
+          if ((data?.length ?? 0) > 0) {
+            // don't allow setting invalid data
+            await this.cache.set('prices', data);
+          } else {
+            this.logger.error(`Fetched invalid data from wfinfo prices`);
+          }
         } catch (error) {
           const err = error as Error;
           this.logger.error('Failed to update wfinfo Prices', err.stack);
@@ -124,8 +135,14 @@ export class WFInfoCacheService {
       }
     }
 
-    this.lastUpdate = Date.now();
-    await this.setLastUpdate();
+    if (
+      (await this.cache.get('prices')) &&
+      (await this.cache.get('filteredItems'))
+    ) {
+      // don't set last update unless both caches are successfully set, forcing hydrate to rerun at the next minute
+      this.lastUpdate = Date.now();
+      await this.setLastUpdate();
+    }
 
     const end = Date.now();
     this.logger.info(`WFInfo Hydration complete in ${end - start}ms`);

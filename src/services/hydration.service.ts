@@ -168,6 +168,17 @@ export class HydrationService implements OnModuleInit, OnApplicationBootstrap {
   }
 
   /**
+   * Check every minute that the wfinfo data exists
+   */
+  @Cron('0 */2 * * * *', {
+    name: 'wfinfo-cache-hydration',
+    timeZone: 'UTC',
+  })
+  async checkWfInfo(): Promise<void> {
+    await this.wfinfoCache.populate();
+  }
+
+  /**
    * Wait for cache-ready signal from primary process
    */
   private async waitForCacheReady(): Promise<void> {
