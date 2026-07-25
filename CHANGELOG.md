@@ -1,3 +1,11 @@
+## [3.2.10](https://github.com/wfcd/warframe-status/compare/v3.2.9...v3.2.10) (2026-07-25)
+
+
+### Bug Fixes
+
+* bump the default group across 1 directory with 17 updates ([#2225](https://github.com/wfcd/warframe-status/issues/2225)) ([fb85461](https://github.com/wfcd/warframe-status/commit/fb85461862899ccab21193fa67ec6a249a24cb2c))
+* **sec:** bump postcss from 8.5.15 to 8.5.23 ([#2224](https://github.com/wfcd/warframe-status/issues/2224)) ([ecdee40](https://github.com/wfcd/warframe-status/commit/ecdee406d616ca478a8df2ef194928f2679c4570))
+
 ## [3.2.9](https://github.com/wfcd/warframe-status/compare/v3.2.8...v3.2.9) (2026-07-14)
 
 
