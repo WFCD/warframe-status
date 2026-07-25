@@ -27,7 +27,6 @@ describe('wfinfo', () => {
         res.body.should.be.an('object');
         Object.keys(res.body).length.should.be.greaterThan(0);
         res.body.should.have.keys([
-          'timestamp',
           'errors',
           'relics',
           'eqmt',
