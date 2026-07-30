@@ -28,7 +28,7 @@
     "test:watch": "dotenvx run -f .env.local -f .env --ignore=MISSING_ENV_FILE -- cross-env HOST=localhost mocha --config .mocharc.yaml --watch"
   },
   "dependencies": {
-    "@dotenvx/dotenvx": "^2.7.2",
+    "@dotenvx/dotenvx": "^2.11.0",
     "@nestjs/common": "^11.1.28",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.1.28",
@@ -39,8 +39,8 @@
     "@nestjs/swagger": "^11.4.5",
     "@nestjs/websockets": "^11.1.28",
     "@wfcd/arsenal-parser": "^2.1.2",
-    "@wfcd/items": "^1.1275.12",
-    "@wfcd/profile-parser": "^2.0.14",
+    "@wfcd/items": "^1.1275.16",
+    "@wfcd/profile-parser": "^2.0.15",
     "cache-manager": "^7.2.9",
     "colors": "1.4.0",
     "express": "^5.2.1",
@@ -57,7 +57,7 @@
     "ws": "^8.21.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.3",
+    "@biomejs/biome": "^2.5.4",
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^21.0.2",
     "@nestjs/cli": "^11.0.24",
@@ -74,7 +74,7 @@
     "@types/node": "^26.1.1",
     "@types/twitter": "^1.7.4",
     "@types/ws": "^8.18.1",
-    "c8": "^11.0.0",
+    "c8": "^12.0.0",
     "chai": "^6.2.2",
     "chai-http": "^5.1.2",
     "cross-env": "^10.1.0",
@@ -83,7 +83,7 @@
     "mocha": "^11.7.6",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^6.0.3",
-    "typescript-json-schema": "^0.67.4",
+    "typescript-json-schema": "^0.68.0",
     "utf-8-validate": "^5.0.10"
   },
   "optionalDependencies": {
