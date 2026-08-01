@@ -1,3 +1,10 @@
+## [3.2.12](https://github.com/wfcd/warframe-status/compare/v3.2.11...v3.2.12) (2026-08-01)
+
+
+### Bug Fixes
+
+* **sec:** bump sanitize-html from 2.17.4 to 2.17.6 ([#2233](https://github.com/wfcd/warframe-status/issues/2233)) ([e724a7f](https://github.com/wfcd/warframe-status/commit/e724a7fb0fb7c2a26f0562c835384ba06e787483))
+
 ## [3.2.11](https://github.com/wfcd/warframe-status/compare/v3.2.10...v3.2.11) (2026-07-28)
 
 
