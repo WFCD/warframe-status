@@ -1,3 +1,10 @@
+## [3.2.13](https://github.com/wfcd/warframe-status/compare/v3.2.12...v3.2.13) (2026-08-06)
+
+
+### Bug Fixes
+
+* **sec:** bump fast-uri from 3.1.4 to 3.1.5 ([#2237](https://github.com/wfcd/warframe-status/issues/2237)) ([89dcff4](https://github.com/wfcd/warframe-status/commit/89dcff4e28d087af57cec035abdc4cc481ed1381))
+
 ## [3.2.12](https://github.com/wfcd/warframe-status/compare/v3.2.11...v3.2.12) (2026-08-01)
 
 
