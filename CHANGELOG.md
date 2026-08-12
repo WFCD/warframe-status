@@ -1,3 +1,11 @@
+## [3.2.14](https://github.com/wfcd/warframe-status/compare/v3.2.13...v3.2.14) (2026-08-12)
+
+
+### Bug Fixes
+
+* **deps:** bump the default group with 10 updates ([#2244](https://github.com/wfcd/warframe-status/issues/2244)) ([285bcff](https://github.com/wfcd/warframe-status/commit/285bcff0c7652a55fb648995c30de0bc9e4875e2))
+* **sec:** bump js-yaml from 4.3.1 to 5.2.2 ([#2242](https://github.com/wfcd/warframe-status/issues/2242)) ([93aa5a1](https://github.com/wfcd/warframe-status/commit/93aa5a18e28b81c6b9899bb9f56755b226463e56))
+
 ## [3.2.13](https://github.com/wfcd/warframe-status/compare/v3.2.12...v3.2.13) (2026-08-06)
 
 
