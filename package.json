@@ -58,13 +58,13 @@
     "ws": "^8.21.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.6",
+    "@biomejs/biome": "^2.5.7",
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^21.0.2",
     "@nestjs/cli": "^11.0.24",
     "@nestjs/schematics": "^11.1.0",
     "@nestjs/testing": "^11.1.28",
-    "@redocly/cli": "^2.43.3",
+    "@redocly/cli": "^2.44.1",
     "@sentry/types": "^10.55.0",
     "@types/chai": "^5.2.3",
     "@types/chai-http": "^4.2.4",
