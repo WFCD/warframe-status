@@ -1,3 +1,10 @@
+## [3.2.19](https://github.com/wfcd/warframe-status/compare/v3.2.18...v3.2.19) (2026-08-27)
+
+
+### Bug Fixes
+
+* bump the default group with 2 updates ([#2259](https://github.com/wfcd/warframe-status/issues/2259)) ([ce0d30c](https://github.com/wfcd/warframe-status/commit/ce0d30c37ea222cd6dfdf4ab84771b4dbd71275e))
+
 ## [3.2.18](https://github.com/wfcd/warframe-status/compare/v3.2.17...v3.2.18) (2026-08-25)
 
 
