@@ -39,7 +39,7 @@
     "@nestjs/swagger": "^11.4.6",
     "@nestjs/websockets": "^11.1.29",
     "@wfcd/arsenal-parser": "^2.1.2",
-    "@wfcd/items": "^1.1275.46",
+    "@wfcd/items": "^1.1275.49",
     "@wfcd/profile-parser": "^2.0.17",
     "cache-manager": "^7.2.9",
     "colors": "1.4.0",
@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.8",
-    "@commitlint/cli": "^21.2.1",
+    "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^21.0.2",
     "@nestjs/cli": "^11.0.24",
     "@nestjs/schematics": "^11.1.0",
