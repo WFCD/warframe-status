@@ -39,7 +39,7 @@
     "@nestjs/swagger": "^11.4.7",
     "@nestjs/websockets": "^11.2.1",
     "@wfcd/arsenal-parser": "^2.1.2",
-    "@wfcd/items": "^1.1275.65",
+    "@wfcd/items": "^1.1275.68",
     "@wfcd/profile-parser": "^2.0.17",
     "cache-manager": "^7.2.9",
     "colors": "1.4.0",
