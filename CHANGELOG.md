@@ -1,3 +1,10 @@
+## [3.2.25](https://github.com/wfcd/warframe-status/compare/v3.2.24...v3.2.25) (2026-09-13)
+
+
+### Bug Fixes
+
+* bump nanoid from 3.3.16 to 3.3.19 ([#2280](https://github.com/wfcd/warframe-status/issues/2280)) ([dd68cca](https://github.com/wfcd/warframe-status/commit/dd68cca1b6613be66397d67763c740787e93793f))
+
 ## [3.2.24](https://github.com/wfcd/warframe-status/compare/v3.2.23...v3.2.24) (2026-09-11)
 
 
