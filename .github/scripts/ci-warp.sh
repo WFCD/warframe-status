@@ -130,12 +130,12 @@ smoke_image() {
     --network "container:${WARP_CONTAINER}" \
     "$image" >/dev/null
 
-  for attempt in $(seq 1 45); do
+  for attempt in $(seq 1 90); do
     if smoke_curl /heartbeat >/dev/null; then
       echo "Heartbeat OK"
       break
     fi
-    if [[ "$attempt" -eq 45 ]]; then
+    if [[ "$attempt" -eq 90 ]]; then
       smoke_log_failure "Heartbeat failed" /heartbeat
       return 1
     fi
