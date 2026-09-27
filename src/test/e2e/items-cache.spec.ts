@@ -28,6 +28,17 @@ describe('ItemsCacheService', () => {
     populateCalls = 0;
     lastPopulateForce = undefined;
 
+    // Real hydration builds every locale from @wfcd/items and can exceed the mocha timeout in CI
+    const braton = { name: 'Braton', uniqueName: '/Lotus/Weapons/Braton' };
+    (
+      service as unknown as { makeLanguageCache: () => unknown }
+    ).makeLanguageCache = () => ({
+      weapons: [braton],
+      warframes: [],
+      items: [braton],
+      mods: [],
+    });
+
     const originalPopulate = service.populate.bind(service);
     service.populate = async (options?: { force?: boolean }) => {
       populateCalls += 1;
