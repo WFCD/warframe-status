@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Reference | WarframeStatus API</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700"
+    rel="stylesheet"
+  />
+  <link rel="icon" type="image/png" href="./wfcd_logo_color.png" />
+  <link href="./styles.css" rel="stylesheet" />
+</head>
+<body>
+  <redoc spec-url="./openapi.json"></redoc>
+  <script src="https://cdn.jsdelivr.net/npm/redoc@latest/bundles/redoc.standalone.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/redoc-try@1.4.10/dist/try.js"></script>
+  <script>
+    initTry({
+      openApi: './openapi.json',
+      redocOptions: { scrollYOffset: 50 },
+    });
+  </script>
+</body>
+</html>
