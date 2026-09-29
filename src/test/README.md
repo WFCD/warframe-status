@@ -226,5 +226,5 @@ When migrating an Express endpoint to NestJS:
 
 - [INTEGRATION_TESTING.md](../../../INTEGRATION_TESTING.md) - Detailed integration test guide
 - [MIGRATION_PLAN.md](../../../MIGRATION_PLAN.md) - Overall migration plan
-- `.mocharc.nest.yaml` - Unit test configuration
-- `.mocharc.integration.yaml` - Integration test configuration
+- `.config/mocha.yaml` - Unit test configuration
+- `.config/mocha.integration.yaml` - Integration test configuration

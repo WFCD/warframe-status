@@ -1,6 +1,6 @@
 # Operations without a client-facing 4xx response.
 # See controller @ApiResponse decorators for documented 2xx/5xx error shapes.
-docs/openapi/openapi.json:
+../docs/openapi/openapi.json:
   operation-4xx-response:
     - '#/paths/~1heartbeat/get/responses'
     - '#/paths/~1weapons/get/responses'
