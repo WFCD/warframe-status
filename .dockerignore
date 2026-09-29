@@ -64,13 +64,9 @@ caches/
 .gitattributes
 
 # Project configs
-.redocly.lint-ignore.yaml
-.babelrc
-.c8rc
+.config/
 .github/
 .husky/
-.mocharc.yaml
-.ncurc.yml
 .nvmrc
 .releaserc.yaml
 CHANGELOG.md
