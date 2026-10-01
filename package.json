@@ -29,7 +29,7 @@
     "test:watch": "dotenvx run -f .env.local -f .env --ignore=MISSING_ENV_FILE -- cross-env HOST=localhost mocha --config .config/mocha.yaml --watch"
   },
   "dependencies": {
-    "@dotenvx/dotenvx": "^2.26.1",
+    "@dotenvx/dotenvx": "^2.28.0",
     "@nestjs/common": "^12.0.3",
     "@nestjs/config": "^12.0.0",
     "@nestjs/core": "^12.0.3",
@@ -53,17 +53,17 @@
     "tsx": "^4.23.13",
     "warframe-nexus-query": "^2.3.7",
     "warframe-worldstate-data": "^3.16.9",
-    "warframe-worldstate-parser": "^5.5.3",
+    "warframe-worldstate-parser": "^5.5.4",
     "winston": "^3.19.0",
     "worldstate-emitter": "^2.5.0",
     "ws": "^8.21.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.13",
+    "@biomejs/biome": "^2.5.14",
     "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^21.0.2",
-    "@nestjs/cli": "^12.0.1",
-    "@nestjs/schematics": "^12.0.2",
+    "@nestjs/cli": "^12.0.3",
+    "@nestjs/schematics": "^12.0.3",
     "@nestjs/testing": "^12.0.3",
     "@redocly/cli": "^2.53.2",
     "@sentry/types": "^10.55.0",
