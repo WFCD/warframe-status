@@ -13,7 +13,9 @@ const withTimestamp = (path: string) =>
 describe('items', () => {
   it('should return all items', async () => {
     const res = await req('/items');
-    const items = [...new Items()];
+    const items = [...new Items()].filter(
+      (item) => item.category !== 'Components',
+    );
     res.should.have.status(200);
     res.body.should.be.an('array');
     res.body.length.should.be.equal(items.length);

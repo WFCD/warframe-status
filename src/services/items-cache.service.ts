@@ -107,27 +107,27 @@ export class ItemsCacheService extends BaseCacheService {
       weapons: [
         ...new Items({
           category: ['Primary', 'Secondary', 'Melee', 'Arch-Melee', 'Arch-Gun'],
-          i18n: true,
+          i18n: [language],
           i18nOnObject,
         }),
       ],
       warframes: [
         ...new Items({
           category: ['Warframes', 'Archwing'],
-          i18n: true,
+          i18n: [language],
           i18nOnObject,
         }),
       ],
       items: [
         ...new Items({
-          i18n: true,
+          i18n: [language],
           i18nOnObject,
         }),
-      ],
+      ].filter((item) => item.category !== 'Components'),
       mods: [
         ...new Items({
           category: ['Mods'],
-          i18n: true,
+          i18n: [language],
           i18nOnObject,
         }),
       ],
