@@ -7,6 +7,21 @@ import { req } from '../hooks/setup.hook';
 chai.should();
 chai.use(chaiHttp);
 
+const MARKET_ITEMS_URL = `${
+  process.env.MARKET_V2_URL_OVERRIDE || 'https://api.warframe.market/v2'
+}/items`;
+
+const isMarketReachable = async (): Promise<boolean> => {
+  try {
+    const res = await fetch(MARKET_ITEMS_URL, {
+      signal: AbortSignal.timeout(10000),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+};
+
 describe('pricecheck', () => {
   it('handles no results', async function () {
     this.timeout(40000);
@@ -16,58 +31,68 @@ describe('pricecheck', () => {
     res.body.should.include('no such item');
   });
 
-  it('supports string search', async function () {
-    this.timeout(60000);
-    const res = await req('/pricecheck/string/nikana%20prime');
-    res.should.have.status(200);
-    res.body.should.be.a('string');
-    res.body.should.not.include('no such item');
-  });
+  describe('with warframe.market data', () => {
+    // warframe.market rejects some hosts (e.g. GitHub Actions runners) with 403
+    before(async function () {
+      this.timeout(15000);
+      if (!(await isMarketReachable())) {
+        this.skip();
+      }
+    });
 
-  it('supports attachment search', async function () {
-    this.timeout(60000);
-    const res = await req('/pricecheck/attachment/nikana%20prime');
-    res.should.have.status(200);
-    res.body.should.be.an('array');
-    res.body[0].should.be.an('object');
-    res.body.should.not.include('no such item');
-    res.body[0].title.should.include('[PC]');
-    res.body[0].title.should.include('Nikana Prime');
-    res.body[0].fields.should.be.an('array');
-    res.body[0].fields.length.should.greaterThanOrEqual(1);
-    res.body[0].thumbnail.url.should.include(
-      'https://warframe.market/static/assets',
-    );
-    res.body[0].footer.icon_url.should.include('https://warframestat.us/');
-  });
+    it('supports string search', async function () {
+      this.timeout(60000);
+      const res = await req('/pricecheck/string/nikana%20prime');
+      res.should.have.status(200);
+      res.body.should.be.a('string');
+      res.body.should.not.include('no such item');
+    });
 
-  it('supports raw search', async function () {
-    this.timeout(60000);
-    const res = await req('/pricecheck/find/nikana%20prime');
-    res.should.have.status(200);
-    res.body.should.be.an('array');
-    res.body.length.should.be.greaterThanOrEqual(1);
-    res.body.should.not.include('no such item');
-  });
+    it('supports attachment search', async function () {
+      this.timeout(60000);
+      const res = await req('/pricecheck/attachment/nikana%20prime');
+      res.should.have.status(200);
+      res.body.should.be.an('array');
+      res.body[0].should.be.an('object');
+      res.body.should.not.include('no such item');
+      res.body[0].title.should.include('[PC]');
+      res.body[0].title.should.include('Nikana Prime');
+      res.body[0].fields.should.be.an('array');
+      res.body[0].fields.length.should.greaterThanOrEqual(1);
+      res.body[0].thumbnail.url.should.include(
+        'https://warframe.market/static/assets',
+      );
+      res.body[0].footer.icon_url.should.include('https://warframestat.us/');
+    });
 
-  it('supports mod rank filter', async function () {
-    this.timeout(60000);
-    const res = await req('/pricecheck/find/blind%20rage?rank=10');
-    res.should.have.status(200);
-    res.body.should.be.an('array');
-    res.body.length.should.be.greaterThanOrEqual(1);
-    res.body[0].name.should.match(/\(R10\)$/);
-  });
+    it('supports raw search', async function () {
+      this.timeout(60000);
+      const res = await req('/pricecheck/find/nikana%20prime');
+      res.should.have.status(200);
+      res.body.should.be.an('array');
+      res.body.length.should.be.greaterThanOrEqual(1);
+      res.body.should.not.include('no such item');
+    });
 
-  it('supports comparing multiple mod ranks', async function () {
-    this.timeout(60000);
-    const res = await req('/pricecheck/attachment/blind%20rage?ranks=0,10');
-    res.should.have.status(200);
-    res.body.should.be.an('array');
-    res.body[0].fields.should.be.an('array');
-    res.body[0].fields.length.should.be.greaterThanOrEqual(2);
-    res.body[0].fields[0].name.should.include('R0');
-    res.body[0].fields[1].name.should.include('R10');
+    it('supports mod rank filter', async function () {
+      this.timeout(60000);
+      const res = await req('/pricecheck/find/blind%20rage?rank=10');
+      res.should.have.status(200);
+      res.body.should.be.an('array');
+      res.body.length.should.be.greaterThanOrEqual(1);
+      res.body[0].name.should.match(/\(R10\)$/);
+    });
+
+    it('supports comparing multiple mod ranks', async function () {
+      this.timeout(60000);
+      const res = await req('/pricecheck/attachment/blind%20rage?ranks=0,10');
+      res.should.have.status(200);
+      res.body.should.be.an('array');
+      res.body[0].fields.should.be.an('array');
+      res.body[0].fields.length.should.be.greaterThanOrEqual(2);
+      res.body[0].fields[0].name.should.include('R0');
+      res.body[0].fields[1].name.should.include('R10');
+    });
   });
 
   it('503s when disabled', async () => {
