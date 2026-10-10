@@ -1,3 +1,10 @@
+## [3.2.29](https://github.com/wfcd/warframe-status/compare/v3.2.28...v3.2.29) (2026-10-10)
+
+
+### Bug Fixes
+
+* bump proxy-addr from 2.0.7 to 2.0.8 ([#2309](https://github.com/wfcd/warframe-status/issues/2309)) ([a4af853](https://github.com/wfcd/warframe-status/commit/a4af8537b2abaf77e056f24f5318e16dd0bf5862))
+
 ## [3.2.28](https://github.com/wfcd/warframe-status/compare/v3.2.27...v3.2.28) (2026-09-27)
 
 
