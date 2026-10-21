@@ -12,8 +12,9 @@
   <link href="./styles.css" rel="stylesheet" />
 </head>
 <body>
-  <redoc spec-url="./openapi.json"></redoc>
-  <script src="https://cdn.jsdelivr.net/npm/redoc@latest/bundles/redoc.standalone.js"></script>
+  <div id="redoc-container"></div>
+  <!-- Pin 2.x: redoc@latest is ESM-only 3.x and blanks this page; redoc-try needs the 2.x global. -->
+  <script src="https://cdn.jsdelivr.net/npm/redoc@2.5.3/bundles/redoc.standalone.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/redoc-try@1.4.10/dist/try.js"></script>
   <script>
     initTry({
