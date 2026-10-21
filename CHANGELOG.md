@@ -1,3 +1,10 @@
+## [3.2.33](https://github.com/wfcd/warframe-status/compare/v3.2.32...v3.2.33) (2026-10-21)
+
+
+### Bug Fixes
+
+* pin docs Redoc to 2.5.3 so the reference renders ([082e1c0](https://github.com/wfcd/warframe-status/commit/082e1c0859b3de2104108704b8588071844b28c5))
+
 ## [3.2.32](https://github.com/wfcd/warframe-status/compare/v3.2.31...v3.2.32) (2026-10-20)
 
 
