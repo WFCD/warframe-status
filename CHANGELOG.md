@@ -1,3 +1,10 @@
+## [3.2.34](https://github.com/wfcd/warframe-status/compare/v3.2.33...v3.2.34) (2026-10-23)
+
+
+### Bug Fixes
+
+* bump @wfcd/items from 1.1276.17 to 1.1276.18 ([#2320](https://github.com/wfcd/warframe-status/issues/2320)) ([0c58be8](https://github.com/wfcd/warframe-status/commit/0c58be89a403e2531365fc2f0f6899e7889b6cd2))
+
 ## [3.2.33](https://github.com/wfcd/warframe-status/compare/v3.2.32...v3.2.33) (2026-10-21)
 
 
