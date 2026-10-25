@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/wfcd/warframe-status/compare/v3.2.36...v3.3.0) (2026-10-25)
+
+
+### Features
+
+* forward pricecheck UA to warframe-nexus-query ([119900b](https://github.com/wfcd/warframe-status/commit/119900b8a1cc938a20bd4fffa0948abbc4e427eb))
+
 ## [3.2.36](https://github.com/wfcd/warframe-status/compare/v3.2.35...v3.2.36) (2026-10-25)
 
 
