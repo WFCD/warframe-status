@@ -5,7 +5,10 @@ import {
   PriceCheckUnavailableDto,
 } from '@dto/pricecheck.dto';
 import { asPlatform } from '@nest/guards/platform.guard';
-import { parsePriceCheckOptions } from '@nest/utils/parsePriceCheckOptions';
+import {
+  parsePriceCheckOptions,
+  parsePriceCheckUserAgent,
+} from '@nest/utils/parsePriceCheckOptions';
 import {
   Controller,
   Get,
@@ -58,7 +61,7 @@ export class PriceCheckController {
   @ApiOperation({
     summary: 'Price check items on warframe.market',
     description:
-      'Query warframe.market for item prices. Supports three response types: "string" (formatted text), "find" (raw data), and "attachment" (Discord embed format). Optional query params filter mod rank and other order modifiers. Requires PRICECHECKS_ENABLED=true.',
+      'Query warframe.market for item prices. Supports three response types: "string" (formatted text), "find" (raw data), and "attachment" (Discord embed format). Optional query params filter mod rank and other order modifiers. Optional UA is forwarded as the warframe.market User-Agent. Requires PRICECHECKS_ENABLED=true.',
   })
   @ApiParam({
     name: 'type',
@@ -79,6 +82,15 @@ export class PriceCheckController {
     description:
       'Platform to query (pc, ps4, xb1, swi, ns). Defaults to pc if not provided.',
     example: 'pc',
+  })
+  @ApiQuery({
+    name: 'UA',
+    required: false,
+    description:
+      'User-Agent forwarded to warframe.market through warframe-nexus-query. Genesis sends genesis/<version> (+https://genesis.warframestat.us; https://github.com/WFCD/genesis).',
+    example:
+      'genesis/3.1.12 (+https://genesis.warframestat.us; https://github.com/WFCD/genesis)',
+    type: String,
   })
   @ApiQuery({
     name: 'rank',
@@ -155,6 +167,7 @@ export class PriceCheckController {
     @Query('cyanStars') cyanStars: string | undefined,
     @Query('cyanStarsLt') cyanStarsLt: string | undefined,
     @Query('subtype') subtype: string | undefined,
+    @Query('UA') ua: string | string[] | undefined,
     @Req() req: Request,
     @Res() res: Response,
   ): Promise<void> {
@@ -168,6 +181,7 @@ export class PriceCheckController {
 
     // Get platform from header
     const platform = asPlatform(req.get('platform'));
+    const userAgent = parsePriceCheckUserAgent(ua);
     const options = parsePriceCheckOptions({
       rank,
       ranks,
@@ -190,6 +204,7 @@ export class PriceCheckController {
             query,
             platform,
             options,
+            userAgent,
           );
           break;
         case 'find':
@@ -197,6 +212,7 @@ export class PriceCheckController {
             query,
             platform,
             options,
+            userAgent,
           );
           break;
         case 'attachment':
@@ -204,6 +220,7 @@ export class PriceCheckController {
             query,
             platform,
             options,
+            userAgent,
           );
           break;
         default:

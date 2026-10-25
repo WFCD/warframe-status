@@ -60,3 +60,24 @@ export const parsePriceCheckOptions = (query: {
 
   return options;
 };
+
+const MAX_USER_AGENT_LENGTH = 256;
+
+/**
+ * Optional `UA` query param. Genesis sends
+ * `genesis/<version> (+https://genesis.warframestat.us; https://github.com/WFCD/genesis)`.
+ * Empty or header-unsafe values are dropped so the library default is used.
+ */
+export const parsePriceCheckUserAgent = (
+  value?: string | string[],
+): string | undefined => {
+  const raw = Array.isArray(value) ? value[0] : value;
+  if (raw == null) return undefined;
+  const userAgent = raw.trim();
+  if (!userAgent || userAgent.length > MAX_USER_AGENT_LENGTH) return undefined;
+  for (const char of userAgent) {
+    const code = char.charCodeAt(0);
+    if (code <= 31 || code === 127) return undefined;
+  }
+  return userAgent;
+};
