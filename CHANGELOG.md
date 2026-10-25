@@ -1,3 +1,12 @@
+## [3.2.35](https://github.com/wfcd/warframe-status/compare/v3.2.34...v3.2.35) (2026-10-25)
+
+
+### Bug Fixes
+
+* **sec:** bump fast-uri from 3.1.7 to 3.1.9 ([#2322](https://github.com/wfcd/warframe-status/issues/2322)) ([3753196](https://github.com/wfcd/warframe-status/commit/375319686e306cc01f86a716ffb4c690c5812469))
+* **sec:** bump serialize-javascript from 7.1.2 to 7.1.4 ([#2324](https://github.com/wfcd/warframe-status/issues/2324)) ([98a44ea](https://github.com/wfcd/warframe-status/commit/98a44ea7faf9260f8a26d0b6593aff0cca295f52))
+* **sec:** bump undici from 6.28.1 to 6.29.1 ([#2323](https://github.com/wfcd/warframe-status/issues/2323)) ([c9fc0c2](https://github.com/wfcd/warframe-status/commit/c9fc0c28f26b889044b20ca0ab6c7f02d46ca530))
+
 ## [3.2.34](https://github.com/wfcd/warframe-status/compare/v3.2.33...v3.2.34) (2026-10-23)
 
 
