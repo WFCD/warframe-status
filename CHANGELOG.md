@@ -1,3 +1,10 @@
+## [3.2.36](https://github.com/wfcd/warframe-status/compare/v3.2.35...v3.2.36) (2026-10-25)
+
+
+### Bug Fixes
+
+* **sec:** bump body-parser from 2.3.0 to 2.4.0 ([#2325](https://github.com/wfcd/warframe-status/issues/2325)) ([a030c8d](https://github.com/wfcd/warframe-status/commit/a030c8d38c5353f2eff8989085a769f23b98b6f3))
+
 ## [3.2.35](https://github.com/wfcd/warframe-status/compare/v3.2.34...v3.2.35) (2026-10-25)
 
 
