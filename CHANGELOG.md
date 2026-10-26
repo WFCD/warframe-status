@@ -1,3 +1,10 @@
+## [3.3.1](https://github.com/wfcd/warframe-status/compare/v3.3.0...v3.3.1) (2026-10-26)
+
+
+### Bug Fixes
+
+* bump worldstate-emitter to 2.5.8 ([21aefe7](https://github.com/wfcd/warframe-status/commit/21aefe70d1c466d34570e4d25d30ac83cb492761))
+
 # [3.3.0](https://github.com/wfcd/warframe-status/compare/v3.2.36...v3.3.0) (2026-10-25)
 
 
