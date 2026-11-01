@@ -1,4 +1,4 @@
-import { ItemNotFoundDto } from '@dto/items.dto';
+import { type GenerateModConfigDto, ItemNotFoundDto } from '@dto/items.dto';
 import {
   Controller,
   Get,
@@ -31,13 +31,6 @@ interface QueryParams {
   by?: string;
   language?: string;
 }
-
-type ModQueryParams = Omit<QueryParams, 'remove' | 'only' | 'filter' | 'by'> & {
-  rank: number;
-  setBonus: number;
-  collapsed: boolean;
-  format: 'png' | 'avif' | 'webp' | 'jpeg';
-};
 
 @ApiTags('items')
 @ApiExtraModels(ItemNotFoundDto)
@@ -437,7 +430,7 @@ export class ItemsController {
     return res.status(HttpStatus.OK).json(results.flat());
   }
 
-  @Get('modGenerator')
+  @Get('generateMod')
   @ApiOperation({
     summary: 'Generate a complete mod image',
     description: 'Builds a mod image from the given uniqueName',
@@ -493,16 +486,15 @@ export class ItemsController {
       format: 'binary',
     },
   })
-  async modGenerator(
+  async generateMod(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
-    @Query('uniqueName') uniqueName: string,
-    @Query() query: ModQueryParams,
+    @Query() config: GenerateModConfigDto,
   ): Promise<StreamableFile> {
-    const language = this.getLanguage(req, query.language);
-    const { rank, setBonus } = query;
-    const collapsed = query.collapsed ?? false;
-    const format = query.format ?? 'png';
+    const language = this.getLanguage(req, config.language);
+    const { uniqueName, rank, setBonus } = config;
+    const mini = config.minimized ?? false;
+    const format = config.format ?? 'png';
 
     // Set Vary header if Accept-Language was provided
     if (req.headers['accept-language']) {
@@ -520,16 +512,16 @@ export class ItemsController {
     const mod = result as Mod;
     const options = {
       mod: result as Mod,
-      rank: rank,
-      setBonus: setBonus,
-      output: { format: format },
+      rank,
+      setBonus,
+      output: { format },
     };
 
-    const image = collapsed
+    const image = mini
       ? await generateCollapsed(options)
       : await generate(options);
     let imageName = mod.imageName?.split('.')[0];
-    if (collapsed) imageName = `${imageName}-mini`;
+    if (mini) imageName = `${imageName}-mini`;
 
     return new StreamableFile(image, {
       type: `image/${format}`,
