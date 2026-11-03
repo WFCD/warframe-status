@@ -1,3 +1,10 @@
+## [3.3.3](https://github.com/wfcd/warframe-status/compare/v3.3.2...v3.3.3) (2026-11-03)
+
+
+### Bug Fixes
+
+* bump 14 updates ([#2333](https://github.com/wfcd/warframe-status/issues/2333)) ([b572afd](https://github.com/wfcd/warframe-status/commit/b572afd7c62fd16fc8d953318643316875f807e0))
+
 ## [3.3.2](https://github.com/wfcd/warframe-status/compare/v3.3.1...v3.3.2) (2026-10-26)
 
 
