@@ -511,7 +511,7 @@ export class ItemsController {
 
     const mod = result as Mod;
     const options = {
-      mod: result as Mod,
+      mod,
       rank,
       setBonus,
       output: { format },
