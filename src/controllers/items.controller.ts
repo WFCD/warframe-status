@@ -1,4 +1,4 @@
-import { type GenerateModConfigDto, ItemNotFoundDto } from '@dto/items.dto';
+import { GenerateModConfigDto, ItemNotFoundDto } from '@dto/items.dto';
 import {
   Controller,
   Get,
@@ -9,6 +9,7 @@ import {
   Req,
   Res,
   StreamableFile,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiExtraModels,
@@ -462,11 +463,11 @@ export class ItemsController {
     type: Number,
   })
   @ApiQuery({
-    name: 'collapsed',
+    name: 'minimized',
     required: false,
     default: false,
     description: 'Generate a collapsed version. The default is false',
-    example: 'collapsed=true',
+    example: 'minimized=true',
     type: Boolean,
   })
   @ApiQuery({
@@ -489,7 +490,13 @@ export class ItemsController {
   async generateMod(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
-    @Query() config: GenerateModConfigDto,
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        expectedType: GenerateModConfigDto,
+      }),
+    )
+    config: GenerateModConfigDto,
   ): Promise<StreamableFile> {
     const language = this.getLanguage(req, config.language);
     const { uniqueName, rank, setBonus } = config;

@@ -1,4 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform, Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 
 /**
  * Error response when an item is not found
@@ -19,7 +29,6 @@ export class ItemNotFoundDto {
   code!: number;
 }
 
-
 /**
  * Mod generator config
  */
@@ -31,6 +40,7 @@ export class GenerateModConfigDto {
       'uniqueName=/Lotus/Upgrades/Mods/Warframe/AvatarDamageReductionInAir',
     type: String,
   })
+  @IsString()
   uniqueName!: string;
 
   @ApiProperty({
@@ -42,24 +52,61 @@ export class GenerateModConfigDto {
     minimum: 0,
     maximum: 10,
   })
-  rank!: number;
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  @Max(10)
+  rank?: number;
 
   @ApiProperty({
-    description: 'The set bonus rank for mods that are part of a set. The default is the max set bonus.',
+    description:
+      'The set bonus rank for mods that are part of a set. The default is the max set bonus.',
     example: 'setBonus=6',
     default: 6,
     type: Number,
-    minimum: 1,
+    minimum: 0,
     maximum: 6,
   })
-  setBonus!: number;
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  @Max(6)
+  setBonus?: number;
 
-  @ApiProperty({ description: 'Output format for the generated image. Supports PNG, JPEG, AVIF, and WEBP. Defaults to PNG', default: 'png', example: 'format=jpeg', type: String })
-  format!: 'png' | 'jpeg' | 'webp' | 'avif';
+  @ApiProperty({
+    description:
+      'Output format for the generated image. Supports PNG, JPEG, AVIF, and WEBP. Defaults to PNG',
+    default: 'png',
+    example: 'format=jpeg',
+    type: String,
+  })
+  @IsOptional()
+  @IsIn(['png', 'jpeg', 'webp', 'avif'])
+  format?: 'png' | 'jpeg' | 'webp' | 'avif';
 
-  @ApiProperty({ description: 'Create a collapsed or "equipped" version of the mod', default: false, example: 'minimized=true', type: String })
-  minimized!: boolean;
+  @ApiProperty({
+    description: 'Create a collapsed or "equipped" version of the mod',
+    default: false,
+    example: 'minimized=true',
+    type: Boolean,
+  })
+  @IsOptional()
+  @Transform(({ value }) =>
+    value === undefined || value === null || value === ''
+      ? undefined
+      : value === true || value === 'true',
+  )
+  @IsBoolean()
+  minimized?: boolean;
 
-  @ApiProperty({ description: 'Language to use when generating said mod', example: 'language=en', type: String })
-  language!: string;
+  @ApiProperty({
+    description: 'Language to use when generating said mod',
+    example: 'language=en',
+    type: String,
+  })
+  @IsOptional()
+  @IsString()
+  language?: string;
 }
