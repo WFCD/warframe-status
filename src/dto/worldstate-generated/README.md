@@ -13,12 +13,10 @@ This directory is **not tracked in git** (except this README). Files here are pr
 ## When files are created
 
 Codegen runs automatically via:
-
 - `npm install` / `npm ci` — `prepare` script
 - `npm run build`, `dev`, or `start`
 
 Related output (also gitignored):
-
 - `src/controllers/worldstate-field-routes.generated.ts` — from `npm run generate:routes`
 
 ## Manual regeneration

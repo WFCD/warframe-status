@@ -19,6 +19,7 @@ src/nest/test/
 ## Test Types
 
 ### Unit Tests (`*.spec.ts`)
+
 - **Fast** execution (~20 seconds for full suite)
 - **Mocked** external dependencies
 - **Isolated** - no network calls
@@ -31,6 +32,7 @@ src/nest/test/
 - `socket-unit.spec.ts` - WebSocket with MockWorldStateService
 
 ### Integration Tests (`*-integration.spec.ts`)
+
 - **Slower** execution (up to 5 minutes)
 - **Real** external services
 - **Network** dependent
@@ -80,7 +82,7 @@ describe('My Feature', () => {
     const res = await request
       .execute(nestApp.getHttpServer())
       .get('/my-endpoint');
-    
+
     expect(res.status).to.equal(200);
     expect(res.body).to.be.an('object');
   });
@@ -100,11 +102,11 @@ describe('My Feature (integration)', function () {
 
   it('should work with real data', async function () {
     this.timeout(30000); // Longer timeout for external calls
-    
+
     const res = await request
       .execute(nestApp.getHttpServer())
       .get('/my-endpoint');
-    
+
     res.should.have.status(200);
   });
 });
@@ -174,6 +176,7 @@ Test environment variables are set globally before tests run:
 ## Best Practices
 
 ### DO ✅
+
 - Use mocks for unit tests
 - Set appropriate timeouts for integration tests
 - Skip tests when dependencies unavailable
@@ -182,6 +185,7 @@ Test environment variables are set globally before tests run:
 - Use `chai.should()` for assertions
 
 ### DON'T ❌
+
 - Call real external APIs in unit tests
 - Commit commented-out tests
 - Leave `this.only()` or `describe.only()` in code
@@ -191,6 +195,7 @@ Test environment variables are set globally before tests run:
 ## Troubleshooting
 
 ### "Cannot find module" errors
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules package-lock.json
@@ -198,23 +203,25 @@ npm install
 ```
 
 ### "expected '' to be an object" in integration tests
+
 This means the external API didn't return data. Check:
 - Network connectivity
 - External API status
 - Rate limiting
 
 ### Tests timing out
+
 - Increase timeout in test: `this.timeout(60000)`
 - Check if external APIs are responding
 - Verify app initialization isn't hanging
 
 ### Decorator errors in LSP
+
 These are TypeScript LSP warnings and don't affect test execution. Tests use `tsx` which handles decorators correctly.
 
 ## Migration Checklist
 
 When migrating an Express endpoint to NestJS:
-
 - [ ] Create controller with route handlers
 - [ ] Create service with business logic
 - [ ] Add unit tests with mocked services
