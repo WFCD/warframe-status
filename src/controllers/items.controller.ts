@@ -517,7 +517,11 @@ export class ItemsController {
 
     res.setHeader('Content-Language', language);
 
-    if (result && Object.keys(result).length) {
+    if (
+      result &&
+      Object.keys(result).length &&
+      (result as Mod).uniqueName?.toLowerCase() === uniqueName.toLowerCase()
+    ) {
       const mod = result as Mod;
       const options = {
         mod,

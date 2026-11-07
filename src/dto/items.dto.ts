@@ -4,6 +4,7 @@ import {
   IsBoolean,
   IsIn,
   IsInt,
+  IsNotEmpty,
   IsOptional,
   IsString,
   Max,
@@ -41,6 +42,7 @@ export class GenerateModConfigDto {
     type: String,
   })
   @IsString()
+  @IsNotEmpty()
   uniqueName!: string;
 
   @ApiProperty({
@@ -83,6 +85,9 @@ export class GenerateModConfigDto {
     type: String,
   })
   @IsOptional()
+  @Transform(({ value }) =>
+    typeof value === 'string' ? value.toLowerCase() : value,
+  )
   @IsIn(['png', 'jpeg', 'webp', 'avif'])
   format?: 'png' | 'jpeg' | 'webp' | 'avif';
 
