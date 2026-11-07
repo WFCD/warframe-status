@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/wfcd/warframe-status/compare/v3.3.3...v3.4.0) (2026-11-07)
+
+
+### Features
+
+* make it easier to get full mod images ([#2329](https://github.com/wfcd/warframe-status/issues/2329)) ([a380288](https://github.com/wfcd/warframe-status/commit/a380288643431c4616f051e82878cfde6a192d6d))
+
 ## [3.3.3](https://github.com/wfcd/warframe-status/compare/v3.3.2...v3.3.3) (2026-11-03)
 
 
