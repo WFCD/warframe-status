@@ -4,6 +4,7 @@ import {
   Get,
   HttpStatus,
   Inject,
+  NotFoundException,
   Param,
   Query,
   Req,
@@ -516,27 +517,31 @@ export class ItemsController {
 
     res.setHeader('Content-Language', language);
 
-    const mod = result as Mod;
-    const options = {
-      mod,
-      rank,
-      setBonus,
-      output: { format },
-    };
+    if (result && Object.keys(result).length) {
+      const mod = result as Mod;
+      const options = {
+        mod,
+        rank,
+        setBonus,
+        output: { format },
+      };
 
-    const image = mini
-      ? await generateCollapsed(options)
-      : await generate(options);
-    let imageName = mod.imageName?.split('.')[0];
-    if (mini) imageName = `${imageName}-mini`;
+      const image = mini
+        ? await generateCollapsed(options)
+        : await generate(options);
+      let imageName = mod.imageName?.split('.')[0];
+      if (mini) imageName = `${imageName}-mini`;
 
-    return new StreamableFile(image, {
-      type: `image/${format}`,
-      disposition: `attachment; filename="${imageName}.${format}"`,
-      length: image.length,
-    }).setErrorHandler((_, res) => {
-      res.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-      return res.send(`Failed to generate an image for ${uniqueName}`);
-    });
+      return new StreamableFile(image, {
+        type: `image/${format}`,
+        disposition: `attachment; filename="${imageName}.${format}"`,
+        length: image.length,
+      }).setErrorHandler((_, res) => {
+        res.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+        return res.send(`Failed to generate an image for ${uniqueName}`);
+      });
+    }
+
+    throw new NotFoundException(`Could not find ${uniqueName}`);
   }
 }
