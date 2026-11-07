@@ -1,0 +1,11 @@
+:root {
+  --primary: white;
+  --secondary: #99aab5;
+  --dark: #23272a;
+  --darker: rgba(44, 47, 51, 0.8);
+  --greyer: rgba(44, 47, 51, 1);
+  --dgreen: rgba(0, 170, 19, 0.1);
+  --green: rgb(0, 170, 19);
+  --red: rgb(229, 57, 53);
+  --dred: rgba(229, 57, 53, 0.1);
+}
