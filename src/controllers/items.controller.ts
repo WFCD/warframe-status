@@ -1,13 +1,16 @@
-import { ItemNotFoundDto } from '@dto/items.dto';
+import { GenerateModConfigDto, ItemNotFoundDto } from '@dto/items.dto';
 import {
   Controller,
   Get,
   HttpStatus,
   Inject,
+  NotFoundException,
   Param,
   Query,
   Req,
   Res,
+  StreamableFile,
+  ValidationPipe,
 } from '@nestjs/common';
 import {
   ApiExtraModels,
@@ -19,6 +22,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import type { ItemsCacheService } from '@services/items-cache.service';
+import type { Mod } from '@wfcd/items';
+import generate, { generateCollapsed } from '@wfcd/mod-generator';
 import type { Request, Response } from 'express';
 
 interface QueryParams {
@@ -425,5 +430,122 @@ export class ItemsController {
 
     res.setHeader('Content-Language', language);
     return res.status(HttpStatus.OK).json(results.flat());
+  }
+
+  @Get('generateMod')
+  @ApiOperation({
+    summary: 'Generate a complete mod image',
+    description: 'Builds a mod image from the given uniqueName',
+  })
+  @ApiQuery({
+    name: 'uniqueName',
+    description: 'The uniqueName of the mod to generate',
+    example: '/Lotus/Upgrades/Mods/Warframe/AvatarDamageReductionInAir',
+    type: String,
+  })
+  @ApiQuery({
+    name: 'rank',
+    required: false,
+    description:
+      'The rank the generated mod image will be set to. The default is the max rank of a given mod. Any values over the fusionLimit will return a max mod.',
+    example: 'rank=4',
+    minimum: 0,
+    maximum: 10,
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'setBonus',
+    required: false,
+    description:
+      'The set bonus rank for mods that are part of a set. The default is the max set bonus.',
+    example: 'setBonus=3',
+    minimum: 0,
+    maximum: 6,
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'minimized',
+    required: false,
+    default: false,
+    description: 'Generate a collapsed version. The default is false',
+    example: 'minimized=true',
+    type: Boolean,
+  })
+  @ApiQuery({
+    name: 'format',
+    required: false,
+    default: 'png',
+    description:
+      'Image format output. Supports PNG, JPEG, AVIF, and WEBP. Defaults to PNG',
+    example: 'format=png',
+    type: String,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The requested mod as seen in the companion app',
+    schema: {
+      type: 'string',
+      format: 'binary',
+    },
+  })
+  async generateMod(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        expectedType: GenerateModConfigDto,
+      }),
+    )
+    config: GenerateModConfigDto,
+  ): Promise<StreamableFile> {
+    const language = this.getLanguage(req, config.language);
+    const { uniqueName, rank, setBonus } = config;
+    const mini = config.minimized ?? false;
+    const format = config.format ?? 'png';
+
+    // Set Vary header if Accept-Language was provided
+    if (req.headers['accept-language']) {
+      res.setHeader('Vary', 'Accept-Language');
+    }
+
+    const result = await this.itemsCache.getItems('mods', language, {
+      by: 'uniqueName',
+      max: 1,
+      term: uniqueName,
+    });
+
+    res.setHeader('Content-Language', language);
+
+    if (
+      result &&
+      Object.keys(result).length &&
+      (result as Mod).uniqueName?.toLowerCase() === uniqueName.toLowerCase()
+    ) {
+      const mod = result as Mod;
+      const options = {
+        mod,
+        rank,
+        setBonus,
+        output: { format },
+      };
+
+      const image = mini
+        ? await generateCollapsed(options)
+        : await generate(options);
+      let imageName = mod.imageName?.split('.')[0];
+      if (mini) imageName = `${imageName}-mini`;
+
+      return new StreamableFile(image, {
+        type: `image/${format}`,
+        disposition: `attachment; filename="${imageName}.${format}"`,
+        length: image.length,
+      }).setErrorHandler((_, res) => {
+        res.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+        return res.send(`Failed to generate an image for ${uniqueName}`);
+      });
+    }
+
+    throw new NotFoundException(`Could not find ${uniqueName}`);
   }
 }
