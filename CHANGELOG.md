@@ -1,3 +1,10 @@
+## [3.4.1](https://github.com/wfcd/warframe-status/compare/v3.4.0...v3.4.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* bump the default group across 1 directory with 13 updates ([#2341](https://github.com/wfcd/warframe-status/issues/2341)) ([5689a95](https://github.com/wfcd/warframe-status/commit/5689a95805d787252c2f071b8ba3da9f1867a5b8))
+
 # [3.4.0](https://github.com/wfcd/warframe-status/compare/v3.3.3...v3.4.0) (2026-11-07)
 
 
