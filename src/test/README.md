@@ -27,6 +27,7 @@ src/nest/test/
 - Run on every code change
 
 **Examples**:
+
 - `data.spec.ts` - Static data endpoints
 - `drops.spec.ts` - Drops endpoint
 - `socket-unit.spec.ts` - WebSocket with MockWorldStateService
@@ -40,6 +41,7 @@ src/nest/test/
 - Run manually or in CI on main branch
 
 **Examples**:
+
 - `worldstate-integration.spec.ts` - Real worldstate data
 - `socket-integration.spec.ts` - Real WebSocket connections
 - `api-compatibility-integration.spec.ts` - NestJS vs Express comparison
@@ -49,6 +51,7 @@ src/nest/test/
 See [INTEGRATION_TESTING.md](../../../INTEGRATION_TESTING.md) for detailed instructions.
 
 **Quick Reference**:
+
 ```bash
 # Unit tests (default)
 npm run test:nest
@@ -145,6 +148,7 @@ const mockWorldState = new MockWorldStateService();
 ### Environment Setup (`env-setup.ts`)
 
 Test environment variables are set globally before tests run:
+
 - `USE_WORLDSTATE=true`
 - `FEATURES=worldstate,SOCKET`
 - `WS_EMITTER_FEATURES=rss,rivens,worldstate`
@@ -155,6 +159,7 @@ Test environment variables are set globally before tests run:
 ### Unit Tests: ✅ 357 passing, 8 pending
 
 **Coverage by Area**:
+
 - ✅ Static Data (arcanes, mods, etc.) - 200+ tests
 - ✅ Drops - 10 tests
 - ✅ Heartbeat - 1 test
@@ -205,6 +210,7 @@ npm install
 ### "expected '' to be an object" in integration tests
 
 This means the external API didn't return data. Check:
+
 - Network connectivity
 - External API status
 - Rate limiting
@@ -222,6 +228,7 @@ These are TypeScript LSP warnings and don't affect test execution. Tests use `ts
 ## Migration Checklist
 
 When migrating an Express endpoint to NestJS:
+
 - [ ] Create controller with route handlers
 - [ ] Create service with business logic
 - [ ] Add unit tests with mocked services
